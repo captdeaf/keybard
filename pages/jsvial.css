@@ -8,8 +8,21 @@
   padding: 3em 6em 3em 6em;
   background-color: #f3f3f3;
   border: 2px solid black;
-  font-size: 200%;
+  font-size: 400%;
   font-weight: bold;
+}
+
+.key {
+  background-color: #666;
+  border: 1px solid black;
+  border-radius: 0.5em;
+  color: white;
+  font-size: 30px;
+}
+
+.key p {
+  display: block;
+  margin: auto;
 }
 
 /* Basic UI elements */
