@@ -15,16 +15,16 @@ function startJSVial() {
 
 function getStyleFor(opts) {
   return {
-    top: Math.floor((opts.y * 100) + 100) + 'px',
-    left: Math.floor((opts.x * 100) + 100) + 'px',
-    width: Math.floor(opts.w * 80) + 'px',
-    height: Math.floor(opts.h * 80) + 'px',
+    top: Math.floor((opts.y * 30) + 120) + 'px',
+    left: Math.floor((opts.x * 30) + 120) + 'px',
+    width: Math.floor(opts.w * 25) + 'px',
+    height: Math.floor(opts.h * 25) + 'px',
     position: 'fixed',
   };
 }
 
 async function doStuff() {
-  await Vial.open();
+  await Vial.init();
   const children = [];
   for (const [kmid, opts] of Object.entries(Vial.kbinfo.keylayout)) {
     let text = '"' + opts.row + ',' + opts.col + '"';

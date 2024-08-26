@@ -8,7 +8,7 @@
   padding: 3em 6em 3em 6em;
   background-color: #f3f3f3;
   border: 2px solid black;
-  font-size: 400%;
+  font-size: 100%;
   font-weight: bold;
 }
 
@@ -17,7 +17,7 @@
   border: 1px solid black;
   border-radius: 0.5em;
   color: white;
-  font-size: 30px;
+  font-size: 10pt;
 }
 
 .key p {

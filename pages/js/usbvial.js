@@ -62,142 +62,15 @@ const RAW = lockValue({
   DYNAMIC_VIAL_KEY_OVERRIDE_SET: 0x06,
 });
 
-const MSG_LEN = 32;
-
-function EndianFrom(num, bytes, little) {
-  const ab = new ArrayBuffer(bytes);
-  const dv = new DataView(ab);
-
-  switch (bytes) {
-    case 2: dv.setInt16(0, num, little); break;
-    case 4: dv.setInt32(0, num, little); break;
-  }
-  return Array.from(new Uint8Array(ab));
-}
-
-function LE32(num) {
-  return EndianFrom(num, 4, true);
-}
-
-function LE16(num) {
-  return EndianFrom(num, 2, true);
-}
-
-function BE32(num) {
-  return EndianFrom(num, 4, false);
-}
-
-function BE16(num) {
-  return EndianFrom(num, 2, false);
-}
-
-function convEndian(ary, size) {
-  if (size === 2) {
-    return ary.map((num) => (((num >> 8) & 0xFF) | ((num << 8) & 0xFF00)));
-  } else {
-    return ary.map((num) => (
-      ((num << 24) & 0xFF000000) |
-      ((num << 8) & 0xFF0000) |
-      ((num >> 8) & 0xFF00) |
-      ((num >> 24) & 0xFF)));
-  }
-}
-
 const Vial = {
-  // This will be set to the opened device.
-  device: undefined,
-  open: async function() {
-    const devices = await navigator.hid.requestDevice({
-      filters: [{
+  init: async function() {
+    const opened = await USB.open(
+      [{
         // Filter for QMK/Vial Keyboards.
         usagePage: 0xFF60,
         usage: 0x61,
       }]
-    });
-
-    if (devices.length !== 1) return false;
-
-    Vial.device = devices[0];
-    await Vial.device.open()
-    await Vial.initDevice();
-
-    return true;
-  },
-
-  sendVia: (cmd, args, flags) => {
-    const vargs = [cmd, ...args];
-    return Vial.send(RAW.CMD_VIA_VIAL_PREFIX, vargs, flags);
-  },
-
-  send: (cmd, args, flags) => {
-    let ary = [cmd];
-    if (args) {
-      ary = [cmd, ...args];
-    }
-    for (let i = ary.length; i < MSG_LEN; i++) {
-      ary.push(0);
-    }
-    console.log("sending", ary);
-    // Callback for when we get a response.
-    const cbpromise = new Promise((res, rej) => {
-      Vial.listener = (data, ev) => {
-        console.log(data);
-        let ret;
-        if (flags.uint16) {
-          ret = new Uint16Array(data);
-          if (flags.bigendian) {
-            ret = convEndian(ret, 2);
-          }
-        } else if (flags.int16) {
-          ret = new Int16Array(data);
-          if (flags.bigendian) {
-            ret = convEndian(ret, 2);
-          }
-        } else if (flags.uint32) {
-          ret = new Int32Array(data);
-          if (flags.bigendian) {
-            ret = convEndian(ret, 4);
-          }
-        } else if (flags.int8) {
-          ret = new Int8Array(data);
-          if (flags.bigendian) {
-            ret = convEndian(ret, 4);
-          }
-        } else {
-          ret = new Uint8Array(data);
-        }
-        if (flags.index != undefined) {
-          ret = ret[flags.index];
-        } else if (flags.slice) {
-          if (flags.slice.length) {
-            ret = ret.slice(...flags.slice);
-          } else {
-            ret = ret.slice(flags.slice);
-          }
-        }
-        if (flags.string) {
-          ret = new TextDecoder().decode(ret);
-        }
-        res(ret);
-      };
-    });
-    // Send update and respond to callback.
-    const sendpromise = Vial.device.sendReport(0, new Uint8Array(ary));
-    sendpromise.then(cbpromise)
-
-    return cbpromise;
-  },
-
-  listener: (data, ev) => {},
-
-  initDevice: async function() {
-    Vial.device.addEventListener('inputreport', (ev) => {
-      // console.log(ev.data);
-      if (Vial.listener) {
-        x = ev.data;
-        Vial.listener(ev.data.buffer, ev);
-      }
-    })
+    )
     const kbinfo = {};
     await Vial.getKeyboardInfo(kbinfo);
     await Vial.getKeyMap(kbinfo);
@@ -205,6 +78,15 @@ const Vial = {
     console.log("kbinfo", kbinfo);
     Vial.kbinfo = kbinfo;
     return kbinfo;
+  },
+
+  send: (...args) => {
+    return USB.send(...args);
+  },
+
+  sendVia: (cmd, args, flags) => {
+    const vargs = [cmd, ...args];
+    return Vial.send(RAW.CMD_VIA_VIAL_PREFIX, vargs, flags);
   },
 
   getKeyMap: async (kbinfo) => {
