@@ -93,6 +93,10 @@ function addAttrs(el, attrs) {
 function EL(name, attrs, ...children) {
   const ret = document.createElement(name);
   if (attrs) {
+    if (attrs.style) {
+      Object.assign(ret.style, attrs.style);
+      delete attrs.style;
+    }
     if (typeof(attrs) === 'string' || 'append' in attrs) {
       children.unshift(attrs);
     } else {
@@ -400,23 +404,11 @@ function makeUUID() {
   return SparkMD5.hash(hashStr + new Date().getTime().toFixed());
 }
 
-////////////////////////////////////
-//
-//  Initializing javascript - in order.
-//
-// Add initializers to run on load, by file. 'order' is optional: If not given,
-// order 1000+n and things run low-high by order. If no order is ever given,
-// they run first-last called. Or in other words, they order they show up in
-// <script> tags.
-//
-////////////////////////////////////
-const INITIALIZERS = [];
-function addInitializer(name, func, order) {
-  if (order === undefined) order = 1000 + INITIALIZERS.length;
-  INITIALIZERS.push({name: name, order: order, func: func});
-}
-
-function runInitializers() {
-  const sorted = INITIALIZERS.sort((a, b) => a.order - b.order);
-  for (const call of sorted) call.func();
+// A wrapper around xzwasm's decompression.
+function decompress(buffer) {
+  buff = buffer;
+  const blob = new Blob([buffer]);
+  const xrs = new xzwasm.XzReadableStream(blob.stream());
+  const resp = new Response(xrs);
+  return resp.text();
 }
