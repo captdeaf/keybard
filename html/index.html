@@ -14,6 +14,7 @@
     <script type="text/javascript" src="js/keys.js"></script>
     <script type="text/javascript" src="js/usbhid.js"></script>
     <script type="text/javascript" src="js/usbvial.js"></script>
+    <script type="text/javascript" src="js/kbdisplay.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
   </head>
   <body>
@@ -33,8 +34,12 @@
         <div id="topbar-filler"></div>
       </div>
     </div>
-    <div id="sheet">
-      {{launch}}
+    <div id="vialgui">
+      <div id="mainboard">
+      </div>
+      <div id="sheet">
+        {{launch}}
+      </div>
     </div>
     <script type="text/javascript">
       (function() {

@@ -1,10 +1,33 @@
-// usbraw.js
+// usbhid.js
 //
 ////////////////////////////////////
 //
-//  Raw information and interaction with USB.
+//  Raw information and interaction with USBHID.
 //
 ////////////////////////////////////
+
+// Playback: Handy for when I'm just tweaking UI stuff.
+let PLAYBACK = false;
+let RECORDING = false;
+
+let SAVED = {};
+
+function loadPlayback() {
+  SAVED = getSaved('playback', {});
+}
+
+function playback(cmdargs) {
+  const key = JSON.stringify(cmdargs);
+  const ret = new Uint8Array(SAVED[key]);
+  return ret.buffer;
+}
+
+function recordPlayback(cmdargs, ret) {
+  const key = JSON.stringify(cmdargs);
+  const val = [...new Uint8Array(ret)];
+  SAVED[key] = val;
+  setSaved('playback', SAVED);
+}
 
 const MSG_LEN = 32;
 
@@ -55,24 +78,27 @@ const USB = {
   listener: (data, ev) => {},
 
   open: async function(filters) {
-    const devices = await navigator.hid.requestDevice({
-      filters: filters,
-    });
+    if (PLAYBACK) {
+      loadPlayback();
+      return true;
+    } else {
+      const devices = await navigator.hid.requestDevice({
+        filters: filters,
+      });
 
-    if (devices.length !== 1) return false;
+      if (devices.length !== 1) return false;
 
-    USB.device = devices[0];
-    const opened = await USB.device.open()
-    console.log("open returned", opened);
+      USB.device = devices[0];
+      const opened = await USB.device.open()
 
-    await USB.initListener();
+      await USB.initListener();
 
-    return true;
+      return true;
+    }
   },
 
   initListener: () => {
     USB.device.addEventListener('inputreport', (ev) => {
-      // console.log(ev.data);
       if (USB.listener) {
         x = ev.data;
         USB.listener(ev.data.buffer, ev);
@@ -81,7 +107,6 @@ const USB = {
   },
 
   formatResponse: (data, flags) => {
-    console.log(data);
     let ret;
     let cls = Uint8Array;
     let bytes = 1;
@@ -115,21 +140,31 @@ const USB = {
     // Format what we're sending.
     // cmd must be one byte. Browser will throw the error
     // anyway.
-    let ary = [cmd];
-    if (args) { ary = [cmd, ...args]; }
-    for (let i = ary.length; i < MSG_LEN; i++) {
-      ary.push(0);
+    let cmdargs = [cmd];
+    if (args) { cmdargs = [cmd, ...args]; }
+    for (let i = cmdargs.length; i < MSG_LEN; i++) {
+      cmdargs.push(0);
+    }
+
+    if (PLAYBACK) {
+      const data = playback(cmdargs);
+      const ret = USB.formatResponse(data, flags);
+      const respromise = new Promise((res, rej) => {
+        res(ret);
+      });
+      return respromise;
     }
 
     // Callback for when we get a response.
     const cbpromise = new Promise((res, rej) => {
       USB.listener = (data, ev) => {
+        recordPlayback(cmdargs, data);
         const ret = USB.formatResponse(data, flags);
         res(ret);
       };
     });
     // Send update and respond to callback.
-    const sendpromise = USB.device.sendReport(0, new Uint8Array(ary));
+    const sendpromise = USB.device.sendReport(0, new Uint8Array(cmdargs));
     sendpromise.then(cbpromise)
 
     return cbpromise;
