@@ -31,26 +31,31 @@ if __name__ == "__main__":
     # I do this instead of watching the directory because
     # otherwise it triggers on my editor .swp file changes.
     while True:
-        watcher = inotify.adapters.Inotify()
+        try:
+            watcher = inotify.adapters.Inotify()
 
-        rebuild()
+            rebuild()
 
-        for path in ['html/**']:
-            for file in glob(path):
-                print(f"Watching {file}")
-                watcher.add_watch(file)
+            for path in ['html/**']:
+                for file in glob(path):
+                    print(f"Watching {file}")
+                    watcher.add_watch(file)
 
-        print("Watching for file changes.")
+            print("Watching for file changes.")
 
-        changed = False
+            changed = False
 
-        for event in watcher.event_gen(yield_nones=False):
-            (_, type_names, path, filename) = event
-            for tname in type_names:
-                # IN_DELETE_SELF is here because some editors tend to delete
-                # and replace.
-                if tname in ['IN_MOVE_SELF', 'IN_DELETE_SELF',
-                        'IN_CLOSE_WRITE']:
-                    changed = True
-                    break
-            if changed: break
+            for event in watcher.event_gen(yield_nones=False):
+                (_, type_names, path, filename) = event
+                for tname in type_names:
+                    # IN_DELETE_SELF is here because some editors tend to delete
+                    # and replace.
+                    if tname in ['IN_MOVE_SELF', 'IN_DELETE_SELF',
+                            'IN_CLOSE_WRITE']:
+                        changed = True
+                        break
+                if changed: break
+        except KeyboardInterrupt:
+            break
+        except:
+            continue

@@ -105,13 +105,10 @@ const Vial = {
       let sz = chunksize;
       if (sz > size - offset) { sz = size - offset; }
 
-      console.log("getkb", offset, sz);
-
       // Why in the world does everything else use little endian,
       // but keymap uses big endian?!
       const data = await Vial.send(RAW.CMD_VIA_KEYMAP_GET_BUFFER, [...BE16(offset), sz],
                              {uint16: true, slice: 2, bigendian: true});
-      // console.log("chunk", data);
       alldata.push(...data);
 
       offset += chunksize;
@@ -140,14 +137,11 @@ const Vial = {
     kbinfo.via_proto = await Vial.send(RAW.CMD_VIA_GET_PROTOCOL_VERSION, [], {int32: true, index: 0});
     kbinfo.kbid = await Vial.sendVia(RAW.CMD_VIAL_GET_KEYBOARD_ID, [], {uint16: true, slice: [0, 3]});
 
-    console.log("kbi", kbinfo);
-
     // Keyboard info is via an xz-compressed JSON blob. Fetched 32 bytse
     // at a time.
     //
     // This mostly contains our layout visualizer for the GUI.
     const payload_size = await Vial.sendVia(RAW.CMD_VIAL_GET_SIZE, [], {uint32: true, index: 0});
-    console.log("payload size", payload_size);
 
     let block = 0;
     let sz = payload_size
@@ -157,7 +151,6 @@ const Vial = {
     while (sz > 0) {
       let data = await Vial.sendVia(RAW.CMD_VIAL_GET_DEFINITION, [...LE32(block)],
                                     {uint8: true});
-      console.log("got", data);
 
       for (let i = 0; i < MSG_LEN && offset < payload_size; i++) {
         pdv.setInt8(offset, data[i]);
@@ -235,11 +228,11 @@ const Vial = {
           // Object.assign(cur, item);
         } else {
           const rc = item.split(',');
-          const kmid = (parseInt(rc[0]) * kbinfo.cols) + parseInt(rc[1]);
-          console.log("foo", [r, c, cur.x, cur.y]);
+          const [row, col] = [parseInt(rc[0]), parseInt(rc[1])];
+          const kmid = (row * kbinfo.cols) + col;
           keylayout[kmid] = {
-            row: rc[0],
-            col: rc[1],
+            row: row,
+            col: col,
             text: kbinfo.keymap[0][kmid],
             ...cur
           };

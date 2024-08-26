@@ -14,15 +14,17 @@
 
 .key {
   background-color: #666;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 0.5em;
   color: white;
   font-size: 10pt;
+  text-align: center;
 }
 
 .key p {
   display: block;
-  margin: auto;
+  margin: 0;
+  padding: 0;
 }
 
 /* Basic UI elements */
