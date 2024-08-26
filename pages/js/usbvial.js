@@ -72,8 +72,17 @@ const Vial = {
       }]
     )
     const kbinfo = {};
+    // the .xz-compressed Vial information.
     await Vial.getKeyboardInfo(kbinfo);
+    
+    // Load combos, macros, etc.
+    await Vial.getFeatures(kbinfo);
+    await Vial.getMacros(kbinfo);
+
+    // Keymap: all layers + all keys.
     await Vial.getKeyMap(kbinfo);
+
+    // Visual layout.
     await Vial.getKeyLayout(kbinfo);
     console.log("kbinfo", kbinfo);
     Vial.kbinfo = kbinfo;
@@ -84,7 +93,7 @@ const Vial = {
     return USB.send(...args);
   },
 
-  sendVia: (cmd, args, flags) => {
+  sendVial: (cmd, args, flags) => {
     const vargs = [cmd, ...args];
     return Vial.send(RAW.CMD_VIA_VIAL_PREFIX, vargs, flags);
   },
@@ -98,23 +107,12 @@ const Vial = {
     // All KB Maps are fetchable as one big buffer ... in 28-byte chunks.
     let offset = 0;
     const chunksize = 28;
-    const alldata = [];
-    const allkeys = {};
-
-    while (offset < size) {
-      let sz = chunksize;
-      if (sz > size - offset) { sz = size - offset; }
-
-      // Why in the world does everything else use little endian,
-      // but keymap uses big endian?!
-      const data = await Vial.send(RAW.CMD_VIA_KEYMAP_GET_BUFFER, [...BE16(offset), sz],
-                             {uint16: true, slice: 2, bigendian: true});
-      alldata.push(...data);
-
-      offset += chunksize;
-    }
+    const alldata = await Vial.getViaBuffer(
+        RAW.CMD_VIA_KEYMAP_GET_BUFFER,
+        size,
+        {uint16: true, slice: 2, bigendian: true, bytes: 2}
+    );
     kbinfo.keymap = [];
-    kbinfo.rowmap = [];
 
     // For svalboard, Each "row" is a different cluster. 10 rows = 10 clusters.
     // 8 fingers, 2 thumbs.
@@ -134,14 +132,20 @@ const Vial = {
   getKeyboardInfo: async (kbinfo) => {
     let ret;
 
-    kbinfo.via_proto = await Vial.send(RAW.CMD_VIA_GET_PROTOCOL_VERSION, [], {int32: true, index: 0});
-    kbinfo.kbid = await Vial.sendVia(RAW.CMD_VIAL_GET_KEYBOARD_ID, [], {uint16: true, slice: [0, 3]});
+    // VIA Protocol. It's a byte followed by a short... big-endian
+    const via_proto = await Vial.send(RAW.CMD_VIA_GET_PROTOCOL_VERSION, [], {uint8: true, slice: [1, 3]});
+    kbinfo.via_proto = (via_proto[0] << 8) + via_proto[1];
 
-    // Keyboard info is via an xz-compressed JSON blob. Fetched 32 bytse
+    // Vial protocol (int) and Keyboard ID (long long), little endian.
+    const vial_proto = await Vial.sendVial(RAW.CMD_VIAL_GET_KEYBOARD_ID, [], {uint32: true, slice: [0, 3]});
+    kbinfo.vial_proto = vial_proto[0];
+    kbinfo.kbid = vial_proto[1] + (vial_proto[2] << 32);
+
+    // Vial KB info is via an xz-compressed JSON blob. Fetched 32 bytes
     // at a time.
     //
     // This mostly contains our layout visualizer for the GUI.
-    const payload_size = await Vial.sendVia(RAW.CMD_VIAL_GET_SIZE, [], {uint32: true, index: 0});
+    const payload_size = await Vial.sendVial(RAW.CMD_VIAL_GET_SIZE, [], {uint32: true, index: 0});
 
     let block = 0;
     let sz = payload_size
@@ -149,7 +153,7 @@ const Vial = {
     let pdv = new DataView(payload);
     let offset = 0
     while (sz > 0) {
-      let data = await Vial.sendVia(RAW.CMD_VIAL_GET_DEFINITION, [...LE32(block)],
+      let data = await Vial.sendVial(RAW.CMD_VIAL_GET_DEFINITION, [...LE32(block)],
                                     {uint8: true});
 
       for (let i = 0; i < MSG_LEN && offset < payload_size; i++) {
@@ -170,6 +174,60 @@ const Vial = {
     kbinfo.cols = payload.matrix.cols;
 
     return kbinfo
+  },
+
+  getFeatures: async (kbinfo) => {
+    // Gets feature information: macro count and size, combo count, etc.
+    const counts = await Vial.sendVial(RAW.CMD_VIAL_DYNAMIC_ENTRY_OP, []);
+
+    const macro_count = await Vial.send(RAW.CMD_VIA_MACRO_GET_COUNT, [], {index: 1});
+    // size is a byte followed by a big-endian short, short is size.
+    let macros_size = await Vial.send(RAW.CMD_VIA_MACRO_GET_BUFFER_SIZE, []);
+    macros_size = (macros_size[1] << 8) + macros_size[2];
+
+    kbinfo.features = {
+      tap_dance_count: counts[0],
+      combo_count: counts[1],
+      key_override_count: counts[2],
+      macro_count: macro_count,
+      macros_size: macros_size,
+    };
+  },
+
+  getViaBuffer: async (cmd, size, opts) => {
+    // Fetch a buffer, 28 bytes at a time.
+    // This is for Via messages that expect:
+    //   send(cmd_get_buffer, [offset, size])
+    let offset = 0;
+    const chunksize = 28;
+    const alldata = [];
+    if (!opts.bytes) opts.bytes = 1;
+
+    while (offset < size) {
+      let sz = chunksize;
+      if (sz > size - offset) { sz = size - offset; }
+
+      let data = await Vial.send(cmd, [...BE16(offset), sz], opts);
+      if (sz < chunksize) {
+        data = data.slice(0, parseInt(sz/opts.bytes));
+      }
+
+      alldata.push(...data);
+
+      offset += chunksize;
+    }
+
+    return alldata;
+  },
+
+  getMacros: async (kbinfo) => {
+    // Macros are stored as one big chunk of memory, at 28 bytes per fetch.
+    // null-separated. In svalboard, it's 795 bytes.
+    kbinfo.macro_memory = await Vial.getViaBuffer(
+        RAW.CMD_VIA_MACRO_GET_BUFFER,
+        kbinfo.features.macros_size,
+        {slice: 4, uint8: true, bytes: 1}
+    );
   },
 
   getKeyLayout: async (kbinfo) => {

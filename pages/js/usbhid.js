@@ -107,6 +107,7 @@ const USB = {
   },
 
   formatResponse: (data, flags) => {
+    if (!flags) flags = {};
     let ret;
     let cls = Uint8Array;
     let bytes = 1;

@@ -28,6 +28,5 @@ async function doStuff() {
   removeElement(get('#launch'));
   await Vial.init();
 
-  GUI.board = setupBoard(Vial.kbinfo.keylayout);
-  GUI.board.drawLayer(Vial.kbinfo.keymap[0]);
+  GUI.board = setupBoard(Vial.kbinfo.keylayout, Vial.kbinfo.keymap);
 }
