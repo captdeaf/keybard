@@ -45,6 +45,7 @@ const GUI = {
 
 async function doStuff() {
   removeElement(get('#launch'));
+  get('#active').style['display'] = 'block';
   await Vial.init();
 
   GUI.board = setupBoard(Vial.kbinfo.keylayout, Vial.kbinfo.keymap);
