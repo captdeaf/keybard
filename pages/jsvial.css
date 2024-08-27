@@ -63,6 +63,24 @@
   cursor: pointer;
   text-align: center;
   line-height: normal;
+  white-space: pre;
+}
+
+.key-layer {
+  display: block;
+  position: absolute;
+  bottom: 3px;
+  left: 50%
+  margin-left: -50%;
+  background-color: yellow;
+  padding: 3px;
+  border: 1px solid black;
+}
+
+.key-layer-mo {
+  font-style: italic;
+  font-weight: bold;
+  color: green;
 }
 
 #key-selection {
