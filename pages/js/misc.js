@@ -17,7 +17,7 @@ const EDITABLE_NAMES = Object.assign({
   tapdance: {},
 }, getSaved('names', {}));
 
-// Create the double-clickable display for editing the name.
+// Create the r-clickable display for editing the name.
 function editableName(type, index) {
   let name = '' + index;
   if (EDITABLE_NAMES[type][index]) {
@@ -25,9 +25,10 @@ function editableName(type, index) {
   }
   const editable = EL('div', {
     class: 'editable',
-    title: type + ' ' + name + ' (double click to change)',
+    title: type + ' ' + name + ' (r-click to change name)',
   }, name);
-  editable.ondblclick = () => {
+  editable.oncontextmenu = (ev) => {
+    ev.preventDefault();
     const newname = prompt('New name for ' + type + ' ' + name);
     if (newname !== null) {
       EDITABLE_NAMES[type][index] = newname;
@@ -36,6 +37,7 @@ function editableName(type, index) {
       editable.innerText = name;
       GUI.board.refresh();
     }
+    return false;
   }
   return editable;
 }
