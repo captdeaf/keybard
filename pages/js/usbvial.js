@@ -77,10 +77,14 @@ const Vial = {
     
     // Load combos, macros, etc.
     await Vial.getFeatures(kbinfo);
-    await Vial.getMacros(kbinfo);
+    // Regenerate keycodes for macros and features.
+    await generateAllKeycodes(kbinfo);
 
     // Keymap: all layers + all keys.
     await Vial.getKeyMap(kbinfo);
+
+    // Get macro memory and define macros in kbinfo.
+    await Vial.getMacros(kbinfo);
 
     // Visual layout.
     await Vial.getKeyLayout(kbinfo);
@@ -115,7 +119,8 @@ const Vial = {
     kbinfo.keymap = [];
 
     // For svalboard, Each "row" is a different cluster. 10 rows = 10 clusters.
-    // 8 fingers, 2 thumbs.
+    // 8 fingers, 2 thumbs. But because thumb 'rows' have 6, finger 'rows' have 5,
+    // we'll have expected nulls.
     for (let l = 0; l < kbinfo.layers; l++) {
       const layer = [];
       for (let r = 0; r < kbinfo.rows; r++) {
