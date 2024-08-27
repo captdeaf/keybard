@@ -19,6 +19,7 @@ function renderKey(kmid, opts) {
 
   const keyimage = EL('div', {
     class: 'key',
+    id: kmid,
     style: {
       width: Math.floor(opts.w * 25) + 'px',
       height: Math.floor(opts.h * 25) + 'px',
@@ -62,7 +63,7 @@ function setupBoard(keylayout, layers) {
   const board = get('#mainboard');
 
   // Current settings.
-  let layer = 0;
+  let selectedLayer = 0;
   let selectedKey = null;
   let children = [];
 
@@ -76,7 +77,7 @@ function setupBoard(keylayout, layers) {
   appendChildren(board, ...children);
 
   function drawLayer(layerid) {
-    layer = layerid;
+    selectedLayer = layerid;
     const keymap = layers[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
       refreshKey(keys[kmid], keymap[kmid]);
