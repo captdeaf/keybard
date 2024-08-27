@@ -6,8 +6,9 @@
 //
 ///////////////////////////////////
 
-PLAYBACK = true;
-RECORDING = true;
+// TODO: Make these toggle-able in the config.
+PLAYBACK = false;
+RECORDING = false;
 
 function startJSVial() {
   if (PLAYBACK) {
