@@ -11,12 +11,12 @@
 
 function generateAllKeycodes(kbinfo) {
   function K(qmkid, str, opts) {
+    if (!opts) opts = {};
     if (str === '') str = qmkid;
-    return {
+    return Object.assign(opts, {
       qmkid: qmkid,
       str: str,
-      opts: opts,
-    };
+    });
   }
 
   KEYCODES_SPECIAL = [
@@ -1204,12 +1204,12 @@ function generateAllKeycodes(kbinfo) {
     KC_MAP['OSL(' + i + ')'] = KC_MAP['QK_ONE_SHOT_LAYER'] + i;
     KC_MAP['TO(' + i + ')'] = KC_MAP['QK_TO'] + i;
     KEYCODES_LAYERS.push(
-      K('MO(' + i + ')', '', {type: 'layer MO', index: i}),
-      K('DF(' + i + ')', '', {type: 'layer DF', index: i}),
-      K('TG(' + i + ')', '', {type: 'layer TG', index: i}),
-      K('TT(' + i + ')', '', {type: 'layer TT', index: i}),
-      K('OSL(' + i + ')', '', {type: 'layer OSL', index: i}),
-      K('TO(' + i + ')', '', {type: 'layer TO', index: i}),
+      K('MO(' + i + ')', '', {type: 'layer', stype: 'MO', index: i}),
+      K('DF(' + i + ')', '', {type: 'layer', stype: 'DF', index: i}),
+      K('TG(' + i + ')', '', {type: 'layer', stype: 'TG', index: i}),
+      K('TT(' + i + ')', '', {type: 'layer', stype: 'TT', index: i}),
+      K('OSL(' + i + ')', '', {type: 'layer', stype: 'OSL', index: i}),
+      K('TO(' + i + ')', '', {type: 'layer', stype: 'TO', index: i}),
     );
   }
 
