@@ -6,19 +6,69 @@
 //
 ///////////////////////////////////
 
-// All GUI functions relating just to the board.
-// Returns an object for GUI.board global
+////////////////////////////////////
+//
+//  Render a single key, including hover tips for macros, etc.
+//
+///////////////////////////////////
+function renderKey(kmid, opts) {
+  if (!opts) opts = {};
+  if (!opts.w) opts.w = {};
+  if (!opts.h) opts.h = {};
+  // When drawing keyboard, style the keys.
+
+  const keyimage = EL('div', {
+    class: 'key',
+    style: {
+      width: Math.floor(opts.w * 25) + 'px',
+      height: Math.floor(opts.h * 25) + 'px',
+      top: Math.floor((opts.y * 30)) + 'px',
+      left: Math.floor((opts.x * 30)) + 'px',
+      position: 'absolute',
+    },
+  }, ' ');
+
+  return {
+    id: kmid,
+    image: keyimage,
+  }
+}
+
+////////////////////////////////////
+//
+//  refreshKey: Update the contents of a key.
+//
+//  Normal: "a", "Caps\nLock", etc.
+//  Macro: "MACRO\n(text...)"
+//  Layer: "LAYER\n(name or num)"
+//
+////////////////////////////////////
+function refreshKey(keydef, key) {
+  if (key && key.str) {
+    keydef.image.innerText = key.str;
+  } else {
+    keydef.image.innerText = ' ';
+  }
+}
+
+////////////////////////////////////
+//
+//  Draw the whole board. This defines GUI.board.(funcs)
+//
+////////////////////////////////////
 function setupBoard(keylayout, layers) {
+  const layerNames = getSaved('layer-names', {});
+  const layerSelection = get('#layer-selection')
+  const board = get('#mainboard');
+
   // Current settings.
   let layer = 0;
   let selectedKey = null;
+  let children = [];
 
-  // Board image, just for updating, really.
-  const board = get('#mainboard');
   // keys[kmid] = {image: element, text: element};
   const keys = {};
 
-  const children = [];
   for (const [kmid, opts] of Object.entries(keylayout)) {
     keys[kmid] = renderKey(kmid, opts);
     children.push(keys[kmid].image);
@@ -26,15 +76,32 @@ function setupBoard(keylayout, layers) {
   appendChildren(board, ...children);
 
   function drawLayer(layerid) {
+    layer = layerid;
     const keymap = layers[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
       refreshKey(keys[kmid], keymap[kmid]);
     }
   }
 
+  children = [];
+  for (let i = 0; i < layers.length; i++) {
+    const layerid = i;
+    let layerName = '' + i;
+    if (layerNames[i]) {
+      layerName = '' + i + ': ' + layerNames[i];
+    }
+    const layerSel = EL('div', {
+      'class': 'layer',
+    }, '' + i);
+    layerSel.onclick = () => {
+      drawLayer(layerid);
+    }
+    children.push(layerSel);
+  }
+  appendChildren(layerSelection, ...children);
+
   drawLayer(0);
 
   return {
   };
 };
-
