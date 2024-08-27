@@ -97,7 +97,27 @@ function setupToggled() {
   }
 }
 
+function displayBoard(name) {
+  get('#board-' + name).style['display'] = 'block';
+}
+
+function setupBoards() {
+  const allboards = getAll('div.board-map');
+  for (const board of allboards) {
+    board.style['display'] = 'none';
+  }
+
+  const boardsels = getAll('div.board-sel');
+  for (const boardsel of boardsels) {
+    boardsel.onclick = () => {
+      displayBoard(boardsel.dataset.board);
+    }
+  }
+}
+
 function setupUI() {
   setupAbout();
   setupToggled();
+  setupBoards();
+  displayBoard('qwerty');
 }

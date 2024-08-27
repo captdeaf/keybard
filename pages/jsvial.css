@@ -17,7 +17,7 @@
   max-height: 40px;
   display: flex;
   flex-flow: row;
-  width: 100%;
+  width: 95%;
   overflow-x: auto;
 }
 
@@ -42,11 +42,12 @@
 }
 
 #mainboard {
+  display: block;
   position: relative;
   top: 15px;
   left: 20px;
   height: 40%;
-  width: 100%;
+  width: 95%;
 }
 
 .key {
@@ -94,6 +95,28 @@
 
 .board-map {
   position: relative;
+  padding: 4px;
+}
+
+#board-selection {
+  margin-left: 1em;
+  display: flex;
+  flex-flow: row;
+  padding: 4px;
+}
+
+.board-sel {
+  flex: 0 0 content;
+  padding: 0.2em;
+  border: 2px solid #bbb;
+  border-radius: 3px;
+  margin-left: 4px;
+  background-color: #777;
+  color: white;
+}
+
+.board-sel-end {
+  flex: 1 1 auto;
 }
 
 .kb-groupings {
@@ -144,6 +167,7 @@
 
 /* Basic UI elements */
 body {
+  cursor: pointer;
   font-size: 110%;
   margin: 0;
   width: 100vw;
@@ -154,6 +178,7 @@ body {
   padding: 1em 1em 0em 1em;
   flex: 0 0 content;
   border-bottom: 2px solid black;
+  width: 90%;
   display: flex;
   flex-flow: column;
 }

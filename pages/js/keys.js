@@ -21,7 +21,7 @@ function generateAllKeycodes(kbinfo) {
 
   KEYCODES_SPECIAL = [
       K('KC_NO', ' '),
-      K('KC_TRNS', '▽',  { alias: ['KC_TRANSPARENT']}),
+      K('KC_TRNS', '▽',  { alias: ['KC_TRANSPARENT'], title: "Transparent - uses default layer" }),
   ];
 
   KEYCODES_BASIC_NUMPAD = [
@@ -1261,6 +1261,11 @@ function generateAllKeycodes(kbinfo) {
   for (const k of KEYCODES) {
     KEYCODES_MAP[k.qmkid] = KC_MAP[k.qmkid];
     RAWCODES_MAP[KC_MAP[k.qmkid]] = k;
+    if (k.alias) {
+      for (const alias of k.alias) {
+        KEYCODES_MAP[alias] = KC_MAP[k.qmkid];
+      }
+    }
   }
 }
 
