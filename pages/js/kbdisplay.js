@@ -5,42 +5,18 @@
 //  Display the connected keyboard.
 //
 ///////////////////////////////////
-
-////////////////////////////////////
-//
-//  Render a single key, including hover tips for macros, etc.
-//
-///////////////////////////////////
 function setupBoard(keylayout, layers) {
-  // Names: for layers, macros, etc. Saved to local site memory.
-  const names = Object.assign({
-    layer: {
-      [0]: 'default',
-      [4]: 'NAS',
-    },
-    macro: {},
-    combo: {},
-    tapdance: {},
-  }, getSaved('names', {}));
-
-  function editableName(type, index) {
-    let name = '' + index;
-    if (names[type][index]) {
-      name = names[type][index];
-    }
-    const editable = EL('span', {
-      class: 'editable',
-    }, name);
-    return EL('span', {
-      class: 'type-name',
-    }, '' + index + ': ', editable);
-  }
 
   function strDefault(val, i) {
     if (val) return val;
     return '' + i;
   }
 
+  ////////////////////////////////////
+  //
+  //  Render a single key, including hover tips for macros, etc.
+  //
+  ///////////////////////////////////
   function renderKey(kmid, opts) {
     // When drawing keyboard, style the keys.
 
@@ -83,9 +59,10 @@ function setupBoard(keylayout, layers) {
   };
 
   function getKeyContents(key, names) {
-    let text = key.str;
+    let text = key.qmkid;
     let title = key.qmkid;
-    if (!text) text = key.qmkid;
+    if (key.str) text = key.str;
+    if (key.title) title = key.title;
     let descs;
     if (key.type in KEY_DESCS) {
       descs = KEY_DESCS[key.type];
@@ -111,11 +88,11 @@ function setupBoard(keylayout, layers) {
     keydef.image.setAttribute('title', strDefault(content.title, ''));
   }
 
-////////////////////////////////////
-//
-//  Draw the whole board. This defines GUI.board.(funcs)
-//
-////////////////////////////////////
+  ////////////////////////////////////
+  //
+  //  Draw the whole board.
+  //
+  ////////////////////////////////////
   const layerSelection = get('#layer-selection')
   const board = get('#mainboard');
 
@@ -137,14 +114,14 @@ function setupBoard(keylayout, layers) {
     selectedLayer = layerid;
     const keymap = layers[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
-      refreshKey(keys[kmid], keymap[kmid], names);
+      refreshKey(keys[kmid], keymap[kmid], EDITABLE_NAMES);
     }
   }
 
   children = [];
   for (let i = 0; i < layers.length; i++) {
     const layerid = i;
-    let layerName = strDefault(names.layer[i], i);
+    let layerName = strDefault(EDITABLE_NAMES.layer[i], i);
     const layerSel = EL('div', {
       'class': 'layer',
     }, editableName('layer', i));
@@ -157,6 +134,13 @@ function setupBoard(keylayout, layers) {
 
   drawLayer(0);
 
+  ////////////////////////////////////
+  //
+  //  How the rest of the JS updates our board.
+  //  This is GUI.board
+  //
+  ////////////////////////////////////
   return {
+    refresh: () => { drawLayer(selectedLayer); }
   };
 };
