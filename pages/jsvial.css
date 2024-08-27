@@ -12,21 +12,82 @@
   font-weight: bold;
 }
 
-.key {
-  background-color: #666;
-  border: 2px solid black;
-  border-radius: 0.5em;
-  color: white;
-  font-size: 10pt;
-  text-align: center;
+.mainboard {
+  position: relative;
+  top: 10%;
+  height: 40%;
+  width: 100%;
 }
 
-.key p {
-  display: block;
-  margin: 0;
-  padding: 0;
+.key {
+  background-color: #ddd;
+  border: 1px solid #999;
+  border-radius: 4px;
   width: 30px;
   height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  font-size: 60%;
+  cursor: pointer;
+  text-align: center;
+  line-height: normal;
+}
+
+#key-selection {
+  position: fixed;
+  top: 50%;
+  height: 50%;
+  width: 100%;
+}
+
+/* Keyboard display for keymap */
+
+.kb-groupings {
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+}
+
+.kb-group {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.kb-row {
+  height: 40px;
+  display: flex;
+  flex-flow: row;
+  flex: 1 1 auto;
+}
+
+.kb-blank {
+  flex: 1 1 auto;
+}
+
+.kb-key {
+  flex: 1 1 auto;
+}
+
+.extra-large {
+  flex: 3 3 auto;
+}
+
+.spacebar {
+  flex: 8 8 auto;
+}
+
+.large {
+  flex: 2 2 auto;
+}
+
+.medium {
+  flex: 1.5 1.5 auto;
+}
+
+.small {
+  flex: 0.75 0.75 auto;
 }
 
 /* Basic UI elements */

@@ -26,21 +26,19 @@ function renderKey(kmid, opts) {
     return style;
   }
 
-  const keytext = EL('p', {}, '?');
   const keyimage = EL('div', {
     class: 'key',
     style: getKeyStyle(opts),
-  }, keytext);
+  }, ' ');
 
   return {
     id: kmid,
-    text: keytext,
     image: keyimage,
   }
 }
 
 function refreshKey(keydef, key) {
   if (key && key.str) {
-    keydef.text.innerText = key.str;
+    keydef.image.innerText = key.str;
   }
 }

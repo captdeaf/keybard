@@ -57,5 +57,3 @@ if __name__ == "__main__":
                 if changed: break
         except KeyboardInterrupt:
             break
-        except:
-            continue
