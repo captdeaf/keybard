@@ -2,7 +2,7 @@
 //
 ////////////////////////////////////
 //
-//  Render a single key.
+//  Render a single key, including hover tips for macros, etc.
 //
 ///////////////////////////////////
 
@@ -18,9 +18,9 @@ function renderKey(kmid, opts) {
     };
     if (opts.y !== undefined && opts.x !== undefined) {
       return Object.assign(style, {
-        top: Math.floor((opts.y * 30) + 120) + 'px',
-        left: Math.floor((opts.x * 30) + 120) + 'px',
-        position: 'fixed',
+        top: Math.floor((opts.y * 30)) + 'px',
+        left: Math.floor((opts.x * 30)) + 'px',
+        position: 'absolute',
       });
     }
     return style;

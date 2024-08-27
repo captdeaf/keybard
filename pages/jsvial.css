@@ -12,9 +12,39 @@
   font-weight: bold;
 }
 
-.mainboard {
+#layer-selection {
+  min-height: 20px;
+  max-height: 40px;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  overflow-x: auto;
+}
+
+#layer-selection .layer {
+  white-space: nowrap;
+  padding: 2px;
+  padding-left: 4px;
+  flex: 1 1 content;
+  background-color: #999;
+  border: 1px solid black;
+  color: white;
+  border-radius: 4px;
+  min-width: 20px;
+  max-width: 80px;
+  overflow: hidden;
+  font-size: 12px;
+  align-items: center;
+}
+
+#layer-selection .fill {
+  flex: 1 1 auto;
+}
+
+#mainboard {
   position: relative;
-  top: 10%;
+  top: 15px;
+  left: 20px;
   height: 40%;
   width: 100%;
 }
@@ -36,13 +66,17 @@
 }
 
 #key-selection {
-  position: fixed;
+  position: absolute;
   top: 50%;
   height: 50%;
   width: 100%;
 }
 
-/* Keyboard display for keymap */
+/* Keyboard display for keymap selection. */
+
+.board-map {
+  position: relative;
+}
 
 .kb-groupings {
   height: 100%;
@@ -96,8 +130,6 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  flex-flow: column;
 }
 
 #head {
@@ -120,7 +152,7 @@ body {
   flex: 0 0 content;
   display: inline-block;
   margin-right: 1em;
-  font-size: 150%;
+  font-size: 100%;
   font-weight: bold;
   height: 100%;
   color: #ff8c00;
