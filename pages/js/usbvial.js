@@ -128,8 +128,7 @@ const Vial = {
       for (let r = 0; r < kbinfo.rows; r++) {
         for (let c = 0; c < kbinfo.cols; c++) {
           const offset = (l * kbinfo.rows * kbinfo.cols) + (r * kbinfo.cols) + c;
-          const raw = RAWCODES_MAP[alldata[offset]];
-          layer.push(raw);
+          layer.push(alldata[offset]);
         }
       }
       kbinfo.keymap[l] = layer;
@@ -197,13 +196,11 @@ const Vial = {
     let macros_size = await Vial.send(RAW.CMD_VIA_MACRO_GET_BUFFER_SIZE, [],
                                       {unpack: 'B>H', index: 1});
 
-    kbinfo.features = {
-      tap_dance_count: counts[0],
-      combo_count: counts[1],
-      key_override_count: counts[2],
-      macro_count: macro_count,
-      macros_size: macros_size,
-    };
+    kbinfo.tap_dance_count = counts[0];
+    kbinfo.combo_count = counts[1];
+    kbinfo.key_override_count = counts[2];
+    kbinfo.macro_count = macro_count;
+    kbinfo.macros_size = macros_size;
   },
 
   getViaBuffer: async (cmd, size, opts) => {
@@ -249,25 +246,29 @@ const Vial = {
     // null-separated. In svalboard, it's 795 bytes.
     kbinfo.macro_memory = await Vial.getViaBuffer(
         RAW.CMD_VIA_MACRO_GET_BUFFER,
-        kbinfo.features.macros_size,
+        kbinfo.macros_size,
         {slice: 4, uint8: true, bytes: 1}
     );
 
+    const raw_macros = MACROS.split(kbinfo, kbinfo.macro_memory);
+    kbinfo.macros = raw_macros.map((macro) => MACROS.parse(kbinfo, macro));
+    kbinfo.mdump = MACROS.dump(kbinfo, kbinfo.macros);
+
     kbinfo.tap_dance_entries = await Vial.getDynamicEntries(
             RAW.DYNAMIC_VIAL_TAP_DANCE_GET,
-            kbinfo.features.tap_dance_count,
+            kbinfo.tap_dance_count,
             { unpack: '<BHHHHH', slice: 1 },
         );
 
     kbinfo.combo_entries = await Vial.getDynamicEntries(
             RAW.DYNAMIC_VIAL_COMBO_GET,
-            kbinfo.features.combo_count,
+            kbinfo.combo_count,
             { unpack: '<BHHHHH', slice: 1 },
         );
 
     kbinfo.key_override_entries = await Vial.getDynamicEntries(
             RAW.DYNAMIC_VIAL_KEY_OVERRIDE_GET,
-            kbinfo.features.key_override_count,
+            kbinfo.key_override_count,
             { unpack: '<BHHHBBB', slice: 1 },
         );
   },
