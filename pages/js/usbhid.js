@@ -142,11 +142,11 @@ const USB = {
           offset++;
           break;
         case 'q':
-          val = dv.getInt64(offset);
+          val = dv.getBigInt64(offset);
           offset += 8;
           break;
         case 'Q':
-          val = dv.getUint64(offset);
+          val = dv.getBigUint64(offset);
           offset += 8;
           break;
         default:

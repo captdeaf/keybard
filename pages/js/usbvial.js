@@ -140,13 +140,12 @@ const Vial = {
     let ret;
 
     // VIA Protocol. It's a byte followed by a short... big-endian
-    const via_proto = await Vial.send(RAW.CMD_VIA_GET_PROTOCOL_VERSION, [], {uint8: true, slice: [1, 3]});
-    kbinfo.via_proto = (via_proto[0] << 8) + via_proto[1];
+    kbinfo.via_proto = await Vial.send(RAW.CMD_VIA_GET_PROTOCOL_VERSION, [], {unpack: 'B>H', index: 1});
 
     // Vial protocol (int) and Keyboard ID (long long), little endian.
-    const vial_proto = await Vial.sendVial(RAW.CMD_VIAL_GET_KEYBOARD_ID, [], {uint32: true, slice: [0, 3]});
-    kbinfo.vial_proto = vial_proto[0];
-    kbinfo.kbid = vial_proto[1] + (vial_proto[2] << 32);
+    const vial_kbid = await Vial.sendVial(RAW.CMD_VIAL_GET_KEYBOARD_ID, [], {unpack: 'IQ'});
+    kbinfo.vial_proto = vial_kbid[0];
+    kbinfo.kbid = vial_kbid[1]
 
     // Vial KB info is via an xz-compressed JSON blob. Fetched 32 bytes
     // at a time.
@@ -195,8 +194,8 @@ const Vial = {
 
     const macro_count = await Vial.send(RAW.CMD_VIA_MACRO_GET_COUNT, [], {index: 1});
     // size is a byte followed by a big-endian short, short is size.
-    let macros_size = await Vial.send(RAW.CMD_VIA_MACRO_GET_BUFFER_SIZE, []);
-    macros_size = (macros_size[1] << 8) + macros_size[2];
+    let macros_size = await Vial.send(RAW.CMD_VIA_MACRO_GET_BUFFER_SIZE, [],
+                                      {unpack: 'B>H', index: 1});
 
     kbinfo.features = {
       tap_dance_count: counts[0],
