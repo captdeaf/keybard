@@ -67,6 +67,19 @@
   white-space: pre;
 }
 
+.kb-mods {
+  min-width: 20em;
+  width: 40%;
+}
+
+.key-mod {
+  background-color: #dff;
+}
+
+.key-mod.selected {
+  background-color: tan;
+}
+
 .key-layer {
   display: block;
   position: absolute;

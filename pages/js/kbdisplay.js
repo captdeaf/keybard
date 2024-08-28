@@ -69,7 +69,7 @@ function setupBoard(keylayout, layers) {
       if (key.stype && key.stype in descs) {
         descs = KEY_DESCS[key.type][key.stype];
       }
-      text = descs[0];
+      // text = descs[0];
       title = title + ': ' + descs[1];
     }
     if (names[key.type] && names[key.type][key.index]) {
@@ -144,3 +144,105 @@ function setupBoard(keylayout, layers) {
     refresh: () => { drawLayer(selectedLayer); }
   };
 };
+
+////////////////////////////////////
+//
+//  setupSample Boards: Set up the input keyboards. QWERTY, etc.
+//
+//  - Add click events to display different sample boards.
+//  - Everything that has a data-shifted should copy its innerText to data-normal
+//  - When a shift is toggled on, switch the sample boards to shift mode.
+//  - Set the modifier keys to toggle.
+//  - When any key with data-key is clicked, report it to GUI.assignKey
+//
+////////////////////////////////////
+function setupSampleBoards() {
+  function displayBoard(name) {
+    get('#board-' + name).style['display'] = 'block';
+  }
+
+  // Board selection.
+  const allboards = getAll('div.board-map');
+  for (const board of allboards) {
+    board.style['display'] = 'none';
+  }
+
+  displayBoard('qwerty');
+
+  const boardsels = getAll('div.board-sel');
+  for (const boardsel of boardsels) {
+    boardsel.onclick = () => {
+      displayBoard(boardsel.dataset.board);
+    }
+  }
+
+  const allKeys = getAll('[data-key]')
+  const shiftableKeys = getAll('[data-shifted]')
+
+  // Copy orig innerHTMLs to data-normal
+  for (const key of shiftableKeys) {
+    key.dataset.normal = key.innerHTML;
+  }
+
+  const modsSelected = {
+    SHIFT: false,
+    CTRL: false,
+    GUI: false,
+    ALT: false,
+  };
+
+  const modMasks = {
+    SHIFT: 0x0100,
+    CTRL: 0x0200,
+    GUI: 0x0400,
+    ALT: 0x0800,
+    RHS: 0x1000,
+  }
+
+  let modmask = 0;
+
+  function updateModifiers() {
+    for (const keymod of getAll('[data-modifier]')) {
+      const mod = keymod.dataset.modifier;
+      modsSelected[mod] = !modsSelected[mod];
+
+      let newModMask = 0;
+      for (const [mod, enabled] of Object.entries(modsSelected)) {
+        if (enabled) {
+          newModMask = newModMask | modMasks[mod];
+        }
+      }
+
+      if ((newModMask & modMasks.SHIFT) != (modmask & modMasks.SHIFT)) {
+        if (newModMask & modMasks.SHIFT === modMasks.SHIFT) {
+          for (key of shiftableKeys) {
+            key.innerHTML = key.dataset.shifted;
+          }
+        } else {
+          for (key of shiftableKeys) {
+            key.innerHTML = key.dataset.normal;
+          }
+        }
+      }
+
+      modMask = newModMask;
+    }
+  }
+
+  const modifierKeys = getAll('.key-mod[data-modifier]');
+  for (const key of modifierKeys) {
+    const mod = key.dataset.modifier;
+    let val = modsSelected[mod];
+    key.onclick = () => {
+      console.log("click?");
+      val = !val;
+      if (val) {
+        key.classList.add('selected');
+      } else {
+        key.classList.remove('selected');
+      }
+      modsSelected[mod] = val;
+      updateModifiers();
+    };
+  }
+}
