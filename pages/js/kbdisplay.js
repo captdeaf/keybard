@@ -14,7 +14,7 @@ function setupBoard(keylayout, layers) {
 
   ////////////////////////////////////
   //
-  //  Render a single key, including hover tips for macros, etc.
+  //  Render a single keyreturning the .keyimage for updating.
   //
   ///////////////////////////////////
   function renderKey(kmid, opts) {
@@ -82,7 +82,23 @@ function setupBoard(keylayout, layers) {
     }
   }
 
-  function refreshKey(keydef, key, names) {
+  function refreshKey(keydef, keymask, names) {
+    // keydef: element identifier
+    // keymask: the key to show.
+    // names: layer/macro/etc names.
+    let key = RAWCODES_MAP[keymask];
+    if (!key) {
+      key = RAWCODES_MAP[keymask & 0xFF];
+      const content = getKeyContents(key, names);
+      const mkey = RAWCODES_MAP[keymask & 0xFF00];
+      if (mkey) {
+        const mcontent = getKeyContents(mkey, names);
+        keydef.image.innerHTML = mcontent.text + "<br>" + content.text;
+        keydef.image.setAttribute('title', strDefault(mcontent.title + content.title, ''));
+      }
+      keydef.image.innerHTML = '<span style="color: red;">' + keymask + '</span>';
+      keydef.image.setAttribute('title', "Unknown code: " + keymask);
+    }
     const content = getKeyContents(key, names);
     keydef.image.innerHTML = content.text;
     keydef.image.setAttribute('title', strDefault(content.title, ''));
@@ -189,6 +205,7 @@ function setupSampleBoards() {
     CTRL: false,
     GUI: false,
     ALT: false,
+    RHS: false,
   };
 
   const modMasks = {
@@ -201,31 +218,26 @@ function setupSampleBoards() {
 
   let modmask = 0;
 
-  function updateModifiers() {
+  function updateModifiers(which) {
+    modmask = 0;
     for (const keymod of getAll('[data-modifier]')) {
-      const mod = keymod.dataset.modifier;
-      modsSelected[mod] = !modsSelected[mod];
-
-      let newModMask = 0;
       for (const [mod, enabled] of Object.entries(modsSelected)) {
         if (enabled) {
-          newModMask = newModMask | modMasks[mod];
+          modmask = modmask | modMasks[mod];
         }
       }
+    }
 
-      if ((newModMask & modMasks.SHIFT) != (modmask & modMasks.SHIFT)) {
-        if (newModMask & modMasks.SHIFT === modMasks.SHIFT) {
-          for (key of shiftableKeys) {
-            key.innerHTML = key.dataset.shifted;
-          }
-        } else {
-          for (key of shiftableKeys) {
-            key.innerHTML = key.dataset.normal;
-          }
+    if (which === 'SHIFT') {
+      if ((modmask & modMasks.SHIFT) === modMasks.SHIFT) {
+        for (const key of shiftableKeys) {
+          key.innerHTML = key.dataset.shifted;
+        }
+      } else {
+        for (const key of shiftableKeys) {
+          key.innerHTML = key.dataset.normal;
         }
       }
-
-      modMask = newModMask;
     }
   }
 
@@ -234,7 +246,6 @@ function setupSampleBoards() {
     const mod = key.dataset.modifier;
     let val = modsSelected[mod];
     key.onclick = () => {
-      console.log("click?");
       val = !val;
       if (val) {
         key.classList.add('selected');
@@ -242,7 +253,7 @@ function setupSampleBoards() {
         key.classList.remove('selected');
       }
       modsSelected[mod] = val;
-      updateModifiers();
+      updateModifiers(mod);
     };
   }
 }
