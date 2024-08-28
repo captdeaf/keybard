@@ -83,8 +83,10 @@ const Vial = {
     // Keymap: all layers + all keys.
     await Vial.getKeyMap(kbinfo);
 
-    // Get macro memory and define macros in kbinfo.
-    await Vial.getMacros(kbinfo);
+    // Get various memory buffers:
+    // - Macros
+    // - Tap Dance entries
+    await Vial.getKeyBuffers(kbinfo);
 
     // Visual layout.
     await Vial.getKeyLayout(kbinfo);
@@ -178,6 +180,12 @@ const Vial = {
     kbinfo.rows = payload.matrix.rows;
     kbinfo.cols = payload.matrix.cols;
 
+    // Encoders (dials)
+    // TBD
+ 
+    // Layout Labels
+    // TBD
+
     return kbinfo
   },
 
@@ -225,7 +233,19 @@ const Vial = {
     return alldata;
   },
 
-  getMacros: async (kbinfo) => {
+  // getDynamicEntries is Vial-specific way to get multiple entries.
+  // Not a buffer, but call 1 = item 1, call 2 = item 2, etc.
+  getDynamicEntries: async (cmd, count, opts) => {
+    const alldata = [];
+    if (!opts) opts = {};
+    for (let i = 0; i < count; i++) {
+      const data = await Vial.sendVial(RAW.CMD_VIAL_DYNAMIC_ENTRY_OP, [cmd, i], opts);
+      alldata.push(data);
+    }
+    return alldata;
+  },
+
+  getKeyBuffers: async (kbinfo) => {
     // Macros are stored as one big chunk of memory, at 28 bytes per fetch.
     // null-separated. In svalboard, it's 795 bytes.
     kbinfo.macro_memory = await Vial.getViaBuffer(
@@ -233,6 +253,24 @@ const Vial = {
         kbinfo.features.macros_size,
         {slice: 4, uint8: true, bytes: 1}
     );
+
+    kbinfo.tap_dance_entries = await Vial.getDynamicEntries(
+            RAW.DYNAMIC_VIAL_TAP_DANCE_GET,
+            kbinfo.features.tap_dance_count,
+            { unpack: '<BHHHHH', slice: 1 },
+        );
+
+    kbinfo.combo_entries = await Vial.getDynamicEntries(
+            RAW.DYNAMIC_VIAL_COMBO_GET,
+            kbinfo.features.combo_count,
+            { unpack: '<BHHHHH', slice: 1 },
+        );
+
+    kbinfo.key_override_entries = await Vial.getDynamicEntries(
+            RAW.DYNAMIC_VIAL_KEY_OVERRIDE_GET,
+            kbinfo.features.key_override_count,
+            { unpack: '<BHHHBBB', slice: 1 },
+        );
   },
 
   getKeyLayout: async (kbinfo) => {

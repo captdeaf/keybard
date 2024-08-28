@@ -106,35 +106,91 @@ const USB = {
     });
   },
 
+  unpack: (buffer, str) => {
+    let offset = 0;
+    const dv = new DataView(buffer);
+    // endian-ness
+    let le = true;
+    const ret = [];
+    for (const chr of str.split('')) {
+      let val;
+      switch (chr) {
+        case '<': le = true; break;
+        case '>': le = false; break;
+        case 'H':
+          val = dv.getUint16(offset, le);
+          offset += 2;
+          break;
+        case 'h':
+          val = dv.getInt16(offset, le);
+          offset += 2;
+          break;
+        case 'I':
+          val = dv.getUint32(offset, le);
+          offset += 4;
+          break;
+        case 'i':
+          val = dv.getInt32(offset, le);
+          offset += 4;
+          break;
+        case 'B':
+          val = dv.getUint8(offset);
+          offset++;
+          break;
+        case 'b':
+          val = dv.getInt8(offset);
+          offset++;
+          break;
+        case 'q':
+          val = dv.getInt64(offset);
+          offset += 8;
+          break;
+        case 'Q':
+          val = dv.getUint64(offset);
+          offset += 8;
+          break;
+        default:
+          alertUser("Invalid char in unpack: " + chr);
+      }
+      if (val !== undefined) {
+        ret.push(val);
+      }
+    }
+    return ret;
+  },
+
   formatResponse: (data, flags) => {
     if (!flags) flags = {};
-    let ret;
-    let cls = Uint8Array;
-    let bytes = 1;
-    // Which bytes?
-    if (flags.int8) { cls = Int8Array; }
-    if (flags.int16) { cls = Int16Array; bytes = 2; }
-    if (flags.uint16) { cls = Uint16Array; bytes = 2; }
-    if (flags.int32) { cls = Int32Array; bytes = 4; }
-    if (flags.uint32) { cls = Uint32Array; bytes = 4; }
-    ret = new cls(data);
-    if (flags.bigendian) {
-      ret = convArrayEndian(ret, bytes);
+    if (flags.unpack) {
+      data = USB.unpack(data, flags.unpack);
+    } else {
+      let cls = Uint8Array;
+      let bytes = 1;
+      // Which bytes?
+      if (flags.int8) { cls = Int8Array; }
+      if (flags.int16) { cls = Int16Array; bytes = 2; }
+      if (flags.uint16) { cls = Uint16Array; bytes = 2; }
+      if (flags.int32) { cls = Int32Array; bytes = 4; }
+      if (flags.uint32) { cls = Uint32Array; bytes = 4; }
+      data = new cls(data);
+      if (flags.bigendian) {
+        data = convArrayEndian(data, bytes);
+      }
     }
 
     if (flags.index !== undefined) {
-      ret = ret[flags.index];
+      data = data[flags.index];
     } else if (flags.slice) {
       if (flags.slice.length) {
-        ret = ret.slice(...flags.slice);
+        data = data.slice(...flags.slice);
       } else {
-        ret = ret.slice(flags.slice);
+        data = data.slice(flags.slice);
       }
     }
     if (flags.string) {
-      ret = new TextDecoder().decode(ret);
+      data = new TextDecoder().decode(data);
     }
-    return ret;
+    return data;
   },
 
   send: (cmd, args, flags) => {
