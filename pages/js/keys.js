@@ -1260,6 +1260,7 @@ function generateAllKeycodes(kbinfo) {
 
   for (const k of KEYCODES) {
     KEYCODES_MAP[k.qmkid] = KC_MAP[k.qmkid];
+    k.raw = KC_MAP[k.qmkid];
     RAWCODES_MAP[KC_MAP[k.qmkid]] = k;
     if (k.alias) {
       for (const alias of k.alias) {

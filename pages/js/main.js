@@ -46,7 +46,13 @@ const GUI = {
 async function doStuff() {
   removeElement(get('#launch'));
   get('#active').style['display'] = 'block';
+
+  // Set up vial, getting everything from the keyboard.
+  // This might eventually also support, e.g: .vil file loads instead.
   await Vial.init();
 
+  setupSampleBoards();
+
+  // Render board.
   GUI.board = setupBoard(Vial.kbinfo.keylayout, Vial.kbinfo.keymap);
 }

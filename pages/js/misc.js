@@ -31,10 +31,16 @@ function editableName(type, index) {
     ev.preventDefault();
     const newname = prompt('New name for ' + type + ' ' + name);
     if (newname !== null) {
-      EDITABLE_NAMES[type][index] = newname;
+      if (newname !== '') {
+        EDITABLE_NAMES[type][index] = newname;
+        name = '' + index + ': ' + EDITABLE_NAMES[type][index];
+      } else {
+        delete EDITABLE_NAMES[type][index];
+        name = '' + index;
+      }
       setSaved('names', EDITABLE_NAMES);
-      name = '' + index + ': ' + EDITABLE_NAMES[type][index];
       editable.innerText = name;
+      editable.setAttribute('title', type + ' ' + name + ' (r-click to change name)');
       GUI.board.refresh();
     }
     return false;

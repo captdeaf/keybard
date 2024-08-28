@@ -5,7 +5,7 @@ from glob import glob
 
 import inotify.adapters
 
-TEMPLATE_RE = re.compile(r'\{\{(\w+)\}\}')
+TEMPLATE_RE = re.compile(r'\{\{([\w\.]+)\}\}')
 
 def optimize(content):
     # 'content' is html code that has lots of whitespace.
