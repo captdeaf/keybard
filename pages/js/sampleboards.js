@@ -47,10 +47,10 @@ function setupSampleBoards(kbinfo) {
   };
 
   const modMasks = {
-    SHIFT: 0x0100,
-    CTRL: 0x0200,
-    GUI: 0x0400,
-    ALT: 0x0800,
+    CTRL: 0x0100,
+    SHIFT: 0x0200,
+    ALT: 0x0400,
+    GUI: 0x0800,
     RHS: 0x1000,
   }
 
@@ -105,11 +105,13 @@ function setupSampleBoards(kbinfo) {
     if (keyimage.dataset.bind === 'macro') {
     } else if (keyimage.dataset.bind === 'kbkey') {
       keyimage.onclick = (ev) => {
+        const keyid = KEY.parse(keyimage.dataset.key);
         if (modmask) {
-          const keyid = KEY.parse(keyimage.dataset.key);
-          const keystr = KEY.stringify(keyid | modmask);
+          console.log("Got keypress modded", keyid, modmask);
+          const keystr = KEY.stringify(keyid + modmask);
           ACTION.trigger('keySelect', keystr);
         } else {
+          console.log("Got keypress unmodded", keyid);
           ACTION.trigger('keySelect', keyimage.dataset.key);
         }
       }
