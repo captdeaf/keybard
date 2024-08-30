@@ -137,6 +137,9 @@ const USB = {
     if (flags.string) {
       data = new TextDecoder().decode(data);
     }
+    if (flags.map) {
+      data = data.map((d) => flags.map(d));
+    }
     return data;
   },
 

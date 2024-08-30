@@ -50,6 +50,24 @@
   width: 95%;
 }
 
+.kbdesc {
+  background-color: white;
+  border: 1px solid #999;
+  border-radius: 4px;
+  min-width: 30p
+  max-width: 120px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  font-size: 60%;
+  cursor: pointer;
+  text-align: center;
+  line-height: normal;
+  white-space: pre;
+}
+
 .key {
   background-color: #ddd;
   border: 1px solid #999;
@@ -98,6 +116,7 @@
 }
 
 #key-selection {
+  background-color: #ccc;
   position: absolute;
   top: 50%;
   height: 50%;
@@ -124,8 +143,9 @@
   border: 2px solid #bbb;
   border-radius: 3px;
   margin-left: 4px;
-  background-color: #777;
-  color: white;
+  background-color: #ddd;
+  color: black;
+  font-size: 8pt;
 }
 
 .board-sel-end {
@@ -136,11 +156,16 @@
   height: 100%;
   display: flex;
   flex-flow: row;
+  width: 100%;
 }
 
 .kb-group {
   margin-left: 1em;
   margin-right: 1em;
+}
+
+#macro-board {
+  width: 100%;
 }
 
 .kb-row {
@@ -178,6 +203,15 @@
   flex: 0.75 0.75 auto;
 }
 
+.floater {
+  position: fixed;
+  top: 2vh;
+  left: 2vw;
+  max-width: 80vw;
+  max-height: 80vh;
+  z-index: 1000;
+}
+
 /* Basic UI elements */
 body {
   cursor: pointer;
@@ -188,7 +222,6 @@ body {
 }
 
 #head {
-  padding: 1em 1em 0em 1em;
   flex: 0 0 content;
   border-bottom: 2px solid black;
   width: 90%;

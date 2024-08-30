@@ -1,0 +1,168 @@
+/* keys.css, styles for boards and keys. */
+
+.kbdesc {
+  min-width: 30px;
+  max-width: 120px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: center;
+  line-height: normal;
+  white-space: pre;
+}
+
+.key {
+  background-color: #ddd;
+  border: 1px solid #999;
+  border-radius: 4px;
+  height: 30px;
+  min-width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2px;
+  font-size: 60%;
+  cursor: pointer;
+  text-align: center;
+  line-height: normal;
+  white-space: pre;
+}
+
+/* kb-mods: the modifier keys. Instead of clicking ctrl in the keyboard to have
+ * ctrl+tab be a key, then enable Ctrl modifier and click tab, to get LCTR(KC_TAB)
+ */
+.kb-mods {
+  border: 2px solid black;
+  border-radius: 4px;
+  background-color: white;
+  min-width: 20em;
+  width: 40%;
+}
+
+.key-mod {
+  background-color: #dff;
+}
+
+.key-mod.selected {
+  background-color: tan;
+}
+
+/* Styles for individual types of keys, for better visual separation.
+ * e.g: a key that triggers a layer has a span.key-layer.
+ */
+
+.key-layer {
+  display: block;
+  position: absolute;
+  bottom: 3px;
+  left: 50%
+  margin-left: -50%;
+  background-color: yellow;
+  padding: 3px;
+  border: 1px solid black;
+}
+
+.key-layer-mo {
+  font-style: italic;
+  font-weight: bold;
+  color: green;
+}
+
+/* Keyboard display for keymap bindings. */
+#key-selection {
+  background-color: #ccc;
+  position: absolute;
+  top: 50%;
+  height: 50%;
+  width: 100%;
+}
+
+.board-map {
+  position: relative;
+  padding: 4px;
+}
+
+#board-selection {
+  margin-left: 1em;
+  display: flex;
+  flex-flow: row;
+  padding: 4px;
+}
+
+.board-sel {
+  flex: 0 0 content;
+  padding: 0.2em;
+  border: 2px solid #bbb;
+  border-radius: 3px;
+  margin-left: 4px;
+  background-color: #ddd;
+  color: black;
+  font-size: 8pt;
+}
+
+.board-sel-end {
+  flex: 1 1 auto;
+}
+
+/* A 'keyboard' rendering consists of:
+ *
+ * A kb-board: a row of kb-groups.
+ * Each group is a different section.
+ * Each group has many kb-rows
+ * Each kb-row has many kb-keys.
+ *
+ * e.g: qwerty has three .kb-group:
+ *
+ * 1) Keyboard with the letter keys.
+ * 2) Special keys: arrow keys, printscreen, ins/home/etc
+ * 3) Numpad keys.
+ */
+.kb-board {
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+}
+
+.kb-group {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.kb-row {
+  height: 40px;
+  display: flex;
+  flex-flow: row;
+  flex: 1 1 auto;
+}
+
+.kb-key { flex: 1 1 auto; }
+.kb-blank { flex: 1 1 auto; }
+
+.extra-large {
+  flex: 3 3 auto;
+}
+
+.spacebar {
+  flex: 8 8 auto;
+}
+
+.large {
+  flex: 2 2 auto;
+}
+
+.medium {
+  flex: 1.5 1.5 auto;
+}
+
+.small {
+  flex: 0.75 0.75 auto;
+}
+
+#macro-board {
+  width: 100%;
+}

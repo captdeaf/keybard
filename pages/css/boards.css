@@ -1,0 +1,39 @@
+/* boards.css, for rendering the different boards. */
+
+#layer-selection {
+  min-height: 20px;
+  max-height: 40px;
+  display: flex;
+  flex-flow: row;
+  width: 95%;
+  overflow-x: auto;
+}
+
+#layer-selection .layer {
+  white-space: nowrap;
+  padding: 2px;
+  padding-left: 4px;
+  flex: 1 1 content;
+  background-color: #999;
+  border: 1px solid black;
+  color: white;
+  border-radius: 4px;
+  min-width: 20px;
+  max-width: 80px;
+  overflow: hidden;
+  font-size: 12px;
+  align-items: center;
+}
+
+#layer-selection .fill {
+  flex: 1 1 auto;
+}
+
+#mainboard {
+  display: block;
+  position: relative;
+  top: 15px;
+  left: 20px;
+  height: 40%;
+  width: 95%;
+}
