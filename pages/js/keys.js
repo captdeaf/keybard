@@ -1356,18 +1356,21 @@ const KEY = {
     }
   },
 
-  stringify(keyid) {
-    if (keyid in KEY.RAWCODES_MAP) {
-      return KEY.RAWCODES_MAP[keyid].qmkid;
-    } else if (keyid & 0xFF00 > 0) {
-      const mask = keyid & 0xFF00;
-      const kcstr = KEY.RAWCODES_MAP[keyid & 0xFF].qmkid;
-      const maskstr = KEY.RAWCODES_MAP[keyid & 0xFF00].qmkid;
+  stringify(keynum) {
+    const modmask = keynum & 0xFF00;
+    const keyid = keynum & 0x00FF;
+    if (keynum in KEY.RAWCODES_MAP) {
+      return KEY.RAWCODES_MAP[keynum].qmkid;
+    } else if (modmask !== 0) {
+      const kcstr = KEY.RAWCODES_MAP[keyid].qmkid;
+      const maskstr = KEY.RAWCODES_MAP[modmask].qmkid;
       if (maskstr.match(/^(\w+)\(kc\)/)) {
         return maskstr.replace(/\(kc\)/, '(' + kcstr + ')');
       } else {
         return maskstr + '(' + kcstr + ')';
       }
+    } else {
+      console.log("err wtf?", keynum, keyid, modmask);
     }
   },
 

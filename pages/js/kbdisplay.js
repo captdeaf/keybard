@@ -30,6 +30,7 @@ function setupBoard(kbinfo) {
 
     ACTION.start({
       keySelect(keystr) {
+        console.log("Got a keystr", keystr);
         newkeymap[selectedLayer][keydata.id] = KEY.parse(keystr);
         refreshKey(keys[keydata.id], newkeymap[selectedLayer][keydata.id], EDITABLE_NAMES);
       },
@@ -171,7 +172,7 @@ function setupBoard(kbinfo) {
   }
 
   children = [];
-  for (let i = 0; i < newkeymap.length; i++) {
+  for (let i = 0; i < kbinfo.layers; i++) {
     const layerid = i;
     let layerName = strDefault(EDITABLE_NAMES.layer[i], i);
     const layerSel = EL('div', {
