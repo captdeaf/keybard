@@ -10,7 +10,7 @@
   margin: 2px;
   cursor: pointer;
   font-weight: bold;
-  text-align: center;
+  text-align: left;
   line-height: normal;
   white-space: pre;
 }
@@ -21,6 +21,7 @@
   border-radius: 4px;
   height: 30px;
   min-width: 30px;
+  max-width: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,11 +46,22 @@
 
 .key-mod {
   background-color: #dff;
+  white-space: normal;
 }
 
 .key-mod.selected {
   background-color: tan;
 }
+
+.key-macro {
+  width: 60px;
+  overflow-x: hidden;
+  text-justify: left;
+}
+
+.key-down { background-color: #fdd; }
+.key-tap { background-color: #ddf; }
+.key-up { background-color: #dfd; }
 
 /* Styles for individual types of keys, for better visual separation.
  * e.g: a key that triggers a layer has a span.key-layer.
@@ -84,6 +96,7 @@
 .board-map {
   position: relative;
   padding: 4px;
+  width: 100%;
 }
 
 #board-selection {
@@ -143,6 +156,8 @@
 .kb-key { flex: 1 1 auto; }
 .kb-blank { flex: 1 1 auto; }
 
+/* These are for relative key sizes. e.g: spacebar is the width of 8 normal
+ * keys. */
 .extra-large {
   flex: 3 3 auto;
 }

@@ -22,43 +22,55 @@ function setupMacros() {
   const QMK_EXT_ID = 1;
 
   function describeMacro(id, actions) {
+    const texts = [];
+    const otherwise = [];
     for (const act of actions) {
       if (act[0] === 'text') {
-        return "M" + id + ": " + act[1];
+        texts.push(act[1]);
+      } else {
+        otherwise.push(act[0] + ' ' + act[1]);
       }
     }
-    return "M" + id;
+    if (texts.length > 0) {
+      return "M" + id + ': ' + texts.join(' ');
+    } else if (otherwise.length > 0) {
+      return "M" + id + ': ' + otherwise.join(' ');
+    } else {
+      return "M" + id;
+    }
   }
 
-  function renderMacroFloat(macro) {
-    console.log("rendering", macro);
+  function renderMacroFloat(mid, macro) {
     const rowkeys = [];
+    rowkeys.push(EL('div', {class: 'kbdesc'}, '<span style="color: blue">Macro M' + mid + ':</span>'));
     for (const action of macro) {
       if (action[0] === 'text') {
-        rowkeys.push(EL('div', {class: "key-text key"}, action[1]));
+        rowkeys.push(EL('div', {class: "kbdesc"}, action[1]));
       } else if (action[0] === 'tap') {
-        rowkeys.push(EL('div', {class: 'key kb-key large key-tap'},
+        rowkeys.push(EL('div', {class: 'key kb-key key-tap key-macro'},
                         action[1]));
       } else if (action[0] === 'down') {
-        rowkeys.push(EL('div', {class: 'key kb-key large key-down'},
-                        action[1]));
+        rowkeys.push(EL('div', {class: 'key kb-key key-down key-macro'},
+                        'down\n' + action[1]));
       } else if (action[0] === 'up') {
-        rowkeys.push(EL('div', {class: 'key kb-key large key-up'},
-                        action[1]));
+        rowkeys.push(EL('div', {class: 'key kb-key key-up key-macro'},
+                       action[1] + '\nup'));
       } else if (action[0] === 'delay') {
-        rowkeys.push(EL('div', {class: 'key-sleep key'},
-                        '' + action[1] + 'ms'));
+        rowkeys.push(EL('div', {class: 'key key-sleep key-macro'},
+                        'sleep\n' + action[1] + 'ms'));
       } else {
         console.log('wtf', action);
       }
     }
     const floater = get('#float-macro');
-    floater.innerHTML = '';
-    appendChildren(floater, EL('div', {class: 'kb-row'}, ...rowkeys));
+    const floatbody = get('#float-macro-render');
+    floatbody.innerHTML = '';
+    appendChildren(floatbody, ...rowkeys);
     floater.style['display'] = 'block';
   }
 
   return {
+    renderMacroFloat: renderMacroFloat,
     split(kbinfo, rawbuffer) {
       let offset = 0;
       let macros = [];
@@ -124,10 +136,11 @@ function setupMacros() {
         const rowid = Math.floor(mid/10);
         const keytpl = EL('div', {
           id: "macro-" + mid,
-          class: "key kb-key large",
+          class: "key kb-key key-macro",
+          title: 'M' + mid,
         }, '');
         keytpl.oncontextmenu = (ev) => {
-          renderMacroFloat(kbinfo.macros[mid]);
+          renderMacroFloat(mid, kbinfo.macros[mid]);
           ev.preventDefault();
           return false;
         }
@@ -140,7 +153,9 @@ function setupMacros() {
         appendChildren(rowEl, ...row);
         rowEls.push(rowEl);
       }
-      appendChildren(macroBoard, EL('div', {class: 'kb-group'}, ...rowEls));
+      const header = EL('div', {class: 'macro-help'},
+                        "To edit macros, R-click one.");
+      appendChildren(macroBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
     },
     refreshBoard(kbinfo) {
       const macros = kbinfo.macros;
@@ -148,7 +163,8 @@ function setupMacros() {
         const macro = macros[mid];
         const el = get('#macro-' + mid);
         const desc = describeMacro(mid, macro);
-        el.innerHTML = desc;
+        el.innerHTML = desc.slice(0, 10);
+        el.setAttribute('title', desc);
       }
     },
     dump(kbinfo, macros) {

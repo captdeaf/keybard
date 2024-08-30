@@ -24,8 +24,10 @@ def build_template(dirname, filename):
     return optimize(parse_template(dirname, filename))
 
 def rebuild():
+    body = build_template('html', 'index')
     with open('pages/index.html', 'w') as fout:
-        fout.write(build_template('html', 'index'))
+        fout.write(body)
+    return body
 
 if __name__ == "__main__":
     rebuild()

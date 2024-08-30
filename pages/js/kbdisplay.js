@@ -159,7 +159,8 @@ function setupBoard(keylayout, layers) {
   //
   ////////////////////////////////////
   return {
-    refresh: () => { drawLayer(selectedLayer); }
+    refresh: () => { drawLayer(selectedLayer); },
+    getKeyContents: getKeyContents,
   };
 };
 
