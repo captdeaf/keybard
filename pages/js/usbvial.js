@@ -148,7 +148,7 @@ const Vial = {
     const chunksize = 28;
     const alldata = await Vial.getViaBuffer(
         RAW.CMD_VIA_KEYMAP_GET_BUFFER,
-        size,
+        size*2,
         {uint16: true, slice: 2, bigendian: true, bytes: 2}
     );
     kbinfo.keymap = [];
@@ -207,9 +207,9 @@ const Vial = {
     payload = JSON.parse(await decompress(new Uint8Array(up).buffer));
     kbinfo.payload = payload;
 
-    kbinfo.layout_labels = payload.layouts.labels;
     kbinfo.rows = payload.matrix.rows;
     kbinfo.cols = payload.matrix.cols;
+    kbinfo.customKeycodes = payload.customKeycodes;
 
     // Encoders (dials)
     // TBD
@@ -380,5 +380,28 @@ const Vial = {
     kbinfo.keylayout = keylayout;
 
     return kbinfo.keylayout;
+  },
+
+  async commitChanges() {
+    // Any keymap changes?
+    const oldkm = Vial.kbinfo.keymap;
+    const newkm = Vial.kbinfo.newkeymap;
+    console.log("commitChanges", oldkm, newkm);
+
+    for (let layer = 0; layer < Vial.kbinfo.layers; layer++) {
+      for (let row = 0; row < Vial.kbinfo.rows; row++) {
+        for (let col = 0; col < Vial.kbinfo.cols; col++) {
+          const idx = Vial.kbinfo.cols * row + col;
+          if (newkm[layer][idx] !== oldkm[layer][idx]) {
+            console.log('updating ', [layer, row, col], KEY.stringify(newkm[layer][idx]));
+            await Vial.send(RAW.CMD_VIA_SET_KEYCODE,
+                            [layer, row, col,
+                            ...BE16(newkm[layer][idx])]);
+          }
+        }
+      }
+    }
+    // Refresh current keymap.
+    Vial.kbinfo.keymap = deepCopy(Vial.kbinfo.newkeymap);
   },
 }

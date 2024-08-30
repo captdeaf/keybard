@@ -3,6 +3,11 @@
 /* Basic UI elements */
 body {
   cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  -ms-touch-callout: none;
   font-size: 110%;
   margin: 0;
   width: 100vw;
