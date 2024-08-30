@@ -35,69 +35,76 @@ function addToggle(attr, stateKey, defaultState, callback) {
   }
 }
 
-function setupAbout() {
-  const desc = get('#about');
-  const toggles = getAll('.toggle-about');
+function setupUI() {
+  function setupAbout() {
+    const desc = get('#about');
+    const toggles = getAll('.toggle-about');
 
-  const descdisplay = desc.style.display;
+    const descdisplay = desc.style.display;
 
-  const toggleAbout = addToggle(undefined, 'about-shown', false, function(enabled) {
-    if (enabled) {
-      desc.style.display = 'none';
-    } else {
-      desc.style.display = descdisplay;
-    }
-  });
-
-  for (const toggle of toggles) {
-    toggle.onclick = toggleAbout;
-  }
-}
-
-function buildSelect(element, options) {
-  element.innerHTML = '';
-  let names = [];
-  const map = {};
-  for (const [shortname, dispname] of Object.entries(options)) {
-    names.push(dispname)
-    map[dispname] = shortname;
-  }
-
-  names = names.sort();
-  for (const dispname of names) {
-    let opt = document.createElement('option');
-    opt.setAttribute('value', map[dispname]);
-    opt.innerText = dispname;
-    element.appendChild(opt);
-  }
-}
-
-function setupToggled() {
-  function createToggle(section) {
-    // We should receive a section.
-    let toggler = section.querySelector(".toggler");
-    let paras = section.querySelectorAll("p");
-
-    let showSection = false;
-    if (section.dataset['show'] === 'true') {
-      showSection = true;
-    }
-
-    toggler.onclick = addToggle(undefined, section.id, showSection, function(enabled) {
+    const toggleAbout = addToggle(undefined, 'about-shown', false, function(enabled) {
       if (enabled) {
-        for (const p of paras) {
-          p.style.display = 'block';
-        }
+        desc.style.display = 'none';
       } else {
-        for (const p of paras) {
-          p.style.display = 'none';
-        }
+        desc.style.display = descdisplay;
       }
     });
-  }
-}
 
-function setupUI() {
+    for (const toggle of toggles) {
+      toggle.onclick = toggleAbout;
+    }
+  }
+
+  function buildSelect(element, options) {
+    element.innerHTML = '';
+    let names = [];
+    const map = {};
+    for (const [shortname, dispname] of Object.entries(options)) {
+      names.push(dispname)
+      map[dispname] = shortname;
+    }
+
+    names = names.sort();
+    for (const dispname of names) {
+      let opt = document.createElement('option');
+      opt.setAttribute('value', map[dispname]);
+      opt.innerText = dispname;
+      element.appendChild(opt);
+    }
+  }
+
+  function setupToggled() {
+    function createToggle(section) {
+      // We should receive a section.
+      let toggler = section.querySelector(".toggler");
+      let paras = section.querySelectorAll("p");
+
+      let showSection = false;
+      if (section.dataset['show'] === 'true') {
+        showSection = true;
+      }
+
+      toggler.onclick = addToggle(undefined, section.id, showSection, function(enabled) {
+        if (enabled) {
+          for (const p of paras) {
+            p.style.display = 'block';
+          }
+        } else {
+          for (const p of paras) {
+            p.style.display = 'none';
+          }
+        }
+      });
+    }
+  }
+
+  function setupButtons() {
+    get('#commit').onclick = () => {
+      Vial.commitChanges();
+    };
+  }
+
   setupAbout();
   setupToggled();
+  setupButtons();
 }

@@ -5,11 +5,42 @@
 //  Display the connected keyboard.
 //
 ///////////////////////////////////
-function setupBoard(keylayout, layers) {
+function setupBoard(kbinfo) {
+  const keylayout = kbinfo.keylayout;
+  const newkeymap = deepCopy(kbinfo.keymap);
+  kbinfo.newkeymap = newkeymap;
+  let selectedLayer = 0;
+  let selectedKey = null;
 
   function strDefault(val, i) {
     if (val) return val;
     return '' + i;
+  }
+
+  // Add an action when a key is selected. Whenever a key is clicked
+  // in the mainboard display, we expect a selected key to be chosen.
+  function selectKey(keydata) {
+    if (selectedKey !== null) {
+      selectedKey.image.classList.remove('active');
+      selectedKey = null;
+    }
+
+    selectedKey = keydata;
+    keydata.image.classList.add('active');
+
+    ACTION.start({
+      keySelect(keystr) {
+        newkeymap[selectedLayer][keydata.id] = KEY.parse(keystr);
+        refreshKey(keys[keydata.id], newkeymap[selectedLayer][keydata.id], EDITABLE_NAMES);
+      },
+      cancel() {
+        selectedKey.image.classList.remove('active');
+        selectedKey = null;
+      },
+      clickNowhere() {
+        return false;
+      }
+    });
   }
 
   ////////////////////////////////////
@@ -18,8 +49,6 @@ function setupBoard(keylayout, layers) {
   //
   ///////////////////////////////////
   function renderKey(kmid, opts) {
-    // When drawing keyboard, style the keys.
-
     const keyimage = EL('div', {
       class: 'key',
       id: kmid,
@@ -32,10 +61,17 @@ function setupBoard(keylayout, layers) {
       },
     }, ' ');
 
-    return {
-      id: kmid,
+    const keydata = {
       image: keyimage,
+      id: kmid,
+      ...opts,
     }
+
+    keyimage.onclick = (ev) => {
+      selectKey(keydata);
+    }
+
+    return keydata;
   }
 
   ////////////////////////////////////
@@ -115,8 +151,6 @@ function setupBoard(keylayout, layers) {
   const board = get('#mainboard');
 
   // Current settings.
-  let selectedLayer = 0;
-  let selectedKey = null;
   let children = [];
 
   // keys[kmid] = {image: element, text: element};
@@ -130,14 +164,14 @@ function setupBoard(keylayout, layers) {
 
   function drawLayer(layerid) {
     selectedLayer = layerid;
-    const keymap = layers[layerid];
+    const layerkeymap = newkeymap[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
-      refreshKey(keys[kmid], keymap[kmid], EDITABLE_NAMES);
+      refreshKey(keys[kmid], layerkeymap[kmid], EDITABLE_NAMES);
     }
   }
 
   children = [];
-  for (let i = 0; i < layers.length; i++) {
+  for (let i = 0; i < newkeymap.length; i++) {
     const layerid = i;
     let layerName = strDefault(EDITABLE_NAMES.layer[i], i);
     const layerSel = EL('div', {
@@ -163,105 +197,3 @@ function setupBoard(keylayout, layers) {
     getKeyContents: getKeyContents,
   };
 };
-
-////////////////////////////////////
-//
-//  setupSample Boards: Set up the input keyboards. QWERTY, etc.
-//
-//  - Add click events to display different sample boards.
-//  - Everything that has a data-shifted should copy its innerText to data-normal
-//  - When a shift is toggled on, switch the sample boards to shift mode.
-//  - Set the modifier keys to toggle.
-//  - When any key with data-key is clicked, report it to GUI.assignKey
-//
-////////////////////////////////////
-function setupSampleBoards() {
-  function displayBoard(name) {
-    // Board selection.
-    const allboards = getAll('div.board-map');
-    for (const board of allboards) {
-      board.style['display'] = 'none';
-    }
-    get('#board-' + name).style['display'] = 'block';
-  }
-
-  displayBoard('qwerty');
-
-  const boardsels = getAll('div.board-sel');
-  for (const boardsel of boardsels) {
-    boardsel.onclick = () => {
-      displayBoard(boardsel.dataset.board);
-    }
-  }
-
-  const allKeys = getAll('[data-key]')
-  const shiftableKeys = getAll('[data-shifted]')
-
-  // Copy orig innerHTMLs to data-normal
-  for (const key of shiftableKeys) {
-    key.dataset.normal = key.innerHTML;
-  }
-
-  const modsSelected = {
-    SHIFT: false,
-    CTRL: false,
-    GUI: false,
-    ALT: false,
-    RHS: false,
-  };
-
-  const modMasks = {
-    SHIFT: 0x0100,
-    CTRL: 0x0200,
-    GUI: 0x0400,
-    ALT: 0x0800,
-    RHS: 0x1000,
-  }
-
-  let modmask = 0;
-
-  // Most board keys have modifiers. macros, combos, etc don't.
-  function updateModifiers(which) {
-    modmask = 0;
-    for (const keymod of getAll('[data-modifier]')) {
-      for (const [mod, enabled] of Object.entries(modsSelected)) {
-        if (enabled) {
-          modmask = modmask | modMasks[mod];
-        }
-      }
-    }
-
-    if (which === 'SHIFT') {
-      if ((modmask & modMasks.SHIFT) === modMasks.SHIFT) {
-        for (const key of shiftableKeys) {
-          key.innerHTML = key.dataset.shifted;
-        }
-      } else {
-        for (const key of shiftableKeys) {
-          key.innerHTML = key.dataset.normal;
-        }
-      }
-    }
-  }
-
-  const modifierKeys = getAll('.key-mod[data-modifier]');
-
-  for (const key of modifierKeys) {
-    const mod = key.dataset.modifier;
-    let val = modsSelected[mod];
-    key.onclick = () => {
-      val = !val;
-      if (val) {
-        key.classList.add('selected');
-      } else {
-        key.classList.remove('selected');
-      }
-      modsSelected[mod] = val;
-      updateModifiers(mod);
-    };
-  }
-
-  return {
-    updateModifiers: updateModifiers,
-  };
-}

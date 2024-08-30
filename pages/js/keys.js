@@ -12,6 +12,7 @@
 const KEY = {
   KEYCODES_MAP: {},
   RAWCODES_MAP: {},
+  RECORDER_MAP: {},
 
   generateAllKeycodes(kbinfo) {
     function K(qmkid, str, opts) {
@@ -1228,10 +1229,20 @@ const KEY = {
 
     for (let i = 0; i < 64; i++) {
       const userkey = 'USER' + ('' + i).padStart(2, '0');
-      KC_MAP[userkey] = KC_MAP['QK_KB'] + i;
-      KEYCODES_MACRO.push(
-        K(userkey, '', {type: 'user', index: i}),
-      );
+      if (kbinfo.customKeycodes && kbinfo.customKeycodes[i]) {
+        const custom = kbinfo.customKeycodes[i];
+        KC_MAP[userkey] = KC_MAP['QK_KB'] + i;
+        KC_MAP[custom.name] = KC_MAP['QK_KB'] + i;
+        KC_MAP[custom.shortName] = KC_MAP['QK_KB'] + i;
+        KEYCODES_USER.push(
+          K(custom.name, custom.shortName, {title: custom.title, type: 'user', index: i}),
+        );
+      } else {
+        KC_MAP[userkey] = KC_MAP['QK_KB'] + i;
+        KEYCODES_USER.push(
+          K(userkey, '', {type: 'user', index: i}),
+        );
+      }
     }
 
     for (let i = 0; i < 256; i++) {
@@ -1265,6 +1276,64 @@ const KEY = {
     KEYCODES.push(...KEYCODES_HIDDEN);
     KEYCODES.push(...KEYCODES_MIDI);
 
+    const JS_CODES = {
+      "ControlLeft": "KC_LCTRL",
+      "ControlRight": "KC_RCTRL",
+      "ShiftLeft": "KC_LSHIFT",
+      "ShiftRight": "KC_RSHIFT",
+      "AltLeft": "KC_LALT",
+      "AltRight": "KC_RALT",
+      "MetaLeft": "KC_LGUI",
+      "MetaRight": "KC_RGUI",
+      "Enter": "KC_ENTER",
+      "Escape": "KC_ESC",
+      "Backspace": "KC_BSPC",
+      "Tab": "KC_TAB",
+      "Space": "KC_SPC",
+      "ArrowLeft": "KC_LEFT",
+      "ArrowUp": "KC_UP",
+      "ArrowRight": "KC_RGHT",
+      "ArrowDown": "KC_DOWN",
+      "Delete": "KC_DEL",
+      "Insert": "KC_INS",
+      "Home": "KC_HOME",
+      "End": "KC_END",
+      "PageUp": "KC_PGUP",
+      "PageDown": "KC_PGDN",
+      "F1": "KC_F1",
+      "F2": "KC_F2",
+      "F3": "KC_F3",
+      "F4": "KC_F4",
+      "F5": "KC_F5",
+      "F6": "KC_F6",
+      "F7": "KC_F7",
+      "F8": "KC_F8",
+      "F9": "KC_F9",
+      "F10": "KC_F10",
+      "F11": "KC_F11",
+      "F12": "KC_F12",
+      "Numpad0": "KC_P0",
+      "Numpad1": "KC_P1",
+      "Numpad2": "KC_P2",
+      "Numpad3": "KC_P3",
+      "Numpad4": "KC_P4",
+      "Numpad5": "KC_P5",
+      "Numpad6": "KC_P6",
+      "Numpad7": "KC_P7",
+      "Numpad8": "KC_P8",
+      "Numpad9": "KC_P9",
+      "NumpadAdd": "KC_PPLS",
+      "NumpadSubtract": "KC_PMNS",
+      "NumpadMultiply": "KC_PAST",
+      "NumpadDivide": "KC_PSLS",
+      "NumpadDecimal": "KC_PDOT",
+      "NumpadEnter": "KC_PENT",
+      "CapsLock": "KC_CAPS",
+      "ScrollLock": "KC_SLCK",
+      "Pause": "KC_PAUS",
+      "PrintScreen": "KC_PSCR"
+    };
+
     for (const k of KEYCODES) {
       KEY.KEYCODES_MAP[k.qmkid] = KC_MAP[k.qmkid];
       k.raw = KC_MAP[k.qmkid];
@@ -1274,6 +1343,16 @@ const KEY = {
           KEY.KEYCODES_MAP[alias] = KC_MAP[k.qmkid];
         }
       }
+      KEY.RECORDER_MAP[k.str] = k.qmkid;
+      if (k.recorder_alias) {
+        for (const alias of k.recorder_alias) {
+          KEY.RECORDER_MAP[alias] = k.qmkid;
+        }
+      }
+    }
+
+    for (const [k, v] of Object.entries(JS_CODES)) {
+      KEY.RECORDER_MAP[k] = v;
     }
   },
 

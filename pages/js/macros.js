@@ -21,7 +21,7 @@ function setupMacros() {
 
   const QMK_EXT_ID = 1;
 
-  function describeMacro(id, actions) {
+  function describeMacro(mid, actions) {
     const texts = [];
     const otherwise = [];
     for (const act of actions) {
@@ -32,11 +32,11 @@ function setupMacros() {
       }
     }
     if (texts.length > 0) {
-      return "M" + id + ': ' + texts.join(' ');
+      return "M" + mid + ': ' + texts.join(' ');
     } else if (otherwise.length > 0) {
-      return "M" + id + ': ' + otherwise.join(' ');
+      return "M" + mid + ': ' + otherwise.join(' ');
     } else {
-      return "M" + id;
+      return "M" + mid;
     }
   }
 
@@ -136,6 +136,8 @@ function setupMacros() {
         const rowid = Math.floor(mid/10);
         const keytpl = EL('div', {
           id: "macro-" + mid,
+          'data-bind': 'macro',
+          'data-macro': mid,
           class: "key kb-key key-macro",
           title: 'M' + mid,
         }, '');

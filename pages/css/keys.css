@@ -33,6 +33,14 @@
   white-space: pre;
 }
 
+.key:hover {
+  background-color: #ffd;
+}
+
+.key.active {
+  background-color: #fdd;
+}
+
 /* kb-mods: the modifier keys. Instead of clicking ctrl in the keyboard to have
  * ctrl+tab be a key, then enable Ctrl modifier and click tab, to get LCTR(KC_TAB)
  */
@@ -104,6 +112,8 @@
   display: flex;
   flex-flow: row;
   padding: 4px;
+  width: 100%;
+  overflow: auto;
 }
 
 .board-sel {
