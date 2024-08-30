@@ -8,6 +8,7 @@
 
 PLAYBACK = false;
 RECORDING = false;
+LOAD_JSON = false;
 
 function startJSVial() {
   const doPlayback = get('#do-playback');
@@ -47,12 +48,19 @@ async function doStuff() {
   removeElement(get('#launch'));
   get('#active').style['display'] = 'block';
 
+  GUI.samples = setupSampleBoards();
+
   // Set up vial, getting everything from the keyboard.
   // This might eventually also support, e.g: .vil file loads instead.
-  await Vial.init();
+  if (LOAD_JSON) {
+    await Vial.loadFromVilJSON(VIL);
+  } else {
+    await Vial.init();
+  }
 
-  setupSampleBoards();
+  MACROS.renderBoard(Vial.kbinfo);
+  MACROS.refreshBoard(Vial.kbinfo);
 
-  // Render board.
+  // Render main board.
   GUI.board = setupBoard(Vial.kbinfo.keylayout, Vial.kbinfo.keymap);
 }

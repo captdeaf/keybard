@@ -62,7 +62,39 @@ const RAW = lockValue({
   DYNAMIC_VIAL_KEY_OVERRIDE_SET: 0x06,
 });
 
+
 const Vial = {
+  svalboard_layout: [
+     [ { "x" : 3.5 }, "3,3", { "x" : 2.5 }, "2,3", { "x" : 9 }, "7,3", { "x" : 2.5 }, "8,3" ],
+     [ { "x" : 2.5 }, "3,4", "3,2", "3,1", { "x" : 0.5 }, "2,4", "2,2", "2,1", { "x" : 7 }, "7,4", "7,2", "7,1", { "x" : 0.5 }, "8,4", "8,2", "8,1" ],
+     [ { "x" : 1, "y" : -0.5 }, "4,3", { "x" : 7.5 }, "1,3", { "x" : 4 }, "6,3", { "x" : 7.5 }, "9,3" ],
+     [ { "x" : 3.5, "y" : -0.5 }, "3,0", { "x" : 2.5 }, "2,0", { "x" : 9 }, "7,0", { "x" : 2.5 }, "8,0" ],
+     [ { "y" : -0.5 }, "4,4", "4,2", "4,1", { "x" : 5.5 }, "1,4", "1,2", "1,1", { "x" : 2 }, "6,4", "6,2", "6,1", { "x" : 5.5 }, "9,4", "9,2", "9,1" ],
+     [ { "x" : 1 }, "4,0", { "x" : 7.5 }, "1,0", { "x" : 4 }, "6,0", { "x" : 7.5 }, "9,0" ],
+     [ { "w" : 1.5, "x" : 7.9, "y" : 0.5 }, "0,3", { "x" : 0.1 }, "0,5", { "w" : 1.5, "x" : 0.1 }, "0,1", { "w" : 1.5, "x" : 0.8 }, "5,1", { "x" : 0.1 }, "5,5", { "w" : 1.5, "x" : 0.1 }, "5,3" ],
+     [ { "w" : 2, "x" : 7.4 }, "0,4", { "x" : 0.1 }, "0,2", { "w" : 1.5, "x" : 0.1 }, "0,0", { "w" : 1.5, "x" : 0.8 }, "5,0", { "x" : 0.1 }, "5,2", { "w" : 2, "x" : 0.1 }, "5,4" ]
+  ],
+  loadFromVilJSON: async function(vil) {
+    const kbinfo = {
+      payload: {layouts: {keymap: Vial.svalboard_layout}},
+    };
+
+    kbinfo.macros = vil.macro;
+    kbinfo.rows = vil.layout[0].length;
+    kbinfo.cols = vil.layout[0][0].length;
+    kbinfo.macro_count = vil.macro.length;
+    kbinfo.combo_count = vil.combo.length;
+    kbinfo.tap_dance_count = vil.tap_dance.length;
+    kbinfo.key_override_count = vil.key_override.count;
+    await KEY.generateAllKeycodes(kbinfo);
+
+    kbinfo.keymap = KEY.parseKeymap(vil.layout, kbinfo.rows, kbinfo.cols);
+    // kbinfo.combo_entries = KEY.parseKeymap(vil.combo);
+    await Vial.getKeyLayout(kbinfo);
+    Vial.kbinfo = kbinfo;
+    console.log("kbinfo", kbinfo);
+    return kbinfo;
+  },
   init: async function() {
     const opened = await USB.open(
       [{
@@ -77,8 +109,9 @@ const Vial = {
     
     // Load combos, macros, etc.
     await Vial.getFeatures(kbinfo);
+
     // Regenerate keycodes for macros and features.
-    await generateAllKeycodes(kbinfo);
+    await KEY.generateAllKeycodes(kbinfo);
 
     // Keymap: all layers + all keys.
     await Vial.getKeyMap(kbinfo);
@@ -257,13 +290,13 @@ const Vial = {
     kbinfo.tap_dance_entries = await Vial.getDynamicEntries(
             RAW.DYNAMIC_VIAL_TAP_DANCE_GET,
             kbinfo.tap_dance_count,
-            { unpack: '<BHHHHH', slice: 1 },
+            { unpack: '<BHHHHH', slice: 1, map: KEY.stringify },
         );
 
     kbinfo.combo_entries = await Vial.getDynamicEntries(
             RAW.DYNAMIC_VIAL_COMBO_GET,
             kbinfo.combo_count,
-            { unpack: '<BHHHHH', slice: 1 },
+            { unpack: '<BHHHHH', slice: 1, map: KEY.stringify },
         );
 
     kbinfo.key_override_entries = await Vial.getDynamicEntries(

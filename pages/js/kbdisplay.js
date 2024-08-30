@@ -86,22 +86,24 @@ function setupBoard(keylayout, layers) {
     // keydef: element identifier
     // keymask: the key to show.
     // names: layer/macro/etc names.
-    let key = RAWCODES_MAP[keymask];
+    let key = KEY.RAWCODES_MAP[keymask];
     if (!key) {
-      key = RAWCODES_MAP[keymask & 0xFF];
+      key = KEY.RAWCODES_MAP[keymask & 0xFF];
       const content = getKeyContents(key, names);
-      const mkey = RAWCODES_MAP[keymask & 0xFF00];
+      const mkey = KEY.RAWCODES_MAP[keymask & 0xFF00];
       if (mkey) {
         const mcontent = getKeyContents(mkey, names);
         keydef.image.innerHTML = mcontent.text + "<br>" + content.text;
         keydef.image.setAttribute('title', strDefault(mcontent.title + content.title, ''));
+      } else {
+        keydef.image.innerHTML = '<span style="color: red;">' + keymask + '</span>';
+        keydef.image.setAttribute('title', "Unknown code: " + keymask);
       }
-      keydef.image.innerHTML = '<span style="color: red;">' + keymask + '</span>';
-      keydef.image.setAttribute('title', "Unknown code: " + keymask);
+    } else {
+      const content = getKeyContents(key, names);
+      keydef.image.innerHTML = content.text;
+      keydef.image.setAttribute('title', strDefault(content.title, ''));
     }
-    const content = getKeyContents(key, names);
-    keydef.image.innerHTML = content.text;
-    keydef.image.setAttribute('title', strDefault(content.title, ''));
   }
 
   ////////////////////////////////////
@@ -174,13 +176,12 @@ function setupBoard(keylayout, layers) {
 ////////////////////////////////////
 function setupSampleBoards() {
   function displayBoard(name) {
+    // Board selection.
+    const allboards = getAll('div.board-map');
+    for (const board of allboards) {
+      board.style['display'] = 'none';
+    }
     get('#board-' + name).style['display'] = 'block';
-  }
-
-  // Board selection.
-  const allboards = getAll('div.board-map');
-  for (const board of allboards) {
-    board.style['display'] = 'none';
   }
 
   displayBoard('qwerty');
@@ -218,6 +219,7 @@ function setupSampleBoards() {
 
   let modmask = 0;
 
+  // Most board keys have modifiers. macros, combos, etc don't.
   function updateModifiers(which) {
     modmask = 0;
     for (const keymod of getAll('[data-modifier]')) {
@@ -242,6 +244,7 @@ function setupSampleBoards() {
   }
 
   const modifierKeys = getAll('.key-mod[data-modifier]');
+
   for (const key of modifierKeys) {
     const mod = key.dataset.modifier;
     let val = modsSelected[mod];
@@ -256,4 +259,8 @@ function setupSampleBoards() {
       updateModifiers(mod);
     };
   }
+
+  return {
+    updateModifiers: updateModifiers,
+  };
 }
