@@ -141,6 +141,9 @@ label {
 /* Floaters that go over everything else. */
 
 .floater {
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  padding: 10px;
   display: none;
   position: fixed;
   top: 4em;

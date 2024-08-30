@@ -7,6 +7,7 @@
 ####################################
 
 from flask import Flask
+from glob import glob
 
 TEMPLATES_DIR = 'html'
 SERVE_DIR = 'pages'
@@ -17,7 +18,9 @@ cwd = os.getcwd()
 if cwd not in sys.path:
     sys.path.append(cwd)
 
-from rebuild_templates import build_template
+from rebuild_templates import rebuild
+
+watchlist = glob('html/*')
 
 app = Flask(
     'devserver',
@@ -25,10 +28,13 @@ app = Flask(
     static_folder = SERVE_DIR,
 )
 
-# index.html, we rebuild this on every access
+print("Rebuilding html")
+contents = rebuild()
+
+#index.html
 @app.route('/')
-def rebuild_index():
-    return build_template('html', 'index')
+def index():
+    return contents
 
 
 def main():
@@ -44,7 +50,10 @@ def main():
     args = parser.parse_args()
 
     try:
-        app.run(host=args.bind, port=args.port, threaded=True, debug=True, use_reloader=True)
+        app.run(host=args.bind, port=args.port,
+                threaded=True, debug=True, use_reloader=True,
+                extra_files=watchlist,
+                )
     except KeyboardInterrupt:
         pass
 
