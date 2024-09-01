@@ -14,6 +14,8 @@ function startJSVial() {
   const doPlayback = get('#do-playback');
   const doRecord = get('#do-record');
 
+  runInitializers('init');
+
   doPlayback.onchange = UI.addToggle('checked', 'do-playback', false,
         (enabled) => {
           doPlayback.checked = enabled;
@@ -54,6 +56,7 @@ async function doStuff() {
     await Vial.init();
   }
 
+  runInitializers('launch');
   setupSampleBoards(Vial.kbinfo);
 
   // Render main board.
