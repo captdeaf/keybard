@@ -43,6 +43,13 @@ const ACTION = {
     ACTION.CURRENT = action;
   },
 
+  clear() {
+    if (ACTION.CURRENT && ACTION.CURRENT.cancel) {
+      ACTION.CURRENT.cancel();
+    }
+    ACTION.CURRENT = null;
+  },
+
   active() {
     return ACTION.CURRENT !== null;
   },
@@ -58,25 +65,37 @@ const ACTION = {
 
   setup() {
     function mapJSKey(evt) {
-      if (KEY.RECORDER_MAP[evt.key]) {
-        return (KEY.RECORDER_MAP[evt.key]);
-      } else if (KEY.RECORDER_MAP[evt.code]) {
-        return KEY.RECORDER_MAP[evt.code];
+      if (KEY.FROMJS_MAP[evt.key]) {
+        return (KEY.FROMJS_MAP[evt.key]);
+      } else if (KEY.FROMJS_MAP[evt.code]) {
+        return KEY.FROMJS_MAP[evt.code];
       } else {
         alertUser("Unknown key map for JS->QMK", evt);
       }
     }
-    window.addEventListener('keydown', (evt) => {
-      if (ACTION.trigger('keyDown', mapJSKey(evt))) {
-        evt.preventDefault();
-        return false;
-      }
-    });
-    window.addEventListener('keyup', (evt) => {
-      if (ACTION.trigger('keyUp', mapJSKey(evt))) {
-        evt.preventDefault();
-        return false;
-      }
+    getAll('.record').map((rec) => {
+      rec.addEventListener('keydown', (evt) => {
+        console.log("kd", evt);
+        if (ACTION.trigger('keydown', evt.key, mapJSKey(evt))) {
+          evt.preventDefault();
+          return false;
+        }
+      });
+      rec.addEventListener('keyup', (evt) => {
+        console.log("ku", evt);
+        if (ACTION.trigger('keyup', evt.key, mapJSKey(evt))) {
+          evt.preventDefault();
+          return false;
+        }
+      });
+      rec.addEventListener('mouseout', (evt) => {
+        console.log("end", evt);
+        rec.blur();
+        if (ACTION.trigger('end')) {
+          evt.preventDefault();
+          return false;
+        }
+      });
     });
   },
 }

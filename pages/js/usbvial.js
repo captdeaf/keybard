@@ -284,14 +284,22 @@ const Vial = {
     );
 
     const raw_macros = MACROS.split(kbinfo, kbinfo.macro_memory);
-    kbinfo.macros = raw_macros.map((macro) => MACROS.parse(kbinfo, macro));
+    kbinfo.macros = raw_macros.map((macro, mid) => MACROS.parse(kbinfo, mid, macro));
     kbinfo.mdump = MACROS.dump(kbinfo, kbinfo.macros);
 
-    kbinfo.tap_dance_entries = await Vial.getDynamicEntries(
+    const tdes = await Vial.getDynamicEntries(
             RAW.DYNAMIC_VIAL_TAP_DANCE_GET,
             kbinfo.tap_dance_count,
-            { unpack: '<BHHHHH', slice: 1, map: KEY.stringify },
+            { unpack: '<BHHHHH', slice: 1},
         );
+
+    kbinfo.tap_dance_entries = tdes.map((tde) => [
+      KEY.stringify(tde[0]),
+      KEY.stringify(tde[1]),
+      KEY.stringify(tde[2]),
+      KEY.stringify(tde[3]),
+      tde[4],
+    ])
 
     kbinfo.combo_entries = await Vial.getDynamicEntries(
             RAW.DYNAMIC_VIAL_COMBO_GET,
@@ -400,6 +408,10 @@ const Vial = {
           }
         }
       }
+    }
+
+    for (const el of getAll('.changed')) {
+      el.classList.remove('changed');
     }
     // Refresh current keymap.
     Vial.kbinfo.keymap = deepCopy(Vial.kbinfo.newkeymap);

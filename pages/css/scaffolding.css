@@ -154,6 +154,28 @@ label {
   top: 4em;
   left: 4em;
   max-width: 80vw;
+  flex-shrink: 1;
+  min-height: 5vh;
+  height: 20%;
   max-height: 80vh;
   z-index: 1000;
+  flex-flow: column;
+}
+
+/* Floater buttons */
+.button-row {
+  flex: 0 0 content;
+  display: flex;
+  height: 26px;
+  width: 100%;
+}
+
+.button-row button {
+  flex: 0 0 content;
+  padding: 3px;
+  margin-right: 0.5em;
+}
+
+div.fill {
+  flex: 1 1 auto;
 }

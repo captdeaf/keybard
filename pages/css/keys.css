@@ -33,6 +33,10 @@
   white-space: pre;
 }
 
+.key.changed {
+  background-color: #dfd;
+}
+
 .key:hover {
   background-color: #ffd;
 }
@@ -161,6 +165,10 @@
   display: flex;
   flex-flow: row;
   flex: 1 1 auto;
+}
+
+.kb-row-wrap {
+  flex-wrap: wrap;
 }
 
 .kb-key { flex: 1 1 auto; }
