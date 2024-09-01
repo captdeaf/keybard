@@ -8,9 +8,10 @@ import inotify.adapters
 TEMPLATE_RE = re.compile(r'\{\{([\w\.]+)\}\}')
 
 def optimize(content):
-    # 'content' is html code that has lots of whitespace.
-    stripped = re.sub(r'\s+',' ', content)
-    return re.sub(r'>\s+<','><', stripped)
+    # 'content' is html code that has lots of whitespace, and probably comments.
+    content = re.sub(r'<!--.*?-->',' ', content)
+    content = re.sub(r'\s+',' ', content)
+    return re.sub(r'>\s+<','><', content)
 
 def parse_template(dirname, filename):
     body = ""

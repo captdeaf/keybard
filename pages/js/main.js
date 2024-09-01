@@ -14,14 +14,14 @@ function startJSVial() {
   const doPlayback = get('#do-playback');
   const doRecord = get('#do-record');
 
-  doPlayback.onchange = addToggle('checked', 'do-playback', false,
+  doPlayback.onchange = UI.addToggle('checked', 'do-playback', false,
         (enabled) => {
           doPlayback.checked = enabled;
           PLAYBACK = enabled;
         }
       );
 
-  doRecord.onchange = addToggle('checked', 'do-recording', false,
+  doRecord.onchange = UI.addToggle('checked', 'do-recording', false,
         (enabled) => {
           doRecord.checked = enabled;
           RECORDING = enabled;
@@ -61,8 +61,4 @@ async function doStuff() {
 
   // Set up actions so we can start handling keypresses, etc.
   ACTION.setup();
-
-  setTimeout(() => {
-    get('#macro-0').oncontextmenu();
-  }, 100);
 }

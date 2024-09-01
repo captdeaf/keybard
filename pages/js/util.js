@@ -343,67 +343,6 @@ function deepCopy(...objs) {
   return Object.assign({}, ...assigns);
 }
 
-////////////////////////////////////
-//
-//  Clone Node doesn't exactly work all the time. Most notably: 'select'
-//  is always cloned as its original value, regardless of changes.
-//
-//  Also, we remove all title= tags since this is used for dragging.
-//
-////////////////////////////////////
-function safeCloneNode(el) {
-  const clone = el.cloneNode(true);
-  const selects = findAll('select', el);
-  if (selects && selects.length > 0) {
-    const cloneSelects = findAll('select', clone);
-    for (let i = 0; i < selects.length; i++) {
-      cloneSelects[i].value = selects[i].value;
-    }
-  }
-  clone.removeAttribute('title');
-  const allTitled = findAll('[title="*"]', clone);
-  if (allTitled && allTitled.length > 0) {
-    for (const titled of allTitled) {
-      titled.removeAttribute('title');
-    }
-  }
-  return clone;
-}
-
-////////////////////////////////////
-//
-// Generate a consistent hash for an object. JSON.stringify isn't consistent in
-// its ordering, so can't be used to create a consistent hash.
-//
-// This uses SparkMD5 third party library, because crypto.subtle requires
-// https. Also because SparkMD5 doesn't require async.
-//
-////////////////////////////////////
-function hashObject(obj) {
-  const stringValues = [];
-  function add(v) {
-    const ret = [];
-    if (isSafeIterable(v)) {
-      for (const k of Object.keys(v).sort()) {
-        add(k);
-        add(v[k]);
-      }
-    } else {
-      stringValues.push(v)
-    }
-  }
-  add(obj);
-
-  return SparkMD5.hash(stringValues.join('.'));
-}
-
-// A UUID generator also using SparkMD5. This is not intended for security
-// purposes, just for generating random-enough IDs of consistent length.
-function makeUUID() {
-  const hashStr = (Math.random() + 1).toString(36).substring(5);
-  return SparkMD5.hash(hashStr + new Date().getTime().toFixed());
-}
-
 // A wrapper around xzwasm's decompression.
 function decompress(buffer) {
   buff = buffer;

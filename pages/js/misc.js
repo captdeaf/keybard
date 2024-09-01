@@ -7,8 +7,9 @@
 ////////////////////////////////////
 
 // Names: for layers, macros, etc. Saved to local site memory.
-const EDITABLE_NAMES = Object.assign({
+const EDITABLE_NAMES = Object.assign({}, {
   layer: {
+    // Examples for svalboard.
     [0]: 'default',
     [4]: 'NAS',
   },
