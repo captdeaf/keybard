@@ -37,7 +37,7 @@ const UI = (function() {
       }
     },
 
-    setup() {
+    init() {
       function setupAbout() {
         const desc = get('#about');
         const toggles = getAll('.toggle-about');
@@ -118,3 +118,5 @@ const UI = (function() {
     },
   }
 })();
+
+addInitializer('init', UI.init);
