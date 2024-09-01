@@ -61,4 +61,8 @@ async function doStuff() {
 
   // Set up actions so we can start handling keypresses, etc.
   ACTION.setup();
+
+  setTimeout(() => {
+    get('#macro-0').oncontextmenu();
+  }, 100);
 }

@@ -33,6 +33,8 @@ function setupBoard(kbinfo) {
         console.log("Got a keystr", keystr);
         newkeymap[selectedLayer][keydata.id] = KEY.parse(keystr);
         refreshKey(keys[keydata.id], newkeymap[selectedLayer][keydata.id], EDITABLE_NAMES);
+        selectedKey.image.classList.add('changed');
+        ACTION.clear()
       },
       cancel() {
         selectedKey.image.classList.remove('active');

@@ -102,6 +102,12 @@ function setupUI() {
     get('#commit').onclick = () => {
       Vial.commitChanges();
     };
+    for (const closer of getAll('.close')) {
+      closer.onclick = () => {
+        const closable = findParent(closer, '.closeable');
+        closable.style['display'] = 'none';
+      }
+    }
   }
 
   setupAbout();

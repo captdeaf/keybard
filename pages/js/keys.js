@@ -12,7 +12,7 @@
 const KEY = {
   KEYCODES_MAP: {},
   RAWCODES_MAP: {},
-  RECORDER_MAP: {},
+  FROMJS_MAP: {},
 
   generateAllKeycodes(kbinfo) {
     function K(qmkid, str, opts) {
@@ -1343,16 +1343,16 @@ const KEY = {
           KEY.KEYCODES_MAP[alias] = KC_MAP[k.qmkid];
         }
       }
-      KEY.RECORDER_MAP[k.str] = k.qmkid;
+      KEY.FROMJS_MAP[k.str] = k.qmkid;
       if (k.recorder_alias) {
         for (const alias of k.recorder_alias) {
-          KEY.RECORDER_MAP[alias] = k.qmkid;
+          KEY.FROMJS_MAP[alias] = k.qmkid;
         }
       }
     }
 
     for (const [k, v] of Object.entries(JS_CODES)) {
-      KEY.RECORDER_MAP[k] = v;
+      KEY.FROMJS_MAP[k] = v;
     }
   },
 
@@ -1371,6 +1371,7 @@ const KEY = {
       }
     } else {
       console.log("err wtf?", keynum, keyid, modmask);
+      return '????';
     }
   },
 

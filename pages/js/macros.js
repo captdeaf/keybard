@@ -21,10 +21,10 @@ function setupMacros() {
 
   const QMK_EXT_ID = 1;
 
-  function describeMacro(mid, actions) {
+  function describeMacro(mid, macro) {
     const texts = [];
     const otherwise = [];
-    for (const act of actions) {
+    for (const act of macro.actions) {
       if (act[0] === 'text') {
         texts.push(act[1]);
       } else {
@@ -40,10 +40,74 @@ function setupMacros() {
     }
   }
 
-  function renderMacroFloat(mid, macro) {
+  function squishMacro(macro) {
+    // Recording starts as a series of purely keydown and keyups.
+    if (macro.actions.length < 2) return;
+    const squished = [];
+    const cur = macro.actions;
+    if (cur.length > 0) {
+      squished[0] = cur[0];
+    }
+    for (let idx = 1; idx < cur.length; idx++) {
+      if (idx > 0)  {
+        if ((cur[idx-1][1] === cur[idx][1]) &&
+            (cur[idx-1][0] === 'down') && (cur[idx][0] === 'up')) {
+          squished[squished.length - 1] = ['tap', cur[idx][1], cur[idx][2]];
+          continue;
+        }
+      }
+      squished.push(cur[idx]);
+    }
+    // Convert all single-character taps to texts.
+    for (const act of squished) {
+      if ((act[0] === 'tap') && (act[1].length === 1)) {
+        act[0] = 'text';
+      }
+    }
+    // Combine taps of single keys.
+    const texted = [];
+    let sidx = 0;
+    while (sidx < squished.length) {
+      if (squished[sidx][0] !== 'text') {
+        texted.push(squished[sidx]);
+        sidx++;
+      } else {
+        let soff = sidx;
+        const texts = [];
+        while ((soff < squished.length) &&
+               (squished[soff][0] === 'text')) {
+          texts.push(squished[soff][1]);
+          soff++;
+        }
+        texted.push(['text', texts.join(''), texts.join('')]);
+
+        sidx = soff;
+      }
+    }
+    macro.actions = texted;
+  }
+
+  function startMacroRecording(macro) {
+    macro.actions = [];
+    renderMacroFloat(macro);
+    ACTION.start({
+      keydown: (key, rawkey) => {
+        macro.actions.push(['down', key, rawkey]);
+        squishMacro(macro);
+        renderMacroFloat(macro);
+      },
+      keyup: (key, rawkey) => {
+        macro.actions.push(['up', key, rawkey]);
+        squishMacro(macro);
+        renderMacroFloat(macro);
+      },
+    });
+  }
+
+  function renderMacroFloat(macro) {
     const rowkeys = [];
-    rowkeys.push(EL('div', {class: 'kbdesc'}, '<span style="color: blue">Macro M' + mid + ':</span>'));
-    for (const action of macro) {
+    rowkeys.push(EL('div', {class: 'kbdesc'}, '<span style="color: blue">Macro M' + macro.mid + ':</span>'));
+    for (const action of macro.actions) {
       if (action[0] === 'text') {
         rowkeys.push(EL('div', {class: "kbdesc"}, action[1]));
       } else if (action[0] === 'tap') {
@@ -64,9 +128,16 @@ function setupMacros() {
     }
     const floater = get('#float-macro');
     const floatbody = get('#float-macro-render');
+
+    const recordbutton = get('.record', floater);
+
+    recordbutton.onclick = () => {
+      startMacroRecording(macro);
+    }
+
     floatbody.innerHTML = '';
     appendChildren(floatbody, ...rowkeys);
-    floater.style['display'] = 'block';
+    floater.style['display'] = 'flex';
   }
 
   return {
@@ -84,7 +155,7 @@ function setupMacros() {
       }
       return macros;
     },
-    parse(kbinfo, rawmacro) {
+    parse(kbinfo, mid, rawmacro) {
       const actions = [];
       let offset = 0;
       while (offset < rawmacro.length) {
@@ -126,7 +197,10 @@ function setupMacros() {
           actions.push(['text', decoder.decode(dv), newbuffer.buffer]);
         }
       }
-      return actions;
+      return {
+        mid: mid,
+        actions: actions,
+      };
     },
     renderBoard(kbinfo) {
       const macroBoard = get('#macro-board');
@@ -142,7 +216,7 @@ function setupMacros() {
           title: 'M' + mid,
         }, '');
         keytpl.oncontextmenu = (ev) => {
-          renderMacroFloat(mid, kbinfo.macros[mid]);
+          renderMacroFloat(kbinfo.macros[mid]);
           ev.preventDefault();
           return false;
         }
@@ -173,8 +247,9 @@ function setupMacros() {
       const buffer = new ArrayBuffer(kbinfo.macros_size);
       let dv = new DataView(buffer);
       let offset = 0;
-      for (const macro of macros) {
-        for (const action of macro) {
+      for (let mid = 0; mid < macros.length; mid++) {
+        const macro = macros[mid];
+        for (const action of macro.actions) {
           if (action[0] === 'text') {
             const encoder = new TextEncoder();
             const textbuffer = new Uint8Array(encoder.encode(action[1]));
