@@ -4,22 +4,27 @@
 
 <!-- Scaffolding -->
 <script type="text/javascript" src="js/ui.js"></script>
+<script type="text/javascript" src="js/actions.js"></script>
 
 <!-- 'constants' -->
 <script type="text/javascript" src="js/svalboard.js"></script>
 
-<!-- Structures used by both USB and UI -->
+<!-- keys.js, definitions for KC_foo, and mapping, e.g: 3 -> KC_A -->
 <script type="text/javascript" src="js/keys.js"></script>
-<script type="text/javascript" src="js/actions.js"></script>
-<script type="text/javascript" src="js/macros.js"></script>
 
-<!-- USB Protocols -->
+<!-- USB proto -->
 <script type="text/javascript" src="js/usbhid.js"></script>
-<script type="text/javascript" src="js/usbvial.js"></script>
+
+<!-- vial. Split into many scripts. -->
+<script type="text/javascript" src="js/vial/vial.js"></script>
+<script type="text/javascript" src="js/vial/usb.js"></script>
+<script type="text/javascript" src="js/vial/kb.js"></script>
+<script type="text/javascript" src="js/vial/macro.js"></script>
 
 <!-- UI -->
-<script type="text/javascript" src="js/kbdisplay.js"></script>
-<script type="text/javascript" src="js/sampleboards.js"></script>
+<script type="text/javascript" src="js/kbui/macros.js"></script>
+<script type="text/javascript" src="js/kbui/kbdisplay.js"></script>
+<script type="text/javascript" src="js/kbui/sampleboards.js"></script>
 
 <!-- Main to tie it all together. -->
 <script type="text/javascript" src="js/main.js"></script>

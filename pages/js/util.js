@@ -351,27 +351,3 @@ function decompress(buffer) {
   const resp = new Response(xrs);
   return resp.text();
 }
-
-////////////////////////////////////
-//
-//  Initializing javascript - in order.
-//
-//  Add initializers to run on load, by file. 'order' is optional: If not given,
-//  order 1000+n and things run low-high by order. If no order is ever given,
-//  they run first-last called. Or in other words, they order they show up in
-//  <script> tags.
-//
-////////////////////////////////////
-const INITIALIZERS = {
-  init: [],
-  launch: [],
-};
-function addInitializer(type, func, order) {
-  if (order === undefined) order = 1000 + INITIALIZERS[type].length;
-  INITIALIZERS[type].push({name: name, order: order, func: func});
-}
-
-function runInitializers(type) {
-  const sorted = INITIALIZERS[type].sort((a, b) => a.order - b.order);
-  for (const call of sorted) call.func();
-}
