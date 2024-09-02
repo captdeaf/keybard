@@ -57,27 +57,24 @@ Vial.macro = (function() {
         if (rawmacro[offset] === QMK_EXT_ID) {
           const type = rawmacro[offset+1];
           if (type in MACRO_IDS) {
-            actions.push([
-              MACRO_IDS[type],
-              KEY.stringify(rawmacro[offset+2]),
-              rawmacro[offset+2],
-            ]);
+            actions.push({
+              type: MACRO_IDS[type],
+              value: KEY.stringify(rawmacro[offset+2]),
+            });
             offset += 3;
           } else if (type === MACRO_DELAY) {
             // I'm not sure why delay has this weird math, but I'm
             // just copying it from the python code. /shrug
-            actions.push([
-              MACRO_DOUBLES[type],
-              (rawmacro[offset+2] - 1) + ((rawmacro[offset+3] - 1) << 8),
-              rawmacro[offset+2] + (rawmacro[offset+3] << 8),
-            ]);
+            actions.push({
+              type: MACRO_DOUBLES[type],
+              value: (rawmacro[offset+2] - 1) + ((rawmacro[offset+3] - 1) << 8),
+            });
             offset += 4;
           } else if (type in MACRO_DOUBLES) {
-            actions.push([
-              MACRO_DOUBLES[type],
-              KEY.stringify(rawmacro[offset+2] + (rawmacro[offset+3] << 8)),
-              rawmacro[offset+2] + (rawmacro[offset+3] << 8)
-            ]);
+            actions.push({
+              type: MACRO_DOUBLES[type],
+              value: KEY.stringify(rawmacro[offset+2] + (rawmacro[offset+3] << 8)),
+            });
             offset += 4;
           }
         } else if (rawmacro[offset] === 0) {
@@ -88,7 +85,7 @@ Vial.macro = (function() {
           const newbuffer = new Uint8Array(rawmacro.slice(start, offset));
           const dv = new DataView(newbuffer.buffer);
           const decoder = new TextDecoder();
-          actions.push(['text', decoder.decode(dv), newbuffer.buffer]);
+          actions.push({type: 'text', value: decoder.decode(dv)});
         }
       }
       return {
