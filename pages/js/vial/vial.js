@@ -80,7 +80,7 @@ const Vial = {
 
     kbinfo.rows = payload.matrix.rows;
     kbinfo.cols = payload.matrix.cols;
-    kbinfo.customKeycodes = payload.customKeycodes;
+    kbinfo.custom_keycodes = payload.customKeycodes;
 
     return kbinfo
   },

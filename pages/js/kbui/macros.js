@@ -9,10 +9,10 @@ const MACROS = (function setupMacros() {
     const texts = [];
     const otherwise = [];
     for (const act of macro.actions) {
-      if (act[0] === 'text') {
-        texts.push(act[1]);
+      if (act.type === 'text') {
+        texts.push(act.value);
       } else {
-        otherwise.push(act[0] + ' ' + act[1]);
+        otherwise.push(act.type + ' ' + act.value);
       }
     }
     if (texts.length > 0) {

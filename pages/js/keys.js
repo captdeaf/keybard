@@ -1229,8 +1229,8 @@ const KEY = {
 
     for (let i = 0; i < 64; i++) {
       const userkey = 'USER' + ('' + i).padStart(2, '0');
-      if (kbinfo.customKeycodes && kbinfo.customKeycodes[i]) {
-        const custom = kbinfo.customKeycodes[i];
+      if (kbinfo.custom_keycodes && kbinfo.custom_keycodes[i]) {
+        const custom = kbinfo.custom_keycodes[i];
         KC_MAP[userkey] = KC_MAP['QK_KB'] + i;
         KC_MAP[custom.name] = KC_MAP['QK_KB'] + i;
         KC_MAP[custom.shortName] = KC_MAP['QK_KB'] + i;

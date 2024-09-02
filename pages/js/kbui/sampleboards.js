@@ -30,6 +30,27 @@ function setupSampleBoards(kbinfo) {
     }
   }
 
+  if (kbinfo.custom_keycodes) {
+    const customboard = get('#custom')
+    let row = null;
+    for (let i = 0; i < kbinfo.custom_keycodes.length; i++) {
+      const custom = kbinfo.custom_keycodes[i];
+      if ((i % 10) === 0) {
+        row = EL('div', {class: 'kb-row'});
+        appendChildren(customboard, EL('div', {class: 'kb-row'}, row));
+      }
+      appendChildren(row, EL('div',
+        {
+          class: 'key',
+          'data-bind': 'key',
+          'data-key': custom.name,
+          title: custom.name + ' - ' + custom.title,
+        },
+        custom.shortName)
+      );
+    }
+  }
+
   const allKeys = getAll('[data-key]')
   const shiftableKeys = getAll('[data-shifted]')
 
