@@ -417,6 +417,14 @@ function unpack(buffer, str) {
   return ret;
 }
 
+function range(num) {
+  const ret = [];
+  for (let i = 0; i < num; i++) {
+    ret.push(i);
+  }
+  return ret;
+}
+
 ////////////////////////////////////
 //
 //  Initializing javascript - in order.

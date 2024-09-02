@@ -18,7 +18,7 @@ function setupSampleBoards(kbinfo) {
     for (const board of allboards) {
       board.style['display'] = 'none';
     }
-    get('#board-' + name).style['display'] = 'block';
+    get('#' + name + '-board').style['display'] = 'block';
   }
 
   displayBoard('qwerty');
@@ -30,25 +30,42 @@ function setupSampleBoards(kbinfo) {
     }
   }
 
-  if (kbinfo.custom_keycodes) {
-    const customboard = get('#custom')
-    let row = null;
-    for (let i = 0; i < kbinfo.custom_keycodes.length; i++) {
-      const custom = kbinfo.custom_keycodes[i];
-      if ((i % 10) === 0) {
-        row = EL('div', {class: 'kb-row'});
-        appendChildren(customboard, EL('div', {class: 'kb-row'}, row));
+  function appendBoard(name, keys, length) {
+    if (!length) length = 20;
+    if (keys && keys.length > 0) {
+      const board = get('#' + name + '-board')
+      let row = null;
+      for (const i of range(keys.length)) {
+        if ((i % 20) === 0) {
+          row = EL('div', {class: 'kb-row'});
+          appendChildren(board, row);
+        }
+        appendChildren(row, EL('div',
+          {
+            class: 'key large',
+            'data-bind': 'key',
+            'data-key': keys[i],
+            title: keys[i],
+          },
+          keys[i])
+        );
       }
-      appendChildren(row, EL('div',
-        {
-          class: 'key',
-          'data-bind': 'key',
-          'data-key': custom.name,
-          title: custom.name + ' - ' + custom.title,
-        },
-        custom.shortName)
-      );
     }
+  }
+
+  appendBoard('custom', kbinfo.custom_keycodes.map((x) => x.name), 20);
+
+  if (kbinfo.layers) {
+    const layers = range(kbinfo.layers);
+
+    // Layers: MO (Momentarily)
+    appendBoard('layer', layers.map((i) => 'MO(' + i + ')'));
+    appendBoard('layer', layers.map((i) => 'DF(' + i + ')'));
+    appendBoard('layer', layers.map((i) => 'TG(' + i + ')'));
+    appendBoard('layer', layers.map((i) => 'TT(' + i + ')'));
+    appendBoard('layer', layers.map((i) => 'OSL(' + i + ')'));
+    appendBoard('layer', layers.map((i) => 'TO(' + i + ')'));
+    appendBoard('layer', layers.map((i) => 'LT ' + i + ' (kc)'));
   }
 
   const allKeys = getAll('[data-key]')
