@@ -32,7 +32,7 @@ Vial.kb = (function() {
         for (let r = 0; r < kbinfo.rows; r++) {
           for (let c = 0; c < kbinfo.cols; c++) {
             const offset = (l * kbinfo.rows * kbinfo.cols) + (r * kbinfo.cols) + c;
-            layer.push(alldata[offset]);
+            layer.push(KEY.stringify(alldata[offset]));
           }
         }
         kbinfo.keymap[l] = layer;

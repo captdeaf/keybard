@@ -1335,12 +1335,14 @@ const KEY = {
     };
 
     for (const k of KEYCODES) {
-      KEY.KEYCODES_MAP[k.qmkid] = KC_MAP[k.qmkid];
       k.raw = KC_MAP[k.qmkid];
+      // KC_NAME to key
+      KEY.KEYCODES_MAP[k.qmkid] = k;
+      // 0x0100 to key
       KEY.RAWCODES_MAP[KC_MAP[k.qmkid]] = k;
       if (k.alias) {
         for (const alias of k.alias) {
-          KEY.KEYCODES_MAP[alias] = KC_MAP[k.qmkid];
+          KEY.KEYCODES_MAP[alias] = k;
         }
       }
       KEY.FROMJS_MAP[k.str] = k.qmkid;
@@ -1378,7 +1380,7 @@ const KEY = {
   parse(keystr) {
     if (!keystr) { return 0xFF; }
     if (keystr in KEY.KEYCODES_MAP) {
-      return KEY.KEYCODES_MAP[keystr];
+      return KEY.KEYCODES_MAP[keystr].raw;
     }
     if (keystr === -1) {
       return 0xFF;
@@ -1388,8 +1390,8 @@ const KEY = {
     }
     const match = keystr.match(/^(\w+)\((\w+)\)$/);
     if (match) {
-      const cmask = KEY.KEYCODES_MAP[match[1] + '(kc)'];
-      const keymask = KEY.KEYCODES_MAP[match[2]];
+      const cmask = KEY.KEYCODES_MAP[match[1] + '(kc)'].raw;
+      const keymask = KEY.KEYCODES_MAP[match[2]].raw;
       return cmask + keymask;
     } else {
       alertUser("Unknown key string: ", keystr);

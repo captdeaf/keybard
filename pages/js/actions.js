@@ -99,3 +99,6 @@ const ACTION = {
     });
   },
 }
+
+// Don't initialize action until the boards are loaded.
+addInitializer('ui', ACTION.setup);
