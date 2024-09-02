@@ -351,3 +351,92 @@ function decompress(buffer) {
   const resp = new Response(xrs);
   return resp.text();
 }
+
+////////////////////////////////////
+//
+//  unpack - similar to most languages' unpack method.
+//  Expects an ArrayBuffer(). unpack(arraybuffer, "<BHH")
+//
+//  <, >: little and big endian
+//  b, B: 1 byte
+//  h, H: 2 bytes
+//  i, I: 4 bytes
+//  q, Q: 8 bytes
+//
+////////////////////////////////////
+function unpack(buffer, str) {
+  let offset = 0;
+  const dv = new DataView(buffer);
+  // endian-ness
+  let le = true;
+  const ret = [];
+  for (const chr of str.split('')) {
+    let val;
+    switch (chr) {
+      case '<': le = true; break;
+      case '>': le = false; break;
+      case 'H':
+        val = dv.getUint16(offset, le);
+        offset += 2;
+        break;
+      case 'h':
+        val = dv.getInt16(offset, le);
+        offset += 2;
+        break;
+      case 'I':
+        val = dv.getUint32(offset, le);
+        offset += 4;
+        break;
+      case 'i':
+        val = dv.getInt32(offset, le);
+        offset += 4;
+        break;
+      case 'B':
+        val = dv.getUint8(offset);
+        offset++;
+        break;
+      case 'b':
+        val = dv.getInt8(offset);
+        offset++;
+        break;
+      case 'q':
+        val = dv.getBigInt64(offset);
+        offset += 8;
+        break;
+      case 'Q':
+        val = dv.getBigUint64(offset);
+        offset += 8;
+        break;
+      default:
+        alertUser("Invalid char in unpack: " + chr);
+    }
+    if (val !== undefined) {
+      ret.push(val);
+    }
+  }
+  return ret;
+}
+
+////////////////////////////////////
+//
+//  Initializing javascript - in order.
+//
+// Add initializers to run on load, by file. 'order' is optional: If not given,
+// order 100+n and things run low-high by order. If no order is ever given,
+// they run first-last called. Or in other words, they order they show up in
+// <script> tags.
+//
+////////////////////////////////////
+const INITIALIZERS = {
+  ui: [],
+};
+
+function addInitializer(type, func, order) {
+  if (order === undefined) order = 100 + INITIALIZERS[type].length;
+  INITIALIZERS[type].push({name: name, order: order, func: func});
+}
+
+function runInitializers(type, ...args) {
+  const sorted = INITIALIZERS[type].sort((a, b) => a.order - b.order);
+  for (const call of sorted) call.func(...args);
+}

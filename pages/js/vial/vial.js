@@ -15,7 +15,8 @@ const Vial = {
         usage: 0x61,
       }]
     );
-
+  },
+  load: async function(kbinfo) {
     // the .xz-compressed Vial information.
     await Vial.getKeyboardInfo(kbinfo);
     
