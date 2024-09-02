@@ -14,7 +14,7 @@ function startJSVial() {
   const doPlayback = get('#do-playback');
   const doRecord = get('#do-record');
 
-  runInitializers('init');
+  UI.init();
 
   doPlayback.onchange = UI.addToggle('checked', 'do-playback', false,
         (enabled) => {
@@ -48,20 +48,22 @@ async function doStuff() {
   removeElement(get('#launch'));
   get('#active').style['display'] = 'block';
 
-  // Set up vial, getting everything from the keyboard.
-  // This might eventually also support, e.g: .vil file loads instead.
-  if (LOAD_JSON) {
-    await Vial.loadFromVilJSON(VIL);
-  } else {
-    await Vial.init();
-  }
+  const kbinfo = {};
 
-  runInitializers('launch');
-  setupSampleBoards(Vial.kbinfo);
+  // TODO: other initialization paths: .vil upload, .kbi upload
+  await initVial(kbinfo);
+
+  console.log(kbinfo);
+
+  setupSampleBoards(kbinfo);
 
   // Render main board.
-  GUI.board = setupBoard(Vial.kbinfo);
+  GUI.board = setupBoard(kbinfo);
 
   // Set up actions so we can start handling keypresses, etc.
   ACTION.setup();
+}
+
+async function initVial(kbinfo) {
+  await Vial.init(kbinfo);
 }

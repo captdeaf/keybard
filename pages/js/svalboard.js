@@ -1,3 +1,12 @@
+// svalboard.js
+//
+////////////////////////////////////
+//
+//  Defaults for svalboard. When uploading incomplete kbinfo files,
+//  or .vil files that don't contain it anyway.
+//
+////////////////////////////////////
+
 const SVALBOARD = {
   layout: [
     [ { "x" : 3.5 }, "3,3", { "x" : 2.5 }, "2,3", { "x" : 9 }, "7,3", { "x" : 2.5 }, "8,3" ],

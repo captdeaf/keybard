@@ -118,5 +118,3 @@ const UI = (function() {
     },
   }
 })();
-
-addInitializer('init', UI.init);
