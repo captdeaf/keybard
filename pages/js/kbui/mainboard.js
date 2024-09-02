@@ -34,7 +34,8 @@ function setupBoard(kbinfo) {
     ACTION.start({
       keySelect(keystr) {
         newkeymap[selectedLayer][keydata.id] = keystr;
-        refreshKey(keys[keydata.id], newkeymap[selectedLayer][keydata.id], EDITABLE_NAMES);
+        keydata.image.dataset.key = keystr;
+        KEYUI.refreshKey(keys[keydata.id].image, newkeymap[selectedLayer][keydata.id]);
         selectedKey.image.classList.add('changed');
         ACTION.clear()
       },
@@ -81,60 +82,6 @@ function setupBoard(kbinfo) {
 
   ////////////////////////////////////
   //
-  //  refreshKey: Update the contents of a key.
-  //
-  //  Normal: "a", "Caps\nLock", etc.
-  //  Macro: "MACRO\n(text...)"
-  //  Layer: "LAYER\n(name or num)"
-  //
-  ////////////////////////////////////
-  const KEY_DESCS = {
-    layer: {
-      MO:  ['Lmnt', 'While pressed, switch to layer:', 'key-layer key-layer-mo'],
-      DF:  ['Ldef', 'Make default layer:', 'key-layer key-layer-df'],
-      TG:  ['Ltog', 'Toggle to layer:', 'key-layer key-layer-tg'],
-      TT:  ['Ltmp', 'Switch/Toggle to layer:', 'key-layer key-layer-tt'],
-      OSL: ['Losl', 'Toggle to layer for one key:', 'key-layer key-layer-osl'],
-      TO:  ['Lto', 'Make layer default:', 'key-layer key-layer-to'],
-    }
-  };
-
-  function getKeyContents(key, names) {
-    let text = key.qmkid;
-    let title = key.qmkid;
-    if (key.str) text = key.str;
-    if (key.title) title = key.title;
-    let descs;
-    if (key.type in KEY_DESCS) {
-      descs = KEY_DESCS[key.type];
-      if (key.stype && key.stype in descs) {
-        descs = KEY_DESCS[key.type][key.stype];
-      }
-      // text = descs[0];
-      title = title;
-    }
-    if (names[key.type] && names[key.type][key.index]) {
-      text = '\n<span class="' + descs[2] + '">' + names[key.type][key.index] + '</span>',
-      title = title + names[key.type][key.index];
-    }
-    return {
-      text: text,
-      title: title,
-    }
-  }
-
-  function refreshKey(keydef, qmkid, names) {
-    // keydef: element identifier
-    // keymask: the key to show.
-    // names: layer/macro/etc names.
-    let key = KEY.KEYCODES_MAP[qmkid];
-    const content = getKeyContents(key, names);
-    keydef.image.innerHTML = content.text;
-    keydef.image.setAttribute('title', strDefault(content.title, ''));
-  }
-
-  ////////////////////////////////////
-  //
   //  Draw the whole board.
   //
   ////////////////////////////////////
@@ -154,8 +101,10 @@ function setupBoard(kbinfo) {
     selectedLayer = layerid;
     const layerkeymap = newkeymap[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
-      refreshKey(keys[kmid], layerkeymap[kmid], EDITABLE_NAMES);
+      keys[kmid].image.dataset.key = layerkeymap[kmid];
     }
+
+    KEYUI.refreshAllKeys(kbinfo);
   }
 
   children = [];

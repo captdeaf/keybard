@@ -124,6 +124,7 @@ const MACROS = (function setupMacros() {
     floater.style['display'] = 'flex';
   }
   return {
+    describe: describeMacro,
     renderBoard(kbinfo) {
       const macroBoard = get('#macro-board');
       const rows = [];

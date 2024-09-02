@@ -1399,6 +1399,56 @@ const KEY = {
     }
   },
 
+  // Given MO(1), return:
+  //   { type: 'layer', mask: 'MO', key: '1' },
+  // Given KC_C, return:
+  //   { type: 'key', key: 'c' },
+  parseDesc(keystr) {
+    let m;
+    // Layers:k MO(0) ... MO(15)
+    m = keystr.match(/^(MO|DF|TG|TT|OSL|TO)\((\w+)\)$/);
+    if (m) {
+      return {
+        type: 'layer', mask: m[1], idx: parseInt(m[2]),
+      };
+    }
+    // Macros: M0 ... M50
+    m = keystr.match(/^M(\d+)$/);
+    if (m) {
+      return {
+        type: 'macro', mask: 'M', idx: parseInt(m[1]),
+      };
+    }
+    // Tap Dances
+    m = keystr.match(/^TD\((\d+)\)$/);
+    if (m) {
+      return {
+        type: 'tapdance', mask: 'TD', idx: parseInt(m[1]),
+      };
+    }
+    // HOLD-Tap keys (why do we have these instead of using tapdance?)
+    m = keystr.match(/^(\w+)\((\w+)\)$/);
+    if (m) {
+      const mod = KEY.KEYCODES_MAP[m[1] + '(kc)'];
+      const key = KEY.KEYCODES_MAP[m[2]];
+      return {
+        type: 'key', str: mod.str.replace(/\(kc\)/, '') + key.str,
+      };
+    }
+
+    // Normal keys.
+    if (keystr in KEY.KEYCODES_MAP) {
+      const key = KEY.KEYCODES_MAP[keystr];
+      return {
+        type: 'key', str: key.str, title: key.title,
+      };
+    }
+    // Unknown
+    return {
+      type: 'key', str: '<span style="color: red; font-weight: bold;">?? BROKEN ??</span>', title: keystr,
+    };
+  },
+
   stringifyKeymap(keymapint) {
     // keymap is just layers of arrays of integers.
     const ret = [];

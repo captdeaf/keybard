@@ -48,7 +48,7 @@ Vial.kb = (function() {
       let macros_size = await Vial.USB.send(Vial.USB.CMD_VIA_MACRO_GET_BUFFER_SIZE, [],
                                         {unpack: 'B>H', index: 1});
 
-      kbinfo.tap_dance_count = counts[0];
+      kbinfo.tapdance_count = counts[0];
       kbinfo.combo_count = counts[1];
       kbinfo.key_override_count = counts[2];
       kbinfo.macro_count = macro_count;
