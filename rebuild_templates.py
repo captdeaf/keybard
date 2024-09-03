@@ -3,8 +3,6 @@
 import re
 from glob import glob
 
-import inotify.adapters
-
 TEMPLATE_RE = re.compile(r'\{\{([\w\.]+)\}\}')
 
 def optimize(content):
