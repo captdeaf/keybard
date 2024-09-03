@@ -75,21 +75,18 @@ const ACTION = {
     }
     getAll('.record').map((rec) => {
       rec.addEventListener('keydown', (evt) => {
-        console.log("kd", evt);
         if (ACTION.trigger('keydown', evt.key, mapJSKey(evt))) {
           evt.preventDefault();
           return false;
         }
       });
       rec.addEventListener('keyup', (evt) => {
-        console.log("ku", evt);
         if (ACTION.trigger('keyup', evt.key, mapJSKey(evt))) {
           evt.preventDefault();
           return false;
         }
       });
       rec.addEventListener('mouseout', (evt) => {
-        console.log("end", evt);
         rec.blur();
         if (ACTION.trigger('end')) {
           evt.preventDefault();
