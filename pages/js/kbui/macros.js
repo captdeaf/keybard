@@ -34,9 +34,9 @@ const MACROS = (function setupMacros() {
     }
     for (let idx = 1; idx < cur.length; idx++) {
       if (idx > 0)  {
-        if ((cur[idx-1][1] === cur[idx][1]) &&
-            (cur[idx-1][0] === 'down') && (cur[idx][0] === 'up')) {
-          squished[squished.length - 1] = ['tap', cur[idx][1], cur[idx][2]];
+        if ((cur[idx-1].value === cur[idx].value) &&
+            (cur[idx-1].type === 'down') && (cur[idx].type === 'up')) {
+          squished[squished.length - 1] = {type: 'tap', value: cur[idx].value};
           continue;
         }
       }
@@ -44,26 +44,26 @@ const MACROS = (function setupMacros() {
     }
     // Convert all single-character taps to texts.
     for (const act of squished) {
-      if ((act[0] === 'tap') && (act[1].length === 1)) {
-        act[0] = 'text';
+      if ((act.type === 'down') && (act.value.length === 1)) {
+        act.type = 'text';
       }
     }
     // Combine taps of single keys.
     const texted = [];
     let sidx = 0;
     while (sidx < squished.length) {
-      if (squished[sidx][0] !== 'text') {
+      if (squished[sidx].type !== 'text') {
         texted.push(squished[sidx]);
         sidx++;
       } else {
         let soff = sidx;
         const texts = [];
         while ((soff < squished.length) &&
-               (squished[soff][0] === 'text')) {
-          texts.push(squished[soff][1]);
+               (squished[soff].type === 'text')) {
+          texts.push(squished[soff].value);
           soff++;
         }
-        texted.push(['text', texts.join(''), texts.join('')]);
+        texted.push({type: 'text', value: texts.join('')});
 
         sidx = soff;
       }
@@ -71,41 +71,46 @@ const MACROS = (function setupMacros() {
     macro.actions = texted;
   }
 
-  function startMacroRecording(macro) {
+  function startMacroRecording(macro, kbinfo) {
     macro.actions = [];
-    renderMacroFloat(macro);
+    renderMacroFloat(macro, kbinfo);
     ACTION.start({
       keydown: (key, rawkey) => {
-        macro.actions.push(['down', key, rawkey]);
+        macro.actions.push({type: 'down', value: key});
         squishMacro(macro);
-        renderMacroFloat(macro);
+        renderMacroFloat(macro, kbinfo);
       },
       keyup: (key, rawkey) => {
-        macro.actions.push(['up', key, rawkey]);
-        squishMacro(macro);
-        renderMacroFloat(macro);
+        if (key.length !== 1) {
+          macro.actions.push({type: 'up', value: key});
+          squishMacro(macro);
+          renderMacroFloat(macro, kbinfo);
+        }
+      },
+      end: () => {
+        KEYUI.refreshAllKeys(kbinfo);
       },
     });
   }
 
-  function renderMacroFloat(macro) {
+  function renderMacroFloat(macro, kbinfo) {
     const rowkeys = [];
     rowkeys.push(EL('div', {class: 'kbdesc'}, '<span style="color: blue">Macro M' + macro.mid + ':</span>'));
     for (const action of macro.actions) {
-      if (action[0] === 'text') {
-        rowkeys.push(EL('div', {class: "kbdesc"}, action[1]));
-      } else if (action[0] === 'tap') {
+      if (action.type === 'text') {
+        rowkeys.push(EL('div', {class: "kbdesc"}, action.value));
+      } else if (action.type === 'tap') {
         rowkeys.push(EL('div', {class: 'key kb-key key-tap key-macro'},
-                        action[1]));
-      } else if (action[0] === 'down') {
+                        action.value));
+      } else if (action.type === 'down') {
         rowkeys.push(EL('div', {class: 'key kb-key key-down key-macro'},
-                        'down\n' + action[1]));
-      } else if (action[0] === 'up') {
+                        'down\n' + action.value));
+      } else if (action.type === 'up') {
         rowkeys.push(EL('div', {class: 'key kb-key key-up key-macro'},
-                       action[1] + '\nup'));
-      } else if (action[0] === 'delay') {
+                       action.value + '\nup'));
+      } else if (action.type === 'delay') {
         rowkeys.push(EL('div', {class: 'key key-sleep key-macro'},
-                        'sleep\n' + action[1] + 'ms'));
+                        'sleep\n' + action.value + 'ms'));
       } else {
         console.log('wtf', action);
       }
@@ -138,7 +143,7 @@ const MACROS = (function setupMacros() {
           class: "key kb-key key-macro",
         }, '');
         keytpl.oncontextmenu = (ev) => {
-          renderMacroFloat(kbinfo.macros[mid]);
+          renderMacroFloat(kbinfo.macros[mid], kbinfo);
           ev.preventDefault();
           return false;
         }
