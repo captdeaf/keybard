@@ -65,7 +65,6 @@ function setupSampleBoards() {
     appendBoard('layer', layers.map((i) => 'TT(' + i + ')'));
     appendBoard('layer', layers.map((i) => 'OSL(' + i + ')'));
     appendBoard('layer', layers.map((i) => 'TO(' + i + ')'));
-    appendBoard('layer', layers.map((i) => 'LT ' + i + ' (kc)'));
   }
 
   const allKeys = getAll('[data-key]')
@@ -160,4 +159,4 @@ function setupSampleBoards() {
 }
 
 // Don't run until site is loaded
-addInitializer('ui', setupSampleBoards, 1000);
+addInitializer('ui', setupSampleBoards, 500);
