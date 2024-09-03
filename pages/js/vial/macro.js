@@ -36,6 +36,16 @@ Vial.macro = (function() {
       const raw_macros = Vial.macro.split(kbinfo, macro_memory);
       kbinfo.macros = raw_macros.map((macro, mid) => Vial.macro.parse(kbinfo, mid, macro));
     },
+    async pushMacros(kbinfo) {
+      // Macros are stored as one big chunk of memory, at 28 bytes per fetch.
+      // null-separated. In svalboard, it's 795 bytes.
+      const raw = Vial.macro.dump(kbinfo.macros_size, kbinfo.macros);
+      const macro_memory = await Vial.USB.pushViaBuffer(
+        Vial.USB.CMD_VIA_MACRO_SET_BUFFER,
+        kbinfo.macros_size,
+        raw
+      );
+    },
     split(kbinfo, rawbuffer) {
       let offset = 0;
       let macros = [];
@@ -52,12 +62,14 @@ Vial.macro = (function() {
     parse(kbinfo, mid, rawmacro) {
       const actions = [];
       let offset = 0;
+      let id = 0;
       while (offset < rawmacro.length) {
         const action = {};
         if (rawmacro[offset] === QMK_EXT_ID) {
           const type = rawmacro[offset+1];
           if (type in MACRO_IDS) {
             actions.push({
+              id: id++,
               type: MACRO_IDS[type],
               value: KEY.stringify(rawmacro[offset+2]),
             });
@@ -66,12 +78,14 @@ Vial.macro = (function() {
             // I'm not sure why delay has this weird math, but I'm
             // just copying it from the python code. /shrug
             actions.push({
-              type: MACRO_DOUBLES[type],
+              id: id++,
+              type: 'delay',
               value: (rawmacro[offset+2] - 1) + ((rawmacro[offset+3] - 1) << 8),
             });
             offset += 4;
           } else if (type in MACRO_DOUBLES) {
             actions.push({
+              id: id++,
               type: MACRO_DOUBLES[type],
               value: KEY.stringify(rawmacro[offset+2] + (rawmacro[offset+3] << 8)),
             });
@@ -85,7 +99,11 @@ Vial.macro = (function() {
           const newbuffer = new Uint8Array(rawmacro.slice(start, offset));
           const dv = new DataView(newbuffer.buffer);
           const decoder = new TextDecoder();
-          actions.push({type: 'text', value: decoder.decode(dv)});
+          actions.push({
+            id: id++,
+            type: 'text',
+            value: decoder.decode(dv),
+          });
         }
       }
       return {
@@ -93,32 +111,34 @@ Vial.macro = (function() {
         actions: actions,
       };
     },
-    dump(kbinfo, macros) {
-      const buffer = new ArrayBuffer(kbinfo.macros_size);
+    dump(size, macros) {
+      const buffer = new ArrayBuffer(size);
+      // return buffer;
       let dv = new DataView(buffer);
       let offset = 0;
       for (let mid = 0; mid < macros.length; mid++) {
         const macro = macros[mid];
         for (const action of macro.actions) {
-          if (action[0] === 'text') {
+          if (action.type === 'text') {
             const encoder = new TextEncoder();
-            const textbuffer = new Uint8Array(encoder.encode(action[1]));
+            const textbuffer = new Uint8Array(encoder.encode(action.value));
             for (let idx = 0; idx < textbuffer.length; idx++) {
               dv.setUint8(offset++, textbuffer[idx]);
             }
-          } else if (action[0] === 'delay') {
+          } else if (action.type === 'delay') {
             dv.setUint8(offset++, MACRO_DELAY);
             dv.setUint8(offset++, (delay % 255) + 1);
             dv.setUint8(offset++, Math.floor(delay / 255) + 1);
-          } else if (action[0] in MACRO_IDS) {
+          } else if (action.type in MACRO_IDS) {
+            const value = KEY.parse(action.value);
             dv.setUint8(offset++, QMK_EXT_ID);
-            if (action[1] >= 0x100) {
-              dv.setUint8(offset++, MACRO_DOUBLES[action[0]]);
-              dv.setUint8(offset++, action[1] & 0xFF);
-              dv.setUint8(offset++, (action[1] >> 8) & 0xFF);
+            if (value >= 0x100) {
+              dv.setUint8(offset++, MACRO_DOUBLES[action.type]);
+              dv.setUint8(offset++, value & 0xFF);
+              dv.setUint8(offset++, (value >> 8) & 0xFF);
             } else {
-              dv.setUint8(offset++, MACRO_IDS[action[0]]);
-              dv.setUint8(offset++, action[1]);
+              dv.setUint8(offset++, MACRO_IDS[action.type]);
+              dv.setUint8(offset++, value);
             }
           }
         }

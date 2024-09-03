@@ -15,6 +15,7 @@ const Vial = {
         usage: 0x61,
       }]
     );
+    KBAPI.wrapped = Vial.api;
   },
   load: async function(kbinfo) {
     // the .xz-compressed Vial information.

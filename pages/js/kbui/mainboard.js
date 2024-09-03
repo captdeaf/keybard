@@ -33,9 +33,14 @@ function setupBoard() {
 
     ACTION.start({
       keySelect(keystr) {
-        newkeymap[selectedLayer][keydata.id] = keystr;
+        const kmid = keydata.id
+        const old = newkeymap[selectedLayer][kmid];
+        newkeymap[selectedLayer][kmid] = keystr;
         keydata.image.dataset.key = keystr;
-        KEYUI.refreshKey(keys[keydata.id].image, newkeymap[selectedLayer][keydata.id]);
+        KEYUI.refreshAllKeys();
+        CHANGES.queue('Remap ' + old + ' to ' + keystr, () => {
+          KBAPI.updateKey(selectedLayer, kmid, keystr);
+        });
         selectedKey.image.classList.add('changed');
         ACTION.clear()
       },

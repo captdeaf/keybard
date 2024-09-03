@@ -46,7 +46,7 @@ async function doStuff() {
   // TODO: other initialization paths: .vil upload, .kbi upload
   await initVial(KBINFO);
 
-  console.log();
+  console.log('kbinfo', KBINFO);
 
   // Initialize KB UI
   runInitializers('ui');

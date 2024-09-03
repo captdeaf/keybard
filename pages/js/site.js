@@ -95,9 +95,12 @@ const Site = (function() {
       }
 
       function setupButtons() {
+        // COMMIT CHANGES
         get('#commit').onclick = () => {
-          Vial.commitChanges();
+          CHANGES.commit();
         };
+
+        // close() on dialogs.
         for (const closer of getAll('.close')) {
           closer.onclick = () => {
             const closable = findParent(closer, '.closeable');
