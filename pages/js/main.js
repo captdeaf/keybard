@@ -6,31 +6,13 @@
 //
 ///////////////////////////////////
 
-PLAYBACK = false;
-RECORDING = false;
-LOAD_JSON = false;
-
 function startJSVial() {
   const doPlayback = get('#do-playback');
   const doRecord = get('#do-record');
 
   Site.init();
 
-  doPlayback.onchange = Site.addToggle('do-playback', false,
-        (enabled) => {
-          doPlayback.checked = enabled;
-          PLAYBACK = enabled;
-        }
-      );
-
-  doRecord.onchange = Site.addToggle('do-recording', false,
-        (enabled) => {
-          doRecord.checked = enabled;
-          RECORDING = enabled;
-        }
-      );
-
-  if (PLAYBACK) {
+  if (SETTINGS.playback) {
     setTimeout(() => { doStuff(); }, 100);
   } else {
     get('#launch').onclick = () => {

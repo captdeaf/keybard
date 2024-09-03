@@ -3,6 +3,7 @@
 // Basic UI management, just for the site as a whole, not for the keyboard
 // interaction.
 
+const SETTINGS = {};
 
 const Site = (function() {
   return {
@@ -69,29 +70,23 @@ const Site = (function() {
       }
 
       function setupToggled() {
-        function createToggle(section) {
-          // We should receive a section.
-          let toggler = section.querySelector(".toggler");
-          let paras = section.querySelectorAll("p");
+        getAll('input[type="checkbox"][data-toggle]').map((el) => {
+          el.onchange = Site.addToggle(el.id, false,
+            (enabled) => {
+              SETTINGS[el.dataset.toggle] = enabled;
+              el.checked = enabled;
 
-          let showSection = false;
-          if (section.dataset['show'] === 'true') {
-            showSection = true;
-          }
-
-          toggler.onclick = UI.addToggle(section.id, showSection, function(enabled) {
-            toggler.checked = enabled;
-            if (enabled) {
-              for (const p of paras) {
-                p.style.display = 'block';
-              }
-            } else {
-              for (const p of paras) {
-                p.style.display = 'none';
+              if (el.dataset.extra === 'hideCommit') {
+                const commit = get('#commit')
+                if (enabled) {
+                  commit.style['display'] = 'none';
+                } else {
+                  commit.style['display'] = 'inline-block';
+                }
               }
             }
-          });
-        }
+          );
+        });
       }
 
       function setupButtons() {

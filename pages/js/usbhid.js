@@ -7,9 +7,6 @@
 ////////////////////////////////////
 
 // Playback: Handy for when I'm just tweaking UI stuff.
-let PLAYBACK = false;
-let RECORDING = false;
-
 let SAVED = {};
 
 function loadPlayback() {
@@ -78,7 +75,7 @@ const USB = {
   listener: (data, ev) => {},
 
   open: async function(filters) {
-    if (PLAYBACK) {
+    if (SETTINGS.playback) {
       loadPlayback();
       return true;
     } else {
@@ -153,7 +150,7 @@ const USB = {
       cmdargs.push(0);
     }
 
-    if (PLAYBACK) {
+    if (SETTINGS.playback) {
       const data = playback(cmdargs);
       const ret = USB.formatResponse(data, flags);
       const respromise = new Promise((res, rej) => {
@@ -165,7 +162,9 @@ const USB = {
     // Callback for when we get a response.
     const cbpromise = new Promise((res, rej) => {
       USB.listener = (data, ev) => {
-        recordPlayback(cmdargs, data);
+        if (SETTINGS.record) {
+          recordPlayback(cmdargs, data);
+        }
         const ret = USB.formatResponse(data, flags);
         res(ret);
       };
