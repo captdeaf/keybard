@@ -33,9 +33,9 @@
 #mainboard-container {
   padding: 10px;
   flex: 4;
-display: flex;
-justify-content: center;
-align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #mainboard {
