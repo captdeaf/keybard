@@ -16,6 +16,7 @@
 }
 
 .key {
+  position: relative;
   background-color: #ddd;
   border: 1px solid #999;
   border-radius: 4px;

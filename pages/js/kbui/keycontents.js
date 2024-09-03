@@ -15,12 +15,12 @@ const KEYUI = (function() {
 ////////////////////////////////////
   const KEY_DESCS = {
     layer: {
-      MO:  ['MO', 'While pressed, switch to layer:', 'key-layer key-layer-mo'],
-      DF:  ['DF', 'Make default layer:', 'key-layer key-layer-df'],
-      TG:  ['TG', 'Toggle to layer:', 'key-layer key-layer-tg'],
-      TT:  ['TT', 'Switch/Toggle to layer:', 'key-layer key-layer-tt'],
-      OSL: ['OSL', 'Toggle to layer for one key:', 'key-layer key-layer-osl'],
-      TO:  ['TO', 'Make layer default:', 'key-layer key-layer-to'],
+      MO:  ['MO', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
+      DF:  ['DF', 'Make default layer: ', 'key-layer key-layer-df'],
+      TG:  ['TG', 'Toggle to layer: ', 'key-layer key-layer-tg'],
+      TT:  ['TT', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
+      OSL: ['OSL', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
+      TO:  ['TO', 'Make layer default: ', 'key-layer key-layer-to'],
     },
     'macro': {M: ['M ', 'Macro: ', 'key-macro']},
     'tapdance': {M: ['TD ', 'Tap Dance: ', 'key-tapdance']},
@@ -52,7 +52,7 @@ const KEYUI = (function() {
     const names = EDITABLE_NAMES[key.type];
     if (names && names[key.idx]) {
       return {
-        text: '<span class="' + desc[2] + '">' + names[key.idx] + '</span>',
+        text: '<div class="' + desc[2] + '">' + names[key.idx] + '</div>',
         title: keystr + ': ' + desc[1] + names[key.idx],
       }
     }
@@ -82,3 +82,5 @@ const KEYUI = (function() {
     refreshAllKeys: refreshAllKeys,
   };
 })();
+
+addInitializer('ui', KEYUI.refreshAllKeys, 1000);

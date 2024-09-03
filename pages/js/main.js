@@ -41,12 +41,10 @@ function startJSVial() {
 
 async function doStuff() {
   removeElement(get('#launch'));
-  get('#active').style['display'] = 'block';
-
   // TODO: other initialization paths: .vil upload, .kbi upload
   await initVial(KBINFO);
 
-  console.log('kbinfo', KBINFO);
+  get('#active').style['display'] = 'block';
 
   // Initialize KB UI
   runInitializers('ui');
