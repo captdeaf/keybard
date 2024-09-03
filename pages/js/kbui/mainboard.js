@@ -66,8 +66,8 @@ function setupBoard() {
       style: {
         width: Math.floor(opts.w * 25) + 'px',
         height: Math.floor(opts.h * 25) + 'px',
-        top: Math.floor((opts.y * 30)) + 'px',
-        left: Math.floor((opts.x * 30)) + 'px',
+        top: Math.floor((opts.y * 32)) + 'px',
+        left: Math.floor((opts.x * 32)) + 'px',
         position: 'absolute',
       },
     }, ' ');
@@ -96,11 +96,34 @@ function setupBoard() {
   // Current settings.
   let children = [];
 
+  const bounds = {
+    top: Infinity,
+    left: Infinity,
+    right: -Infinity,
+    bottom: -Infinity,
+  };
+
   for (const [kmid, key] of Object.entries(keylayout)) {
-    keys[kmid] = renderKey(kmid, key);
+    const keydata = renderKey(kmid, key);
+    keys[kmid] = keydata;
+
+    const top = parseInt(keydata.image.style.top, 10);
+    const left = parseInt(keydata.image.style.left, 10);
+    const width = parseInt(keydata.image.style.width, 10);
+    const height = parseInt(keydata.image.style.height, 10);
+    bounds.top = Math.min(bounds.top, top);
+    bounds.left = Math.min(bounds.left, left);
+    bounds.right = Math.max(bounds.right, left + width);
+    bounds.bottom = Math.max(bounds.bottom, top + height);
+
     children.push(keys[kmid].image);
   }
   appendChildren(board, ...children);
+
+  // This allows us to center the board on screen.
+  board.style.width = `${bounds.right}px`;
+  board.style.height = `${bounds.bottom}px`;
+  
 
   function drawLayer(layerid) {
     selectedLayer = layerid;
@@ -108,6 +131,11 @@ function setupBoard() {
     for (const [kmid, key] of Object.entries(keys)) {
       keys[kmid].image.dataset.key = layerkeymap[kmid];
     }
+
+    for (const layer of document.querySelectorAll('.layer')) {
+      layer.classList.remove('selected');
+    }
+    document.querySelector(`[data-layerid="${selectedLayer}"]`)?.classList.add('selected');
 
     KEYUI.refreshAllKeys();
   }
@@ -117,6 +145,7 @@ function setupBoard() {
     const layerid = i;
     let layerName = strDefault(EDITABLE_NAMES.layer[i], i);
     const layerSel = EL('div', {
+      'data-layerid': layerid,
       'class': 'layer',
     }, editableName('layer', i));
     layerSel.onclick = () => {

@@ -16,10 +16,10 @@
 }
 
 .key {
+  --key-border-radius: 4px;
   position: relative;
-  background-color: #ddd;
-  border: 1px solid #999;
-  border-radius: 4px;
+  background-color: #e5e5e5;
+  border-radius: var(--key-border-radius);
   height: 30px;
   min-width: 30px;
   max-width: 120px;
@@ -81,14 +81,13 @@
  */
 
 .key-layer {
-  display: block;
   position: absolute;
-  bottom: 3px;
-  left: 50%
-  margin-left: -50%;
-  background-color: yellow;
-  padding: 3px;
-  border: 1px solid black;
+  background-color: #F6EACB;
+  inset: 0;
+  border-radius: var(--key-border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .key-layer-mo {
@@ -100,10 +99,7 @@
 /* Keyboard display for keymap bindings. */
 #key-selection {
   background-color: #ccc;
-  position: absolute;
-  top: 50%;
-  height: 50%;
-  width: 100%;
+  flex: 6;
 }
 
 .board-map {
