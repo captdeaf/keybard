@@ -19,14 +19,51 @@
 //
 ////////////////////////////////////
 
-class KBInfo {
-  layers = 16;
-  macro_count = 50;
-  keylayout = {};
-  keymap = [];
-  macros = [];
-  custom_keycodes = [];
-  extra = {};
+const KBINFO = {
+  layers: 16,
+  macro_count: 50,
+  keylayout: {},
+  keymap: [],
+  macros: [],
+  custom_keycodes: [],
+  extra: {},
 };
 
-const KBINFO = new KBInfo();
+const CHANGES = {
+  todo: [],
+  queue(desc, cb) {
+    CHANGES.todo.push({
+      desc: desc,
+      cb: cb,
+    });
+  },
+
+  commit() {
+    for (const change of CHANGES.todo) {
+      change.cb();
+    }
+    for (const el of findAll('.changed')) {
+      el.classList.remove('changed');
+    }
+  }
+};
+
+// KBAPI - For when we need to push changes.
+let KBAPI = {
+  async updateKey(layer, kmid, keystr) {
+    const row = Math.floor(kmid / KBINFO.cols);
+    const col = Math.floor(kmid % KBINFO.cols);
+    const keymask = KEY.parse(keystr);
+    console.log("Change ", layer, row, col, keymask);
+    await KBAPI.wrapped.updateKey(layer, row, col, keymask);
+  },
+  async updateMacros() {
+    // macros is always shoved as a big block of data.
+    await KBAPI.wrapped.updateMacros(KBINFO);
+  },
+};
+
+KBAPI.wrapped = {
+  async updateKey() {},
+  async updateMacros() {},
+}

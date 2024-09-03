@@ -97,6 +97,26 @@ Vial.USB = lockValue({
     return alldata;
   },
 
+  pushViaBuffer: async (cmd, size, buffer) => {
+    // Push a buffer, 28 bytes at a time.
+    // This is for Via messages that expect:
+    //   send(cmd_get_buffer, [offset, size])
+    let offset = 0;
+    const chunksize = 28;
+    const alldata = [];
+
+    while (offset < size) {
+      let sz = chunksize;
+      if (sz > size - offset) { sz = size - offset; }
+
+      await Vial.USB.send(cmd, [...BE16(offset), sz, ...new Uint8Array(buffer.slice(offset, offset+sz))]);
+
+      offset += chunksize;
+    }
+
+    return alldata;
+  },
+
   // getDynamicEntries is Vial-specific way to get multiple entries.
   // Not a buffer, but call 1 = item 1, call 2 = item 2, etc.
   getDynamicEntries: async (cmd, count, opts) => {

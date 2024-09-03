@@ -44,7 +44,7 @@ const MACROS = (function setupMacros() {
     }
     // Convert all single-character taps to texts.
     for (const act of squished) {
-      if ((act.type === 'down') && (act.value.length === 1)) {
+      if ((act.type === 'down') && (act.str.length === 1)) {
         act.type = 'text';
       }
     }
@@ -60,10 +60,11 @@ const MACROS = (function setupMacros() {
         const texts = [];
         while ((soff < squished.length) &&
                (squished[soff].type === 'text')) {
-          texts.push(squished[soff].value);
+          texts.push(squished[soff].str);
           soff++;
         }
-        texted.push({type: 'text', value: texts.join('')});
+        const str = texts.join('');
+        texted.push({type: 'text', value: str, str: str});
 
         sidx = soff;
       }
@@ -76,19 +77,22 @@ const MACROS = (function setupMacros() {
     renderMacroFloat(macro);
     ACTION.start({
       keydown: (key, rawkey) => {
-        macro.actions.push({type: 'down', value: key});
+        macro.actions.push({type: 'down', value: rawkey, str: key});
         squishMacro(macro);
         renderMacroFloat(macro);
       },
       keyup: (key, rawkey) => {
         if (key.length !== 1) {
-          macro.actions.push({type: 'up', value: key});
+          macro.actions.push({type: 'up', value: rawkey, str: key});
           squishMacro(macro);
           renderMacroFloat(macro);
         }
       },
       end: () => {
         KEYUI.refreshAllKeys();
+        CHANGES.queue('Update macro ' + macro.id, () => {
+          KBAPI.updateMacros();
+        });
       },
     });
   }
