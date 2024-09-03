@@ -43,15 +43,13 @@ async function doStuff() {
   removeElement(get('#launch'));
   get('#active').style['display'] = 'block';
 
-  const kbinfo = new KBInfo();
-
   // TODO: other initialization paths: .vil upload, .kbi upload
-  await initVial(kbinfo);
+  await initVial(KBINFO);
 
-  console.log(kbinfo);
+  console.log();
 
   // Initialize KB UI
-  runInitializers('ui', kbinfo);
+  runInitializers('ui');
 }
 
 async function initVial(kbinfo) {

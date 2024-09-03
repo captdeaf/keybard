@@ -11,7 +11,7 @@
 //  - When any key with data-key is clicked, report it to GUI.assignKey
 //
 ////////////////////////////////////
-function setupSampleBoards(kbinfo) {
+function setupSampleBoards() {
   function displayBoard(name) {
     // Board selection.
     const allboards = getAll('div.board-map');
@@ -53,10 +53,10 @@ function setupSampleBoards(kbinfo) {
     }
   }
 
-  appendBoard('custom', kbinfo.custom_keycodes.map((x) => x.name), 20);
+  appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 20);
 
-  if (kbinfo.layers) {
-    const layers = range(kbinfo.layers);
+  if (KBINFO.layers) {
+    const layers = range(KBINFO.layers);
 
     // Layers: MO (Momentarily)
     appendBoard('layer', layers.map((i) => 'MO(' + i + ')'));

@@ -131,16 +131,16 @@ Vial.kb = (function() {
       return kbinfo.keylayout;
     },
 
-    async commitChanges() {
+    async commitChanges(kbinfo) {
       // Any keymap changes?
-      const oldkm = Vial.kbinfo.keymap;
-      const newkm = Vial.kbinfo.newkeymap;
+      const oldkm = kbinfo.keymap;
+      const newkm = kbinfo.newkeymap;
       console.log("commitChanges", oldkm, newkm);
 
-      for (let layer = 0; layer < Vial.kbinfo.layers; layer++) {
-        for (let row = 0; row < Vial.kbinfo.rows; row++) {
-          for (let col = 0; col < Vial.kbinfo.cols; col++) {
-            const idx = Vial.kbinfo.cols * row + col;
+      for (let layer = 0; layer < kbinfo.layers; layer++) {
+        for (let row = 0; row < kbinfo.rows; row++) {
+          for (let col = 0; col < kbinfo.cols; col++) {
+            const idx = kbinfo.cols * row + col;
             if (newkm[layer][idx] !== oldkm[layer][idx]) {
               console.log('updating ', [layer, row, col], KEY.stringify(newkm[layer][idx]));
               await Vial.USB.send(Vial.USB.CMD_VIA_SET_KEYCODE,
@@ -155,7 +155,7 @@ Vial.kb = (function() {
         el.classList.remove('changed');
       }
       // Refresh current keymap.
-      Vial.kbinfo.keymap = deepCopy(Vial.kbinfo.newkeymap);
+      kbinfo.keymap = deepCopy(kbinfo.newkeymap);
     },
   };
 })();

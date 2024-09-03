@@ -71,29 +71,29 @@ const MACROS = (function setupMacros() {
     macro.actions = texted;
   }
 
-  function startMacroRecording(macro, kbinfo) {
+  function startMacroRecording(macro) {
     macro.actions = [];
-    renderMacroFloat(macro, kbinfo);
+    renderMacroFloat(macro);
     ACTION.start({
       keydown: (key, rawkey) => {
         macro.actions.push({type: 'down', value: key});
         squishMacro(macro);
-        renderMacroFloat(macro, kbinfo);
+        renderMacroFloat(macro);
       },
       keyup: (key, rawkey) => {
         if (key.length !== 1) {
           macro.actions.push({type: 'up', value: key});
           squishMacro(macro);
-          renderMacroFloat(macro, kbinfo);
+          renderMacroFloat(macro);
         }
       },
       end: () => {
-        KEYUI.refreshAllKeys(kbinfo);
+        KEYUI.refreshAllKeys();
       },
     });
   }
 
-  function renderMacroFloat(macro, kbinfo) {
+  function renderMacroFloat(macro) {
     const rowkeys = [];
     rowkeys.push(EL('div', {class: 'kbdesc'}, '<span style="color: blue">Macro M' + macro.mid + ':</span>'));
     for (const action of macro.actions) {
@@ -130,10 +130,10 @@ const MACROS = (function setupMacros() {
   }
   return {
     describe: describeMacro,
-    renderBoard(kbinfo) {
+    renderBoard() {
       const macroBoard = get('#macro-board');
       const rows = [];
-      for (let idx = 0; idx < kbinfo.macro_count; idx++) {
+      for (let idx = 0; idx < KBINFO.macro_count; idx++) {
         const mid = idx;
         const rowid = Math.floor(mid/10);
         const keytpl = EL('div', {
@@ -143,7 +143,7 @@ const MACROS = (function setupMacros() {
           class: "key kb-key key-macro",
         }, '');
         keytpl.oncontextmenu = (ev) => {
-          renderMacroFloat(kbinfo.macros[mid], kbinfo);
+          renderMacroFloat(KBINFO.macros[mid]);
           ev.preventDefault();
           return false;
         }
@@ -160,8 +160,8 @@ const MACROS = (function setupMacros() {
                         "To edit macros, R-click one.");
       appendChildren(macroBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
     },
-    refreshBoard(kbinfo) {
-      const macros = kbinfo.macros;
+    refreshBoard() {
+      const macros = KBINFO.macros;
       for (let mid = 0; mid < macros.length; mid++) {
         const macro = macros[mid];
         const el = get('#macro-' + mid);
@@ -173,7 +173,7 @@ const MACROS = (function setupMacros() {
   };
 })();
 
-addInitializer('ui', (kbinfo) => {
-  MACROS.renderBoard(kbinfo);
-  MACROS.refreshBoard(kbinfo);
+addInitializer('ui', () => {
+  MACROS.renderBoard();
+  MACROS.refreshBoard();
 });
