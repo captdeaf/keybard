@@ -24,7 +24,7 @@ def build_template(dirname, filename):
 
 def rebuild():
     body = build_template('html', 'index')
-    with open('pages/index.html', 'w') as fout:
+    with open('pages/index.html', 'w', encoding='utf-8') as fout:
         fout.write(body)
     return body
 
