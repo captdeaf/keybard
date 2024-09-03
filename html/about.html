@@ -1,11 +1,12 @@
 <div id="about">
-  What is VIAL?
+  Svalboard Keymap Editor
   <div id="about-closer" class="toggle-about">&lt;close&gt;</div>
-  <br/>
-  <br/>
-  <p>
-    TODO
-  </p>
+  <section id="about-instant">
+    <label>
+      <input type="checkbox" class="check" id="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
+      Instant pushes (akin to Vial)
+    </label>
+  </section>
   <section id="about-playback">
     <label>
       <input type="checkbox" class="check" id="do-playback" data-default="false" data-toggle="playback"/>
@@ -18,10 +19,17 @@
       Record for playback. (requires playback off)
     </label>
   </section>
-  <section id="about-instant">
-    <label>
-      <input type="checkbox" class="check" id="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
-      Instant pushes (akin to Vial)
-    </label>
-  </section>
+  <br/>
+  <br/>
+  <p>
+    Developing for html/css - Make it super fast to reload the page so you
+    can see changes w/o reconnecting your keyboard each time.
+    <ol>
+      <li>Enable 'Record' above.</li>
+      <li>Launch, and select your keyboard. </li>
+      <li>Enable 'Playback' above.</li>
+      <li>Reload page - It should now be near instant.</li>
+      <li>(Note: Keyboard changes will not be permanent at this point.</li>
+    </ol>
+  </p>
 </div>

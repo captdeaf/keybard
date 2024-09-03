@@ -162,7 +162,7 @@ const USB = {
     // Callback for when we get a response.
     const cbpromise = new Promise((res, rej) => {
       USB.listener = (data, ev) => {
-        if (SETTINGS.record) {
+        if (SETTINGS.record && !SETTINGS.playback) {
           recordPlayback(cmdargs, data);
         }
         const ret = USB.formatResponse(data, flags);
