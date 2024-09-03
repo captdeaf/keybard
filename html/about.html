@@ -8,14 +8,20 @@
   </p>
   <section id="about-playback">
     <label>
-      <input type="checkbox" id="do-playback" class="check"/>
+      <input type="checkbox" class="check" id="do-playback" data-default="false" data-toggle="playback"/>
       Playback a recording. (Overrides record)
     </label>
   </section>
   <section id="about-record">
     <label>
-      <input type="checkbox" id="do-record" class="check"/>
+      <input type="checkbox" class="check" id="do-record" data-default="false" data-toggle="record"/>
       Record for playback. (requires playback off)
+    </label>
+  </section>
+  <section id="about-instant">
+    <label>
+      <input type="checkbox" class="check" id="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
+      Instant pushes (akin to Vial)
     </label>
   </section>
 </div>

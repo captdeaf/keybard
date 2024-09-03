@@ -32,10 +32,15 @@ const KBINFO = {
 const CHANGES = {
   todo: [],
   queue(desc, cb) {
-    CHANGES.todo.push({
-      desc: desc,
-      cb: cb,
-    });
+    if (SETTINGS.instant) {
+      change.cb();
+      el.classList.remove('changed');
+    } else {
+      CHANGES.todo.push({
+        desc: desc,
+        cb: cb,
+      });
+    }
   },
 
   commit() {

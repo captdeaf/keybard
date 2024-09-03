@@ -51,7 +51,7 @@ function editableName(type, index) {
       setSaved('names', EDITABLE_NAMES);
       editable.innerText = name;
       editable.setAttribute('title', type + ' ' + name + ' (r-click to change name)');
-      GUI.board.refresh();
+      KEYUI.refreshAllKeys();
     }
     return false;
   }
