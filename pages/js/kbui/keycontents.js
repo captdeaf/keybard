@@ -26,7 +26,7 @@ const KEYUI = (function() {
     'tapdance': {M: ['TD ', 'Tap Dance: ', 'key-tapdance']},
   };
 
-  function getKeyContents(keystr, kbinfo) {
+  function getKeyContents(keystr) {
     let key = KEY.parseDesc(keystr);
     if (key.str) {
       return {
@@ -35,7 +35,7 @@ const KEYUI = (function() {
       }
     }
     if (key.type === 'macro') {
-      const d = MACROS.describe(key.idx, kbinfo.macros[key.idx]);
+      const d = MACROS.describe(key.idx, KBINFO.macros[key.idx]);
       return {
         text: d.slice(0, 10),
         title: d,
@@ -62,18 +62,18 @@ const KEYUI = (function() {
     }
   }
 
-  function refreshKey(keyimage, kbinfo) {
+  function refreshKey(keyimage) {
     if (keyimage.dataset.key) {
-      const content = getKeyContents(keyimage.dataset.key, kbinfo);
+      const content = getKeyContents(keyimage.dataset.key);
       keyimage.setAttribute('title', content.title);
       keyimage.innerHTML = content.text;
     }
   }
 
-  function refreshAllKeys(kbinfo) {
+  function refreshAllKeys() {
     const allKeys = getAll('.key');
     for (const key of allKeys) {
-      refreshKey(key, kbinfo);
+      refreshKey(key);
     }
   }
 

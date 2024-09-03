@@ -5,10 +5,10 @@
 //  Display the connected keyboard.
 //
 ///////////////////////////////////
-function setupBoard(kbinfo) {
-  const keylayout = kbinfo.keylayout;
-  const newkeymap = deepCopy(kbinfo.keymap);
-  kbinfo.newkeymap = newkeymap;
+function setupBoard() {
+  const keylayout = KBINFO.keylayout;
+  const newkeymap = deepCopy(KBINFO.keymap);
+  KBINFO.newkeymap = newkeymap;
   let selectedLayer = 0;
   let selectedKey = null;
 
@@ -104,11 +104,11 @@ function setupBoard(kbinfo) {
       keys[kmid].image.dataset.key = layerkeymap[kmid];
     }
 
-    KEYUI.refreshAllKeys(kbinfo);
+    KEYUI.refreshAllKeys();
   }
 
   children = [];
-  for (let i = 0; i < kbinfo.layers; i++) {
+  for (let i = 0; i < KBINFO.layers; i++) {
     const layerid = i;
     let layerName = strDefault(EDITABLE_NAMES.layer[i], i);
     const layerSel = EL('div', {
