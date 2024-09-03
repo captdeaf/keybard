@@ -44,7 +44,7 @@ async function doStuff() {
   // TODO: other initialization paths: .vil upload, .kbi upload
   await initVial(KBINFO);
 
-  get('#active').style['display'] = 'block';
+  get('#active').style['display'] = 'flex';
 
   // Initialize KB UI
   runInitializers('ui');

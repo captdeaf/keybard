@@ -1,47 +1,53 @@
 /* Scaffolding - the large sections of the page. */
 
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 110%;
+}
+
 /* Basic UI elements */
 body {
-  cursor: pointer;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   -ms-touch-callout: none;
-  font-size: 110%;
   margin: 0;
   width: 100vw;
   height: 100vh;
+  font-family: Lato, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* The header - title, menu choices, etc. */
 #head {
   flex: 0 0 content;
-  border-bottom: 2px solid black;
-  width: 90%;
   display: flex;
   flex-flow: column;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+#topbar-container {
+  padding: 10px;
 }
 
 #topbar {
-  position: relative;
   display: flex;
+  justify-content: space-between;
   width: 100%;
-  flex-flow: row;
+  align-items: center;
 }
 
 #topbar #title {
   cursor: pointer;
-  flex: 0 0 content;
-  display: inline-block;
-  margin-right: 1em;
-  font-size: 100%;
   font-weight: bold;
   height: 100%;
-  color: #ff8c00;
-  text-stroke: 1px #cc5900;
-  -webkit-text-stroke: 1px #cc5900;
-  -webkit-text-fill-color: #ff8c00;
 }
 
 #topbar #title #qmark {
@@ -49,8 +55,6 @@ body {
   bottom: 0.5em;
   right: 1em;
   font-size: 50%;
-  -webkit-text-stroke: 0px blue;
-  -webkit-text-fill-color: blue;
 }
 
 #topbar .link {
@@ -62,18 +66,12 @@ body {
   bottom: 0px;
 }
 
-#topbar div {
-  position: relative;
-  bottom: 0;
-  margin-right: 2em;
-  bottom: 0;
-  text-decoration: none;
+#topbar button {
+  background-color: transparent;
+  border: none;
+  font-size: 0.6rem;
+  text-decoration: underline;
   cursor: pointer;
-  color: blue;
-}
-
-#topbar-filler {
-  flex: 1 1 auto;
 }
 
 /* About: the main config and description menu */
@@ -141,6 +139,22 @@ label {
   border: 2px solid black;
   font-size: 100%;
   font-weight: bold;
+}
+
+/* Content container. */
+
+#vialgui {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+
+#vialgui #active {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 
 /* Floaters that go over everything else. */

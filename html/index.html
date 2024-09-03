@@ -14,20 +14,23 @@
   </head>
   <body>
     {{about}}
-    <div id="head" class="plstyle">
-      <div id="topbar">
-        <div id="title" class="toggle-about">JSVial (menu)</div>
-        <div id="topbar-filler"></div>
-        <div><button id="commit">COMMIT CHANGES</button></div>
+    <div id="head">
+      <div id="topbar-container">
+        <div id="topbar">
+          <div id="title" class="toggle-about">JSVial</div>
+          <div id="layer-selection"></div>
+          <div><button id="commit">COMMIT CHANGES</button></div>
+        </div>
       </div>
     </div>
     <div id="vialgui">
       {{launch}}
       <div id='active' style="display: none;">
-        <div id="layer-selection">
+
+        <div id="mainboard-container">
+          <div id="mainboard"></div>
         </div>
-        <div id="mainboard">
-        </div>
+
         <div id="key-selection">
           {{allboards}}
         </div>

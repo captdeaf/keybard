@@ -65,6 +65,7 @@ const KEYUI = (function() {
   function refreshKey(keyimage) {
     if (keyimage.dataset.key) {
       const content = getKeyContents(keyimage.dataset.key);
+      console.log(keyimage.dataset.key, content)
       keyimage.setAttribute('title', content.title);
       keyimage.innerHTML = content.text;
     }
