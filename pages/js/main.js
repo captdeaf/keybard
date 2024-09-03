@@ -7,9 +7,6 @@
 ///////////////////////////////////
 
 function startJSVial() {
-  const doPlayback = get('#do-playback');
-  const doRecord = get('#do-record');
-
   Site.init();
 
   if (SETTINGS.playback) {

@@ -28,10 +28,14 @@ const KEYUI = (function() {
 
   function getKeyContents(keystr) {
     let key = KEY.parseDesc(keystr);
+    let title = keystr;
+    if (key.title) {
+      title = title + ': ' + key.title;
+    }
     if (key.str) {
       return {
         text: key.str,
-        title: keystr,
+        title: title,
       }
     }
     if (key.type === 'macro') {

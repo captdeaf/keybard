@@ -128,6 +128,10 @@
   font-size: 8pt;
 }
 
+.board-sel.selected {
+  background-color: #ddf;
+}
+
 .board-sel-end {
   flex: 1 1 auto;
 }

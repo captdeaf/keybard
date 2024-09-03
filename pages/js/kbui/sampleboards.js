@@ -12,23 +12,29 @@
 //
 ////////////////////////////////////
 function setupSampleBoards() {
-  function displayBoard(name) {
+  const boardsels = getAll('div.board-sel');
+  for (const boardsel of boardsels) {
+    boardsel.onclick = (evt) => {
+      displayBoard(boardsel.dataset.board, evt.target);
+    }
+  }
+
+  function displayBoard(name, el) {
     // Board selection.
+    setSaved('boardsel', name); 
     const allboards = getAll('div.board-map');
+    for (const boardsel of boardsels) {
+      boardsel.classList.remove('selected');
+    }
+    el.classList.add('selected');
     for (const board of allboards) {
       board.style['display'] = 'none';
     }
     get('#' + name + '-board').style['display'] = 'block';
   }
 
-  displayBoard('qwerty');
-
-  const boardsels = getAll('div.board-sel');
-  for (const boardsel of boardsels) {
-    boardsel.onclick = () => {
-      displayBoard(boardsel.dataset.board);
-    }
-  }
+  const startingBoard = getSaved('boardsel', 'qwerty');
+  displayBoard(startingBoard, get('.board-sel[data-board="' + startingBoard + '"]'));
 
   function appendBoard(name, keys, length) {
     if (!length) length = 20;
@@ -36,7 +42,7 @@ function setupSampleBoards() {
       const board = get('#' + name + '-board')
       let row = null;
       for (const i of range(keys.length)) {
-        if ((i % 20) === 0) {
+        if ((i % length) === 0) {
           row = EL('div', {class: 'kb-row'});
           appendChildren(board, row);
         }
@@ -53,7 +59,7 @@ function setupSampleBoards() {
     }
   }
 
-  appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 20);
+  appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 8);
 
   if (KBINFO.layers) {
     const layers = range(KBINFO.layers);
