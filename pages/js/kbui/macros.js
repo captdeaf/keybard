@@ -24,11 +24,11 @@ const MACROS = (function setupMacros() {
     }
   }
 
-  function squishMacro(macro) {
+  function squishActions(actions) {
     // Recording starts as a series of purely keydown and keyups.
-    if (macro.actions.length < 2) return;
+    if (actions.length < 2) return actions;
     const squished = [];
-    const cur = macro.actions;
+    const cur = actions;
     if (cur.length > 0) {
       squished[0] = cur[0];
     }
@@ -69,23 +69,23 @@ const MACROS = (function setupMacros() {
         sidx = soff;
       }
     }
-    macro.actions = texted;
+    return texted;
   }
 
   function startMacroRecording(macro) {
-    macro.actions = [];
+    let actions = [];
     renderMacroFloat(macro);
     ACTION.start({
       keydown: (key, rawkey) => {
-        macro.actions.push({type: 'down', value: rawkey, str: key});
-        squishMacro(macro);
-        renderMacroFloat(macro);
+        actions.push({type: 'down', value: rawkey, str: key});
+        actions = squishActions(actions);
+        renderMacroFloat(macro, actions);
       },
       keyup: (key, rawkey) => {
         if (key.length !== 1) {
-          macro.actions.push({type: 'up', value: rawkey, str: key});
-          squishMacro(macro);
-          renderMacroFloat(macro);
+          actions.push({type: 'up', value: rawkey, str: key});
+          actions = squishActions(actions);
+          renderMacroFloat(macro, actions);
         }
       },
       end: () => {
@@ -97,23 +97,61 @@ const MACROS = (function setupMacros() {
     });
   }
 
-  function renderMacroFloat(macro) {
+  function getMacroActions() {
+    const parentEl = get('#float-macro-render')
+    const actionEls = findAll('[data-action]', parentEl);
+    const actions = [];
+    for (const el of actionEls) {
+      const act = el.dataset.action;
+      if (act === 'text') {
+        const inp = get('input', el);
+        actions.push({
+          type: act,
+          value: inp.value,
+        })
+      } else if (act === 'tap' || act === 'down' || act === 'up') {
+        actions.push({
+          type: act,
+          value: el.dataset.value,
+        })
+      }
+    }
+    return actions;
+  }
+
+  function renderMacroFloat(macro, actions) {
+    // Editable action: Add an 'X' to it, basically.
+    if (!actions) actions = macro.actions;
+    function EA(...args) {
+      const remover = EL('div', {class: 'removeMacro'}, 'X');
+      const children = [
+        remover,
+        EL(...args),
+      ];
+      const container = EL('div', {class: 'macro-action'}, children);
+      remover.onclick = () => {
+        container.replaceWith('');
+        macro.actions = renderMacroFloat(macro, getMacroActions());
+      };
+      return container;
+    }
     const rowkeys = [];
     rowkeys.push(EL('div', {class: 'kbdesc'}, '<span style="color: blue">Macro M' + macro.mid + ':</span>'));
-    for (const action of macro.actions) {
+    for (const action of actions) {
+      const classes = 'key kb-key key-macro key-' + action.type;
       if (action.type === 'text') {
-        rowkeys.push(EL('div', {class: "kbdesc"}, action.value));
+        rowkeys.push(EA('input', {type: 'text', 'data-action': 'text', value: action.value, class: "kbdesc"}));
       } else if (action.type === 'tap') {
-        rowkeys.push(EL('div', {class: 'key kb-key key-tap key-macro'},
+        rowkeys.push(EA('div', {class: classes, 'data-action': 'tap', 'data-value': action.value},
                         action.value));
       } else if (action.type === 'down') {
-        rowkeys.push(EL('div', {class: 'key kb-key key-down key-macro'},
+        rowkeys.push(EA('div', {class: classes, 'data-action': 'down', 'data-value': action.value},
                         'down\n' + action.value));
       } else if (action.type === 'up') {
-        rowkeys.push(EL('div', {class: 'key kb-key key-up key-macro'},
+        rowkeys.push(EA('div', {class: classes, 'data-action': 'up', 'data-value': action.value},
                        action.value + '\nup'));
       } else if (action.type === 'delay') {
-        rowkeys.push(EL('div', {class: 'key key-sleep key-macro'},
+        rowkeys.push(EA('div', {class: classes, 'data-action': 'delay'},
                         'sleep\n' + action.value + 'ms'));
       } else {
         console.log('wtf', action);
@@ -121,6 +159,10 @@ const MACROS = (function setupMacros() {
     }
     const floater = get('#float-macro');
     const floatbody = get('#float-macro-render');
+    get('.save', floater).onclick = () => {
+      macro.actions = getMacroActions();
+      KEYUI.refreshAllKeys();
+    }
 
     const recordbutton = get('.record', floater);
 
