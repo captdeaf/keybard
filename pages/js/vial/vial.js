@@ -49,7 +49,7 @@ const Vial = {
     // Vial protocol (int) and Keyboard ID (long long), little endian.
     const vial_kbid = await Vial.USB.sendVial(Vial.USB.CMD_VIAL_GET_KEYBOARD_ID, [], {unpack: 'IQ'});
     kbinfo.vial_proto = vial_kbid[0];
-    kbinfo.kbid = vial_kbid[1]
+    kbinfo.kbid = vial_kbid[1].toString();
 
     // Vial KB info is via an xz-compressed JSON blob. Fetched 32 bytes
     // at a time.

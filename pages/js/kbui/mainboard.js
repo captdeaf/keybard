@@ -10,8 +10,6 @@ const MAINBOARD = {
 };
 addInitializer('connected', () => {
   const keylayout = KBINFO.keylayout;
-  const newkeymap = deepCopy(KBINFO.keymap);
-  KBINFO.newkeymap = newkeymap;
 
   // keys[kmid] = {image: element, text: element};
   const keys = {};
@@ -90,10 +88,16 @@ addInitializer('connected', () => {
 
   function drawLayer(layerid) {
     MAINBOARD.layer = layerid;
-    const layerkeymap = newkeymap[layerid];
+    const layerkeymap = KBINFO.keymap[layerid];
+    const oldkeymap = BASE_KBINFO.keymap[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
       keys[kmid].image.dataset.key = layerkeymap[kmid];
       keys[kmid].image.dataset.bound = kmid;
+      if (layerkeymap[kmid] === oldkeymap[kmid]) {
+        keys[kmid].image.classList.remove('changed');
+      } else {
+        keys[kmid].image.classList.add('changed');
+      }
     }
 
     for (const layer of document.querySelectorAll('.layer')) {
