@@ -72,6 +72,15 @@
   text-justify: left;
 }
 
+.macro-action {
+  min-width: 64px;
+  text-align: middle;
+  display: flex;
+  flex-flow: column;
+  border: 1px solid black;
+  border-radius: 3px;
+}
+
 .key-down { background-color: #fdd; }
 .key-tap { background-color: #ddf; }
 .key-up { background-color: #dfd; }
