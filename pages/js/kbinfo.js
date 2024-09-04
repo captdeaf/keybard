@@ -19,7 +19,7 @@
 //
 ////////////////////////////////////
 
-const KBINFO = {
+let KBINFO = {
   layers: 16,
   macro_count: 50,
   keylayout: {},
@@ -29,7 +29,10 @@ const KBINFO = {
   extra: {},
 };
 
+let BASE_KBINFO;
+
 const CHANGES = {
+  // Queue and commit changes.
   todo: [],
   queue(desc, cb) {
     if (SETTINGS.instant) {
@@ -50,6 +53,8 @@ const CHANGES = {
     for (const el of findAll('.changed')) {
       el.classList.remove('changed');
     }
+
+    BASE_KBINFO = deepCopy(KBINFO);
   }
 };
 

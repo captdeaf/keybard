@@ -67,12 +67,12 @@ addInitializer('connected', () => {
 
   ACTION.onclick('[data-bind]', (target) => {
     let keystr = target.dataset.key;
-    if (target.dataset.bind === 'keymask') {
+    const mask = getMask();
+    if (mask !== 0 && target.dataset.bind === 'keymask') {
       const maskstr = KEY.stringify(getMask());
       keystr = maskstr.replace(/kc/, keystr);
     }
     if (selectedKey) {
-      console.log("Bind target", selectedKey, keystr);
       selectedKey.classList.add('changed');
       selectedKey.classList.remove('active');
       KBINFO.keymap[MAINBOARD.layer][parseInt(selectedKey.dataset.bound)] = keystr;

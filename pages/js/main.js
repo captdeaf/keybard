@@ -26,10 +26,12 @@ async function doStuff() {
 
   get('#active').style['display'] = 'flex';
 
+  console.log('kbinfo', KBINFO);
+  BASE_KBINFO = deepCopy(KBINFO);
+
   // Initialize KB UI
   runInitializers('connected');
 
-  console.log('kbinfo', KBINFO);
   KEYUI.refreshAllKeys();
 }
 
