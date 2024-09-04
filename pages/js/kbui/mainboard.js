@@ -5,11 +5,13 @@
 //  Display the connected keyboard.
 //
 ///////////////////////////////////
-function setupBoard() {
+const MAINBOARD = {
+  layer: 0,
+};
+addInitializer('connected', () => {
   const keylayout = KBINFO.keylayout;
   const newkeymap = deepCopy(KBINFO.keymap);
   KBINFO.newkeymap = newkeymap;
-  let selectedLayer = 0;
   let selectedKey = null;
 
   // keys[kmid] = {image: element, text: element};
@@ -34,12 +36,12 @@ function setupBoard() {
     ACTION.start({
       keySelect(keystr) {
         const kmid = keydata.id
-        const old = newkeymap[selectedLayer][kmid];
-        newkeymap[selectedLayer][kmid] = keystr;
+        const old = newkeymap[MAINBOARD.layer][kmid];
+        newkeymap[MAINBOARD.layer][kmid] = keystr;
         keydata.image.dataset.key = keystr;
         KEYUI.refreshAllKeys();
         CHANGES.queue('Remap ' + old + ' to ' + keystr, () => {
-          KBAPI.updateKey(selectedLayer, kmid, keystr);
+          KBAPI.updateKey(MAINBOARD.layer, kmid, keystr);
         });
         selectedKey.image.classList.add('changed');
         ACTION.clear()
@@ -126,7 +128,7 @@ function setupBoard() {
   
 
   function drawLayer(layerid) {
-    selectedLayer = layerid;
+    MAINBOARD.layer = layerid;
     const layerkeymap = newkeymap[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
       keys[kmid].image.dataset.key = layerkeymap[kmid];
@@ -135,7 +137,7 @@ function setupBoard() {
     for (const layer of document.querySelectorAll('.layer')) {
       layer.classList.remove('selected');
     }
-    document.querySelector(`[data-layerid="${selectedLayer}"]`)?.classList.add('selected');
+    document.querySelector(`[data-layerid="${MAINBOARD.layer}"]`)?.classList.add('selected');
 
     KEYUI.refreshAllKeys();
   }
@@ -156,6 +158,4 @@ function setupBoard() {
   appendChildren(layerSelection, ...children);
 
   drawLayer(0);
-};
-
-addInitializer('ui', setupBoard);
+});

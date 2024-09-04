@@ -6,13 +6,9 @@
 //
 ///////////////////////////////////
 
-const KEYUI = (function() {
+const KEYUI = {};
 
-////////////////////////////////////
-//
-//  refreshAllKeys: Update the contents of every .key in the page.
-//
-////////////////////////////////////
+addInitializer('load', () => {
   const KEY_DESCS = {
     layer: {
       MO:  ['MO', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
@@ -26,6 +22,8 @@ const KEYUI = (function() {
     'tapdance': {M: ['TD ', 'Tap Dance: ', 'key-tapdance']},
   };
 
+  // Given a key string, e.g: KC_A, KC_NO, LCTL(KC_A), etc,
+  // return a {label: 'LCTRL A', title: <onhover>}
   function getKeyContents(keystr) {
     let key = KEY.parseDesc(keystr);
     let title = keystr;
@@ -66,6 +64,11 @@ const KEYUI = (function() {
     }
   }
 
+  ////////////////////////////////////
+  //
+  //  refreshAllKeys: Update the contents of every .key in the page.
+  //
+  ////////////////////////////////////
   function refreshKey(keyimage) {
     if (keyimage.dataset.key) {
       const content = getKeyContents(keyimage.dataset.key);
@@ -74,17 +77,10 @@ const KEYUI = (function() {
     }
   }
 
-  function refreshAllKeys() {
+  KEYUI.refreshAllKeys = () => {
     const allKeys = getAll('.key');
     for (const key of allKeys) {
       refreshKey(key);
     }
-  }
-
-  return {
-    getContents: getKeyContents,
-    refreshAllKeys: refreshAllKeys,
   };
-})();
-
-addInitializer('ui', KEYUI.refreshAllKeys, 1000);
+});

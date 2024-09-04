@@ -6,9 +6,6 @@
 //
 ////////////////////////////////////
 
-// from keycodes.keycodes_v5 import keycodes_v5
-// from keycodes.keycodes_v6 import keycodes_v6
-
 const KEY = {
   KEYCODES_MAP: {},
   RAWCODES_MAP: {},
