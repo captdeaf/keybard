@@ -12,7 +12,6 @@ addInitializer('connected', () => {
   const keylayout = KBINFO.keylayout;
   const newkeymap = deepCopy(KBINFO.keymap);
   KBINFO.newkeymap = newkeymap;
-  let selectedKey = null;
 
   // keys[kmid] = {image: element, text: element};
   const keys = {};
@@ -20,40 +19,6 @@ addInitializer('connected', () => {
   function strDefault(val, i) {
     if (val) return val;
     return '' + i;
-  }
-
-  // Add an action when a key is selected. Whenever a key is clicked
-  // in the mainboard display, we expect a selected key to be chosen.
-  function selectKey(keydata) {
-    if (selectedKey !== null) {
-      selectedKey.image.classList.remove('active');
-      selectedKey = null;
-    }
-
-    selectedKey = keydata;
-    keydata.image.classList.add('active');
-
-    ACTION.start({
-      keySelect(keystr) {
-        const kmid = keydata.id
-        const old = newkeymap[MAINBOARD.layer][kmid];
-        newkeymap[MAINBOARD.layer][kmid] = keystr;
-        keydata.image.dataset.key = keystr;
-        KEYUI.refreshAllKeys();
-        CHANGES.queue('Remap ' + old + ' to ' + keystr, () => {
-          KBAPI.updateKey(MAINBOARD.layer, kmid, keystr);
-        });
-        selectedKey.image.classList.add('changed');
-        ACTION.clear()
-      },
-      cancel() {
-        selectedKey.image.classList.remove('active');
-        selectedKey = null;
-      },
-      clickNowhere() {
-        return false;
-      }
-    });
   }
 
   ////////////////////////////////////
@@ -78,10 +43,6 @@ addInitializer('connected', () => {
       image: keyimage,
       id: kmid,
       ...opts,
-    }
-
-    keyimage.onclick = (ev) => {
-      selectKey(keydata);
     }
 
     return keydata;
@@ -132,6 +93,7 @@ addInitializer('connected', () => {
     const layerkeymap = newkeymap[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
       keys[kmid].image.dataset.key = layerkeymap[kmid];
+      keys[kmid].image.dataset.bound = kmid;
     }
 
     for (const layer of document.querySelectorAll('.layer')) {

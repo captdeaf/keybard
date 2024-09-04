@@ -182,14 +182,7 @@ addInitializer('load', () => {
       if (action.type === 'keydown' ||
           action.type === 'keyup' ||
           action.type === 'tap') {
-        wrap.el.onclick = (ev) => {
-          ACTION.start({
-            keySelect(keystr) {
-              wrap.el.dataset.key = keystr;
-              KEYUI.refreshKey(wrap.el);
-            }
-          });
-        }
+        // TODO:  Rebind
       }
     }
     const floatbody = get('#float-macro-render');
