@@ -11,7 +11,7 @@
 //  - When any key with data-key is clicked, report it to GUI.assignKey
 //
 ////////////////////////////////////
-function setupSampleBoards() {
+addInitializer('connected', () => {
   const boardsels = getAll('div.board-sel');
   for (const boardsel of boardsels) {
     boardsel.onclick = (evt) => {
@@ -162,7 +162,4 @@ function setupSampleBoards() {
       alertUser('unknown dataset.bind', keyimage.dataset.bind);
     }
   }
-}
-
-// Don't run until site is loaded
-addInitializer('ui', setupSampleBoards, 500);
+});

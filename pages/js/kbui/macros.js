@@ -4,7 +4,9 @@
 //
 ////////////////////////////////////
 
-const MACROS = (function setupMacros() {
+const MACROS = {};
+
+addInitializer('load', () => {
   function describeMacro(mid, macro) {
     const texts = [];
     const otherwise = [];
@@ -35,7 +37,7 @@ const MACROS = (function setupMacros() {
     for (let idx = 1; idx < cur.length; idx++) {
       if (idx > 0)  {
         if ((cur[idx-1].value === cur[idx].value) &&
-            (cur[idx-1].type === 'down') && (cur[idx].type === 'up')) {
+            (cur[idx-1].type === 'keydown') && (cur[idx].type === 'keyup')) {
           squished[squished.length - 1] = {type: 'tap', value: cur[idx].value};
           continue;
         }
@@ -44,7 +46,7 @@ const MACROS = (function setupMacros() {
     }
     // Convert all single-character taps to texts.
     for (const act of squished) {
-      if ((act.type === 'down') && (act.str.length === 1)) {
+      if ((act.type === 'keydown') && (act.str.length === 1)) {
         act.type = 'text';
       }
     }
@@ -77,13 +79,13 @@ const MACROS = (function setupMacros() {
     renderMacroFloat(macro);
     ACTION.start({
       keydown: (key, rawkey) => {
-        actions.push({type: 'down', value: rawkey, str: key});
+        actions.push({type: 'keydown', value: rawkey, str: key});
         actions = squishActions(actions);
         renderMacroFloat(macro, actions);
       },
       keyup: (key, rawkey) => {
         if (key.length !== 1) {
-          actions.push({type: 'up', value: rawkey, str: key});
+          actions.push({type: 'keyup', value: rawkey, str: key});
           actions = squishActions(actions);
           renderMacroFloat(macro, actions);
         }
@@ -109,7 +111,7 @@ const MACROS = (function setupMacros() {
           type: act,
           value: inp.value,
         })
-      } else if (act === 'tap' || act === 'down' || act === 'up') {
+      } else if (act === 'tap' || act === 'keydown' || act === 'keyup') {
         actions.push({
           type: act,
           value: el.dataset.value,
@@ -119,107 +121,134 @@ const MACROS = (function setupMacros() {
     return actions;
   }
 
-  function renderMacroFloat(macro, actions) {
-    // Editable action: Add an 'X' to it, basically.
-    if (!actions) actions = macro.actions;
-    function EA(...args) {
-      const remover = EL('div', {class: 'removeMacro'}, 'X');
-      const children = [
-        remover,
-        EL(...args),
-      ];
-      const container = EL('div', {class: 'macro-action'}, children);
-      remover.onclick = () => {
-        container.replaceWith('');
-        macro.actions = renderMacroFloat(macro, getMacroActions());
-      };
-      return container;
+  function wrapAction(desc, ...args) {
+    const ret = {
+      el: EL(...args),
+    };
+    const remove = EL('div', {class: 'removeMacro'}, 'X');
+    ret.wrap = EL('div', {class: 'macro-action'}, [
+      EL('div', {class: 'describeMacro'}, desc),
+      remove,
+      ret.el,
+    ]);
+    remove.onclick = () => {
+      ret.wrap.replaceWith('');
+    };
+    return ret;
+  };
+
+  function renderAction(action) {
+    if (action.type === 'text') {
+      return wrapAction('text', 'input',
+                {
+                  type: 'text',
+                  value: action.value,
+                  placeholder: 'text'
+                },
+                '');
     }
-    const rowkeys = [];
-    rowkeys.push(EL('div', {class: 'kbdesc'}, '<span style="color: blue">Macro M' + macro.mid + ':</span>'));
+    if (action.type === 'keydown') {
+      return wrapAction('keydown', 'div',
+                        {class: 'key'},
+                        '');
+    }
+    if (action.type === 'tap') {
+      return wrapAction('tap', 'div',
+                        {class: 'key'},
+                        '');
+    }
+    if (action.type === 'keyup') {
+      return wrapAction('keyup', 'div',
+                        {class: 'key'},
+                        '');
+    }
+    if (action.type === 'delay') {
+      return wrapAction('text', 'input',
+                {
+                  type: 'text',
+                  value: action.value,
+                  placeholder: 'text'
+                },
+                '');
+    }
+  }
+
+  function renderMacroActions(macro, actions) {
+    const children = [];
+
     for (const action of actions) {
-      const classes = 'key kb-key key-macro key-' + action.type;
-      if (action.type === 'text') {
-        rowkeys.push(EA('input', {type: 'text', 'data-action': 'text', value: action.value, class: "kbdesc"}));
-      } else if (action.type === 'tap') {
-        rowkeys.push(EA('div', {class: classes, 'data-action': 'tap', 'data-value': action.value},
-                        action.value));
-      } else if (action.type === 'down') {
-        rowkeys.push(EA('div', {class: classes, 'data-action': 'down', 'data-value': action.value},
-                        'down\n' + action.value));
-      } else if (action.type === 'up') {
-        rowkeys.push(EA('div', {class: classes, 'data-action': 'up', 'data-value': action.value},
-                       action.value + '\nup'));
-      } else if (action.type === 'delay') {
-        rowkeys.push(EA('div', {class: classes, 'data-action': 'delay'},
-                        'sleep\n' + action.value + 'ms'));
-      } else {
-        console.log('wtf', action);
+      const wrap = renderAction(action);
+      children.push(wrap.wrap);
+      if (action.type === 'keydown' ||
+          action.type === 'keyup' ||
+          action.type === 'tap') {
+        wrap.el.onclick = (ev) => {
+          ACTION.start({
+            keySelect(keystr) {
+              wrap.el.dataset.key = keystr;
+              KEYUI.refreshKey(wrap.el);
+            }
+          });
+        }
       }
     }
-    const floater = get('#float-macro');
     const floatbody = get('#float-macro-render');
+    floatbody.innerHTML = '';
+    appendChildren(floatbody, ...children);
+  }
+
+  function renderMacroFloat(macro, actions) {
+    if (!actions) actions = macro.actions;
+    const floater = get('#float-macro');
+
+    for (const button of getAll('[data-add]', floater)) {
+      button.onclick = function() {
+        actions.push({
+          type: button.dataset.add,
+          value: '',
+        });
+        renderMacroActions(macro, actions);
+      }
+    }
+
+
     get('.save', floater).onclick = () => {
       macro.actions = getMacroActions();
       KEYUI.refreshAllKeys();
     }
 
-    const recordbutton = get('.record', floater);
-
-    recordbutton.onclick = () => {
-      startMacroRecording(macro);
-    }
-
-    floatbody.innerHTML = '';
-    appendChildren(floatbody, ...rowkeys);
     floater.style['display'] = 'flex';
   }
-  return {
-    describe: describeMacro,
-    renderBoard() {
-      const macroBoard = get('#macro-board');
-      const rows = [];
-      for (let idx = 0; idx < KBINFO.macro_count; idx++) {
-        const mid = idx;
-        const rowid = Math.floor(mid/10);
-        const keytpl = EL('div', {
-          id: "macro-" + mid,
-          'data-bind': 'key',
-          'data-key': 'M' + mid,
-          class: "key kb-key key-macro",
-        }, '');
-        keytpl.oncontextmenu = (ev) => {
-          renderMacroFloat(KBINFO.macros[mid]);
-          ev.preventDefault();
-          return false;
-        }
-        if (!rows[rowid]) {rows[rowid] = [];}
-        rows[rowid].push(keytpl);
-      }
-      const rowEls = [];
-      for (const row of rows) {
-        const rowEl = EL('div', {class: 'kb-row'});
-        appendChildren(rowEl, ...row);
-        rowEls.push(rowEl);
-      }
-      const header = EL('div', {class: 'macro-help'},
-                        "To edit macros, R-click one.");
-      appendChildren(macroBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
-    },
-    refreshBoard() {
-      const macros = KBINFO.macros;
-      for (let mid = 0; mid < macros.length; mid++) {
-        const macro = macros[mid];
-        const el = get('#macro-' + mid);
-        const desc = describeMacro(mid, macro);
-        el.innerHTML = desc.slice(0, 10);
-        el.setAttribute('title', desc);
-      }
-    },
-  };
-})();
 
-addInitializer('ui', () => {
-  MACROS.renderBoard();
-  MACROS.refreshBoard();
+  MACROS.describe = describeMacro;
+  addInitializer('connected', () => {
+    const macroBoard = get('#macro-board');
+    const rows = [];
+    for (let idx = 0; idx < KBINFO.macro_count; idx++) {
+      const mid = idx;
+      const rowid = Math.floor(mid/10);
+      const keytpl = EL('div', {
+        id: "macro-" + mid,
+        'data-bind': 'key',
+        'data-key': 'M' + mid,
+        class: "key kb-key key-macro",
+      }, '');
+      keytpl.oncontextmenu = (ev) => {
+        renderMacroFloat(KBINFO.macros[mid]);
+        ev.preventDefault();
+        return false;
+      }
+      if (!rows[rowid]) {rows[rowid] = [];}
+      rows[rowid].push(keytpl);
+    }
+    const rowEls = [];
+    for (const row of rows) {
+      const rowEl = EL('div', {class: 'kb-row'});
+      appendChildren(rowEl, ...row);
+      rowEls.push(rowEl);
+    }
+    const header = EL('div', {class: 'macro-help'},
+                      "To edit macros, R-click one.");
+    appendChildren(macroBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
+  });
 });

@@ -37,65 +37,52 @@
 //
 ////////////////////////////////////
 
-const ACTION = {
-  current: null,
-  start(action) {
-    ACTION.CURRENT = action;
-  },
-
-  clear() {
-    if (ACTION.CURRENT && ACTION.CURRENT.cancel) {
-      ACTION.CURRENT.cancel();
+const ACTION = {};
+addInitializer('load', () => {
+  // Map a key, e.g: from 'a' to 'KC_A'
+  function mapJSKeyPress(evt) {
+    if (KEY.FROMJS_MAP[evt.key]) {
+      return (KEY.FROMJS_MAP[evt.key]);
+    } else if (KEY.FROMJS_MAP[evt.code]) {
+      return KEY.FROMJS_MAP[evt.code];
+    } else {
+      alertUser("Unknown key map for JS->QMK", evt.key, evt.code);
     }
-    ACTION.CURRENT = null;
-  },
+  }
 
-  active() {
-    return ACTION.CURRENT !== null;
-  },
+  const clickables = [];
 
-  trigger(name, ...args) {
-    if (ACTION.CURRENT && ACTION.CURRENT[name]) {
-      const ret = ACTION.CURRENT[name](...args);
-      if (ret !== undefined) return ret;
-      return true;
-    }
-    return false;
-  },
+  ACTION.onclick = (selector, cb) => {
+    clickables.push({sel: selector, cb: cb});
+  };
 
-  setup() {
-    function mapJSKey(evt) {
-      if (KEY.FROMJS_MAP[evt.key]) {
-        return (KEY.FROMJS_MAP[evt.key]);
-      } else if (KEY.FROMJS_MAP[evt.code]) {
-        return KEY.FROMJS_MAP[evt.code];
-      } else {
-        alertUser("Unknown key map for JS->QMK", evt);
+  // Given a list of elements (e.g: from elementsFromPoint), return those
+  // of a given selector.
+  function listElementsMatching(elements, selector) {
+    elements = [...elements];
+    const ret = [];
+
+    for (const element of elements) {
+      if (element.matches(selector)) {
+        ret.push(element);
       }
     }
-    getAll('.record').map((rec) => {
-      rec.addEventListener('keydown', (evt) => {
-        if (ACTION.trigger('keydown', evt.key, mapJSKey(evt))) {
-          evt.preventDefault();
-          return false;
-        }
-      });
-      rec.addEventListener('keyup', (evt) => {
-        if (ACTION.trigger('keyup', evt.key, mapJSKey(evt))) {
-          evt.preventDefault();
-          return false;
-        }
-      });
-      rec.addEventListener('mouseout', (evt) => {
-        rec.blur();
-        if (ACTION.trigger('end')) {
-          evt.preventDefault();
-          return false;
-        }
-      });
-    });
-  },
-}
+    return ret;
+  }
 
-// Don't initialize action until the boards are loaded.
-addInitializer('ui', ACTION.setup);
+  // Bind all window clicks.
+  document.onclick = (evt) => {
+    const t = evt.target;
+    let els = document.elementsFromPoint(evt.clientX, evt.clientY);
+    for (const clickable of clickables) {
+      const found = listElementsMatching(els, clickable.sel);
+      if (found && found.length > 0) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        clickable.cb(evt.target);
+        return false;
+      }
+    }
+    return true;
+  };
+}, 0);

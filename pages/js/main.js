@@ -7,7 +7,7 @@
 ///////////////////////////////////
 
 function startJSVial() {
-  Site.init();
+  runInitializers('load');
 
   if (SETTINGS.playback) {
     setTimeout(() => { doStuff(); }, 100);
@@ -20,13 +20,16 @@ function startJSVial() {
 
 async function doStuff() {
   removeElement(get('#launch'));
+
   // TODO: other initialization paths: .vil upload, .kbi upload
   await initVial(KBINFO);
 
   get('#active').style['display'] = 'flex';
 
   // Initialize KB UI
-  runInitializers('ui');
+  runInitializers('connected');
+
+  KEYUI.refreshAllKeys();
 }
 
 async function initVial(kbinfo) {

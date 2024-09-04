@@ -147,7 +147,7 @@ function findParent(el, sel) {
 // Like find, but throws an error if not found.
 function getParent(el, sel) {
   const par = findParent(el, sel);
-  if (el === undefined) {
+  if (par === undefined) {
     console.log('Cannot find parent sel "' + sel + '"', el);
     throw 'Invalid selector "' + sel + '"';
   }
@@ -318,7 +318,8 @@ function range(num) {
 //
 ////////////////////////////////////
 const INITIALIZERS = {
-  ui: [],
+  load: [],
+  connected: [],
 };
 
 function addInitializer(type, func, order) {
