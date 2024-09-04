@@ -29,6 +29,7 @@ async function doStuff() {
   // Initialize KB UI
   runInitializers('connected');
 
+  console.log('kbinfo', KBINFO);
   KEYUI.refreshAllKeys();
 }
 
