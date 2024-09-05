@@ -7,6 +7,12 @@
 const MACROS = {};
 
 addInitializer('load', () => {
+  ////////////////////////////////////
+  //
+  //  Describe a macro. If there's any text in the macro, then just use that.
+  //  If no text, then return stringified version of keys.
+  //
+  ////////////////////////////////////
   function describeMacro(mid, macro) {
     const texts = [];
     const otherwise = [];
@@ -26,6 +32,12 @@ addInitializer('load', () => {
     }
   }
 
+  ////////////////////////////////////
+  //
+  //  Wrap a key action inside an element that can remove it,
+  //  and TBD: swap it w/ other elements, etc.
+  //
+  ////////////////////////////////////
   function wrapAction(desc, ...args) {
     const ret = {
       el: EL(...args),
@@ -47,6 +59,7 @@ addInitializer('load', () => {
                            {
                              class: 'key key-' + type,
                              'data-key': value,
+                             'data-macro': type,
                              'data-macro-bound': 'true',
                            },
                            '');
@@ -54,20 +67,32 @@ addInitializer('load', () => {
     return ret;
   }
 
+  ////////////////////////////////////
+  //
+  //  Generate elements for the individual actions.
+  //  text: input type=text
+  //  delay: input type=text 
+  //
+  ////////////////////////////////////
   function renderAction(action) {
     if (action.type === 'text') {
       return wrapAction('text', 'input',
                 {
+                  'data-macro': action.type,
                   type: 'text',
                   value: action.value,
+                  style: {width: '7em', resize: 'horizontal'},
                   placeholder: 'text'
                 },
                 '');
     }
     if (action.type === 'delay') {
-      return wrapAction('text', 'input',
+      return wrapAction('delay', 'input',
                 {
-                  type: 'text',
+                  'data-macro': action.type,
+                  type: 'number',
+                  maxlength: 5,
+                  style: {width: '5em'},
                   value: action.value,
                   placeholder: 'text'
                 },
@@ -79,7 +104,7 @@ addInitializer('load', () => {
   const floater = get('#float-macro');
   const floatbody = get('#float-macro-render');
   const floatname = get('#float-macro-name');
-  console.log("fb", floatbody);
+  const savebutton = get('#save-macro');
 
   ////////////////////////////////////
   //
@@ -105,7 +130,6 @@ addInitializer('load', () => {
   ////////////////////////////////////
   function renderMacroFloat(macro, actions) {
     if (!actions) actions = macro.actions;
-    floatbody.innerHTML = '';
     floatname.innerHTML = 'M' + macro.mid;
 
     for (const button of getAll('[data-add]', floater)) {
@@ -118,9 +142,52 @@ addInitializer('load', () => {
       }
     }
 
+    savebutton.dataset.mid = macro.mid;
+
     renderMacroActions(macro, actions);
     floater.style['display'] = 'flex';
   }
+
+  ////////////////////////////////////
+  //
+  //  Read the elements of floatbody, converting them into a set of actions.
+  //  If any are KC_NO (0), then log and ignore.
+  //
+  ////////////////////////////////////
+  function buildActionsFromFloat() {
+    const actions = [];
+    const children = findAll('[data-macro]', floatbody);
+
+    for (const kid of children) {
+      if (kid.dataset.macro === 'text') {
+        actions.push({type: 'text', value: kid.value});
+      } else if (kid.dataset.macro === 'delay') {
+        // TODO: validation?
+        actions.push({type: 'delay', value: parseInt(kid.value)});
+      } else {
+        if (kid.dataset.key !== 'KC_NO') {
+          actions.push({type: kid.dataset.macro, value: kid.dataset.key});
+        } else {
+          console.log("Ignoring KC_NO in macro");
+        }
+      }
+    }
+    return actions;
+  }
+
+  ////////////////////////////////////
+  //
+  //  Populate the macro with what's inside it.
+  //
+  ////////////////////////////////////
+  ACTION.onclick('#save-macro', (target) => {
+    // Save the macro.
+    const macro = KBINFO.macros[savebutton.dataset.mid];
+    macro.actions = buildActionsFromFloat();
+    floater.style['display'] = 'none';
+    CHANGES.queue('macro', KBAPI.updateMacros);
+    KEYUI.refreshAllKeys();
+  });
 
   ////////////////////////////////////
   //

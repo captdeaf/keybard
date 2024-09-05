@@ -33,21 +33,20 @@ let BASE_KBINFO;
 
 const CHANGES = {
   // Queue and commit changes.
-  todo: [],
+  todo: {},
   queue(desc, cb) {
     if (SETTINGS.instant) {
-      change.cb();
-      el.classList.remove('changed');
+      cb();
     } else {
-      CHANGES.todo.push({
+      CHANGES.todo[desc] = {
         desc: desc,
         cb: cb,
-      });
+      };
     }
   },
 
   commit() {
-    for (const change of CHANGES.todo) {
+    for (const [desc, change] of Object.entries(CHANGES.todo)) {
       change.cb();
     }
     for (const el of findAll('.changed')) {
@@ -64,7 +63,6 @@ let KBAPI = {
     const row = Math.floor(kmid / KBINFO.cols);
     const col = Math.floor(kmid % KBINFO.cols);
     const keymask = KEY.parse(keystr);
-    console.log("Change ", layer, row, col, keymask);
     await KBAPI.wrapped.updateKey(layer, row, col, keymask);
   },
   async updateMacros() {

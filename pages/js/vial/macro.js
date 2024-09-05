@@ -126,9 +126,10 @@ Vial.macro = (function() {
               dv.setUint8(offset++, textbuffer[idx]);
             }
           } else if (action.type === 'delay') {
+            dv.setUint8(offset++, QMK_EXT_ID);
             dv.setUint8(offset++, MACRO_DELAY);
-            dv.setUint8(offset++, (delay % 255) + 1);
-            dv.setUint8(offset++, Math.floor(delay / 255) + 1);
+            dv.setUint8(offset++, (action.value % 255) + 1);
+            dv.setUint8(offset++, Math.floor(action.value / 255) + 1);
           } else if (action.type in MACRO_IDS) {
             const value = KEY.parse(action.value);
             dv.setUint8(offset++, QMK_EXT_ID);
