@@ -121,9 +121,13 @@ addInitializer('connected', () => {
     }
 
     if (selectedKeyType === 'main') {
-      KBINFO.keymap[MAINBOARD.layer][parseInt(selectedKey.dataset.bound)] = keystr;
+      const kmid = parseInt(selectedKey.dataset.bound)
+      KBINFO.keymap[MAINBOARD.layer][kmid] = keystr;
       selectedKey.dataset.key = keystr;
       selectedKey.classList.add('changed');
+      CHANGES.queue('key' + kmid, () => {
+        KBAPI.updateKey(MAINBOARD.layer, kmid, keystr);
+      });
     } else if (selectedKeyType === 'macro') {
       selectedKey.dataset.key = keystr;
     }
