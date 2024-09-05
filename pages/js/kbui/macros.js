@@ -47,6 +47,7 @@ addInitializer('load', () => {
                            {
                              class: 'key key-' + type,
                              'data-key': value,
+                             'data-macro-bound': 'true',
                            },
                            '');
     KEYUI.refreshKey(ret.el);

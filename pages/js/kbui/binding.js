@@ -7,20 +7,21 @@
 ////////////////////////////////////
 
 addInitializer('connected', () => {
-  let selectedKey = null;
-  let selectedMacroKey = null;
 
-  ACTION.onclick('[data-bound]', (target) => {
-    selectedMacroKey = null;
-    selectedKey = target;
-    selectedKey.classList.add('active');
-  });
-
+  ////////////////////////////////////
+  //
+  //  Modifier keys in keyboard: SHIFT, CTRL, etc.
+  //  For binding keys to also send a modifier. Not individual
+  //  keys. To send SHIFT by itself, click the shift key. To send
+  //  SHIFT+K enable SHIFT modifier and click K key.
+  //
+  ////////////////////////////////////
   const mods = {
     SHIFT: false,
     CTRL: false,
     GUI: false,
     ALT: false,
+    // right-hand-side. No mixing of LCTRL + LALT.
     RHS: false,
   };
 
@@ -59,6 +60,8 @@ addInitializer('connected', () => {
       }
     }
 
+    // SHIFT is special: When enabled, show the 'shifted' version of
+    // every key on the sample boards.
     if (target.dataset.modifier === 'SHIFT') {
       if (enabled) {
         for (const key of shiftableKeys) {
@@ -72,30 +75,64 @@ addInitializer('connected', () => {
     }
   });
 
+  ////////////////////////////////////
+  //
+  //  The main logic for key selection.
+  //
+  //  1) A key that needs mapping is selected.
+  //    - main board
+  //    - macro key
+  //    - combo key
+  //    - tapdance key
+  //
+  //  2) A key on sample boards is selected.
+  //    - Mod Mask for all non-special keys.
+  //    - special keys: macro, tapdance, layer, custom
+  //
+  ////////////////////////////////////
+  let selectedKeyType = null;
+  let selectedKey = null;
+
+  function bindTargetKey(type, target) {
+    if (selectedKey) {
+      selectedKey.classList.remove('active');
+      selectedKey = null;
+    }
+    if (selectedKey === target) {
+      return;
+    }
+    selectedKeyType = type;
+    selectedKey = target;
+    selectedKey.classList.add('active');
+  }
+
+  ACTION.onclick('[data-bound]', (target) => {
+    bindTargetKey('main', target);
+  });
+
   ACTION.onclick('[data-bind]', (target) => {
+    if (!selectedKey) return;
+
     let keystr = target.dataset.key;
     const mask = getMask();
     if (mask !== 0 && target.dataset.bind === 'keymask') {
       const maskstr = KEY.stringify(getMask());
       keystr = maskstr.replace(/kc/, keystr);
     }
-    if (selectedKey) {
-      selectedKey.classList.add('changed');
-      selectedKey.classList.remove('active');
+
+    if (selectedKeyType === 'main') {
       KBINFO.keymap[MAINBOARD.layer][parseInt(selectedKey.dataset.bound)] = keystr;
       selectedKey.dataset.key = keystr;
-      KEYUI.refreshAllKeys();
-      selectedKey = null;
-      return;
+      selectedKey.classList.add('changed');
+    } else if (selectedKeyType === 'macro') {
+      selectedKey.dataset.key = keystr;
     }
-    if (selectedMacroKey) {
-      selectedMacroKey.dataset.key = keystr;
-      selectedMacroKey.classList.remove('active');
-    }
+    KEYUI.refreshKey(selectedKey);
+    selectedKey.classList.remove('active');
+    selectedKey = null;
   });
 
   ACTION.onclick('[data-macro-bound]', (target) => {
-    selectedMacroKey = target;
-    selectedMacroKey.classList.add('active');
+    bindTargetKey('macro', target);
   });
 });
