@@ -36,7 +36,9 @@
         </div>
       </div>
     </div>
-    <div id="floats">
+    <div id="floats" data-search="block">
+      <!-- Anything inside floats prevents elementsFromPoint from
+           propagating down. -->
     {{floats.html}}
     </div>
     <script type="text/javascript">
