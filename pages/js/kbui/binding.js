@@ -8,8 +8,10 @@
 
 addInitializer('connected', () => {
   let selectedKey = null;
+  let selectedMacroKey = null;
 
   ACTION.onclick('[data-bound]', (target) => {
+    selectedMacroKey = null;
     selectedKey = target;
     selectedKey.classList.add('active');
   });
@@ -46,10 +48,15 @@ addInitializer('connected', () => {
   ACTION.onclick('[data-modifier]', (target) => {
     const enabled = !mods[target.dataset.modifier];
     mods[target.dataset.modifier] = enabled;
+    const allKeys = getAll('[data-modifier="' + target.dataset.modifier + '"]');
     if (enabled) {
-      target.classList.add('selected');
+      for (const key of allKeys) {
+        key.classList.add('selected');
+      }
     } else {
-      target.classList.remove('selected');
+      for (const key of allKeys) {
+        key.classList.remove('selected');
+      }
     }
 
     if (target.dataset.modifier === 'SHIFT') {
@@ -79,6 +86,16 @@ addInitializer('connected', () => {
       selectedKey.dataset.key = keystr;
       KEYUI.refreshAllKeys();
       selectedKey = null;
+      return;
     }
+    if (selectedMacroKey) {
+      selectedMacroKey.dataset.key = keystr;
+      selectedMacroKey.classList.remove('active');
+    }
+  });
+
+  ACTION.onclick('[data-macro-bound]', (target) => {
+    selectedMacroKey = target;
+    selectedMacroKey.classList.add('active');
   });
 });

@@ -73,12 +73,21 @@
 }
 
 .macro-action {
+  position: relative;
   min-width: 64px;
   text-align: middle;
   display: flex;
   flex-flow: column;
   border: 1px solid black;
   border-radius: 3px;
+}
+
+.remove-macro {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  font-size: 12px;
+  color: red;
 }
 
 .key-down { background-color: #fdd; }

@@ -77,6 +77,8 @@ addInitializer('load', () => {
     }
   }
 
+  KEYUI.refreshKey = refreshKey;
+
   KEYUI.refreshAllKeys = () => {
     const allKeys = getAll('.key');
     for (const key of allKeys) {
