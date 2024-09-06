@@ -123,7 +123,7 @@ Vial.USB = lockValue({
     const alldata = [];
     if (!opts) opts = {};
     for (let i = 0; i < count; i++) {
-      const data = await Vial.USB.sendVial(Vial.PROTO.CMD_VIAL_DYNAMIC_ENTRY_OP, [cmd, i], opts);
+      const data = await Vial.USB.sendVial(Vial.USB.CMD_VIAL_DYNAMIC_ENTRY_OP, [cmd, i], opts);
       alldata.push(data);
     }
     return alldata;

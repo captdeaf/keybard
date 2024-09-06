@@ -24,7 +24,7 @@ Vial.macro = (function() {
   const QMK_EXT_ID = 1;
 
   return {
-    async getMacros(kbinfo) {
+    async get(kbinfo) {
       // Macros are stored as one big chunk of memory, at 28 bytes per fetch.
       // null-separated. In svalboard, it's 795 bytes.
       const macro_memory = await Vial.USB.getViaBuffer(
@@ -36,7 +36,7 @@ Vial.macro = (function() {
       const raw_macros = Vial.macro.split(kbinfo, macro_memory);
       kbinfo.macros = raw_macros.map((macro, mid) => Vial.macro.parse(kbinfo, mid, macro));
     },
-    async pushMacros(kbinfo) {
+    async push(kbinfo) {
       // Macros are stored as one big chunk of memory, at 28 bytes per fetch.
       // null-separated. In svalboard, it's 795 bytes.
       const raw = Vial.macro.dump(kbinfo.macros_size, kbinfo.macros);

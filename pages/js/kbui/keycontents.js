@@ -18,8 +18,8 @@ addInitializer('load', () => {
       OSL: ['OSL', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
       TO:  ['TO', 'Make layer default: ', 'key-layer key-layer-to'],
     },
-    'macro': {M: ['M ', 'Macro: ', 'key-macro']},
-    'tapdance': {M: ['TD ', 'Tap Dance: ', 'key-tapdance']},
+    'macro': {M: ['M', 'Macro: ', 'key-macro']},
+    'tapdance': {TD: ['TD', 'Tap Dance: ', 'key-tapdance']},
   };
 
   // Given a key string, e.g: KC_A, KC_NO, LCTL(KC_A), etc,
@@ -38,6 +38,13 @@ addInitializer('load', () => {
     }
     if (key.type === 'macro') {
       const d = MACROS.describe(key.idx, KBINFO.macros[key.idx]);
+      return {
+        text: d.slice(0, 10),
+        title: d,
+      }
+    }
+    if (key.type === 'tapdance') {
+      const d = TAPDANCE.describe(key.idx, KBINFO.tapdances[key.idx]);
       return {
         text: d.slice(0, 10),
         title: d,

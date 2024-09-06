@@ -60,7 +60,7 @@ addInitializer('load', () => {
                              class: 'key key-' + type,
                              'data-key': value,
                              'data-macro': type,
-                             'data-macro-bound': 'true',
+                             'data-div-bound': 'macro',
                            },
                            '');
     KEYUI.refreshKey(ret.el);
@@ -221,7 +221,7 @@ addInitializer('load', () => {
       appendChildren(rowEl, ...row);
       rowEls.push(rowEl);
     }
-    const header = EL('div', {class: 'macro-help'},
+    const header = EL('div', {class: 'board-help'},
                       "To edit macros, R-click one.");
     appendChildren(macroBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
   });

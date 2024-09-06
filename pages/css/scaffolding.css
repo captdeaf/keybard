@@ -176,6 +176,10 @@ label {
   flex-flow: column;
 }
 
+#float-tapdance {
+  height: 280px;
+}
+
 /* Floater buttons */
 .button-row {
   flex: 0 0 content;

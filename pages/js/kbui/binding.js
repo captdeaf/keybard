@@ -81,9 +81,10 @@ addInitializer('connected', () => {
   //
   //  1) A key that needs mapping is selected.
   //    - main board
-  //    - macro key
-  //    - combo key
-  //    - tapdance key
+  //    - 'div' key - updates the .div's data-key, that's it.
+  //      - combo key
+  //      - macro key
+  //      - tapdance key
   //
   //  2) A key on sample boards is selected.
   //    - Mod Mask for all non-special keys.
@@ -128,7 +129,7 @@ addInitializer('connected', () => {
       CHANGES.queue('key' + kmid, () => {
         KBAPI.updateKey(MAINBOARD.layer, kmid, keystr);
       });
-    } else if (selectedKeyType === 'macro') {
+    } else if (selectedKeyType === 'div') {
       selectedKey.dataset.key = keystr;
     }
     KEYUI.refreshKey(selectedKey);
@@ -136,7 +137,7 @@ addInitializer('connected', () => {
     selectedKey = null;
   });
 
-  ACTION.onclick('[data-macro-bound]', (target) => {
-    bindTargetKey('macro', target);
+  ACTION.onclick('[data-div-bound]', (target) => {
+    bindTargetKey('div', target);
   });
 });
