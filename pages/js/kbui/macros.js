@@ -132,21 +132,19 @@ addInitializer('load', () => {
     if (!actions) actions = macro.actions;
     floatname.innerHTML = 'M' + macro.mid;
 
-    for (const button of getAll('[data-add]', floater)) {
-      button.onclick = function() {
-        actions.push({
-          type: button.dataset.add,
-          value: button.dataset.value,
-        });
-        renderMacroActions(macro, actions);
-      }
-    }
-
     savebutton.dataset.mid = macro.mid;
 
     renderMacroActions(macro, actions);
     floater.style['display'] = 'flex';
   }
+
+  ACTION.onclick('[data-macro-add]', (target) => {
+    appendChildren(floatbody, renderAction({
+        type: target.dataset.macroAdd,
+        value: target.dataset.value,
+      }).wrap
+    );
+  });
 
   ////////////////////////////////////
   //
