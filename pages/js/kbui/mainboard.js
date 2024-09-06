@@ -32,7 +32,7 @@ addInitializer('connected', () => {
         width: Math.floor(opts.w * 25) + 'px',
         height: Math.floor(opts.h * 25) + 'px',
         top: Math.floor((opts.y * 32)) + 'px',
-        left: Math.floor((opts.x * 32)) + 'px',
+        left: Math.floor(((opts.x + 4) * 32) + 10) + 'px',
         position: 'absolute',
       },
     }, ' ');
@@ -82,8 +82,8 @@ addInitializer('connected', () => {
   appendChildren(board, ...children);
 
   // This allows us to center the board on screen.
-  board.style.width = `${bounds.right}px`;
-  board.style.height = `${bounds.bottom}px`;
+  board.style.width = `${bounds.right + 20}px`;
+  board.style.height = `${bounds.bottom + 20}px`;
   
 
   function drawLayer(layerid) {

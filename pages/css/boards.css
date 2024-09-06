@@ -6,6 +6,10 @@
   flex-direction: row;
   justify-content: center;
   gap: 3px;
+  border-bottom: 1px solid black;
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+  width: 100%;
 }
 
 #layer-selection .layer {
@@ -30,14 +34,36 @@
   flex: 1 1 auto;
 }
 
+#main {
+  flex: 4 4 auto;
+  height: 50%;
+  overflow: auto;
+}
+
 #mainboard-container {
-  padding: 10px;
-  flex: 4;
   display: flex;
+  flex-flow: column;
   justify-content: center;
   align-items: center;
 }
 
 #mainboard {
   position: relative;
+}
+
+#main-selection {
+  display: flex;
+  flex-flow: row;
+}
+
+.main-select {
+  padding: 5px;
+  margin-right: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.main-select.active {
+  background-color: yellow;
 }

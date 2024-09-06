@@ -18,7 +18,11 @@
       <div id="topbar-container">
         <div id="topbar">
           <div id="title" class="toggle-about">MENU/ABOUT</div>
-          <div id="layer-selection"></div>
+          <div id="main-selection">
+            <div class="main-select" data-target="mainboard-container" id="select-mainboard">Keyboard Map</div>
+            <div class="main-select" data-target="combo-container" id="select-combo">Combos</div>
+            <div class="main-select" data-target="keyoverride-container" id="select-keyoverride">Key Overrides</div>
+          </div>
           <div><button id="commit">COMMIT CHANGES</button></div>
         </div>
       </div>
@@ -27,8 +31,15 @@
       {{launch.html}}
       <div id='active' style="display: none;">
 
-        <div id="mainboard-container">
-          <div id="mainboard"></div>
+        <div id="main">
+          <div class="main-container" id="mainboard-container">
+            <div id="layer-selection"></div>
+            <div id="mainboard"></div>
+          </div>
+          <div class="main-container" id="combo-container">
+          </div>
+          <div class="main-container" id="keyoverride-container">
+          </div>
         </div>
 
         <div id="key-selection">

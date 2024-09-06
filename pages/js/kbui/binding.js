@@ -21,6 +21,8 @@ addInitializer('connected', () => {
     CTRL: false,
     GUI: false,
     ALT: false,
+    // Mod tap. Turns LCTRL(kc) into LCTL_T(kc)
+    MTAP: false,
     // right-hand-side. No mixing of LCTRL + LALT.
     RHS: false,
   };
@@ -31,6 +33,7 @@ addInitializer('connected', () => {
     ALT: 0x0400,
     GUI: 0x0800,
     RHS: 0x1000,
+    MTAP: 0x2000,
   };
 
   function getMask() {

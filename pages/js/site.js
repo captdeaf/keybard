@@ -77,4 +77,33 @@ addInitializer('load', () => {
   get('#commit').onclick = () => {
     CHANGES.commit();
   };
+
+  // Main container selection: mainboard, combos, key overrides.
+  const allTabs = getAll('.main-select');
+  const allContainers = getAll('.main-container');
+
+  function selectTab(target) {
+    for (const tab of allTabs) {
+      if (tab.dataset.target === target) {
+        tab.classList.add('active');
+      } else {
+        tab.classList.remove('active');
+      }
+    }
+    for (const container of allContainers) {
+      if (container.id === target) {
+        container.style.display = 'flex';
+      } else {
+        container.style.display = 'none';
+      }
+    }
+    setSaved('main-container', target);
+  }
+  for (const tab of allTabs) {
+    tab.onclick = () => { selectTab(tab.dataset.target); };
+  }
+
+  addInitializer('connected', () => {
+    selectTab(getSaved('main-container', 'mainboard-container'));
+  });
 });
