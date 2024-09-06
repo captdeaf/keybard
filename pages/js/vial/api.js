@@ -15,6 +15,6 @@ Vial.api = {
                     ...BE16(keymask)]);
   },
   async updateMacros(kbinfo) {
-    await Vial.macro.pushMacros(kbinfo);
-  }
+    await Vial.macro.push(kbinfo);
+  },
 };
