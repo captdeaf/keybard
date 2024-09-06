@@ -67,3 +67,16 @@
 .main-select.active {
   background-color: yellow;
 }
+
+#combo-container {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.combo-group {
+  display: flex;
+  flex-flow: row;
+  margin-left: 20px;
+  flex: 5 5 content;
+}

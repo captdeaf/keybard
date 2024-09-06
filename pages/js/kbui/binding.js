@@ -114,6 +114,10 @@ addInitializer('connected', () => {
     bindTargetKey('main', target);
   });
 
+  ACTION.onclick('[data-combo]', (target) => {
+    bindTargetKey('combo', target);
+  });
+
   ACTION.onclick('[data-bind]', (target) => {
     if (!selectedKey) return;
 
@@ -134,6 +138,15 @@ addInitializer('connected', () => {
       });
     } else if (selectedKeyType === 'div') {
       selectedKey.dataset.key = keystr;
+    } else if (selectedKeyType === 'combo') {
+      const cmbid = selectedKey.dataset.cmbid;
+      const combo = KBINFO.combos[cmbid];
+      const idx = selectedKey.dataset.combo;
+      combo[idx] = keystr;
+      selectedKey.dataset.key = keystr;
+      CHANGES.queue('combo' + cmbid, () => {
+        KBAPI.updateCombo(cmbid);
+      });
     }
     KEYUI.refreshKey(selectedKey);
     selectedKey.classList.remove('active');

@@ -20,4 +20,7 @@ Vial.api = {
   async updateTapdance(kbinfo, tdid) {
     await Vial.tapdance.push(kbinfo, tdid);
   },
+  async updateCombo(kbinfo, cmbid) {
+    await Vial.combo.push(kbinfo, cmbid);
+  }
 };
