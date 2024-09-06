@@ -32,6 +32,7 @@ const Vial = {
 
     // Get various memory buffers:
     await Vial.macro.get(kbinfo);
+    await Vial.combo.get(kbinfo);
     await Vial.tapdance.get(kbinfo);
 
     // await Vial.getKeyBuffers(kbinfo);

@@ -72,10 +72,14 @@ let KBAPI = {
   async updateTapdance(tdid) {
     await KBAPI.wrapped.updateTapdance(KBINFO, tdid);
   },
+  async updateCombo(cmbid) {
+    await KBAPI.wrapped.updateCombo(KBINFO, cmbid);
+  },
 };
 
 KBAPI.wrapped = {
   async updateKey() {},
   async updateMacros() {},
   async updateTapdance() {},
+  async updateCombo() {},
 }
