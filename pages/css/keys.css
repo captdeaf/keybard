@@ -117,7 +117,7 @@
 /* Keyboard display for keymap bindings. */
 #key-selection {
   background-color: #ccc;
-  flex: 6;
+  flex: 1 1 auto;
 }
 
 .board-map {
@@ -136,7 +136,8 @@
 }
 
 .board-sel {
-  flex: 0 0 content;
+  cursor: pointer;
+  flex: 4 0 content;
   padding: 0.2em;
   border: 2px solid #bbb;
   border-radius: 3px;
