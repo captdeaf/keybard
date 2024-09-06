@@ -29,15 +29,16 @@ Vial.tapdance = (function() {
         });
       });
     },
-    async push(kbinfo, tapdance) {
+    async push(kbinfo, tdid) {
+      const tapdance = kbinfo.tapdances[tdid];
       await Vial.USB.sendVial(Vial.USB.CMD_VIAL_DYNAMIC_ENTRY_OP, [
         Vial.USB.DYNAMIC_VIAL_TAP_DANCE_SET,
         tapdance.tdid,
-        ...LE(KEY.parse(tapdance.tap)),
-        ...LE(KEY.parse(tapdance.hold)),
-        ...LE(KEY.parse(tapdance.doubletap)),
-        ...LE(KEY.parse(tapdance.taphold)),
-        ...LE(tapdance.tapms),
+        ...LE16(KEY.parse(tapdance.tap)),
+        ...LE16(KEY.parse(tapdance.hold)),
+        ...LE16(KEY.parse(tapdance.doubletap)),
+        ...LE16(KEY.parse(tapdance.taphold)),
+        ...LE16(tapdance.tapms),
       ]);
     },
   };

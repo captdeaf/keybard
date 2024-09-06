@@ -14,7 +14,6 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   function describeTapdance(tdid, tapdance) {
-    console.log('describing', tdid, tapdance);
     const ret = ['TD(' + tdid + ')'];
     for (const k of ['tap', 'hold', 'doubletap', 'taphold']) {
       if (tapdance[k]) ret.push(KEY.parseDesc(tapdance[k]).str);
@@ -36,7 +35,7 @@ addInitializer('load', () => {
 
   const divs = {};
 
-  let editTD = 0;
+  let editID = 0;
 
   ////////////////////////////////////
   //
@@ -71,7 +70,7 @@ addInitializer('load', () => {
     tapms.innerHTML = '';
     appendChildren(tapms, divs['tapms']);
 
-    editTD = tapdance.tdid;
+    editID = tapdance.tdid;
 
     floater.style['display'] = 'flex';
   }
@@ -82,11 +81,15 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   ACTION.onclick('#float-tapdance-save', (target) => {
-    const tapdance = KBINFO.tapdances[editTD];
+    const tapdance = KBINFO.tapdances[editID];
     for (const [type, el] of Object.entries(tdtypemap)) {
       tapdance[type] = divs[type].dataset.key;
     }
     tapdance['tapms'] = parseInt(divs['tapms'].value);
+    get('#tapdance-' + editID).classList.add('changed');
+    CHANGES.queue('TD' + editID, () => {
+      KBAPI.updateTapdance(editID);
+    });
     KEYUI.refreshAllKeys();
   });
 

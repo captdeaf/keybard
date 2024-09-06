@@ -69,9 +69,13 @@ let KBAPI = {
     // macros is always shoved as a big block of data.
     await KBAPI.wrapped.updateMacros(KBINFO);
   },
+  async updateTapdance(tdid) {
+    await KBAPI.wrapped.updateTapdance(KBINFO, tdid);
+  },
 };
 
 KBAPI.wrapped = {
   async updateKey() {},
   async updateMacros() {},
+  async updateTapdance() {},
 }
