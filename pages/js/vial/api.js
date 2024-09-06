@@ -17,4 +17,7 @@ Vial.api = {
   async updateMacros(kbinfo) {
     await Vial.macro.push(kbinfo);
   },
+  async updateTapdance(kbinfo, tdid) {
+    await Vial.tapdance.push(kbinfo, tdid);
+  },
 };
