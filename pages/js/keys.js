@@ -25,7 +25,7 @@ const KEY = {
 
     KEYCODES_SPECIAL = [
         K('KC_NO', ' ', {title: 'Do nothing'}),
-        K('KC_TRNS', '▽',  { alias: ['KC_TRANSPARENT'], title: "Transparent - uses default layer" }),
+        K('KC_TRNS', '▽',  { alias: ['KC_TRANSPARENT'], title: "Transparent - uses a lower active layer" }),
     ];
 
     KEYCODES_BASIC_NUMPAD = [
