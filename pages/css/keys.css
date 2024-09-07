@@ -21,13 +21,11 @@
   background-color: #e5e5e5;
   border-radius: var(--key-border-radius);
   height: 30px;
-  min-width: 30px;
-  max-width: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 2px;
-  font-size: 60%;
+  font-size: 1vw;
   cursor: pointer;
   text-align: center;
   line-height: normal;
@@ -191,8 +189,17 @@
   flex-wrap: wrap;
 }
 
-.kb-key { flex: 1 1 auto; }
-.kb-blank { flex: 1 1 auto; }
+.kb-key {
+  flex: 1 1 auto;
+  min-width: 30px;
+  max-width: 120px;
+}
+
+.kb-blank {
+  flex: 1 1 auto;
+  min-width: 30px;
+  max-width: 120px;
+}
 
 /* These are for relative key sizes. e.g: spacebar is the width of 8 normal
  * keys. */

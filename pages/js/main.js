@@ -23,6 +23,7 @@ async function doStuff() {
 
   // TODO: other initialization paths: .vil upload, .kbi upload
   await initVial(KBINFO);
+  // await initUploadKBInfo(WKB);
 
   get('#active').style['display'] = 'flex';
 
@@ -33,6 +34,14 @@ async function doStuff() {
   runInitializers('connected');
 
   KEYUI.refreshAllKeys();
+}
+
+async function initUploadKBInfo(kbinfo) {
+    // Regenerate keycodes for macros and features.
+    await KEY.generateAllKeycodes(kbinfo);
+    // Visual layout.
+    await Vial.kb.getKeyLayout(kbinfo);
+    KBINFO = kbinfo;
 }
 
 async function initVial(kbinfo) {

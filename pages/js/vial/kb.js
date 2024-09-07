@@ -88,10 +88,13 @@ Vial.kb = (function() {
       };
 
       const keylayout = {};
+      const cluster = {
+      };
       for (var r = 0; r < klayout.length; r++) {
         for (var c = 0; c < klayout[r].length; c++) {
           const item = klayout[r][c]
           if (typeof(item) !== 'string') {
+            const tmp = Object.assign({}, item);
             if ('x' in item) {
               cur.x += item.x;
             }
@@ -108,9 +111,29 @@ Vial.kb = (function() {
             } else {
               cur.h = 1;
             }
-            // Object.assign(cur, item);
+            if ('rx' in item) {
+              cluster.x = item.rx;
+            }
+            if ('ry' in item) {
+              cluster.y = item.ry;
+            }
+            if ('rx' in item || 'ry' in item) {
+              cur.x = cluster.x;
+              cur.y = cluster.y;
+              if ('y' in item) {
+                cur.y += item.y;
+              }
+              if ('x' in item) {
+                cur.x += item.x;
+              }
+            }
+            delete tmp.x;
+            delete tmp.y;
+            delete tmp.w;
+            delete tmp.h;
+            Object.assign(cur, tmp);
           } else {
-            const rc = item.split(',');
+            const rc = item.split("\n")[0].split(',');
             const [row, col] = [parseInt(rc[0]), parseInt(rc[1])];
             const kmid = (row * kbinfo.cols) + col;
             keylayout[kmid] = {
@@ -120,6 +143,8 @@ Vial.kb = (function() {
               ...cur
             };
             cur.x += cur.w;
+            cur.w = 1;
+            cur.h = 1;
           }
         }
         cur.y += cur.h;

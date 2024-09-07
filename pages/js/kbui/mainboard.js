@@ -25,16 +25,20 @@ addInitializer('connected', () => {
   //
   ///////////////////////////////////
   function renderKey(kmid, opts) {
+    const style = {
+      width: (opts.w * 3 + ((opts.w - 1)/2)) + 'vw',
+      height: (opts.h * 3 + ((opts.h - 1)/2)) + 'vw',
+      top: ((opts.y) * 3.5) + 'vw',
+      left: ((opts.x) * 3.5) + 'vw',
+      position: 'absolute',
+    };
+    if (opts.r) {
+      style.transform = 'rotate(' + opts.r + 'deg)';
+    }
     const keyimage = EL('div', {
       class: 'key',
       id: kmid,
-      style: {
-        width: Math.floor(opts.w * 25) + 'px',
-        height: Math.floor(opts.h * 25) + 'px',
-        top: Math.floor((opts.y * 32)) + 'px',
-        left: Math.floor(((opts.x + 4) * 32) + 10) + 'px',
-        position: 'absolute',
-      },
+      style: style,
     }, ' ');
 
     const keydata = {
@@ -66,6 +70,7 @@ addInitializer('connected', () => {
 
   for (const [kmid, key] of Object.entries(keylayout)) {
     const keydata = renderKey(kmid, key);
+    keydata.image.dataset.foo = JSON.stringify(key);
     keys[kmid] = keydata;
 
     const top = parseInt(keydata.image.style.top, 10);
@@ -82,8 +87,8 @@ addInitializer('connected', () => {
   appendChildren(board, ...children);
 
   // This allows us to center the board on screen.
-  board.style.width = `${bounds.right + 20}px`;
-  board.style.height = `${bounds.bottom + 20}px`;
+  board.style.width = `${bounds.right}vw`;
+  board.style.height = `${bounds.bottom}vw`;
   
 
   function drawLayer(layerid) {
