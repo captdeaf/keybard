@@ -119,41 +119,6 @@
   flex: 1 1 auto;
 }
 
-.board-map {
-  position: relative;
-  padding: 4px;
-  width: 100%;
-}
-
-#board-selection {
-  margin-left: 1em;
-  display: flex;
-  flex-flow: row;
-  padding: 4px;
-  width: 100%;
-  overflow: auto;
-}
-
-.board-sel {
-  cursor: pointer;
-  flex: 4 0 content;
-  padding: 0.2em;
-  border: 2px solid #bbb;
-  border-radius: 3px;
-  margin-left: 4px;
-  background-color: #ddd;
-  color: black;
-  font-size: 8pt;
-}
-
-.board-sel.selected {
-  background-color: #ddf;
-}
-
-.board-sel-end {
-  flex: 1 1 auto;
-}
-
 /* A 'keyboard' rendering consists of:
  *
  * A kb-board: a row of kb-groups.

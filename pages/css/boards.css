@@ -80,3 +80,44 @@
   margin-left: 20px;
   flex: 5 5 content;
 }
+
+/* The sample boards at the bottom. */
+.board-map {
+  position: relative;
+  padding: 4px;
+  width: 100%;
+  margin-bottom: 4.5vw;
+}
+
+#board-selection {
+  position: absolute;
+  bottom: 5px;
+  height: 4vw;
+  margin-left: 1em;
+  display: flex;
+  flex-flow: row;
+  padding: 4px;
+  width: 100%;
+  overflow: auto;
+}
+
+.board-sel {
+  cursor: pointer;
+  flex: 4 0 content;
+  padding: 0.2em;
+  border: 2px solid #bbb;
+  border-radius: 3px;
+  margin-left: 4px;
+  background-color: #ddd;
+  color: black;
+  font-size: 8pt;
+}
+
+.board-sel.selected {
+  background-color: #ddf;
+}
+
+.board-sel-end {
+  flex: 1 1 auto;
+}
+
