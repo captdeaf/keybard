@@ -3,7 +3,7 @@
 .kbdesc {
   min-width: 30px;
   max-width: 120px;
-  height: 30px;
+  height: 3.5vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,7 +20,8 @@
   position: relative;
   background-color: #e5e5e5;
   border-radius: var(--key-border-radius);
-  height: 30px;
+  height: 3vw;
+  min-width: 3vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -179,7 +180,7 @@
 }
 
 .kb-row {
-  height: 40px;
+  min-height: 3.5vw;
   display: flex;
   flex-flow: row;
   flex: 1 1 auto;
