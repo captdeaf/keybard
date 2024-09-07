@@ -59,7 +59,9 @@ addInitializer('connected', () => {
     }
   }
 
-  appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 8);
+  if (KBINFO.custom_keycodes) {
+    appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 8);
+  }
 
   if (KBINFO.layers) {
     const layers = range(KBINFO.layers);
