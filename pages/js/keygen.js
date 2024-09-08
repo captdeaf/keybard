@@ -124,7 +124,7 @@ const CODEMAP = {
   "80": "KC_LEFT",
   "81": "KC_DOWN",
   "82": "KC_UP",
-  "5": "QMK_LM_SHIFT",
+  "5": "KC_B",
   "6": "KC_C",
   "9": "KC_F",
   "10": "KC_G",
@@ -143,7 +143,7 @@ const CODEMAP = {
   "28": "KC_Y",
   "29": "KC_Z",
   "30": "KC_1",
-  "31": "QMK_LM_MASK",
+  "31": "KC_2",
   "32": "KC_3",
   "33": "KC_4",
   "34": "KC_5",
@@ -5742,18 +5742,6 @@ const KEYMAP = {
     "str": "QK_KB",
     "code": 0x7e00,
     "title": "QK_KB"
-  },
-  "QMK_LM_SHIFT": {
-    "qmkid": "QMK_LM_SHIFT",
-    "str": "QMK_LM_SHIFT",
-    "code": 0x0005,
-    "title": "QMK_LM_SHIFT"
-  },
-  "QMK_LM_MASK": {
-    "qmkid": "QMK_LM_MASK",
-    "str": "QMK_LM_MASK",
-    "code": 0x001f,
-    "title": "QMK_LM_MASK"
   },
   "M0": {
     "qmkid": "M0",
@@ -14529,7 +14517,7 @@ const KEYALIASES = {
   "KC_DOWN": "KC_DOWN",
   "KC_UP": "KC_UP",
   "KC_A": "KC_A",
-  "KC_B": "QMK_LM_SHIFT",
+  "KC_B": "KC_B",
   "KC_C": "KC_C",
   "KC_D": "KC_D",
   "KC_E": "KC_E",
@@ -14555,7 +14543,7 @@ const KEYALIASES = {
   "KC_Y": "KC_Y",
   "KC_Z": "KC_Z",
   "KC_1": "KC_1",
-  "KC_2": "QMK_LM_MASK",
+  "KC_2": "KC_2",
   "KC_3": "KC_3",
   "KC_4": "KC_4",
   "KC_5": "KC_5",
@@ -14947,8 +14935,6 @@ const KEYALIASES = {
   "FN_MO13": "FN_MO13",
   "FN_MO23": "FN_MO23",
   "QK_KB": "USER00",
-  "QMK_LM_SHIFT": "QMK_LM_SHIFT",
-  "QMK_LM_MASK": "QMK_LM_MASK",
   "M0": "M0",
   "TD(0)": "TD(0)",
   "M1": "M1",

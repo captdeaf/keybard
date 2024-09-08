@@ -30,7 +30,7 @@ addInitializer('load', () => {
     if (key.title) {
       title = title + ': ' + key.title;
     }
-    if (key.str) {
+    if (key.str !== undefined) {
       return {
         text: key.str,
         title: title,
