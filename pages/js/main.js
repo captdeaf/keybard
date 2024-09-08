@@ -37,11 +37,11 @@ async function doStuff() {
 }
 
 async function initUploadKBInfo(kbinfo) {
+    KBINFO = kbinfo;
     // Regenerate keycodes for macros and features.
     await KEY.generateAllKeycodes(kbinfo);
     // Visual layout.
     await Vial.kb.getKeyLayout(kbinfo);
-    KBINFO = kbinfo;
 }
 
 async function initVial(kbinfo) {
