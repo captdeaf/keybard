@@ -1365,8 +1365,10 @@ const KEY = {
       const maskstr = KEY.RAWCODES_MAP[modmask].qmkid;
       if (maskstr.match(/^(\w+)\(kc\)/)) {
         return maskstr.replace(/\(kc\)/, '(' + kcstr + ')');
+      } else if (keyid === 0) {
+        return maskstr;
       } else {
-        return maskstr + '(' + kcstr + ')';
+        return '0x' + keynum.toString(16).padStart(4, '0');
       }
     } else {
       console.log("err wtf?", keynum, keyid, modmask);
@@ -1444,6 +1446,12 @@ const KEY = {
       const key = KEY.KEYCODES_MAP[keystr];
       return {
         type: 'key', str: key.str, title: key.title,
+      };
+    }
+    if (keystr.match(/^0x/)) {
+      return {
+        type: 'key',
+        str: keystr,
       };
     }
     // Unknown
