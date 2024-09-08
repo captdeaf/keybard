@@ -18,10 +18,10 @@ addInitializer('connected', () => {
   ///////////////////////////////////
   function renderKey(kmid, opts) {
     const style = {
-      width: (opts.w * 3 + ((opts.w - 1)/2)) + 'vw',
-      height: (opts.h * 3 + ((opts.h - 1)/2)) + 'vw',
-      top: ((opts.y) * 3.5) + 'vw',
-      left: ((opts.x) * 3.5) + 'vw',
+      width: (opts.w * 30 + ((opts.w - 1)*5)) + 'px',
+      height: (opts.h * 30 + ((opts.h - 1)*5)) + 'px',
+      top: ((opts.y) * 35) + 'px',
+      left: ((opts.x) * 35) + 'px',
       position: 'absolute',
     };
     if (opts.r) {
@@ -83,8 +83,8 @@ addInitializer('connected', () => {
   appendChildren(board, ...children);
 
   // This allows us to center the board on screen.
-  board.style.width = `${bounds.right}vw`;
-  board.style.height = `${bounds.bottom}vw`;
+  board.style.width = `${bounds.right}px`;
+  board.style.height = `${bounds.bottom}px`;
   
   ////////////////////////////////////
   //

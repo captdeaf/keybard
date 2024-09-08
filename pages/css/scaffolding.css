@@ -16,7 +16,7 @@ body {
   -webkit-touch-callout: none;
   -ms-touch-callout: none;
   margin: 0;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   font-family: Lato, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
@@ -80,7 +80,7 @@ body {
   z-index: 1000;
   top: 5em;
   left: 5em;
-  width: 80vw;
+  width: 80%;
   max-width: 40em;
   text-wrap: auto;
   display: inline-block;
@@ -167,7 +167,7 @@ label {
   position: fixed;
   top: 4em;
   left: 4em;
-  max-width: 80vw;
+  max-width: 80%;
   flex-shrink: 1;
   min-height: 5vh;
   height: 20%;

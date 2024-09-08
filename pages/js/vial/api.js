@@ -22,5 +22,8 @@ Vial.api = {
   },
   async updateCombo(kbinfo, cmbid) {
     await Vial.combo.push(kbinfo, cmbid);
-  }
+  },
+  async updateKeyoverride(kbinfo, koid) {
+    await Vial.key_override.push(kbinfo, koid);
+  },
 };
