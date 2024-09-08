@@ -16,4 +16,4 @@ def alias(qmkid, *aliases):
 def Map(qmkid, code):
     custom_codes[code] = qmkid
 
-# K('KC_A', 'Z', 'From A to Z')
+K('QK_REPEAT_KEY', 'Repeat', 'Pete and Repeat ...')

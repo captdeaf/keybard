@@ -121,6 +121,10 @@
   flex: 1 1 auto;
 }
 
+.layer-list-head {
+  display: inline-block;
+}
+
 /* Key Override table */
 
 #keyoverride-table {

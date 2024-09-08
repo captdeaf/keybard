@@ -56,7 +56,7 @@ addInitializer('connected', () => {
   //  labels and titles.
   //
   ////////////////////////////////////
-  function appendBoard(name, keys, length) {
+  function appendBoard(name, keys, length, extra) {
     if (!length) length = 20;
     if (keys && keys.length > 0) {
       const board = allboards[name].container;
@@ -65,10 +65,13 @@ addInitializer('connected', () => {
         if ((i % length) === 0) {
           row = EL('div', {class: 'kb-row'});
           appendChildren(board, row);
+          if (extra) {
+            appendChildren(row, extra);
+          }
         }
         appendChildren(row, EL('div',
           {
-            class: 'key large',
+            class: 'key large kbdesc',
             'data-bind': 'key',
             'data-key': keys[i],
             title: keys[i],
@@ -89,12 +92,17 @@ addInitializer('connected', () => {
     const layers = range(KBINFO.layers);
 
     // Layers: MO (Momentarily)
-    appendBoard('layer', layers.map((i) => 'MO(' + i + ')'));
-    appendBoard('layer', layers.map((i) => 'DF(' + i + ')'));
-    appendBoard('layer', layers.map((i) => 'TG(' + i + ')'));
-    appendBoard('layer', layers.map((i) => 'TT(' + i + ')'));
-    appendBoard('layer', layers.map((i) => 'OSL(' + i + ')'));
-    appendBoard('layer', layers.map((i) => 'TO(' + i + ')'));
+    function label(text) {
+      return EL('div', {
+        class: 'kbdesc layer-list-head',
+      }, text);
+    }
+    appendBoard('layer', layers.map((i) => 'MO(' + i + ')'), 16, label('MO'));
+    appendBoard('layer', layers.map((i) => 'DF(' + i + ')'), 16, label('DF'));
+    appendBoard('layer', layers.map((i) => 'TG(' + i + ')'), 16, label('TG'));
+    appendBoard('layer', layers.map((i) => 'TT(' + i + ')'), 16, label('TT'));
+    appendBoard('layer', layers.map((i) => 'OSL(' + i + ')'), 16, label('OSL'));
+    appendBoard('layer', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
   }
 
 });

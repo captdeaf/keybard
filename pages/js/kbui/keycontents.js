@@ -30,12 +30,6 @@ addInitializer('load', () => {
     if (key.title) {
       title = title + ': ' + key.title;
     }
-    if (key.str !== undefined) {
-      return {
-        text: key.str,
-        title: title,
-      }
-    }
     if (key.type === 'macro') {
       const d = MACROS.describe(key.idx, KBINFO.macros[key.idx]);
       return {
@@ -50,24 +44,30 @@ addInitializer('load', () => {
         title: d,
       }
     }
-    const desc = KEY_DESCS[key.type][key.mask];
-    if (!desc) {
-      console.log('no desc for', key.type, key.mask);
+    if (KEY_DESCS[key.type]) {
+      const desc = KEY_DESCS[key.type][key.mask];
+      const names = EDITABLE_NAMES[key.type];
+      if (names && names[key.idx]) {
+        return {
+          text: '<div class="' + desc[2] + '">' + names[key.idx] + '</div>',
+          title: keystr + ': ' + desc[1] + names[key.idx],
+        }
+      }
       return {
-        text: keystr,
-        title: keystr,
+        text: desc[0] + ' ' + key.idx,
+        title: desc[1] + ' ' + key.idx,
       }
     }
-    const names = EDITABLE_NAMES[key.type];
-    if (names && names[key.idx]) {
+    if (key.str !== undefined) {
       return {
-        text: '<div class="' + desc[2] + '">' + names[key.idx] + '</div>',
-        title: keystr + ': ' + desc[1] + names[key.idx],
+        text: key.str,
+        title: title,
       }
     }
+    console.log(`Key ${keystr} doesn't work?`);
     return {
-      text: desc[0] + ' ' + key.idx,
-      title: desc[1] + ' ' + key.idx,
+      text: `??? BUST ${keystr} ???`,
+      title: " busted? ",
     }
   }
 

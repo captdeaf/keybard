@@ -13989,9 +13989,9 @@ const KEYMAP = {
   },
   "QK_REPEAT_KEY": {
     "qmkid": "QK_REPEAT_KEY",
-    "str": "QK_REPEAT_KEY",
+    "str": "Repeat",
     "code": 0x7c79,
-    "title": "QK_REPEAT_KEY"
+    "title": "Pete and Repeat ..."
   },
   "QK_ALT_REPEAT_KEY": {
     "qmkid": "QK_ALT_REPEAT_KEY",

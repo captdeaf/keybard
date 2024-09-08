@@ -26,10 +26,14 @@ const KEY = {
     const userStart = KEYMAP['QK_KB'].code;
     for (let i = 0; i < 64; i++) {
       const userkey = 'USER' + ('' + i).padStart(2, '0');
+      const code = KEYMAP[userkey].code;
       if (KBINFO.custom_keycodes && KBINFO.custom_keycodes[i]) {
         const custom = KBINFO.custom_keycodes[i];
         KEYMAP[userkey] = K(custom.name, custom.shortName, {
-          title: custom.title, type: 'user', index: i});
+          title: custom.title, type: 'user', index: i, code: code});
+        KEYMAP[custom.name] = K(custom.name, custom.shortName, {
+          title: custom.title, type: 'user', index: i, code: code});
+        KEYALIASES[custom.name] = userkey;
       }
     }
 
@@ -168,16 +172,13 @@ const KEY = {
   parseDesc(keystr) {
     if (keystr in KEYALIASES) {
       keystr = KEYALIASES[keystr];
-    }
-    let m;
-    if (KEYMAP[keystr]) {
-      const mod = KEYMAP[keystr];
-      if (mod) {
-        return {
-          type: 'key', str: mod.str,
-        };
+    } else {
+      return {
+        type: 'key',
+        str: keystr
       }
     }
+    let m;
     // Layers:k MO(0) ... MO(15)
     m = keystr.match(/^(MO|DF|TG|TT|OSL|TO)\((\w+)\)$/);
     if (m) {
@@ -206,7 +207,6 @@ const KEY = {
       if (!mod) {
         mod = KEYMAP[m[1]];
       }
-      console.log("m", m, mod);
       if (mod) {
         if (m[2] === 'kc') {
           m[2] = 'KC_NO';
