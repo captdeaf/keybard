@@ -1224,13 +1224,15 @@ const KEY = {
       );
     }
 
+    const userStart = KC_MAP['QK_KB'];
     for (let i = 0; i < 64; i++) {
       const userkey = 'USER' + ('' + i).padStart(2, '0');
       if (KBINFO.custom_keycodes && KBINFO.custom_keycodes[i]) {
         const custom = KBINFO.custom_keycodes[i];
-        KC_MAP[userkey] = KC_MAP['QK_KB'] + i;
-        KC_MAP[custom.name] = KC_MAP['QK_KB'] + i;
-        KC_MAP[custom.shortName] = KC_MAP['QK_KB'] + i;
+        KC_MAP[userkey] = userStart + i;
+        KC_MAP[custom.name] = userStart + i;
+        KC_MAP[custom.shortName] = userStart + i;
+        console.log("Pushing", custom);
         KEYCODES_USER.push(
           K(custom.name, custom.shortName, {title: custom.title, type: 'user', index: i}),
         );
@@ -1407,6 +1409,14 @@ const KEY = {
   //   { type: 'key', key: 'c' },
   parseDesc(keystr) {
     let m;
+    if (KEY.KEYCODES_MAP[keystr]) {
+      const mod = KEY.KEYCODES_MAP[keystr];
+      if (mod) {
+        return {
+          type: 'key', str: mod.str,
+        };
+      }
+    }
     // Layers:k MO(0) ... MO(15)
     m = keystr.match(/^(MO|DF|TG|TT|OSL|TO)\((\w+)\)$/);
     if (m) {
@@ -1431,14 +1441,20 @@ const KEY = {
     // HOLD-Tap keys (why do we have these instead of using tapdance?)
     m = keystr.match(/^(\w+)\((\w+)\)$/);
     if (m) {
-      const mod = KEY.KEYCODES_MAP[m[1] + '(kc)'];
-      if (m[2] === 'kc') {
-        m[2] = 'KC_NO';
+      let mod = KEY.KEYCODES_MAP[m[1] + '(kc)'];
+      if (!mod) {
+        mod = KEY.KEYCODES_MAP[m[1]];
       }
-      const key = KEY.KEYCODES_MAP[m[2]];
-      return {
-        type: 'key', str: mod.str.replace(/\(kc\)/, '') + key.str,
-      };
+      console.log("m", m, mod);
+      if (mod) {
+        if (m[2] === 'kc') {
+          m[2] = 'KC_NO';
+        }
+        const key = KEY.KEYCODES_MAP[m[2]];
+        return {
+          type: 'key', str: mod.str.replace(/\(kc\)/, '') + key.str,
+        };
+      }
     }
 
     // Normal keys.
