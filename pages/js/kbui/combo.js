@@ -4,8 +4,6 @@
 //
 ////////////////////////////////////
 
-const COMBO = {};
-
 addInitializer('load', () => {
   const comboBoard = get('#combo-container');
   const allCombos = [];

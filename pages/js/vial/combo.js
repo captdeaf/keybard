@@ -1,5 +1,3 @@
-// vial/macro.js
-//
 ////////////////////////////////////
 //
 //  Vial combo: Fetching, Parsing, Pushing.

@@ -49,6 +49,8 @@ addInitializer('connected', () => {
     key.dataset.normal = key.innerHTML;
   }
 
+  const allModBars = getAll('.kb-modifiers');
+
   ACTION.onclick('[data-modifier]', (target) => {
     const enabled = !mods[target.dataset.modifier];
     mods[target.dataset.modifier] = enabled;
@@ -60,6 +62,19 @@ addInitializer('connected', () => {
     } else {
       for (const key of allKeys) {
         key.classList.remove('selected');
+      }
+    }
+
+    try {
+      const maskstr = KEY.stringify(getMask());
+      console.log("OK", maskstr);
+      for (const el of allModBars) {
+        el.style['background-color'] = '';
+      }
+    } catch (err) {
+      console.log(err);
+      for (const el of allModBars) {
+        el.style['background-color'] = 'red';
       }
     }
 
@@ -124,8 +139,12 @@ addInitializer('connected', () => {
     let keystr = target.dataset.key;
     const mask = getMask();
     if (mask !== 0 && target.dataset.bind === 'keymask') {
-      const maskstr = KEY.stringify(getMask());
-      keystr = maskstr.replace(/kc/, keystr);
+      try {
+        const maskstr = KEY.stringify(getMask());
+        keystr = maskstr.replace(/kc/, keystr);
+      } catch (err) {
+        return;
+      }
     }
 
     if (selectedKeyType === 'main') {
