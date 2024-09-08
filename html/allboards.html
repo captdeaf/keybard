@@ -1,12 +1,12 @@
 <div id="allboards">
-  <div class="board-map" id="qwerty-board">{{qwerty.html}}</div>
-  <div class="board-map" id="custom-board">
+  <div class="board-map" data-board="qwerty">{{qwerty.html}}</div>
+  <!-- Dynamically generated from kbinfo -->
+  <div class="board-map" data-board="custom"></div>
+  <div class="board-map" data-board="layer"></div>
+  <!-- More complex boards. -->
+  <div class="board-map" data-board="macro" id="macro-board">
   </div>
-  <div class="board-map" id="macro-board">
-  </div>
-  <div class="board-map" id="layer-board">
-  </div>
-  <div class="board-map" id="tapdance-board">
+  <div class="board-map" data-board="tapdance" id="tapdance-board">
   </div>
 </div>
 <div id="board-selection">

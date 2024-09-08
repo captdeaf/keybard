@@ -86,13 +86,13 @@
   position: relative;
   padding: 4px;
   width: 100%;
-  margin-bottom: 4.5vw;
+  margin-bottom: 4.50px;
 }
 
 #board-selection {
   position: absolute;
   bottom: 5px;
-  height: 4vw;
+  height: 40px;
   margin-left: 1em;
   display: flex;
   flex-flow: row;
@@ -121,3 +121,81 @@
   flex: 1 1 auto;
 }
 
+/* Key Override table */
+
+#keyoverride-table {
+  table-layout: fixed;
+  margin: 0em 0em 5em 1em;
+}
+
+.ko-row {
+  margin: 1em;
+}
+
+.ko-row td {
+  padding: 5px;
+}
+
+.ko-row .key {
+  border: 1px solid black;
+  width: 30px;
+}
+
+.ko-row.odd {
+  background-color: #ddf;
+}
+
+.ko-row.even {
+  background-color: #eee;
+}
+
+.ko-row.changed {
+  background-color: #dfd !important;
+}
+
+.ko-mod-row {
+  display: flex;
+  flex-flow: row;
+}
+
+.ko-layer-td {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  width: 160px;
+}
+
+.ko-layer-td div {
+  width: 20px;
+  margin: 2px;
+}
+
+.ko-option-td {
+  width: 330px;
+}
+
+.ko-option-td div {
+  width: 100px;
+  margin: 2px;
+}
+
+.ko-toggle {
+  display: inline-block;
+  font-size: 10px;
+  border: 1px solid black;
+  background-color: #eee;
+  padding: 3px;
+  border-radius: 3px;
+}
+
+.ko-toggle.checked {
+  background-color: #aaf;
+}
+
+.ko-mod-row .ko-toggle {
+  width: 40px;
+}
+
+.ko-toggle.checked {
+  background-color: #ccf;
+}

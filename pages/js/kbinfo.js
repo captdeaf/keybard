@@ -8,12 +8,12 @@
 //   layers: 16, rows: 10, cols: 6,
 //   macro_count: 50, combo_count: 50, tapdance_count: 50, key_override_count: 30,
 //   keylayout: {}, // This is for visual layout: what key goes where.
-//   keymap: [16 arrays of [(10 * 6) key strings]]
-//   macros: [50 arrays of {mid: #, actions: [{}]}]
-//   key_override_entries: TBD,
+//   keymap: [16 arrays of [(10 * 6) key strings], ...]
+//   macros: [50 arrays of {mid: #, actions: [{}]}, ...]
+//   key_override_entries: [{koid: #, {layers, ...}, ...],
 //   encoder_layout: TBD,
-//   combo_entries: TBD,
-//   custom_keycodes: [array of 18 objects],
+//   combo_entries: [[type, value], ...],
+//   custom_keycodes: [{name, shortname, title}, ...],
 //   extra: Extra information, such as versions and information from .xz json payload
 // }
 //
@@ -21,16 +21,27 @@
 
 let KBINFO = {
   layers: 16,
-  macro_count: 50,
   keylayout: {},
   keymap: [],
+  macro_count: 0,
   macros: [],
   custom_keycodes: [],
+  key_override_count: 0,
+  key_override_entries: [],
+  combo_count: 0,
+  combos: [],
   extra: {},
 };
 
+// Unchanged. May be used for committing .vil or .kbinfo piecemeal?
 let BASE_KBINFO;
 
+////////////////////////////////////
+//
+//  Queue up changes for commit. Alternately, if SETTINGS.instant is enabled,
+//  then trigger it instantly.
+//
+////////////////////////////////////
 const CHANGES = {
   // Queue and commit changes.
   todo: {},
@@ -57,7 +68,15 @@ const CHANGES = {
   }
 };
 
-// KBAPI - For when we need to push changes.
+////////////////////////////////////
+//
+//  A wrapper around:
+//    - Vial
+//    - Sval (eventually if it breaks from Vial?)
+//    - .vil editing
+//    - .kbinfo editing.
+//
+////////////////////////////////////
 let KBAPI = {
   async updateKey(layer, kmid, keystr) {
     const row = Math.floor(kmid / KBINFO.cols);
@@ -75,6 +94,9 @@ let KBAPI = {
   async updateCombo(cmbid) {
     await KBAPI.wrapped.updateCombo(KBINFO, cmbid);
   },
+  async updateKeyoverride(koid) {
+    await KBAPI.wrapped.updateKeyoverride(KBINFO, koid);
+  },
 };
 
 KBAPI.wrapped = {
@@ -82,4 +104,5 @@ KBAPI.wrapped = {
   async updateMacros() {},
   async updateTapdance() {},
   async updateCombo() {},
+  async updateKeyoverride() {},
 }
