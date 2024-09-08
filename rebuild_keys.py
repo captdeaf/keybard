@@ -84,10 +84,15 @@ def main():
     # Populate codemap, keymap, aliases using vial IDs.
     # (Not QMK Ids, because otherwise we'll break vial for
     # .vil files...)
+    broken = set([
+        'QMK_LM_SHIFT',
+        'QMK_LM_MASK',
+    ])
     for vialid, code in kc6.kc.items():
-        codemap[code] = vialid
-        aliases[vialid] = vialid
-        keymap[vialid] = Key(vialid, vialid, vialid, code=code)
+        if vialid not in broken:
+            codemap[code] = vialid
+            aliases[vialid] = vialid
+            keymap[vialid] = Key(vialid, vialid, vialid, code=code)
 
     # We can't import keycodes.py so we grep and parse it.
     vialkeys = parse_vial_keys(vialpath)
