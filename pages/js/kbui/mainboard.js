@@ -5,15 +5,7 @@
 //  Display the connected keyboard.
 //
 ///////////////////////////////////
-const MAINBOARD = {
-  layer: 0,
-};
 addInitializer('connected', () => {
-  const keylayout = KBINFO.keylayout;
-
-  // keys[kmid] = {image: element, text: element};
-  const keys = {};
-
   function strDefault(val, i) {
     if (val) return val;
     return '' + i;
@@ -55,6 +47,11 @@ addInitializer('connected', () => {
   //  Draw the whole board.
   //
   ////////////////////////////////////
+  const keylayout = KBINFO.keylayout;
+  // keys[kmid] = {image: element, text: element};
+  const keys = {};
+
+  let selectedLayer = 0;
   const layerSelection = get('#layer-selection')
   const board = get('#mainboard');
 
@@ -70,7 +67,6 @@ addInitializer('connected', () => {
 
   for (const [kmid, key] of Object.entries(keylayout)) {
     const keydata = renderKey(kmid, key);
-    keydata.image.dataset.foo = JSON.stringify(key);
     keys[kmid] = keydata;
 
     const top = parseInt(keydata.image.style.top, 10);
@@ -90,14 +86,19 @@ addInitializer('connected', () => {
   board.style.width = `${bounds.right}vw`;
   board.style.height = `${bounds.bottom}vw`;
   
-
+  ////////////////////////////////////
+  //
+  //  Update all the keys to show the given layer.
+  //
+  ////////////////////////////////////
   function drawLayer(layerid) {
-    MAINBOARD.layer = layerid;
+    selectedLayer = layerid;
     const layerkeymap = KBINFO.keymap[layerid];
     const oldkeymap = BASE_KBINFO.keymap[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
       keys[kmid].image.dataset.key = layerkeymap[kmid];
-      keys[kmid].image.dataset.bound = kmid;
+      keys[kmid].image.dataset.kmid = kmid;
+      keys[kmid].image.dataset.bound = 'main';
       if (layerkeymap[kmid] === oldkeymap[kmid]) {
         keys[kmid].image.classList.remove('changed');
       } else {
@@ -108,11 +109,36 @@ addInitializer('connected', () => {
     for (const layer of document.querySelectorAll('.layer')) {
       layer.classList.remove('selected');
     }
-    document.querySelector(`[data-layerid="${MAINBOARD.layer}"]`)?.classList.add('selected');
+    document.querySelector(`[data-layerid="${selectedLayer}"]`)?.classList.add('selected');
 
+    ACTION.selectKey();
     KEYUI.refreshAllKeys();
   }
 
+  ACTION.onclick('[data-bound="main"]', (target) => {
+    ACTION.selectKey(target);
+    ACTION.on('bind', (keystr) => {
+      const kmid = target.dataset.kmid;
+      if (keystr !== target.dataset.key) {
+        console.log('bind', keystr, target.dataset.key);
+        KBINFO.keymap[selectedLayer][kmid] = keystr;
+        target.dataset.key = keystr;
+        target.classList.add('changed');
+        CHANGES.queue('key' + selectedLayer + '.' + kmid, () => {
+          KBAPI.updateKey(selectedLayer, kmid, keystr);
+        });
+        KEYUI.refreshKey(target);
+        ACTION.selectKey();
+      }
+    });
+  });
+
+  ////////////////////////////////////
+  //
+  // Menu bar: [0, 1, NAS, 3, MOUSE, 4, ...]
+  // Draw the layer IDs and Names.
+  //
+  ////////////////////////////////////
   children = [];
   for (let i = 0; i < KBINFO.layers; i++) {
     const layerid = i;

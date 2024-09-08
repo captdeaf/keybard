@@ -113,7 +113,7 @@
   font-size: 8pt;
 }
 
-.board-sel.selected {
+.board-sel.active {
   background-color: #ddf;
 }
 
