@@ -1232,7 +1232,6 @@ const KEY = {
         KC_MAP[userkey] = userStart + i;
         KC_MAP[custom.name] = userStart + i;
         KC_MAP[custom.shortName] = userStart + i;
-        console.log("Pushing", custom);
         KEYCODES_USER.push(
           K(custom.name, custom.shortName, {title: custom.title, type: 'user', index: i}),
         );
