@@ -1,5 +1,3 @@
-// vial/macro.js
-//
 ////////////////////////////////////
 //
 //  Vial Macros: Parsing, Pushing.

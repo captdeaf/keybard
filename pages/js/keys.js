@@ -1388,6 +1388,9 @@ const KEY = {
     const match = keystr.match(/^(\w+)\((\w+)\)$/);
     if (match) {
       const cmask = KEY.KEYCODES_MAP[match[1] + '(kc)'].raw;
+      if (match[2] === 'kc') {
+        match[2] = 'KC_NO';
+      }
       const keymask = KEY.KEYCODES_MAP[match[2]].raw;
       return cmask + keymask;
     } else {
@@ -1427,6 +1430,9 @@ const KEY = {
     m = keystr.match(/^(\w+)\((\w+)\)$/);
     if (m) {
       const mod = KEY.KEYCODES_MAP[m[1] + '(kc)'];
+      if (m[2] === 'kc') {
+        m[2] = 'KC_NO';
+      }
       const key = KEY.KEYCODES_MAP[m[2]];
       return {
         type: 'key', str: mod.str.replace(/\(kc\)/, '') + key.str,
