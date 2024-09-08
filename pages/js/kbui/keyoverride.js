@@ -69,12 +69,18 @@ addInitializer('connected', () => {
     const name = target.dataset.name;
     ACTION.selectKey(target);
     ACTION.on('bind', (keystr) => {
+      // Update KO
       KBINFO.key_overrides[koid][name] = keystr;
 
       korows[koid].classList.add('changed');
       CHANGES.queue('ko' + koid, () => {
         KBAPI.updateKeyoverride(koid);
       });
+
+      // Update UI
+      target.dataset.key = keystr;
+      KEYUI.refreshKey(target);
+      ACTION.selectKey();
     });
   });
 
