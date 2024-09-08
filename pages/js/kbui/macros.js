@@ -148,8 +148,25 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
-  //  Read the elements of floatbody, converting them into a set of actions.
-  //  If any are KC_NO (0), then log and ignore.
+  //  Binding: This is kinda done a little backwards. The user clicks a key
+  //  in the macro to rebind, we get that event. Then the user clicks a key
+  //  in the sample boards. That gets redirected to us via ACTION.trigger.
+  //
+  ////////////////////////////////////
+  ACTION.onclick('[data-div-bound="macro"]', (target) => {
+    ACTION.selectKey(target);
+    ACTION.on('bind', (keystr) => {
+      target.dataset.key = keystr;
+      KEYUI.refreshKey(target);
+      // Clear key selection.
+      ACTION.selectKey();
+    });
+  });
+
+  ////////////////////////////////////
+  //
+  //  Read the elements of the macro float, converting them into a set of
+  //  actions. If any are KC_NO (0), then log and ignore it.
   //
   ////////////////////////////////////
   function buildActionsFromFloat() {

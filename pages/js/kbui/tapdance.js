@@ -50,7 +50,7 @@ addInitializer('load', () => {
       el.innerHTML = '';
       divs[type] = EL('div', {
         'data-tapdance-type': type,
-        'data-div-bound': 'tapdance',
+        'data-bound': 'tapdance',
         'data-key': tapdance[type],
         class: 'key',
       });
@@ -95,7 +95,25 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
-  //  Add a tapdance button to the tapdance board for each tapdance the kb supports.
+  //  Binding: This is kinda done a little backwards. The user clicks a key in
+  //  the tapdance to rebind, we get that event. Then the user clicks a key in
+  //  the sample boards. That gets redirected to us via ACTION.trigger.
+  //
+  ////////////////////////////////////
+  ACTION.onclick('[data-bound="tapdance"]', (target) => {
+    ACTION.selectKey(target);
+    ACTION.on('bind', (keystr) => {
+      target.dataset.key = keystr;
+      KEYUI.refreshKey(target);
+      // Clear key selection.
+      ACTION.selectKey();
+    });
+  });
+
+  ////////////////////////////////////
+  //
+  //  Add a tapdance button to the tapdance board for each tapdance the kb
+  //  supports.
   //
   ////////////////////////////////////
   TAPDANCE.describe = describeTapdance;

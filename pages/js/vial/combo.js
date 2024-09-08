@@ -26,11 +26,11 @@ Vial.combo = (function() {
         ]);
       });
     },
-    async push(kbinfo, tdid) {
-      const combo = kbinfo.combos[tdid];
+    async push(kbinfo, cmbid) {
+      const combo = kbinfo.combos[cmbid];
       await Vial.USB.sendVial(Vial.USB.CMD_VIAL_DYNAMIC_ENTRY_OP, [
         Vial.USB.DYNAMIC_VIAL_COMBO_SET,
-        combo.tdid,
+        cmbid,
         ...LE16(KEY.parse(combo[0])),
         ...LE16(KEY.parse(combo[1])),
         ...LE16(KEY.parse(combo[2])),

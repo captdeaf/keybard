@@ -97,45 +97,22 @@ addInitializer('connected', () => {
   //
   //  The main logic for key selection.
   //
-  //  1) A key that needs mapping is selected.
-  //    - main board
-  //    - 'div' key - updates the .div's data-key, that's it.
-  //      - combo key
-  //      - macro key
-  //      - tapdance key
+  //  1) A key that needs rebinding is selected. It has its own
+  //     ACTION bind. It binds a callback to ACTION.on('bind')
   //
-  //  2) A key on sample boards is selected.
-  //    - Mod Mask for all non-special keys.
-  //    - special keys: macro, tapdance, layer, custom
+  //  2) A key on sample boards is selected. This is where the
+  //     ACTION.onclick below comes into play.
+  //    - keymask for all non-special keys, so they can be
+  //      LCTRL(kc)'d, etc, 
+  //
+  //  3) Call ACTION.trigger('bind', keystr) with the resulting
+  //     KC_?? or LCTRL(KC_??).
   //
   ////////////////////////////////////
   let selectedKeyType = null;
   let selectedKey = null;
 
-  function bindTargetKey(type, target) {
-    if (selectedKey) {
-      selectedKey.classList.remove('active');
-      selectedKey = null;
-    }
-    if (selectedKey === target) {
-      return;
-    }
-    selectedKeyType = type;
-    selectedKey = target;
-    selectedKey.classList.add('active');
-  }
-
-  ACTION.onclick('[data-bound]', (target) => {
-    bindTargetKey('main', target);
-  });
-
-  ACTION.onclick('[data-combo]', (target) => {
-    bindTargetKey('combo', target);
-  });
-
   ACTION.onclick('[data-bind]', (target) => {
-    if (!selectedKey) return;
-
     let keystr = target.dataset.key;
     const mask = getMask();
     if (mask !== 0 && target.dataset.bind === 'keymask') {
@@ -147,32 +124,6 @@ addInitializer('connected', () => {
       }
     }
 
-    if (selectedKeyType === 'main') {
-      const kmid = parseInt(selectedKey.dataset.bound)
-      KBINFO.keymap[MAINBOARD.layer][kmid] = keystr;
-      selectedKey.dataset.key = keystr;
-      selectedKey.classList.add('changed');
-      CHANGES.queue('key' + kmid, () => {
-        KBAPI.updateKey(MAINBOARD.layer, kmid, keystr);
-      });
-    } else if (selectedKeyType === 'div') {
-      selectedKey.dataset.key = keystr;
-    } else if (selectedKeyType === 'combo') {
-      const cmbid = selectedKey.dataset.cmbid;
-      const combo = KBINFO.combos[cmbid];
-      const idx = selectedKey.dataset.combo;
-      combo[idx] = keystr;
-      selectedKey.dataset.key = keystr;
-      CHANGES.queue('combo' + cmbid, () => {
-        KBAPI.updateCombo(cmbid);
-      });
-    }
-    KEYUI.refreshKey(selectedKey);
-    selectedKey.classList.remove('active');
-    selectedKey = null;
-  });
-
-  ACTION.onclick('[data-div-bound]', (target) => {
-    bindTargetKey('div', target);
+    ACTION.trigger('bind', keystr);
   });
 });
