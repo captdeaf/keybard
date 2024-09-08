@@ -31,10 +31,10 @@ def parse_quantum_keycodes(inpath):
             code = int(m[2], 16)
             codemap[code] = qmkid
             keymap[qmkid] = Key(qmkid, qmkid, qmkid, code=code)
-            aliases[qmkid] = qmkid
+            aliases[qmkid] = code
         else:
             # aliases.
-            aliases[qmkid] = m[2]
+            aliases[qmkid] = aliases[m[2]]
 
     print(f"QMK: Found {len(keymap)} keycodes.h")
 
@@ -72,43 +72,52 @@ def main():
     qmkpath = sys.argv[1]
     vialpath = sys.argv[2]
 
-    codemap, keymap, aliases = parse_quantum_keycodes(qmkpath)
-    vialkeys = parse_vial_keys(vialpath)
+    # codemap[int] = qmkid
+    codemap = dict()
+    # keymap[qmkid] = K()
+    keymap = dict()
+    # aliases[qmkid] = vialid
+    aliases = dict()
 
-    dumbaliases = dict()
-    for alias, qmkid in aliases.items():
-        dumbaliases[alias.replace('_', '')] = qmkid
-
-    # We have our basics from qmk. Let's also import python's.
     from keycodes_v6 import keycodes_v6 as kc6
 
-    # Update our aliases for vial's dumb versions.
-    # We map code to qmkid.
-    for pyid, code in kc6.kc.items():
-        if pyid not in aliases:
-            if code in codemap:
-                aliases[pyid] = codemap[code]
-                continue
-        aliases[pyid] = pyid
-        codemap[code] = pyid
-        keymap[pyid] = Key(pyid, pyid, pyid, code=code)
+    # Populate codemap, keymap, aliases using vial IDs.
+    # (Not QMK Ids, because otherwise we'll break vial for
+    # .vil files...)
+    for vialid, code in kc6.kc.items():
+        codemap[code] = vialid
+        aliases[vialid] = vialid
+        keymap[vialid] = Key(vialid, vialid, vialid, code=code)
 
-    print("Okay, merge:")
+    # We can't import keycodes.py so we grep and parse it.
+    vialkeys = parse_vial_keys(vialpath)
+
+    # what keycodes.py has is: Key() definitions!
+    for vialid, key in vialkeys.items():
+        # We may get an alias.
+        vialid = aliases[vialid]
+        if vialid in keymap:
+            keymap[vialid].update(key)
+        else:
+            keymap[vialid] = key
+
+    # Now merge in QMK. This is just here to fill the gaps.
+    qmkcodes, qmkkeys, qmkaliases = parse_quantum_keycodes(qmkpath)
+
+    for code, qmkid in qmkcodes.items():
+        if code not in codemap:
+            codemap[code] = qmkid
+
+    for qmkid, code in qmkaliases.items():
+        aliases[qmkid] = codemap[code]
+
+    for qmkid, key in qmkkeys.items():
+        if qmkid not in keymap:
+            keymap[qmkid] = key
 
     from custom_keys import custom_keys, custom_codes, custom_aliases
 
     aliases.update(custom_aliases)
-
-    # Vial's keycodes from vial-gui/src/main/python/keycodes/keycodes.py
-    for qmkid, desc in vialkeys.items():
-        print(f"Looking for {qmkid}")
-        # We may get an alias.
-        qmkid = aliases[qmkid]
-        if qmkid in keymap:
-            keymap[qmkid].update(desc)
-        else:
-            print(f"WARNING: qmkid {qmkid} has no code")
-            keymap[qmkid] = desc
 
     # Imprint custom keys.
     for qmkid, key in custom_keys.items():
@@ -121,12 +130,13 @@ def main():
 
     codemapjs = json.dumps(codemap, indent=2)
     keymapjs = json.dumps(keymap, indent=2)
+    aliasesjs = json.dumps(aliases, indent=2)
 
     def hexify(m):
         return f": 0x{int(m[1], 10):04x},"
 
-    codemapjs = re.sub(': (\\d+),', hexify, codemapjs)
-    keymapjs = re.sub(': (\\d+),', hexify, keymapjs)
+    # codemapjs = re.sub(': (\\d+),', hexify, codemapjs)
+    keymapjs = re.sub(': (\\d+),', lambda m: f": 0x{int(m[1], 10):04x},", keymapjs)
 
     with open('pages/js/keygen.js', 'w', encoding='utf-8') as fout:
         fout.write("/////////////////////////////////\n")
@@ -137,10 +147,12 @@ def main():
 
         fout.write('const CODEMAP = ')
         fout.write(codemapjs)
-        fout.write(';\n')
-        fout.write('\n')
+        fout.write(';\n\n')
         fout.write('const KEYMAP = ')
         fout.write(keymapjs)
+        fout.write(';\n\n')
+        fout.write('const KEYALIASES = ')
+        fout.write(aliasesjs)
         fout.write(';\n')
 
 if __name__ == "__main__":
