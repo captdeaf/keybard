@@ -3,9 +3,10 @@
 import re
 from glob import glob
 
-TEMPLATE_RE = re.compile(r'\{\{([\w\.]+)\}\}')
+TEMPLATE_RE = re.compile(r'\{\{([\w\./]+)\}\}')
 
 def optimize(content):
+    return content
     # 'content' is html code that has lots of whitespace, and probably comments.
     content = re.sub(r'<!--.*?-->',' ', content)
     content = re.sub(r'\s+',' ', content)

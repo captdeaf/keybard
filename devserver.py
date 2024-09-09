@@ -20,7 +20,7 @@ if cwd not in sys.path:
 
 from rebuild_templates import rebuild
 
-watchlist = glob('html/*')
+watchlist = glob('html/**')
 
 app = Flask(
     'devserver',
