@@ -30,6 +30,7 @@ let KBINFO = {
   key_override_entries: [],
   combo_count: 0,
   combos: [],
+  settings: {},
   extra: {},
 };
 
@@ -97,6 +98,9 @@ let KBAPI = {
   async updateKeyoverride(koid) {
     await KBAPI.wrapped.updateKeyoverride(KBINFO, koid);
   },
+  async updateQMKSetting(qfield) {
+    await KBAPI.wrapped.updateQMKSetting(KBINFO, qfield);
+  }
 };
 
 KBAPI.wrapped = {
@@ -105,4 +109,5 @@ KBAPI.wrapped = {
   async updateTapdance() {},
   async updateCombo() {},
   async updateKeyoverride() {},
+  async updateQMKSetting() {},
 }

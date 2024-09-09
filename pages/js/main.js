@@ -18,14 +18,25 @@ function startJSVial() {
   }
 }
 
+addInitializer('load', () => {
+  const origs = [];
+  for (const el of getAll('.on-connect')) {
+    origs.push([el, el.style['display']]);
+    el.style['display'] = 'none';
+  }
+  addInitializer('connected', () => {
+    for (const orig of origs) {
+      orig[0].style['display'] = orig[1];
+    }
+  });
+});
+
 async function doStuff() {
   removeElement(get('#launch'));
 
   // TODO: other initialization paths: .vil upload, .kbi upload
   await initVial(KBINFO);
   // await initUploadKBInfo(WKB);
-
-  get('#active').style['display'] = 'flex';
 
   console.log('kbinfo', KBINFO);
   BASE_KBINFO = deepCopy(KBINFO);
