@@ -87,7 +87,7 @@ addInitializer('load', () => {
   KEYUI.refreshKey = refreshKey;
 
   KEYUI.refreshAllKeys = () => {
-    const allKeys = getAll('.key');
+    const allKeys = getAll('.key:not(.kb-norender)');
     for (const key of allKeys) {
       refreshKey(key);
     }

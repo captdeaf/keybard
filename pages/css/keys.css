@@ -139,6 +139,12 @@
   width: 100%;
 }
 
+.kb-spam {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
 .kb-group {
   margin-left: 1em;
   margin-right: 1em;
