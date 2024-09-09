@@ -35,6 +35,7 @@ const Vial = {
     await Vial.combo.get(kbinfo);
     await Vial.key_override.get(kbinfo);
     await Vial.tapdance.get(kbinfo);
+    await Vial.qmk.get(kbinfo);
 
     // await Vial.getKeyBuffers(kbinfo);
 

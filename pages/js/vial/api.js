@@ -26,4 +26,7 @@ Vial.api = {
   async updateKeyoverride(kbinfo, koid) {
     await Vial.key_override.push(kbinfo, koid);
   },
+  async updateQMKSetting(kbinfo, qfield) {
+    await Vial.qmk.push(kbinfo, qfield);
+  },
 };

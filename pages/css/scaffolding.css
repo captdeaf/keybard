@@ -141,6 +141,12 @@ label {
   font-weight: bold;
 }
 
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
 /* Content container. */
 
 #vialgui {

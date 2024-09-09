@@ -47,7 +47,11 @@ addInitializer('load', () => {
     toggle.onclick = toggleAbout;
   }
 
-  // About has config options that are checkboxes. Add
+  ////////////////////////////////////
+  //
+  //  Config options inside About (or elsewhere)
+  //
+  ////////////////////////////////////
   getAll('input[type="checkbox"][data-toggle]').map((el) => {
     el.onchange = addToggle(el.id, false,
       (enabled) => {
@@ -67,16 +71,16 @@ addInitializer('load', () => {
     );
   });
 
+  ////////////////////////////////////
+  //
+  //  Basic dialog and window interactions.
+  //
+  ////////////////////////////////////
   // Clicking a .close hides its parent that has .closeable
   ACTION.onclick('.close', (target) => {
     const closeable = getParent(target, '.closeable');
     closeable.style['display'] = 'none';
   });
-
-  // COMMIT CHANGES
-  get('#commit').onclick = () => {
-    CHANGES.commit();
-  };
 
   // Main container selection: mainboard, combos, key overrides.
   const allTabs = getAll('.main-select');
@@ -99,10 +103,39 @@ addInitializer('load', () => {
     }
     setSaved('main-container', target);
   }
-  for (const tab of allTabs) {
-    tab.onclick = () => { selectTab(tab.dataset.target); };
-  }
+  ACTION.onclick('[data-mainboard]', (target) => {
+    selectTab(target.dataset.mainboard);
+  });
 
+  // Toggle a float between visible and not.
+  const openFloats = {};
+  ACTION.onclick('[data-open]', (target) => {
+    const floater = get(target.dataset.open);
+    let disp = target.dataset.display;
+    if (!disp) disp = 'block';
+    if (openFloats[floater]) {
+      floater.style['display'] = 'none';
+      openFloats[floater] = false;
+    } else {
+      floater.style['display'] = disp;
+      openFloats[floater] = true;
+    }
+  });
+  
+  ////////////////////////////////////
+  //
+  //  Commit all changes.
+  //
+  ////////////////////////////////////
+  get('#commit').onclick = () => {
+    CHANGES.commit();
+  };
+
+  ////////////////////////////////////
+  //
+  //  Default settings.
+  //
+  ////////////////////////////////////
   addInitializer('connected', () => {
     selectTab(getSaved('main-container', 'mainboard-container'));
   });
