@@ -8,13 +8,6 @@
 
 const Vial = {
   init: async function(kbinfo) {
-    const opened = await USB.open(
-      [{
-        // Filter for QMK/Vial Keyboards.
-        usagePage: 0xFF60,
-        usage: 0x61,
-      }]
-    );
     KBAPI.wrapped = Vial.api;
   },
   load: async function(kbinfo) {

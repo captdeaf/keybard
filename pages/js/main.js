@@ -31,7 +31,19 @@ addInitializer('load', () => {
   });
 });
 
+async function tryConnect() {
+  const opened = await USB.open([{
+    // Filter for QMK/Vial kbs
+    usagePage: 0xFF60,
+    usage: 0x61,
+  }]);
+  return opened;
+}
+
 async function doStuff() {
+  if (!await tryConnect()) {
+    return false;
+  }
   removeElement(get('#launch'));
 
   // TODO: other initialization paths: .vil upload, .kbi upload
