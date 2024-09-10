@@ -149,7 +149,7 @@ const KEY = {
       return 0xFF;
     }
     if (!keystr.match) {
-      alertUser("Unknown key string: ", keystr);
+      console.log("Unknown key string: ", keystr);
     }
     const match = keystr.match(/^(\w+)\((\w+)\)$/);
     if (match) {
@@ -160,7 +160,7 @@ const KEY = {
       const keymask = KEYMAP[match[2]].code;
       return cmask + keymask;
     } else {
-      alertUser("Unknown key string: ", keystr);
+      console.log("Unknown key string: ", keystr);
       return "UNKNOWN";
     }
   },

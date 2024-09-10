@@ -74,13 +74,6 @@ function setSaved(name, val) {
   return val;
 }
 
-// QoL: alertUser's console.log leaves a backtrace in debug console, alert
-//      doesn't.  So I'm just using this.
-function alertUser(...args) {
-  console.log("Alert", ...args);
-  alert(args.join(' '));
-}
-
 // DOM/QoL: Add attributes quickly.
 function addAttrs(el, attrs) {
   for (const [k, v] of Object.entries(attrs)) {
@@ -290,7 +283,7 @@ function unpack(buffer, str) {
         offset += 8;
         break;
       default:
-        alertUser("Invalid char in unpack: " + chr);
+        console.log("Invalid char in unpack: " + chr);
     }
     if (val !== undefined) {
       ret.push(val);
