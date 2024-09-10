@@ -1,7 +1,9 @@
-// site.js
+////////////////////////////////////
 //
-// Basic UI management, just for the site as a whole, not for the keyboard
-// interaction.
+//  Basic UI management, just for the site as a whole, not for the keyboard
+//  interaction.
+//
+////////////////////////////////////
 
 const SETTINGS = {};
 
@@ -107,6 +109,10 @@ addInitializer('load', () => {
     selectTab(target.dataset.mainboard);
   });
 
+  addInitializer('load', () => {
+    selectTab(getSaved('main-container', 'mainboard-container'));
+  });
+
   // Toggle a float between visible and not.
   const openFloats = {};
   ACTION.onclick('[data-open]', (target) => {
@@ -131,12 +137,4 @@ addInitializer('load', () => {
     CHANGES.commit();
   };
 
-  ////////////////////////////////////
-  //
-  //  Default settings.
-  //
-  ////////////////////////////////////
-  addInitializer('connected', () => {
-    selectTab(getSaved('main-container', 'mainboard-container'));
-  });
 });

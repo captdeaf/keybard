@@ -8,16 +8,16 @@
 
     <!-- JSVial style and script. -->
     <link rel="stylesheet" type="text/css" href="css/scaffolding.css" />
+    <link rel="stylesheet" type="text/css" href="css/dialogs.css" />
     <link rel="stylesheet" type="text/css" href="css/keys.css" />
     <link rel="stylesheet" type="text/css" href="css/boards.css" />
     {{scripts.html}}
   </head>
   <body>
-    {{about.html}}
     <div id="head">
       <div id="topbar-container">
         <div id="topbar">
-          <div id="title" class="toggle-about">MENU/ABOUT</div>
+          {{menu.html}}
           <div id="main-selection" class="on-connect">
             <div class="main-select" data-mainboard="mainboard-container" id="select-mainboard">Keyboard Map</div>
             <div class="main-select" data-mainboard="combo-container" id="select-combo">Combos</div>
@@ -28,6 +28,7 @@
         </div>
       </div>
     </div>
+    {{about.html}}
     <div id="maingui">
       {{launch.html}}
       <div id="active" class="on-connect">
