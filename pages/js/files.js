@@ -24,19 +24,21 @@ addInitializer('connected', () => {
     document.body.removeChild(link);
   }
 
+  // Helpers
+  function repeat(what, count) {
+    const result = [];
+    for (let i = 0; i < count; i++) {
+      result.push(what);
+    }
+    return result;
+  }
+
   ////////////////////////////////////
   //
   //  Nodelines: Mostly kinda junk stuff.
   //
   ////////////////////////////////////
   function generateVIL(kbinfo, macros) {
-    function repeat(what, count) {
-      const result = [];
-      for (let i = 0; i < count; i++) {
-        result.push(what);
-      }
-      return result;
-    }
     if (macros) {
       macros = kbinfo.macros.map((macro) => macro.actions);
     } else {
@@ -100,5 +102,19 @@ addInitializer('connected', () => {
   ACTION.onclick('#download-vil-nomacro', () => {
     const vil = generateVIL(deepCopy(KBINFO), false);
     downloadTEXT('keyboard-nomacro.vil', vil);
+  });
+
+  ACTION.onclick('#download-svl', () => {
+    const copy = deepCopy(KBINFO);
+    delete copy.payload;
+    downloadTEXT('keyboard.svl', copy);
+  });
+
+  ACTION.onclick('#download-svl-nomacro', () => {
+    const copy = deepCopy(KBINFO);
+    delete copy.payload;
+    copy.macros = repeat([], copy.macro_count);
+    const svl = JSON.stringify(copy);
+    downloadTEXT('keyboard-nomacro.svl', svl);
   });
 });
