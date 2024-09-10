@@ -70,6 +70,9 @@ addInitializer('load', () => {
       title: " busted? ",
     }
   }
+  KEYUI.getKeyText = (keystr) => {
+    return KEY.parseDesc(keystr).str;
+  }
 
   ////////////////////////////////////
   //

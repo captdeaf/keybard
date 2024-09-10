@@ -17,10 +17,14 @@ addInitializer('load', () => {
     const texts = [];
     const otherwise = [];
     for (const act of macro.actions) {
-      if (act.type === 'text') {
-        texts.push(act.value);
-      } else {
-        otherwise.push(act.type + ' ' + act.value);
+      if (act[0] === 'text') {
+        texts.push(act[1]);
+      } else if (act[0] === 'down') {
+        otherwise.push('↧' + KEYUI.getKeyText(act[1]));
+      } else if (act[0] === 'up') {
+        otherwise.push('↥' + KEYUI.getKeyText(act[1]));
+      } else if (act[0] === 'tap') {
+        otherwise.push('↨' + KEYUI.getKeyText(act[1]));
       }
     }
     if (texts.length > 0) {
@@ -75,30 +79,30 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   function renderAction(action) {
-    if (action.type === 'text') {
+    if (action[0] === 'text') {
       return wrapAction('text', 'input',
                 {
-                  'data-macro': action.type,
+                  'data-macro': action[0],
                   type: 'text',
-                  value: action.value,
+                  value: action[0],
                   style: {width: '7em', resize: 'horizontal'},
                   placeholder: 'text'
                 },
                 '');
     }
-    if (action.type === 'delay') {
+    if (action[0] === 'delay') {
       return wrapAction('delay', 'input',
                 {
-                  'data-macro': action.type,
+                  'data-macro': action[0],
                   type: 'number',
                   maxlength: 5,
                   style: {width: '5em'},
-                  value: action.value,
+                  value: action[0],
                   placeholder: 'text'
                 },
                 '');
     }
-    return wrapKeyAction(action.type, action.value);
+    return wrapKeyAction(action[0], action[1]);
   }
 
   const floater = get('#float-macro');
@@ -139,10 +143,10 @@ addInitializer('load', () => {
   }
 
   ACTION.onclick('[data-macro-add]', (target) => {
-    appendChildren(floatbody, renderAction({
-        type: target.dataset.macroAdd,
-        value: target.dataset.value,
-      }).wrap
+    appendChildren(floatbody, renderAction([
+        target.dataset.macroAdd,
+        target.dataset.value,
+      ]).wrap
     );
   });
 
@@ -175,13 +179,13 @@ addInitializer('load', () => {
 
     for (const kid of children) {
       if (kid.dataset.macro === 'text') {
-        actions.push({type: 'text', value: kid.value});
+        actions.push(['text', kid.value]);
       } else if (kid.dataset.macro === 'delay') {
         // TODO: validation?
-        actions.push({type: 'delay', value: parseInt(kid.value)});
+        actions.push(['delay', parseInt(kid.value)]);
       } else {
         if (kid.dataset.key !== 'KC_NO') {
-          actions.push({type: kid.dataset.macro, value: kid.dataset.key});
+          actions.push([kid.dataset.macro, kid.dataset.key]);
         } else {
           console.log("Ignoring KC_NO in macro");
         }
