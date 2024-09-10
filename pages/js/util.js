@@ -275,11 +275,11 @@ function unpack(buffer, str) {
         offset++;
         break;
       case 'q':
-        val = dv.getBigInt64(offset);
+        val = dv.getBigInt64(offset, le);
         offset += 8;
         break;
       case 'Q':
-        val = dv.getBigUint64(offset);
+        val = dv.getBigUint64(offset, le);
         offset += 8;
         break;
       default:

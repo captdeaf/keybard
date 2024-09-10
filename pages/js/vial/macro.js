@@ -76,7 +76,7 @@ Vial.macro = (function() {
             // just copying it from the python code. /shrug
             actions.push([
               'delay',
-              (rawmacro[offset+2] - 1) + ((rawmacro[offset+3] - 1) << 8),
+              (rawmacro[offset+2] - 1) + ((rawmacro[offset+3] - 1) * 255),
             ]);
             offset += 4;
           } else if (type in MACRO_DOUBLES) {
