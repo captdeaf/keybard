@@ -132,14 +132,6 @@
   margin: 0em 0em 5em 1em;
 }
 
-.ko-row {
-  margin: 1em;
-}
-
-.ko-row td {
-  padding: 5px;
-}
-
 .ko-row .key {
   border: 1px solid black;
   width: 30px;

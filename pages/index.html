@@ -8,6 +8,7 @@
 
     <!-- JSVial style and script. -->
     <link rel="stylesheet" type="text/css" href="css/scaffolding.css" />
+    <link rel="stylesheet" type="text/css" href="css/dialogs.css" />
     <link rel="stylesheet" type="text/css" href="css/keys.css" />
     <link rel="stylesheet" type="text/css" href="css/boards.css" />
     <!-- Basic libraries -->
@@ -61,6 +62,68 @@
 
   </head>
   <body>
+    <div id="head">
+      <div id="topbar-container">
+        <div id="topbar">
+          <div class="dropdown menu" id="menu-top">
+  MENU
+  <div class="dropdown-content">
+  <label class="menuitem">
+    <input type="checkbox" class="check" id="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
+    Instant pushes (akin to Vial)
+  </label>
+  <label class="menuitem dropdown">
+    &gt; Dev options
+    <div class="dropdown-content">
+      <label class="menuitem">
+        <input type="checkbox" class="check" id="do-playback" data-default="false" data-toggle="playback"/>
+        Playback a recording. (Overrides record)
+      </label>
+      <label class="menuitem">
+        <input type="checkbox" class="check" id="do-record" data-default="false" data-toggle="record"/>
+        Record for playback. (requires playback off)
+      </label>
+    </div>
+  </label>
+  <label class="menuitem dropdown">
+    &gt; Vial (.vil) and Svial (.svl) Files (STUBS)
+    <div class="dropdown-content">
+    <label class="menuitem" data-menu-action="download-svl">
+      &darr; Download .svl file.
+    </label>
+    <label class="menuitem" data-menu-action="download-svl-nomacro">
+      &darr; Download macro-less .svl file.
+    </label>
+    <label class="menuitem" data-menu-action="download-vil">
+      &darr; Download .vil file.
+    </label>
+    <label class="menuitem" data-menu-action="download-vil-nomacro">
+      &darr; Download macro-less .vil file.
+    </label>
+    <label class="menuitem" data-menu-action="upload-file">
+      &uarr; Upload .svl or .vil file.
+    </label>
+    </div>
+  </label>
+  <label class="menuitem" data-menu-action="menu-connect">
+    Connect a device. (STUB)
+  </label>
+  <label class="menuitem toggle-about">
+    About JSVial
+  </label>
+  </div>
+</div>
+
+          <div id="main-selection" class="on-connect">
+            <div class="main-select" data-mainboard="mainboard-container" id="select-mainboard">Keyboard Map</div>
+            <div class="main-select" data-mainboard="combo-container" id="select-combo">Combos</div>
+            <div class="main-select" data-mainboard="keyoverride-container" id="select-keyoverride">Key Overrides</div>
+            <div class="main-select" data-open="#float-qmksettings" id="open-qmk">QMK Settings</div>
+          </div>
+          <div><button class="on-connect" id="commit">COMMIT CHANGES</button></div>
+        </div>
+      </div>
+    </div>
     <div id="about">
   Svalboard Keymap Editor
   <div id="about-closer" class="toggle-about">&lt;close&gt;</div>
@@ -97,20 +160,6 @@
   </p>
 </div>
 
-    <div id="head">
-      <div id="topbar-container">
-        <div id="topbar">
-          <div id="title" class="toggle-about">MENU/ABOUT</div>
-          <div id="main-selection" class="on-connect">
-            <div class="main-select" data-mainboard="mainboard-container" id="select-mainboard">Keyboard Map</div>
-            <div class="main-select" data-mainboard="combo-container" id="select-combo">Combos</div>
-            <div class="main-select" data-mainboard="keyoverride-container" id="select-keyoverride">Key Overrides</div>
-            <div class="main-select" data-open="#float-qmksettings" id="open-qmk">QMK Settings</div>
-          </div>
-          <div><button class="on-connect" id="commit">COMMIT CHANGES</button></div>
-        </div>
-      </div>
-    </div>
     <div id="maingui">
       <div id="launch">
   LAUNCH JSVIAL
@@ -126,7 +175,7 @@
           <div class="main-container" id="combo-container">
           </div>
           <div class="main-container" id="keyoverride-container">
-            <table id="keyoverride-table" cellspacing="0" cellpadding="0">
+            <table id="keyoverride-table" cellspacing="0" cellpadding="2">
 <thead>
  <tr>
    <th></th>

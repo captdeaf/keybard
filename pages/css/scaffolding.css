@@ -74,60 +74,6 @@ body {
   cursor: pointer;
 }
 
-/* About: the main config and description menu */
-#about {
-  position: absolute;
-  z-index: 1000;
-  top: 5em;
-  left: 5em;
-  width: 80%;
-  max-width: 40em;
-  text-wrap: auto;
-  display: inline-block;
-  padding: 0.5em 1em 1em 1em;
-  border: 5px solid #363;
-  background-color: #eee;
-  overflow-y: scroll;
-}
-
-#about .toggle-about {
-  cursor: pointer;
-  position: absolute;
-  font-weight: bold;
-  top: 0.5em;
-  right: 1em;
-  color: blue;
-}
-
-#about section {
-  margin-left: 1em;
-  background-color: #ddd;
-  padding: 0.7em 1em 1em 1em;
-}
-
-#about section p {
-  text-indent: 2em;
-}
-
-#about section .toggler {
-  display: inline-block;
-  float: right;
-  color: blue;
-  cursor: pointer;
-}
-
-#about p code {
-  background-color: #bbb;
-  color: #33f;
-  padding: 3px;
-}
-
-label {
-  color: #ff8c00;
-  font-weight: bold;
-  cursor: pointer;
-}
-
 /* Launch dialog. */
 
 #launch {
@@ -161,43 +107,6 @@ label {
   flex-direction: column;
   width: 100%;
   height: 100%;
-}
-
-/* Floaters that go over everything else. */
-
-.floater {
-  background-color: #f3f3f3;
-  border: 2px solid black;
-  padding: 10px;
-  display: none;
-  position: fixed;
-  top: 4em;
-  left: 4em;
-  max-width: 80%;
-  flex-shrink: 1;
-  min-height: 5vh;
-  height: 20%;
-  max-height: 80vh;
-  z-index: 1000;
-  flex-flow: column;
-}
-
-#float-tapdance {
-  height: 280px;
-}
-
-/* Floater buttons */
-.button-row {
-  flex: 0 0 content;
-  display: flex;
-  height: 26px;
-  width: 100%;
-}
-
-.button-row button {
-  flex: 0 0 content;
-  padding: 3px;
-  margin-right: 0.5em;
 }
 
 div.fill {
