@@ -18,15 +18,15 @@ addInitializer('load', () => {
   //  from its classes.
   //
   ////////////////////////////////////
-  let selectedKey;
+  ACTION.selectedKey = null;
   ACTION.selectKey = (keyelement) => {
-    if (selectedKey) {
-      selectedKey.classList.remove('active');
-      selectedKey = undefined;
+    if (ACTION.selectedKey) {
+      ACTION.selectedKey.classList.remove('active');
+      ACTION.selectedKey = undefined;
     }
     if (keyelement) {
-      selectedKey = keyelement;
-      selectedKey.classList.add('active');
+      ACTION.selectedKey = keyelement;
+      ACTION.selectedKey.classList.add('active');
     }
   };
 

@@ -4,8 +4,10 @@ import re
 import sys
 import json
 
-def Key(qmkid, label, tooltip=None, **args):
+def Key(qmkid, label, tooltip=None, alias=None, **args):
     d = dict(qmkid=qmkid, str=label, **args)
+    if alias is not None:
+        d['alias'] = alias
     if tooltip is not None:
         d['title'] = tooltip
     return d
@@ -101,6 +103,10 @@ def main():
     for vialid, key in vialkeys.items():
         # We may get an alias.
         vialid = aliases[vialid]
+        if 'alias' in key:
+            for alias in key['alias']:
+                aliases[alias] = vialid
+            del key['alias']
         if vialid in keymap:
             keymap[vialid].update(key)
         else:

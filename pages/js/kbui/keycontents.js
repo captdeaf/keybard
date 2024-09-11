@@ -58,16 +58,25 @@ addInitializer('load', () => {
         title: desc[1] + ' ' + key.idx,
       }
     }
-    if (key.str !== undefined) {
+    if (!key || key.str === undefined) {
+      console.log(`Key ${keystr} doesn't work?`);
       return {
-        text: key.str,
-        title: title,
+        text: `??? BUST ${keystr} ???`,
+        title: " busted? ",
       }
     }
-    console.log(`Key ${keystr} doesn't work?`);
+
+    let m = key.str.match(/^(\w+\s*)\((\w+)\)/);
+    if (m && m[2] !== 'kc') {
+      return {
+        text: m[1] + '\n' + KEY.parseDesc(m[2]).str,
+        title: title,
+      };
+    }
+
     return {
-      text: `??? BUST ${keystr} ???`,
-      title: " busted? ",
+      text: key.str,
+      title: title,
     }
   }
   KEYUI.getKeyText = (keystr) => {

@@ -67,12 +67,10 @@ addInitializer('connected', () => {
 
     try {
       const maskstr = KEY.stringify(getMask());
-      console.log("OK", maskstr);
       for (const el of allModBars) {
         el.style['background-color'] = '';
       }
     } catch (err) {
-      console.log(err);
       for (const el of allModBars) {
         el.style['background-color'] = 'red';
       }
@@ -109,8 +107,6 @@ addInitializer('connected', () => {
   //     KC_?? or LCTRL(KC_??).
   //
   ////////////////////////////////////
-  let selectedKeyType = null;
-  let selectedKey = null;
 
   ACTION.onclick('[data-bind]', (target) => {
     let keystr = target.dataset.key;
@@ -122,6 +118,11 @@ addInitializer('connected', () => {
       } catch (err) {
         return;
       }
+    }
+    if (target.dataset.bind === 'key-mod') {
+      const cur = KEY.parse(ACTION.selectedKey.dataset.key);
+      const curstr = KEY.stringify(cur & 0xFF);
+      keystr = target.dataset.key.replace('(kc)', `(${curstr})`);
     }
 
     ACTION.trigger('bind', keystr);
