@@ -153,14 +153,12 @@ addInitializer('connected', () => {
 
   ACTION.onclick('#download-svl', () => {
     const copy = deepCopy(KBINFO);
-    delete copy.payload;
     const svl = JSON.stringify(copy);
     downloadTEXT('keyboard.svl', svl);
   });
 
   ACTION.onclick('#download-svl-nomacro', () => {
     const copy = deepCopy(KBINFO);
-    delete copy.payload;
     copy.macros = repeat([], copy.macro_count);
     const svl = JSON.stringify(copy);
     downloadTEXT('keyboard-nomacro.svl', svl);
