@@ -62,17 +62,11 @@ Vial.qmk = (function() {
       }
       KBINFO.settings = settings;
     },
-    async push(kbinfo, qfield) {
-      const val = kbinfo.settings[qfield.qsid];
-      let vals = [val];
-      if (qfield.width === 2) {
-        vals = LE16(val);
-      } else if (qfield.width === 4) {
-        vals = LE32(val);
-      }
+    async push(kbinfo, qsid) {
+      const val = kbinfo.settings[qsid];
       vals = LE32(val);
-      console.log('pushing via qmk set:', qfield.qsid, vals);
-      await Vial.USB.sendVial(Vial.USB.CMD_VIAL_QMK_SETTINGS_SET, [...LE16(qfield.qsid), ...vals]);
+      console.log('pushing via qmk set:', qsid, vals);
+      await Vial.USB.sendVial(Vial.USB.CMD_VIAL_QMK_SETTINGS_SET, [...LE16(qsid), ...vals]);
     },
   };
 })();

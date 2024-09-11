@@ -8,6 +8,8 @@ const TAPDANCE = {
   // Given a tdid and tapdance (KBINFO.tapdances[tdid], really),
   // return a description to render on a key.
   describe: null,
+  // Update changes between BASE_KBINFO and KBINFO.
+  updateAll: null,
 };
 
 addInitializer('load', () => {
@@ -151,4 +153,26 @@ addInitializer('load', () => {
                       "To edit tapdances, R-click one.");
     appendChildren(tapdanceBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
   });
+
+  ////////////////////////////////////
+  //
+  //  Called when a file is uploaded or a device is connected after a file
+  //  is uploaded. Mark and queue all changes.
+  //
+  ////////////////////////////////////
+  TAPDANCE.updateAll = () => {
+    for (let tdid = 0; tdid < KBINFO.tapdance_count; tdid++) {
+      const td = KBINFO.tapdances[tdid];
+      const btd = BASE_KBINFO.tapdances[tdid];
+      for (const i of ['tap', 'hold', 'doubletap', 'taphold', 'tapms']) {
+        if (td[i] !== btd[i]) {
+          get('#tapdance-' + tdid).classList.add('changed');
+          CHANGES.queue('TD' + tdid, () => {
+            KBAPI.updateTapdance(tdid);
+          });
+          break;
+        }
+      }
+    }
+  };
 });

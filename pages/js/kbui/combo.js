@@ -3,6 +3,12 @@
 //  Combos: Viewing/Editing
 //
 ////////////////////////////////////
+
+const COMBOS = {
+  // Update changes between BASE_KBINFO and KBINFO.
+  updateAll: null,
+};
+
 addInitializer('connected', () => {
   ////////////////////////////////////
   //
@@ -37,6 +43,35 @@ addInitializer('connected', () => {
 
   ////////////////////////////////////
   //
+  //  Called when a file is uploaded or a device is connected after a file
+  //  is uploaded. Mark and queue all changes.
+  //
+  ////////////////////////////////////
+  COMBOS.updateAll = () => {
+    for (let cmbid = 0; cmbid < KBINFO.combo_count; cmbid++) {
+      let changed = false;
+      for (let k = 0; k < 5; k++) {
+        if (KBINFO.combos[cmbid][k] !== BASE_KBINFO.combos[cmbid][k]) {
+          changed = true;
+          break;
+        }
+      }
+      if (changed) {
+        for (const combokey of getAll('[data-cmbid="' + cmbid + '"][data-idx]')) {
+          const newkey = KBINFO.combos[cmbid][combokey.dataset.idx];
+          combokey.dataset.key = newkey;
+          KEYUI.refreshKey(combokey);
+          combokey.classList.add('changed');
+        }
+        CHANGES.queue('combo' + cmbid, () => {
+          KBAPI.updateCombo(cmbid);
+        });
+      }
+    }
+  };
+
+  ////////////////////////////////////
+  //
   //  Binding: This is kinda done a little backwards. The user clicks a key in
   //  the combo to rebind, we get that event. Then the user clicks a key in
   //  the sample boards. That gets redirected to us via ACTION.trigger.
@@ -55,7 +90,6 @@ addInitializer('connected', () => {
       for (const combokey of getAll('[data-cmbid="' + cmbid + '"]')) {
         combokey.classList.add('changed');
       }
-      console.log('cmbid', cmbid, 'combo', combo);
       CHANGES.queue('combo' + cmbid, () => {
         KBAPI.updateCombo(cmbid);
       });

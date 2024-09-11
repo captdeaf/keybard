@@ -11,7 +11,7 @@ const MAINBOARD = {
   // Current layer
   selectedLayer: 0,
   // Refresh all keys (usually after KBINFO is updated entirely)
-  refreshAll: null,
+  updateAll: null,
 };
 
 addInitializer('connected', () => {
@@ -123,10 +123,24 @@ addInitializer('connected', () => {
     KEYUI.refreshAllKeys();
   }
 
-  // refreshAll: When a new KBINFO is uploaded. We already compare to
-  // BASE_KBINFO so we're good.
-  MAINBOARD.refreshAll = () => {
+  ////////////////////////////////////
+  //
+  //  Called when a file is uploaded or a device is connected after a file
+  //  is uploaded. Mark and queue all changes.
+  //
+  ////////////////////////////////////
+  MAINBOARD.updateAll = () => {
     drawLayer(MAINBOARD.selectedLayer);
+
+    for (let layer = 0; layer < KBINFO.layers; layer++) {
+      for (let kmid = 0; kmid < KBINFO.keymap.length; kmid++) {
+        CHANGES.queue('key' + MAINBOARD.selectedLayer + '.' + kmid, () => {
+          if (KBINFO.keymap[layer][kmid] !== BASE_KBINFO.keymap[layer][kmid]) {
+            KBAPI.updateKey(layer, kmid, keystr);
+          }
+        });
+      }
+    }
   };
 
   ACTION.onclick('[data-bound="main"]', (target) => {
