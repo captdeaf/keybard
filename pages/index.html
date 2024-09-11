@@ -876,8 +876,10 @@
     <button class="macro-edit-button" data-macro-add="up" data-value="KC_LSHIFT">Keyup</button>
     <button class="macro-edit-button" data-macro-add="delay" data-value="100">Delay</button>
     <div class="fill"></div>
-    <button id="save-macro">Save</button>
-    <button>Close</button>
+    <div class="topright">
+      <button id="save-macro">Save</button>
+      <button class="close">Close</button>
+    </div>
   </div>
   <div id="float-macro-render" class="kb-row kb-row-wrap">
   </div>
@@ -886,8 +888,10 @@
 <div id="float-tapdance" class="floater closeable">
   <div class="button-row">
     <div id="float-tapdance-name">TD(?)</div>
-    <button id="float-tapdance-save">Save</button>
-    <button class="close">Close</button>
+    <div class="topright">
+      <button id="float-tapdance-save">Save</button>
+      <button class="close" data-action="close">Close</button>
+    </div>
   </div>
   <div class="float-tapdance-row kb-row">
     <div class="kbdesc">Tap:</div>
@@ -911,14 +915,16 @@
   </div>
   <div class="float-tapdance-row kb-row">
     <div class="kbdesc">Tap MS</div>
-  <div id="float-tapdance-tapms">
-  </div>
+    <div id="float-tapdance-tapms">
+    </div>
   </div>
 </div>
 
 <div id="float-qmksettings" class="floater closeable">
+  <div class="topright">
+    <button class="close" data-action="close">Close</button>
+  </div>
   <div id="qmk-tabs"></div>
-  <button class="close">Close</button>
 </div>
 
 

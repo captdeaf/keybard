@@ -87,7 +87,7 @@ body {
   font-weight: bold;
 }
 
-.close {
+.topright {
   position: absolute;
   top: 5px;
   right: 5px;

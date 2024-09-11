@@ -4,7 +4,10 @@
 //
 ////////////////////////////////////
 
-const MACROS = {};
+const MACROS = {
+  // Describe a macro using its text (preferred), or keys (fallback).
+  describe: null,
+};
 
 addInitializer('load', () => {
   ////////////////////////////////////
@@ -35,6 +38,7 @@ addInitializer('load', () => {
       return "M" + mid;
     }
   }
+  MACROS.describe = describeMacro;
 
   ////////////////////////////////////
   //
@@ -48,7 +52,7 @@ addInitializer('load', () => {
     };
     const remove = EL('div', {class: 'remove-macro'}, 'X');
     ret.wrap = EL('div', {class: 'macro-action'}, [
-      EL('div', {class: 'describe-macro'}, desc),
+      EL('div', {class: 'macro-type'}, desc),
       remove,
       ret.el,
     ]);
@@ -213,7 +217,6 @@ addInitializer('load', () => {
   //  Add a macro button to the macro board for each macro the kb supports.
   //
   ////////////////////////////////////
-  MACROS.describe = describeMacro;
   addInitializer('connected', () => {
     const macroBoard = get('#macro-board');
     const rows = [];

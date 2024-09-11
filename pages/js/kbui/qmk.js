@@ -100,7 +100,7 @@ addInitializer('connected', () => {
   for (const qtab of QMK_SETTINGS.tabs) {
     const fields = [];
     for (const qfield of qtab.fields) {
-      const field = EL('div', {class: 'qmk-field', 'data-qsid': qfield.qsid}, [
+      const field = EL('label', {class: 'qmk-field', 'data-qsid': qfield.qsid}, [
         EL('div', {class: 'qmk-field-name'}, qfield.title),
         generateOption(qfield)
       ]);

@@ -6,7 +6,14 @@
 //
 ///////////////////////////////////
 
-const KEYUI = {};
+const KEYUI = {
+  // return a {str: ..., title: ...} object.
+  getKeyText: null,
+  // Refresh a key's display.
+  refreshKey: null,
+  // Refresh every key in the app, except those with the class kb-norender
+  refreshAllKeys: null,
+};
 
 addInitializer('load', () => {
   const KEY_DESCS = {

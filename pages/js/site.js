@@ -5,7 +5,12 @@
 //
 ////////////////////////////////////
 
-const SETTINGS = {};
+const SETTINGS = {
+  // Settings available.
+  instant: false,
+  playback: false,
+  record: false,
+};
 
 addInitializer('load', () => {
   ////////////////////////////////////
