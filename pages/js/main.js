@@ -10,6 +10,7 @@ function startJSVial() {
   runInitializers('load');
 
   if (!navigator.hid) {
+    get('#about').style['display'] = 'none';
     get('#launch').style['display'] = 'none';
     get('#nosupport').style['display'] = 'block';
     return;
