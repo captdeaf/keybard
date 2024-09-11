@@ -87,6 +87,18 @@ body {
   font-weight: bold;
 }
 
+#nosupport {
+  position: fixed;
+  top: 30%;
+  left: 20%;
+  padding: 3em 6em 3em 6em;
+  background-color: #f3f3f3;
+  border: 2px solid black;
+  font-size: 100%;
+  font-weight: bold;
+  color: red;
+}
+
 .topright {
   position: absolute;
   top: 5px;
