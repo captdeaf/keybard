@@ -42,6 +42,13 @@ let BASE_KBINFO;
 //  Queue up changes for commit. Alternately, if SETTINGS.instant is enabled,
 //  then trigger it instantly.
 //
+//  Changes are queued by "{type},{idx}". idx is just an indicator of what
+//  individually has changed, so that if a single key is updated twice, only
+//  the second change is queued for commit. (Unless instant is enabled.)
+//
+//  Currently, macros are pushed all at once rather than individually updated,
+//  so they are the only ones queued simply by "macro".
+//
 ////////////////////////////////////
 const CHANGES = {
   // Queue and commit changes.
@@ -61,6 +68,7 @@ const CHANGES = {
     for (const [desc, change] of Object.entries(CHANGES.todo)) {
       change.cb();
     }
+    CHANGES.todo = {};
     for (const el of findAll('.changed')) {
       el.classList.remove('changed');
     }

@@ -6,7 +6,16 @@
 //
 ////////////////////////////////////
 
-const ACTION = {};
+const ACTION = {
+  // Currently selected key for binding target.
+  selectedKey: null,
+  selectKey: null,
+  // Custom events
+  on: null,
+  trigger: null,
+  // onclick(selector, cb(target))
+  onclick: null,
+};
 addInitializer('load', () => {
   ////////////////////////////////////
   //

@@ -1,3 +1,4 @@
+// THIS IS FROM QMK REPO.
 const QMK_SETTINGS = {
   "tabs": [
     {

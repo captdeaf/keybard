@@ -4,7 +4,11 @@
 //
 ////////////////////////////////////
 
-const TAPDANCE = {};
+const TAPDANCE = {
+  // Given a tdid and tapdance (KBINFO.tapdances[tdid], really),
+  // return a description to render on a key.
+  describe: null,
+};
 
 addInitializer('load', () => {
   ////////////////////////////////////
@@ -20,6 +24,7 @@ addInitializer('load', () => {
     }
     return ret.join(' ');
   }
+  TAPDANCE.describe = describeTapdance;
 
   const floater = get('#float-tapdance');
   const floatname = get('#float-tapdance-name');
@@ -116,7 +121,6 @@ addInitializer('load', () => {
   //  supports.
   //
   ////////////////////////////////////
-  TAPDANCE.describe = describeTapdance;
   addInitializer('connected', () => {
     const tapdanceBoard = get('#tapdance-board');
     const rows = [];

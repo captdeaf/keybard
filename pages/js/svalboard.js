@@ -2,8 +2,8 @@
 //
 ////////////////////////////////////
 //
-//  Defaults for svalboard. When uploading incomplete kbinfo files,
-//  or .vil files that don't contain it anyway.
+//  Defaults for svalboard. When uploading incomplete 
+//  .vil files that don't contain this extra data.
 //
 ////////////////////////////////////
 

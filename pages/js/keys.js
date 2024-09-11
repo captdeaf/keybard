@@ -12,7 +12,22 @@
 ////////////////////////////////////
 
 const KEY = {
-  generateAllKeycodes() {
+  // When a KBINFO is loaded, generateAllKeycodes updates our
+  // custom user keycodes for title and text.
+  generateAllKeycodes: null,
+  // Given a key string, such as LCTRL(KC_A), return an object
+  // describing it so it can be rendered.
+  parseDesc: null,
+  // Parse a string, such as KC_A, into an integer representation.
+  parse: null,
+  parseKeymap: null,
+  // Convert an integer representation of a keypress into a string.
+  stringify: null,
+  stringifyKeymap: null,
+};
+
+addInitializer('load', () => {
+  KEY.generateAllKeycodes = () => {
     function K(qmkid, str, opts) {
       if (!opts) opts = {};
       if (str === '') str = qmkid;
@@ -57,8 +72,9 @@ const KEY = {
       KEYMAP[`TD(${i})`].type = 'tapdance';
       KEYMAP[`TD(${i})`].idx = i;
     }
-  },
-  JS_MAP: {
+  };
+
+  const JS_MAP = {
     "ControlLeft": "KC_LCTRL",
     "ControlRight": "KC_RCTRL",
     "ShiftLeft": "KC_LSHIFT",
@@ -114,10 +130,10 @@ const KEY = {
     "ScrollLock": "KC_SLCK",
     "Pause": "KC_PAUS",
     "PrintScreen": "KC_PSCR"
-  },
+  }
 
   // .vil files show LSFT(KC_QUO) instead of KC_DQUO like we do.
-  vilify(keystr) {
+  KEY.vilify = (keystr) => {
     const keynum = KEY.parse(keystr);
     const modmask = keynum & 0xFF00;
     const keyid = keynum & 0x00FF;
@@ -139,9 +155,9 @@ const KEY = {
       console.log("err wtf?", keynum, keyid, modmask);
       return '????';
     }
-  },
+  };
 
-  stringify(keynum) {
+  KEY.stringify = (keynum) => {
     const modmask = keynum & 0xFF00;
     const keyid = keynum & 0x00FF;
     if (modmask !== 0) {
@@ -162,9 +178,9 @@ const KEY = {
       console.log("err wtf?", keynum, keyid, modmask);
       return '????';
     }
-  },
+  };
 
-  parse(keystr) {
+  KEY.parse = (keystr) => {
     if (!keystr) { return 0xFF; }
     if (keystr in KEYALIASES) {
       keystr = KEYALIASES[keystr];
@@ -190,13 +206,13 @@ const KEY = {
       console.log("Unknown key string: ", keystr);
       return "UNKNOWN";
     }
-  },
+  };
 
   // Given MO(1), return:
   //   { type: 'layer', mask: 'MO', key: '1' },
   // Given KC_C, return:
   //   { type: 'key', key: 'c' },
-  parseDesc(keystr) {
+  KEY.parseDesc = (keystr) => {
     if (keystr in KEYALIASES) {
       keystr = KEYALIASES[keystr];
     }
@@ -262,9 +278,9 @@ const KEY = {
     return {
       type: 'key', str: '<span style="color: red; font-weight: bold;">?? BROKEN ??</span>', title: keystr,
     };
-  },
+  };
 
-  stringifyKeymap(keymapint) {
+  KEY.stringifyKeymap = (keymapint) => {
     // keymap is just layers of arrays of integers.
     const ret = [];
     for (const layer of keymapint) {
@@ -279,9 +295,9 @@ const KEY = {
       ret.push(l);
     }
     return ret;
-  },
+  };
 
-  parseKeymap(keymapstr, rows, cols) {
+  KEY.parseKeymap = (keymapstr, rows, cols) => {
     // keymap is just layers of arrays of strings.
     const ret = [];
     for (const layer of keymapstr) {
@@ -300,5 +316,5 @@ const KEY = {
       ret.push(l);
     }
     return ret;
-  },
-}
+  };
+});
