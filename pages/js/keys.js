@@ -144,18 +144,20 @@ const KEY = {
   stringify(keynum) {
     const modmask = keynum & 0xFF00;
     const keyid = keynum & 0x00FF;
-    if (keynum in CODEMAP) {
-      return CODEMAP[keynum];
-    } else if (modmask !== 0) {
+    if (modmask !== 0) {
       const kcstr = CODEMAP[keyid];
       const maskstr = CODEMAP[modmask];
       if (maskstr.match(/^(\w+)\(kc\)/)) {
         return maskstr.replace(/\(kc\)/, '(' + kcstr + ')');
       } else if (keyid === 0) {
         return maskstr;
+      } else if (keynum in CODEMAP) {
+        return CODEMAP[keynum];
       } else {
         return '0x' + keynum.toString(16).padStart(4, '0');
       }
+    } else if (keynum in CODEMAP) {
+      return CODEMAP[keynum];
     } else {
       console.log("err wtf?", keynum, keyid, modmask);
       return '????';
@@ -197,11 +199,6 @@ const KEY = {
   parseDesc(keystr) {
     if (keystr in KEYALIASES) {
       keystr = KEYALIASES[keystr];
-    } else {
-      return {
-        type: 'key',
-        str: keystr
-      }
     }
     let m;
     // Layers:k MO(0) ... MO(15)
@@ -231,6 +228,11 @@ const KEY = {
       let mod = KEYMAP[m[1] + '(kc)'];
       if (!mod) {
         mod = KEYMAP[m[1]];
+        if (mod in KEYALIASES) {
+          mod = KEYALIASES[mod];
+        }
+      } else if (mod in KEYALIASES) {
+        mod = KEYALIASES[mod];
       }
       if (mod) {
         if (m[2] === 'kc') {

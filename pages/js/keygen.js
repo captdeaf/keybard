@@ -1756,20 +1756,14 @@ const KEYMAP = {
     "str": "LCS_T\n(kc)",
     "code": 0x2300,
     "title": "Left Control + Left Shift when held, kc when tapped",
-    "masked": true,
-    "alias": [
-      "LCS_T(kc)"
-    ]
+    "masked": true
   },
   "C_S(kc)": {
     "qmkid": "C_S(kc)",
     "str": "LCS\n(kc)",
     "code": 0x0300,
     "title": "LCTL + LSFT",
-    "masked": true,
-    "alias": [
-      "LCS(kc)"
-    ]
+    "masked": true
   },
   "HYPR(kc)": {
     "qmkid": "HYPR(kc)",
@@ -1986,20 +1980,14 @@ const KEYMAP = {
     "str": "LSG_T\n(kc)",
     "code": 0x2a00,
     "title": "LGUI + LSFT when held, kc when tapped",
-    "masked": true,
-    "alias": [
-      "LSG_T(kc)"
-    ]
+    "masked": true
   },
   "SGUI(kc)": {
     "qmkid": "SGUI(kc)",
     "str": "LSG\n(kc)",
     "code": 0x0a00,
     "title": "LGUI + LSFT",
-    "masked": true,
-    "alias": [
-      "LSG(kc)"
-    ]
+    "masked": true
   },
   "OSM(MOD_LSFT)": {
     "qmkid": "OSM(MOD_LSFT)",
@@ -2191,10 +2179,7 @@ const KEYMAP = {
     "qmkid": "KC_TRNS",
     "str": "\u25bd",
     "code": 0x0001,
-    "title": "KC_TRNS",
-    "alias": [
-      "KC_TRANSPARENT"
-    ]
+    "title": "KC_TRNS"
   },
   "KC_NUMLOCK": {
     "qmkid": "KC_NUMLOCK",
@@ -2203,181 +2188,121 @@ const KEYMAP = {
     "title": "KC_NUMLOCK",
     "recorder_alias": [
       "num lock"
-    ],
-    "alias": [
-      "KC_NLCK"
     ]
   },
   "KC_KP_SLASH": {
     "qmkid": "KC_KP_SLASH",
     "str": "/",
     "code": 0x0054,
-    "title": "KC_KP_SLASH",
-    "alias": [
-      "KC_PSLS"
-    ]
+    "title": "KC_KP_SLASH"
   },
   "KC_KP_ASTERISK": {
     "qmkid": "KC_KP_ASTERISK",
     "str": "*",
     "code": 0x0055,
-    "title": "KC_KP_ASTERISK",
-    "alias": [
-      "KC_PAST"
-    ]
+    "title": "KC_KP_ASTERISK"
   },
   "KC_KP_MINUS": {
     "qmkid": "KC_KP_MINUS",
     "str": "-",
     "code": 0x0056,
-    "title": "KC_KP_MINUS",
-    "alias": [
-      "KC_PMNS"
-    ]
+    "title": "KC_KP_MINUS"
   },
   "KC_KP_PLUS": {
     "qmkid": "KC_KP_PLUS",
     "str": "+",
     "code": 0x0057,
-    "title": "KC_KP_PLUS",
-    "alias": [
-      "KC_PPLS"
-    ]
+    "title": "KC_KP_PLUS"
   },
   "KC_KP_ENTER": {
     "qmkid": "KC_KP_ENTER",
     "str": "Num\nEnter",
     "code": 0x0058,
-    "title": "KC_KP_ENTER",
-    "alias": [
-      "KC_PENT"
-    ]
+    "title": "KC_KP_ENTER"
   },
   "KC_KP_1": {
     "qmkid": "KC_KP_1",
     "str": "1",
     "code": 0x0059,
-    "title": "KC_KP_1",
-    "alias": [
-      "KC_P1"
-    ]
+    "title": "KC_KP_1"
   },
   "KC_KP_2": {
     "qmkid": "KC_KP_2",
     "str": "2",
     "code": 0x005a,
-    "title": "KC_KP_2",
-    "alias": [
-      "KC_P2"
-    ]
+    "title": "KC_KP_2"
   },
   "KC_KP_3": {
     "qmkid": "KC_KP_3",
     "str": "3",
     "code": 0x005b,
-    "title": "KC_KP_3",
-    "alias": [
-      "KC_P3"
-    ]
+    "title": "KC_KP_3"
   },
   "KC_KP_4": {
     "qmkid": "KC_KP_4",
     "str": "4",
     "code": 0x005c,
-    "title": "KC_KP_4",
-    "alias": [
-      "KC_P4"
-    ]
+    "title": "KC_KP_4"
   },
   "KC_KP_5": {
     "qmkid": "KC_KP_5",
     "str": "5",
     "code": 0x005d,
-    "title": "KC_KP_5",
-    "alias": [
-      "KC_P5"
-    ]
+    "title": "KC_KP_5"
   },
   "KC_KP_6": {
     "qmkid": "KC_KP_6",
     "str": "6",
     "code": 0x005e,
-    "title": "KC_KP_6",
-    "alias": [
-      "KC_P6"
-    ]
+    "title": "KC_KP_6"
   },
   "KC_KP_7": {
     "qmkid": "KC_KP_7",
     "str": "7",
     "code": 0x005f,
-    "title": "KC_KP_7",
-    "alias": [
-      "KC_P7"
-    ]
+    "title": "KC_KP_7"
   },
   "KC_KP_8": {
     "qmkid": "KC_KP_8",
     "str": "8",
     "code": 0x0060,
-    "title": "KC_KP_8",
-    "alias": [
-      "KC_P8"
-    ]
+    "title": "KC_KP_8"
   },
   "KC_KP_9": {
     "qmkid": "KC_KP_9",
     "str": "9",
     "code": 0x0061,
-    "title": "KC_KP_9",
-    "alias": [
-      "KC_P9"
-    ]
+    "title": "KC_KP_9"
   },
   "KC_KP_0": {
     "qmkid": "KC_KP_0",
     "str": "0",
     "code": 0x0062,
-    "title": "KC_KP_0",
-    "alias": [
-      "KC_P0"
-    ]
+    "title": "KC_KP_0"
   },
   "KC_KP_DOT": {
     "qmkid": "KC_KP_DOT",
     "str": ".",
     "code": 0x0063,
-    "title": "KC_KP_DOT",
-    "alias": [
-      "KC_PDOT"
-    ]
+    "title": "KC_KP_DOT"
   },
   "KC_KP_EQUAL": {
     "qmkid": "KC_KP_EQUAL",
     "str": "=",
     "code": 0x0067,
-    "title": "KC_KP_EQUAL",
-    "alias": [
-      "KC_PEQL"
-    ]
+    "title": "KC_KP_EQUAL"
   },
   "KC_KP_COMMA": {
     "qmkid": "KC_KP_COMMA",
     "str": ",",
     "code": 0x0085,
-    "title": "KC_KP_COMMA",
-    "alias": [
-      "KC_PCMM"
-    ]
+    "title": "KC_KP_COMMA"
   },
   "KC_PSCREEN": {
     "qmkid": "KC_PSCREEN",
     "str": "Print\nScreen",
     "code": 0x0046,
-    "title": "KC_PSCREEN",
-    "alias": [
-      "KC_PSCR"
-    ]
+    "title": "KC_PSCREEN"
   },
   "KC_SCROLLLOCK": {
     "qmkid": "KC_SCROLLLOCK",
@@ -2386,10 +2311,6 @@ const KEYMAP = {
     "title": "KC_SCROLLLOCK",
     "recorder_alias": [
       "scroll lock"
-    ],
-    "alias": [
-      "KC_SLCK",
-      "KC_BRMD"
     ]
   },
   "KC_PAUSE": {
@@ -2400,11 +2321,6 @@ const KEYMAP = {
     "recorder_alias": [
       "pause",
       "break"
-    ],
-    "alias": [
-      "KC_PAUS",
-      "KC_BRK",
-      "KC_BRMU"
     ]
   },
   "KC_INSERT": {
@@ -2414,9 +2330,6 @@ const KEYMAP = {
     "title": "KC_INSERT",
     "recorder_alias": [
       "insert"
-    ],
-    "alias": [
-      "KC_INS"
     ]
   },
   "KC_HOME": {
@@ -2444,9 +2357,6 @@ const KEYMAP = {
     "title": "KC_DELETE",
     "recorder_alias": [
       "delete"
-    ],
-    "alias": [
-      "KC_DEL"
     ]
   },
   "KC_END": {
@@ -2465,9 +2375,6 @@ const KEYMAP = {
     "title": "KC_PGDOWN",
     "recorder_alias": [
       "page down"
-    ],
-    "alias": [
-      "KC_PGDN"
     ]
   },
   "KC_RIGHT": {
@@ -2477,9 +2384,6 @@ const KEYMAP = {
     "title": "KC_RIGHT",
     "recorder_alias": [
       "right"
-    ],
-    "alias": [
-      "KC_RGHT"
     ]
   },
   "KC_LEFT": {
@@ -2876,9 +2780,6 @@ const KEYMAP = {
     "title": "KC_ENTER",
     "recorder_alias": [
       "enter"
-    ],
-    "alias": [
-      "KC_ENT"
     ]
   },
   "KC_ESCAPE": {
@@ -2888,9 +2789,6 @@ const KEYMAP = {
     "title": "KC_ESCAPE",
     "recorder_alias": [
       "esc"
-    ],
-    "alias": [
-      "KC_ESC"
     ]
   },
   "KC_BSPACE": {
@@ -2900,9 +2798,6 @@ const KEYMAP = {
     "title": "KC_BSPACE",
     "recorder_alias": [
       "backspace"
-    ],
-    "alias": [
-      "KC_BSPC"
     ]
   },
   "KC_TAB": {
@@ -2921,9 +2816,6 @@ const KEYMAP = {
     "title": "KC_SPACE",
     "recorder_alias": [
       "space"
-    ],
-    "alias": [
-      "KC_SPC"
     ]
   },
   "KC_MINUS": {
@@ -2934,9 +2826,6 @@ const KEYMAP = {
     "printable": "-",
     "recorder_alias": [
       "-"
-    ],
-    "alias": [
-      "KC_MINS"
     ]
   },
   "KC_EQUAL": {
@@ -2947,9 +2836,6 @@ const KEYMAP = {
     "printable": "=",
     "recorder_alias": [
       "="
-    ],
-    "alias": [
-      "KC_EQL"
     ]
   },
   "KC_LBRACKET": {
@@ -2960,9 +2846,6 @@ const KEYMAP = {
     "printable": "[",
     "recorder_alias": [
       "["
-    ],
-    "alias": [
-      "KC_LBRC"
     ]
   },
   "KC_RBRACKET": {
@@ -2973,9 +2856,6 @@ const KEYMAP = {
     "printable": "]",
     "recorder_alias": [
       "]"
-    ],
-    "alias": [
-      "KC_RBRC"
     ]
   },
   "KC_BSLASH": {
@@ -2986,9 +2866,6 @@ const KEYMAP = {
     "printable": "\\",
     "recorder_alias": [
       "\\"
-    ],
-    "alias": [
-      "KC_BSLS"
     ]
   },
   "KC_SCOLON": {
@@ -2999,9 +2876,6 @@ const KEYMAP = {
     "printable": ";",
     "recorder_alias": [
       ";"
-    ],
-    "alias": [
-      "KC_SCLN"
     ]
   },
   "KC_QUOTE": {
@@ -3012,9 +2886,6 @@ const KEYMAP = {
     "printable": "'",
     "recorder_alias": [
       "'"
-    ],
-    "alias": [
-      "KC_QUOT"
     ]
   },
   "KC_GRAVE": {
@@ -3025,10 +2896,6 @@ const KEYMAP = {
     "printable": "`",
     "recorder_alias": [
       "`"
-    ],
-    "alias": [
-      "KC_GRV",
-      "KC_ZKHK"
     ]
   },
   "KC_COMMA": {
@@ -3039,9 +2906,6 @@ const KEYMAP = {
     "printable": ",",
     "recorder_alias": [
       ","
-    ],
-    "alias": [
-      "KC_COMM"
     ]
   },
   "KC_DOT": {
@@ -3062,9 +2926,6 @@ const KEYMAP = {
     "printable": "/",
     "recorder_alias": [
       "/"
-    ],
-    "alias": [
-      "KC_SLSH"
     ]
   },
   "KC_CAPSLOCK": {
@@ -3074,10 +2935,6 @@ const KEYMAP = {
     "title": "KC_CAPSLOCK",
     "recorder_alias": [
       "caps lock"
-    ],
-    "alias": [
-      "KC_CLCK",
-      "KC_CAPS"
     ]
   },
   "KC_F1": {
@@ -3197,9 +3054,6 @@ const KEYMAP = {
       "menu",
       "left menu",
       "right menu"
-    ],
-    "alias": [
-      "KC_APP"
     ]
   },
   "KC_LCTRL": {
@@ -3210,9 +3064,6 @@ const KEYMAP = {
     "recorder_alias": [
       "left ctrl",
       "ctrl"
-    ],
-    "alias": [
-      "KC_LCTL"
     ]
   },
   "KC_LSHIFT": {
@@ -3223,9 +3074,6 @@ const KEYMAP = {
     "recorder_alias": [
       "left shift",
       "shift"
-    ],
-    "alias": [
-      "KC_LSFT"
     ]
   },
   "KC_LALT": {
@@ -3235,9 +3083,6 @@ const KEYMAP = {
     "title": "KC_LALT",
     "recorder_alias": [
       "alt"
-    ],
-    "alias": [
-      "KC_LOPT"
     ]
   },
   "KC_LGUI": {
@@ -3248,10 +3093,6 @@ const KEYMAP = {
     "recorder_alias": [
       "left windows",
       "windows"
-    ],
-    "alias": [
-      "KC_LCMD",
-      "KC_LWIN"
     ]
   },
   "KC_RCTRL": {
@@ -3261,9 +3102,6 @@ const KEYMAP = {
     "title": "KC_RCTRL",
     "recorder_alias": [
       "right ctrl"
-    ],
-    "alias": [
-      "KC_RCTL"
     ]
   },
   "KC_RSHIFT": {
@@ -3273,20 +3111,13 @@ const KEYMAP = {
     "title": "KC_RSHIFT",
     "recorder_alias": [
       "right shift"
-    ],
-    "alias": [
-      "KC_RSFT"
     ]
   },
   "KC_RALT": {
     "qmkid": "KC_RALT",
     "str": "RAlt",
     "code": 0x00e6,
-    "title": "KC_RALT",
-    "alias": [
-      "KC_ALGR",
-      "KC_ROPT"
-    ]
+    "title": "KC_RALT"
   },
   "KC_RGUI": {
     "qmkid": "KC_RGUI",
@@ -3295,10 +3126,6 @@ const KEYMAP = {
     "title": "KC_RGUI",
     "recorder_alias": [
       "right windows"
-    ],
-    "alias": [
-      "KC_RCMD",
-      "KC_RWIN"
     ]
   },
   "KC_TILD": {
@@ -3431,82 +3258,55 @@ const KEYMAP = {
     "qmkid": "KC_NONUS_HASH",
     "str": "~\n#",
     "code": 0x0032,
-    "title": "Non-US # and ~",
-    "alias": [
-      "KC_NUHS"
-    ]
+    "title": "Non-US # and ~"
   },
   "KC_NONUS_BSLASH": {
     "qmkid": "KC_NONUS_BSLASH",
     "str": "|\n\\",
     "code": 0x0064,
-    "title": "Non-US \\ and |",
-    "alias": [
-      "KC_NUBS"
-    ]
+    "title": "Non-US \\ and |"
   },
   "KC_RO": {
     "qmkid": "KC_RO",
     "str": "_\n\\",
     "code": 0x0087,
-    "title": "JIS \\ and _",
-    "alias": [
-      "KC_INT1"
-    ]
+    "title": "JIS \\ and _"
   },
   "KC_KANA": {
     "qmkid": "KC_KANA",
     "str": "\u30ab\u30bf\u30ab\u30ca\n\u3072\u3089\u304c\u306a",
     "code": 0x0088,
-    "title": "JIS Katakana/Hiragana",
-    "alias": [
-      "KC_INT2"
-    ]
+    "title": "JIS Katakana/Hiragana"
   },
   "KC_JYEN": {
     "qmkid": "KC_JYEN",
     "str": "|\n\u00a5",
     "code": 0x0089,
-    "title": "KC_JYEN",
-    "alias": [
-      "KC_INT3"
-    ]
+    "title": "KC_JYEN"
   },
   "KC_HENK": {
     "qmkid": "KC_HENK",
     "str": "\u5909\u63db",
     "code": 0x008a,
-    "title": "JIS Henkan",
-    "alias": [
-      "KC_INT4"
-    ]
+    "title": "JIS Henkan"
   },
   "KC_MHEN": {
     "qmkid": "KC_MHEN",
     "str": "\u7121\u5909\u63db",
     "code": 0x008b,
-    "title": "JIS Muhenkan",
-    "alias": [
-      "KC_INT5"
-    ]
+    "title": "JIS Muhenkan"
   },
   "KC_LANG1": {
     "qmkid": "KC_LANG1",
     "str": "\ud55c\uc601\n\u304b\u306a",
     "code": 0x0090,
-    "title": "Korean Han/Yeong / JP Mac Kana",
-    "alias": [
-      "KC_HAEN"
-    ]
+    "title": "Korean Han/Yeong / JP Mac Kana"
   },
   "KC_LANG2": {
     "qmkid": "KC_LANG2",
     "str": "\u6f22\u5b57\n\u82f1\u6570",
     "code": 0x0091,
-    "title": "Korean Hanja / JP Mac Eisu",
-    "alias": [
-      "KC_HANJ"
-    ]
+    "title": "Korean Hanja / JP Mac Eisu"
   },
   "KC_GESC": {
     "qmkid": "KC_GESC",
@@ -3560,244 +3360,163 @@ const KEYMAP = {
     "qmkid": "MAGIC_SWAP_CONTROL_CAPSLOCK",
     "str": "Swap\nCtrl\nCaps",
     "code": 0x7000,
-    "title": "Swap Caps Lock and Left Control",
-    "alias": [
-      "CL_SWAP"
-    ]
+    "title": "Swap Caps Lock and Left Control"
   },
   "MAGIC_UNSWAP_CONTROL_CAPSLOCK": {
     "qmkid": "MAGIC_UNSWAP_CONTROL_CAPSLOCK",
     "str": "Unswap\nCtrl\nCaps",
     "code": 0x7001,
-    "title": "Unswap Caps Lock and Left Control",
-    "alias": [
-      "CL_NORM"
-    ]
+    "title": "Unswap Caps Lock and Left Control"
   },
   "MAGIC_CAPSLOCK_TO_CONTROL": {
     "qmkid": "MAGIC_CAPSLOCK_TO_CONTROL",
     "str": "Caps\nto\nCtrl",
     "code": 0x7004,
-    "title": "Treat Caps Lock as Control",
-    "alias": [
-      "CL_CTRL"
-    ]
+    "title": "Treat Caps Lock as Control"
   },
   "MAGIC_UNCAPSLOCK_TO_CONTROL": {
     "qmkid": "MAGIC_UNCAPSLOCK_TO_CONTROL",
     "str": "Caps\nnot to\nCtrl",
     "code": 0x7003,
-    "title": "Stop treating Caps Lock as Control",
-    "alias": [
-      "CL_CAPS"
-    ]
+    "title": "Stop treating Caps Lock as Control"
   },
   "MAGIC_SWAP_LCTL_LGUI": {
     "qmkid": "MAGIC_SWAP_LCTL_LGUI",
     "str": "Swap\nLCtl\nLGui",
     "code": 0x7017,
-    "title": "Swap Left Control and GUI",
-    "alias": [
-      "LCG_SWP"
-    ]
+    "title": "Swap Left Control and GUI"
   },
   "MAGIC_UNSWAP_LCTL_LGUI": {
     "qmkid": "MAGIC_UNSWAP_LCTL_LGUI",
     "str": "Unswap\nLCtl\nLGui",
     "code": 0x7018,
-    "title": "Unswap Left Control and GUI",
-    "alias": [
-      "LCG_NRM"
-    ]
+    "title": "Unswap Left Control and GUI"
   },
   "MAGIC_SWAP_RCTL_RGUI": {
     "qmkid": "MAGIC_SWAP_RCTL_RGUI",
     "str": "Swap\nRCtl\nRGui",
     "code": 0x7019,
-    "title": "Swap Right Control and GUI",
-    "alias": [
-      "RCG_SWP"
-    ]
+    "title": "Swap Right Control and GUI"
   },
   "MAGIC_UNSWAP_RCTL_RGUI": {
     "qmkid": "MAGIC_UNSWAP_RCTL_RGUI",
     "str": "Unswap\nRCtl\nRGui",
     "code": 0x701a,
-    "title": "Unswap Right Control and GUI",
-    "alias": [
-      "RCG_NRM"
-    ]
+    "title": "Unswap Right Control and GUI"
   },
   "MAGIC_SWAP_CTL_GUI": {
     "qmkid": "MAGIC_SWAP_CTL_GUI",
     "str": "Swap\nCtl\nGui",
     "code": 0x701b,
-    "title": "Swap Control and GUI on both sides",
-    "alias": [
-      "CG_SWAP"
-    ]
+    "title": "Swap Control and GUI on both sides"
   },
   "MAGIC_UNSWAP_CTL_GUI": {
     "qmkid": "MAGIC_UNSWAP_CTL_GUI",
     "str": "Unswap\nCtl\nGui",
     "code": 0x701c,
-    "title": "Unswap Control and GUI on both sides",
-    "alias": [
-      "CG_NORM"
-    ]
+    "title": "Unswap Control and GUI on both sides"
   },
   "MAGIC_TOGGLE_CTL_GUI": {
     "qmkid": "MAGIC_TOGGLE_CTL_GUI",
     "str": "Toggle\nCtl\nGui",
     "code": 0x701d,
-    "title": "Toggle Control and GUI swap on both sides",
-    "alias": [
-      "CG_TOGG"
-    ]
+    "title": "Toggle Control and GUI swap on both sides"
   },
   "MAGIC_SWAP_LALT_LGUI": {
     "qmkid": "MAGIC_SWAP_LALT_LGUI",
     "str": "Swap\nLAlt\nLGui",
     "code": 0x7005,
-    "title": "Swap Left Alt and GUI",
-    "alias": [
-      "LAG_SWP"
-    ]
+    "title": "Swap Left Alt and GUI"
   },
   "MAGIC_UNSWAP_LALT_LGUI": {
     "qmkid": "MAGIC_UNSWAP_LALT_LGUI",
     "str": "Unswap\nLAlt\nLGui",
     "code": 0x7006,
-    "title": "Unswap Left Alt and GUI",
-    "alias": [
-      "LAG_NRM"
-    ]
+    "title": "Unswap Left Alt and GUI"
   },
   "MAGIC_SWAP_RALT_RGUI": {
     "qmkid": "MAGIC_SWAP_RALT_RGUI",
     "str": "Swap\nRAlt\nRGui",
     "code": 0x7007,
-    "title": "Swap Right Alt and GUI",
-    "alias": [
-      "RAG_SWP"
-    ]
+    "title": "Swap Right Alt and GUI"
   },
   "MAGIC_UNSWAP_RALT_RGUI": {
     "qmkid": "MAGIC_UNSWAP_RALT_RGUI",
     "str": "Unswap\nRAlt\nRGui",
     "code": 0x7008,
-    "title": "Unswap Right Alt and GUI",
-    "alias": [
-      "RAG_NRM"
-    ]
+    "title": "Unswap Right Alt and GUI"
   },
   "MAGIC_SWAP_ALT_GUI": {
     "qmkid": "MAGIC_SWAP_ALT_GUI",
     "str": "Swap\nAlt\nGui",
     "code": 0x7014,
-    "title": "Swap Alt and GUI on both sides",
-    "alias": [
-      "AG_SWAP"
-    ]
+    "title": "Swap Alt and GUI on both sides"
   },
   "MAGIC_UNSWAP_ALT_GUI": {
     "qmkid": "MAGIC_UNSWAP_ALT_GUI",
     "str": "Unswap\nAlt\nGui",
     "code": 0x7015,
-    "title": "Unswap Alt and GUI on both sides",
-    "alias": [
-      "AG_NORM"
-    ]
+    "title": "Unswap Alt and GUI on both sides"
   },
   "MAGIC_TOGGLE_ALT_GUI": {
     "qmkid": "MAGIC_TOGGLE_ALT_GUI",
     "str": "Toggle\nAlt\nGui",
     "code": 0x7016,
-    "title": "Toggle Alt and GUI swap on both sides",
-    "alias": [
-      "AG_TOGG"
-    ]
+    "title": "Toggle Alt and GUI swap on both sides"
   },
   "MAGIC_NO_GUI": {
     "qmkid": "MAGIC_NO_GUI",
     "str": "GUI\nOff",
     "code": 0x700a,
-    "title": "Disable the GUI keys",
-    "alias": [
-      "GUI_OFF"
-    ]
+    "title": "Disable the GUI keys"
   },
   "MAGIC_UNNO_GUI": {
     "qmkid": "MAGIC_UNNO_GUI",
     "str": "GUI\nOn",
     "code": 0x7009,
-    "title": "Enable the GUI keys",
-    "alias": [
-      "GUI_ON"
-    ]
+    "title": "Enable the GUI keys"
   },
   "MAGIC_SWAP_GRAVE_ESC": {
     "qmkid": "MAGIC_SWAP_GRAVE_ESC",
     "str": "Swap\n`\nEsc",
     "code": 0x700c,
-    "title": "Swap ` and Escape",
-    "alias": [
-      "GE_SWAP"
-    ]
+    "title": "Swap ` and Escape"
   },
   "MAGIC_UNSWAP_GRAVE_ESC": {
     "qmkid": "MAGIC_UNSWAP_GRAVE_ESC",
     "str": "Unswap\n`\nEsc",
     "code": 0x700d,
-    "title": "Unswap ` and Escape",
-    "alias": [
-      "GE_NORM"
-    ]
+    "title": "Unswap ` and Escape"
   },
   "MAGIC_SWAP_BACKSLASH_BACKSPACE": {
     "qmkid": "MAGIC_SWAP_BACKSLASH_BACKSPACE",
     "str": "Swap\n\\\nBS",
     "code": 0x700e,
-    "title": "Swap \\ and Backspace",
-    "alias": [
-      "BS_SWAP"
-    ]
+    "title": "Swap \\ and Backspace"
   },
   "MAGIC_UNSWAP_BACKSLASH_BACKSPACE": {
     "qmkid": "MAGIC_UNSWAP_BACKSLASH_BACKSPACE",
     "str": "Unswap\n\\\nBS",
     "code": 0x700f,
-    "title": "Unswap \\ and Backspace",
-    "alias": [
-      "BS_NORM"
-    ]
+    "title": "Unswap \\ and Backspace"
   },
   "MAGIC_HOST_NKRO": {
     "qmkid": "MAGIC_HOST_NKRO",
     "str": "NKRO\nOn",
     "code": 0x7011,
-    "title": "Enable N-key rollover",
-    "alias": [
-      "NK_ON"
-    ]
+    "title": "Enable N-key rollover"
   },
   "MAGIC_UNHOST_NKRO": {
     "qmkid": "MAGIC_UNHOST_NKRO",
     "str": "NKRO\nOff",
     "code": 0x7012,
-    "title": "Disable N-key rollover",
-    "alias": [
-      "NK_OFF"
-    ]
+    "title": "Disable N-key rollover"
   },
   "MAGIC_TOGGLE_NKRO": {
     "qmkid": "MAGIC_TOGGLE_NKRO",
     "str": "NKRO\nToggle",
     "code": 0x7013,
-    "title": "Toggle N-key rollover",
-    "alias": [
-      "NK_TOGG"
-    ]
+    "title": "Toggle N-key rollover"
   },
   "MAGIC_EE_HANDS_LEFT": {
     "qmkid": "MAGIC_EE_HANDS_LEFT",
@@ -3833,37 +3552,25 @@ const KEYMAP = {
     "qmkid": "CLICKY_TOGGLE",
     "str": "Clicky\nToggle",
     "code": 0x748a,
-    "title": "Toggles Audio clicky mode",
-    "alias": [
-      "CK_TOGG"
-    ]
+    "title": "Toggles Audio clicky mode"
   },
   "CLICKY_UP": {
     "qmkid": "CLICKY_UP",
     "str": "Clicky\nUp",
     "code": 0x748d,
-    "title": "Increases frequency of the clicks",
-    "alias": [
-      "CK_UP"
-    ]
+    "title": "Increases frequency of the clicks"
   },
   "CLICKY_DOWN": {
     "qmkid": "CLICKY_DOWN",
     "str": "Clicky\nDown",
     "code": 0x748e,
-    "title": "Decreases frequency of the clicks",
-    "alias": [
-      "CK_DOWN"
-    ]
+    "title": "Decreases frequency of the clicks"
   },
   "CLICKY_RESET": {
     "qmkid": "CLICKY_RESET",
     "str": "Clicky\nReset",
     "code": 0x748f,
-    "title": "Resets frequency to default",
-    "alias": [
-      "CK_RST"
-    ]
+    "title": "Resets frequency to default"
   },
   "MU_ON": {
     "qmkid": "MU_ON",
@@ -4259,37 +3966,25 @@ const KEYMAP = {
     "qmkid": "KC_PWR",
     "str": "Power",
     "code": 0x00a5,
-    "title": "System Power Down",
-    "alias": [
-      "KC_SYSTEM_POWER"
-    ]
+    "title": "System Power Down"
   },
   "KC_SLEP": {
     "qmkid": "KC_SLEP",
     "str": "Sleep",
     "code": 0x00a6,
-    "title": "System Sleep",
-    "alias": [
-      "KC_SYSTEM_SLEEP"
-    ]
+    "title": "System Sleep"
   },
   "KC_WAKE": {
     "qmkid": "KC_WAKE",
     "str": "Wake",
     "code": 0x00a7,
-    "title": "System Wake",
-    "alias": [
-      "KC_SYSTEM_WAKE"
-    ]
+    "title": "System Wake"
   },
   "KC_EXEC": {
     "qmkid": "KC_EXEC",
     "str": "Exec",
     "code": 0x0074,
-    "title": "Execute",
-    "alias": [
-      "KC_EXECUTE"
-    ]
+    "title": "Execute"
   },
   "KC_HELP": {
     "qmkid": "KC_HELP",
@@ -4301,10 +3996,7 @@ const KEYMAP = {
     "qmkid": "KC_SLCT",
     "str": "Select",
     "code": 0x0077,
-    "title": "KC_SLCT",
-    "alias": [
-      "KC_SELECT"
-    ]
+    "title": "KC_SLCT"
   },
   "KC_STOP": {
     "qmkid": "KC_STOP",
@@ -4316,10 +4008,7 @@ const KEYMAP = {
     "qmkid": "KC_AGIN",
     "str": "Again",
     "code": 0x0079,
-    "title": "KC_AGIN",
-    "alias": [
-      "KC_AGAIN"
-    ]
+    "title": "KC_AGIN"
   },
   "KC_UNDO": {
     "qmkid": "KC_UNDO",
@@ -4343,10 +4032,7 @@ const KEYMAP = {
     "qmkid": "KC_PSTE",
     "str": "Paste",
     "code": 0x007d,
-    "title": "KC_PSTE",
-    "alias": [
-      "KC_PASTE"
-    ]
+    "title": "KC_PSTE"
   },
   "KC_FIND": {
     "qmkid": "KC_FIND",
@@ -4358,10 +4044,7 @@ const KEYMAP = {
     "qmkid": "KC_CALC",
     "str": "Calc",
     "code": 0x00b2,
-    "title": "Launch Calculator (Windows)",
-    "alias": [
-      "KC_CALCULATOR"
-    ]
+    "title": "Launch Calculator (Windows)"
   },
   "KC_MAIL": {
     "qmkid": "KC_MAIL",
@@ -4373,145 +4056,97 @@ const KEYMAP = {
     "qmkid": "KC_MSEL",
     "str": "Media\nPlayer",
     "code": 0x00af,
-    "title": "Launch Media Player (Windows)",
-    "alias": [
-      "KC_MEDIA_SELECT"
-    ]
+    "title": "Launch Media Player (Windows)"
   },
   "KC_MYCM": {
     "qmkid": "KC_MYCM",
     "str": "My\nPC",
     "code": 0x00b3,
-    "title": "Launch My Computer (Windows)",
-    "alias": [
-      "KC_MY_COMPUTER"
-    ]
+    "title": "Launch My Computer (Windows)"
   },
   "KC_WSCH": {
     "qmkid": "KC_WSCH",
     "str": "Browser\nSearch",
     "code": 0x00b4,
-    "title": "Browser Search (Windows)",
-    "alias": [
-      "KC_WWW_SEARCH"
-    ]
+    "title": "Browser Search (Windows)"
   },
   "KC_WHOM": {
     "qmkid": "KC_WHOM",
     "str": "Browser\nHome",
     "code": 0x00b5,
-    "title": "Browser Home (Windows)",
-    "alias": [
-      "KC_WWW_HOME"
-    ]
+    "title": "Browser Home (Windows)"
   },
   "KC_WBAK": {
     "qmkid": "KC_WBAK",
     "str": "Browser\nBack",
     "code": 0x00b6,
-    "title": "Browser Back (Windows)",
-    "alias": [
-      "KC_WWW_BACK"
-    ]
+    "title": "Browser Back (Windows)"
   },
   "KC_WFWD": {
     "qmkid": "KC_WFWD",
     "str": "Browser\nForward",
     "code": 0x00b7,
-    "title": "Browser Forward (Windows)",
-    "alias": [
-      "KC_WWW_FORWARD"
-    ]
+    "title": "Browser Forward (Windows)"
   },
   "KC_WSTP": {
     "qmkid": "KC_WSTP",
     "str": "Browser\nStop",
     "code": 0x00b8,
-    "title": "Browser Stop (Windows)",
-    "alias": [
-      "KC_WWW_STOP"
-    ]
+    "title": "Browser Stop (Windows)"
   },
   "KC_WREF": {
     "qmkid": "KC_WREF",
     "str": "Browser\nRefresh",
     "code": 0x00b9,
-    "title": "Browser Refresh (Windows)",
-    "alias": [
-      "KC_WWW_REFRESH"
-    ]
+    "title": "Browser Refresh (Windows)"
   },
   "KC_WFAV": {
     "qmkid": "KC_WFAV",
     "str": "Browser\nFav.",
     "code": 0x00ba,
-    "title": "Browser Favorites (Windows)",
-    "alias": [
-      "KC_WWW_FAVORITES"
-    ]
+    "title": "Browser Favorites (Windows)"
   },
   "KC_BRIU": {
     "qmkid": "KC_BRIU",
     "str": "Bright.\nUp",
     "code": 0x00bd,
-    "title": "Increase the brightness of screen (Laptop)",
-    "alias": [
-      "KC_BRIGHTNESS_UP"
-    ]
+    "title": "Increase the brightness of screen (Laptop)"
   },
   "KC_BRID": {
     "qmkid": "KC_BRID",
     "str": "Bright.\nDown",
     "code": 0x00be,
-    "title": "Decrease the brightness of screen (Laptop)",
-    "alias": [
-      "KC_BRIGHTNESS_DOWN"
-    ]
+    "title": "Decrease the brightness of screen (Laptop)"
   },
   "KC_MPRV": {
     "qmkid": "KC_MPRV",
     "str": "Media\nPrev",
     "code": 0x00ac,
-    "title": "Previous Track",
-    "alias": [
-      "KC_MEDIA_PREV_TRACK"
-    ]
+    "title": "Previous Track"
   },
   "KC_MNXT": {
     "qmkid": "KC_MNXT",
     "str": "Media\nNext",
     "code": 0x00ab,
-    "title": "Next Track",
-    "alias": [
-      "KC_MEDIA_NEXT_TRACK"
-    ]
+    "title": "Next Track"
   },
   "KC_MUTE": {
     "qmkid": "KC_MUTE",
     "str": "Mute",
     "code": 0x00a8,
-    "title": "Mute Audio",
-    "alias": [
-      "KC_AUDIO_MUTE"
-    ]
+    "title": "Mute Audio"
   },
   "KC_VOLD": {
     "qmkid": "KC_VOLD",
     "str": "Vol -",
     "code": 0x00aa,
-    "title": "Volume Down",
-    "alias": [
-      "KC_AUDIO_VOL_DOWN"
-    ]
+    "title": "Volume Down"
   },
   "KC_VOLU": {
     "qmkid": "KC_VOLU",
     "str": "Vol +",
     "code": 0x00a9,
-    "title": "Volume Up",
-    "alias": [
-      "KC_AUDIO_VOL_UP"
-    ]
+    "title": "Volume Up"
   },
   "KC__VOLDOWN": {
     "qmkid": "KC__VOLDOWN",
@@ -4529,262 +4164,175 @@ const KEYMAP = {
     "qmkid": "KC_MSTP",
     "str": "Media\nStop",
     "code": 0x00ad,
-    "title": "KC_MSTP",
-    "alias": [
-      "KC_MEDIA_STOP"
-    ]
+    "title": "KC_MSTP"
   },
   "KC_MPLY": {
     "qmkid": "KC_MPLY",
     "str": "Media\nPlay",
     "code": 0x00ae,
-    "title": "Play/Pause",
-    "alias": [
-      "KC_MEDIA_PLAY_PAUSE"
-    ]
+    "title": "Play/Pause"
   },
   "KC_MRWD": {
     "qmkid": "KC_MRWD",
     "str": "Prev\nTrack\n(macOS)",
     "code": 0x00bc,
-    "title": "Previous Track / Rewind (macOS)",
-    "alias": [
-      "KC_MEDIA_REWIND"
-    ]
+    "title": "Previous Track / Rewind (macOS)"
   },
   "KC_MFFD": {
     "qmkid": "KC_MFFD",
     "str": "Next\nTrack\n(macOS)",
     "code": 0x00bb,
-    "title": "Next Track / Fast Forward (macOS)",
-    "alias": [
-      "KC_MEDIA_FAST_FORWARD"
-    ]
+    "title": "Next Track / Fast Forward (macOS)"
   },
   "KC_EJCT": {
     "qmkid": "KC_EJCT",
     "str": "Eject",
     "code": 0x00b0,
-    "title": "Eject (macOS)",
-    "alias": [
-      "KC_MEDIA_EJECT"
-    ]
+    "title": "Eject (macOS)"
   },
   "KC_MS_U": {
     "qmkid": "KC_MS_U",
     "str": "Mouse\nUp",
     "code": 0x00cd,
-    "title": "Mouse Cursor Up",
-    "alias": [
-      "KC_MS_UP"
-    ]
+    "title": "Mouse Cursor Up"
   },
   "KC_MS_D": {
     "qmkid": "KC_MS_D",
     "str": "Mouse\nDown",
     "code": 0x00ce,
-    "title": "Mouse Cursor Down",
-    "alias": [
-      "KC_MS_DOWN"
-    ]
+    "title": "Mouse Cursor Down"
   },
   "KC_MS_L": {
     "qmkid": "KC_MS_L",
     "str": "Mouse\nLeft",
     "code": 0x00cf,
-    "title": "Mouse Cursor Left",
-    "alias": [
-      "KC_MS_LEFT"
-    ]
+    "title": "Mouse Cursor Left"
   },
   "KC_MS_R": {
     "qmkid": "KC_MS_R",
     "str": "Mouse\nRight",
     "code": 0x00d0,
-    "title": "Mouse Cursor Right",
-    "alias": [
-      "KC_MS_RIGHT"
-    ]
+    "title": "Mouse Cursor Right"
   },
   "KC_BTN1": {
     "qmkid": "KC_BTN1",
     "str": "Mouse\n1",
     "code": 0x00d1,
-    "title": "Mouse Button 1",
-    "alias": [
-      "KC_MS_BTN1"
-    ]
+    "title": "Mouse Button 1"
   },
   "KC_BTN2": {
     "qmkid": "KC_BTN2",
     "str": "Mouse\n2",
     "code": 0x00d2,
-    "title": "Mouse Button 2",
-    "alias": [
-      "KC_MS_BTN2"
-    ]
+    "title": "Mouse Button 2"
   },
   "KC_BTN3": {
     "qmkid": "KC_BTN3",
     "str": "Mouse\n3",
     "code": 0x00d3,
-    "title": "Mouse Button 3",
-    "alias": [
-      "KC_MS_BTN3"
-    ]
+    "title": "Mouse Button 3"
   },
   "KC_BTN4": {
     "qmkid": "KC_BTN4",
     "str": "Mouse\n4",
     "code": 0x00d4,
-    "title": "Mouse Button 4",
-    "alias": [
-      "KC_MS_BTN4"
-    ]
+    "title": "Mouse Button 4"
   },
   "KC_BTN5": {
     "qmkid": "KC_BTN5",
     "str": "Mouse\n5",
     "code": 0x00d5,
-    "title": "Mouse Button 5",
-    "alias": [
-      "KC_MS_BTN5"
-    ]
+    "title": "Mouse Button 5"
   },
   "KC_WH_U": {
     "qmkid": "KC_WH_U",
     "str": "Mouse\nWheel\nUp",
     "code": 0x00d9,
-    "title": "KC_WH_U",
-    "alias": [
-      "KC_MS_WH_UP"
-    ]
+    "title": "KC_WH_U"
   },
   "KC_WH_D": {
     "qmkid": "KC_WH_D",
     "str": "Mouse\nWheel\nDown",
     "code": 0x00da,
-    "title": "KC_WH_D",
-    "alias": [
-      "KC_MS_WH_DOWN"
-    ]
+    "title": "KC_WH_D"
   },
   "KC_WH_L": {
     "qmkid": "KC_WH_L",
     "str": "Mouse\nWheel\nLeft",
     "code": 0x00db,
-    "title": "KC_WH_L",
-    "alias": [
-      "KC_MS_WH_LEFT"
-    ]
+    "title": "KC_WH_L"
   },
   "KC_WH_R": {
     "qmkid": "KC_WH_R",
     "str": "Mouse\nWheel\nRight",
     "code": 0x00dc,
-    "title": "KC_WH_R",
-    "alias": [
-      "KC_MS_WH_RIGHT"
-    ]
+    "title": "KC_WH_R"
   },
   "KC_ACL0": {
     "qmkid": "KC_ACL0",
     "str": "Mouse\nAccel\n0",
     "code": 0x00dd,
-    "title": "Set mouse acceleration to 0",
-    "alias": [
-      "KC_MS_ACCEL0"
-    ]
+    "title": "Set mouse acceleration to 0"
   },
   "KC_ACL1": {
     "qmkid": "KC_ACL1",
     "str": "Mouse\nAccel\n1",
     "code": 0x00de,
-    "title": "Set mouse acceleration to 1",
-    "alias": [
-      "KC_MS_ACCEL1"
-    ]
+    "title": "Set mouse acceleration to 1"
   },
   "KC_ACL2": {
     "qmkid": "KC_ACL2",
     "str": "Mouse\nAccel\n2",
     "code": 0x00df,
-    "title": "Set mouse acceleration to 2",
-    "alias": [
-      "KC_MS_ACCEL2"
-    ]
+    "title": "Set mouse acceleration to 2"
   },
   "KC_LCAP": {
     "qmkid": "KC_LCAP",
     "str": "Locking\nCaps",
     "code": 0x0082,
-    "title": "Locking Caps Lock",
-    "alias": [
-      "KC_LOCKING_CAPS"
-    ]
+    "title": "Locking Caps Lock"
   },
   "KC_LNUM": {
     "qmkid": "KC_LNUM",
     "str": "Locking\nNum",
     "code": 0x0083,
-    "title": "Locking Num Lock",
-    "alias": [
-      "KC_LOCKING_NUM"
-    ]
+    "title": "Locking Num Lock"
   },
   "KC_LSCR": {
     "qmkid": "KC_LSCR",
     "str": "Locking\nScroll",
     "code": 0x0084,
-    "title": "Locking Scroll Lock",
-    "alias": [
-      "KC_LOCKING_SCROLL"
-    ]
+    "title": "Locking Scroll Lock"
   },
   "DYN_REC_START1": {
     "qmkid": "DYN_REC_START1",
     "str": "DM1\nRec",
     "code": 0x7c53,
-    "title": "Dynamic Macro 1 Rec Start",
-    "alias": [
-      "DM_REC1"
-    ]
+    "title": "Dynamic Macro 1 Rec Start"
   },
   "DYN_REC_START2": {
     "qmkid": "DYN_REC_START2",
     "str": "DM2\nRec",
     "code": 0x7c54,
-    "title": "Dynamic Macro 2 Rec Start",
-    "alias": [
-      "DM_REC2"
-    ]
+    "title": "Dynamic Macro 2 Rec Start"
   },
   "DYN_REC_STOP": {
     "qmkid": "DYN_REC_STOP",
     "str": "DM Rec\nStop",
     "code": 0x7c55,
-    "title": "Dynamic Macro Rec Stop",
-    "alias": [
-      "DM_RSTP"
-    ]
+    "title": "Dynamic Macro Rec Stop"
   },
   "DYN_MACRO_PLAY1": {
     "qmkid": "DYN_MACRO_PLAY1",
     "str": "DM1\nPlay",
     "code": 0x7c56,
-    "title": "Dynamic Macro 1 Play",
-    "alias": [
-      "DM_PLY1"
-    ]
+    "title": "Dynamic Macro 1 Play"
   },
   "DYN_MACRO_PLAY2": {
     "qmkid": "DYN_MACRO_PLAY2",
     "str": "DM2\nPlay",
     "code": 0x7c57,
-    "title": "Dynamic Macro 2 Play",
-    "alias": [
-      "DM_PLY2"
-    ]
+    "title": "Dynamic Macro 2 Play"
   },
   "MI_C": {
     "qmkid": "MI_C",
@@ -4796,10 +4344,7 @@ const KEYMAP = {
     "qmkid": "MI_Cs",
     "str": "\u1d39\u1d35\u1d30\u1d35\nC#/D\u1d47",
     "code": 0x7104,
-    "title": "Midi send note C#/D\u1d47",
-    "alias": [
-      "MI_Db"
-    ]
+    "title": "Midi send note C#/D\u1d47"
   },
   "MI_D": {
     "qmkid": "MI_D",
@@ -4811,10 +4356,7 @@ const KEYMAP = {
     "qmkid": "MI_Ds",
     "str": "\u1d39\u1d35\u1d30\u1d35\nD#/E\u1d47",
     "code": 0x7106,
-    "title": "Midi send note D#/E\u1d47",
-    "alias": [
-      "MI_Eb"
-    ]
+    "title": "Midi send note D#/E\u1d47"
   },
   "MI_E": {
     "qmkid": "MI_E",
@@ -4832,10 +4374,7 @@ const KEYMAP = {
     "qmkid": "MI_Fs",
     "str": "\u1d39\u1d35\u1d30\u1d35\nF#/G\u1d47",
     "code": 0x7109,
-    "title": "Midi send note F#/G\u1d47",
-    "alias": [
-      "MI_Gb"
-    ]
+    "title": "Midi send note F#/G\u1d47"
   },
   "MI_G": {
     "qmkid": "MI_G",
@@ -4847,10 +4386,7 @@ const KEYMAP = {
     "qmkid": "MI_Gs",
     "str": "\u1d39\u1d35\u1d30\u1d35\nG#/A\u1d47",
     "code": 0x710b,
-    "title": "Midi send note G#/A\u1d47",
-    "alias": [
-      "MI_Ab"
-    ]
+    "title": "Midi send note G#/A\u1d47"
   },
   "MI_A": {
     "qmkid": "MI_A",
@@ -4862,10 +4398,7 @@ const KEYMAP = {
     "qmkid": "MI_As",
     "str": "\u1d39\u1d35\u1d30\u1d35\nA#/B\u1d47",
     "code": 0x710d,
-    "title": "Midi send note A#/B\u1d47",
-    "alias": [
-      "MI_Bb"
-    ]
+    "title": "Midi send note A#/B\u1d47"
   },
   "MI_B": {
     "qmkid": "MI_B",
@@ -4883,10 +4416,7 @@ const KEYMAP = {
     "qmkid": "MI_Cs_1",
     "str": "\u1d39\u1d35\u1d30\u1d35\nC#\u2081/D\u1d47\u2081",
     "code": 0x7110,
-    "title": "Midi send note C#\u2081/D\u1d47\u2081",
-    "alias": [
-      "MI_Db_1"
-    ]
+    "title": "Midi send note C#\u2081/D\u1d47\u2081"
   },
   "MI_D_1": {
     "qmkid": "MI_D_1",
@@ -4898,10 +4428,7 @@ const KEYMAP = {
     "qmkid": "MI_Ds_1",
     "str": "\u1d39\u1d35\u1d30\u1d35\nD#\u2081/E\u1d47\u2081",
     "code": 0x7112,
-    "title": "Midi send note D#\u2081/E\u1d47\u2081",
-    "alias": [
-      "MI_Eb_1"
-    ]
+    "title": "Midi send note D#\u2081/E\u1d47\u2081"
   },
   "MI_E_1": {
     "qmkid": "MI_E_1",
@@ -4919,10 +4446,7 @@ const KEYMAP = {
     "qmkid": "MI_Fs_1",
     "str": "\u1d39\u1d35\u1d30\u1d35\nF#\u2081/G\u1d47\u2081",
     "code": 0x7115,
-    "title": "Midi send note F#\u2081/G\u1d47\u2081",
-    "alias": [
-      "MI_Gb_1"
-    ]
+    "title": "Midi send note F#\u2081/G\u1d47\u2081"
   },
   "MI_G_1": {
     "qmkid": "MI_G_1",
@@ -4934,10 +4458,7 @@ const KEYMAP = {
     "qmkid": "MI_Gs_1",
     "str": "\u1d39\u1d35\u1d30\u1d35\nG#\u2081/A\u1d47\u2081",
     "code": 0x7117,
-    "title": "Midi send note G#\u2081/A\u1d47\u2081",
-    "alias": [
-      "MI_Ab_1"
-    ]
+    "title": "Midi send note G#\u2081/A\u1d47\u2081"
   },
   "MI_A_1": {
     "qmkid": "MI_A_1",
@@ -4949,10 +4470,7 @@ const KEYMAP = {
     "qmkid": "MI_As_1",
     "str": "\u1d39\u1d35\u1d30\u1d35\nA#\u2081/B\u1d47\u2081",
     "code": 0x7119,
-    "title": "Midi send note A#\u2081/B\u1d47\u2081",
-    "alias": [
-      "MI_Bb_1"
-    ]
+    "title": "Midi send note A#\u2081/B\u1d47\u2081"
   },
   "MI_B_1": {
     "qmkid": "MI_B_1",
@@ -4970,10 +4488,7 @@ const KEYMAP = {
     "qmkid": "MI_Cs_2",
     "str": "\u1d39\u1d35\u1d30\u1d35\nC#\u2082/D\u1d47\u2082",
     "code": 0x711c,
-    "title": "Midi send note C#\u2082/D\u1d47\u2082",
-    "alias": [
-      "MI_Db_2"
-    ]
+    "title": "Midi send note C#\u2082/D\u1d47\u2082"
   },
   "MI_D_2": {
     "qmkid": "MI_D_2",
@@ -4985,10 +4500,7 @@ const KEYMAP = {
     "qmkid": "MI_Ds_2",
     "str": "\u1d39\u1d35\u1d30\u1d35\nD#\u2082/E\u1d47\u2082",
     "code": 0x711e,
-    "title": "Midi send note D#\u2082/E\u1d47\u2082",
-    "alias": [
-      "MI_Eb_2"
-    ]
+    "title": "Midi send note D#\u2082/E\u1d47\u2082"
   },
   "MI_E_2": {
     "qmkid": "MI_E_2",
@@ -5006,10 +4518,7 @@ const KEYMAP = {
     "qmkid": "MI_Fs_2",
     "str": "\u1d39\u1d35\u1d30\u1d35\nF#\u2082/G\u1d47\u2082",
     "code": 0x7121,
-    "title": "Midi send note F#\u2082/G\u1d47\u2082",
-    "alias": [
-      "MI_Gb_2"
-    ]
+    "title": "Midi send note F#\u2082/G\u1d47\u2082"
   },
   "MI_G_2": {
     "qmkid": "MI_G_2",
@@ -5021,10 +4530,7 @@ const KEYMAP = {
     "qmkid": "MI_Gs_2",
     "str": "\u1d39\u1d35\u1d30\u1d35\nG#\u2082/A\u1d47\u2082",
     "code": 0x7123,
-    "title": "Midi send note G#\u2082/A\u1d47\u2082",
-    "alias": [
-      "MI_Ab_2"
-    ]
+    "title": "Midi send note G#\u2082/A\u1d47\u2082"
   },
   "MI_A_2": {
     "qmkid": "MI_A_2",
@@ -5036,10 +4542,7 @@ const KEYMAP = {
     "qmkid": "MI_As_2",
     "str": "\u1d39\u1d35\u1d30\u1d35\nA#\u2082/B\u1d47\u2082",
     "code": 0x7125,
-    "title": "Midi send note A#\u2082/B\u1d47\u2082",
-    "alias": [
-      "MI_Bb_2"
-    ]
+    "title": "Midi send note A#\u2082/B\u1d47\u2082"
   },
   "MI_B_2": {
     "qmkid": "MI_B_2",
@@ -5057,10 +4560,7 @@ const KEYMAP = {
     "qmkid": "MI_Cs_3",
     "str": "\u1d39\u1d35\u1d30\u1d35\nC#\u2083/D\u1d47\u2083",
     "code": 0x7128,
-    "title": "Midi send note C#\u2083/D\u1d47\u2083",
-    "alias": [
-      "MI_Db_3"
-    ]
+    "title": "Midi send note C#\u2083/D\u1d47\u2083"
   },
   "MI_D_3": {
     "qmkid": "MI_D_3",
@@ -5072,10 +4572,7 @@ const KEYMAP = {
     "qmkid": "MI_Ds_3",
     "str": "\u1d39\u1d35\u1d30\u1d35\nD#\u2083/E\u1d47\u2083",
     "code": 0x712a,
-    "title": "Midi send note D#\u2083/E\u1d47\u2083",
-    "alias": [
-      "MI_Eb_3"
-    ]
+    "title": "Midi send note D#\u2083/E\u1d47\u2083"
   },
   "MI_E_3": {
     "qmkid": "MI_E_3",
@@ -5093,10 +4590,7 @@ const KEYMAP = {
     "qmkid": "MI_Fs_3",
     "str": "\u1d39\u1d35\u1d30\u1d35\nF#\u2083/G\u1d47\u2083",
     "code": 0x712d,
-    "title": "Midi send note F#\u2083/G\u1d47\u2083",
-    "alias": [
-      "MI_Gb_3"
-    ]
+    "title": "Midi send note F#\u2083/G\u1d47\u2083"
   },
   "MI_G_3": {
     "qmkid": "MI_G_3",
@@ -5108,10 +4602,7 @@ const KEYMAP = {
     "qmkid": "MI_Gs_3",
     "str": "\u1d39\u1d35\u1d30\u1d35\nG#\u2083/A\u1d47\u2083",
     "code": 0x712f,
-    "title": "Midi send note G#\u2083/A\u1d47\u2083",
-    "alias": [
-      "MI_Ab_3"
-    ]
+    "title": "Midi send note G#\u2083/A\u1d47\u2083"
   },
   "MI_A_3": {
     "qmkid": "MI_A_3",
@@ -5123,10 +4614,7 @@ const KEYMAP = {
     "qmkid": "MI_As_3",
     "str": "\u1d39\u1d35\u1d30\u1d35\nA#\u2083/B\u1d47\u2083",
     "code": 0x7131,
-    "title": "Midi send note A#\u2083/B\u1d47\u2083",
-    "alias": [
-      "MI_Bb_3"
-    ]
+    "title": "Midi send note A#\u2083/B\u1d47\u2083"
   },
   "MI_B_3": {
     "qmkid": "MI_B_3",
@@ -5144,10 +4632,7 @@ const KEYMAP = {
     "qmkid": "MI_Cs_4",
     "str": "\u1d39\u1d35\u1d30\u1d35\nC#\u2084/D\u1d47\u2084",
     "code": 0x7134,
-    "title": "Midi send note C#\u2084/D\u1d47\u2084",
-    "alias": [
-      "MI_Db_4"
-    ]
+    "title": "Midi send note C#\u2084/D\u1d47\u2084"
   },
   "MI_D_4": {
     "qmkid": "MI_D_4",
@@ -5159,10 +4644,7 @@ const KEYMAP = {
     "qmkid": "MI_Ds_4",
     "str": "\u1d39\u1d35\u1d30\u1d35\nD#\u2084/E\u1d47\u2084",
     "code": 0x7136,
-    "title": "Midi send note D#\u2084/E\u1d47\u2084",
-    "alias": [
-      "MI_Eb_4"
-    ]
+    "title": "Midi send note D#\u2084/E\u1d47\u2084"
   },
   "MI_E_4": {
     "qmkid": "MI_E_4",
@@ -5180,10 +4662,7 @@ const KEYMAP = {
     "qmkid": "MI_Fs_4",
     "str": "\u1d39\u1d35\u1d30\u1d35\nF#\u2084/G\u1d47\u2084",
     "code": 0x7139,
-    "title": "Midi send note F#\u2084/G\u1d47\u2084",
-    "alias": [
-      "MI_Gb_4"
-    ]
+    "title": "Midi send note F#\u2084/G\u1d47\u2084"
   },
   "MI_G_4": {
     "qmkid": "MI_G_4",
@@ -5195,10 +4674,7 @@ const KEYMAP = {
     "qmkid": "MI_Gs_4",
     "str": "\u1d39\u1d35\u1d30\u1d35\nG#\u2084/A\u1d47\u2084",
     "code": 0x713b,
-    "title": "Midi send note G#\u2084/A\u1d47\u2084",
-    "alias": [
-      "MI_Ab_4"
-    ]
+    "title": "Midi send note G#\u2084/A\u1d47\u2084"
   },
   "MI_A_4": {
     "qmkid": "MI_A_4",
@@ -5210,10 +4686,7 @@ const KEYMAP = {
     "qmkid": "MI_As_4",
     "str": "\u1d39\u1d35\u1d30\u1d35\nA#\u2084/B\u1d47\u2084",
     "code": 0x713d,
-    "title": "Midi send note A#\u2084/B\u1d47\u2084",
-    "alias": [
-      "MI_Bb_4"
-    ]
+    "title": "Midi send note A#\u2084/B\u1d47\u2084"
   },
   "MI_B_4": {
     "qmkid": "MI_B_4",
@@ -5231,10 +4704,7 @@ const KEYMAP = {
     "qmkid": "MI_Cs_5",
     "str": "\u1d39\u1d35\u1d30\u1d35\nC#\u2085/D\u1d47\u2085",
     "code": 0x7140,
-    "title": "Midi send note C#\u2085/D\u1d47\u2085",
-    "alias": [
-      "MI_Db_5"
-    ]
+    "title": "Midi send note C#\u2085/D\u1d47\u2085"
   },
   "MI_D_5": {
     "qmkid": "MI_D_5",
@@ -5246,10 +4716,7 @@ const KEYMAP = {
     "qmkid": "MI_Ds_5",
     "str": "\u1d39\u1d35\u1d30\u1d35\nD#\u2085/E\u1d47\u2085",
     "code": 0x7142,
-    "title": "Midi send note D#\u2085/E\u1d47\u2085",
-    "alias": [
-      "MI_Eb_5"
-    ]
+    "title": "Midi send note D#\u2085/E\u1d47\u2085"
   },
   "MI_E_5": {
     "qmkid": "MI_E_5",
@@ -5267,10 +4734,7 @@ const KEYMAP = {
     "qmkid": "MI_Fs_5",
     "str": "\u1d39\u1d35\u1d30\u1d35\nF#\u2085/G\u1d47\u2085",
     "code": 0x7145,
-    "title": "Midi send note F#\u2085/G\u1d47\u2085",
-    "alias": [
-      "MI_Gb_5"
-    ]
+    "title": "Midi send note F#\u2085/G\u1d47\u2085"
   },
   "MI_G_5": {
     "qmkid": "MI_G_5",
@@ -5282,10 +4746,7 @@ const KEYMAP = {
     "qmkid": "MI_Gs_5",
     "str": "\u1d39\u1d35\u1d30\u1d35\nG#\u2085/A\u1d47\u2085",
     "code": 0x7147,
-    "title": "Midi send note G#\u2085/A\u1d47\u2085",
-    "alias": [
-      "MI_Ab_5"
-    ]
+    "title": "Midi send note G#\u2085/A\u1d47\u2085"
   },
   "MI_A_5": {
     "qmkid": "MI_A_5",
@@ -5297,10 +4758,7 @@ const KEYMAP = {
     "qmkid": "MI_As_5",
     "str": "\u1d39\u1d35\u1d30\u1d35\nA#\u2085/B\u1d47\u2085",
     "code": 0x7149,
-    "title": "Midi send note A#\u2085/B\u1d47\u2085",
-    "alias": [
-      "MI_Bb_5"
-    ]
+    "title": "Midi send note A#\u2085/B\u1d47\u2085"
   },
   "MI_B_5": {
     "qmkid": "MI_B_5",
@@ -5480,10 +4938,7 @@ const KEYMAP = {
     "qmkid": "MI_VEL_1",
     "str": "\u1d39\u1d35\u1d30\u1d35\nVel\u2081",
     "code": 0x7167,
-    "title": "Midi set velocity to 0",
-    "alias": [
-      "MI_VEL_0"
-    ]
+    "title": "Midi set velocity to 0"
   },
   "MI_VEL_2": {
     "qmkid": "MI_VEL_2",
@@ -15719,6 +15174,193 @@ const KEYALIASES = {
   "USER61": "USER61",
   "USER62": "USER62",
   "USER63": "USER63",
+  "KC_TRANSPARENT": "KC_TRNS",
+  "KC_NLCK": "KC_NUMLOCK",
+  "KC_PSLS": "KC_KP_SLASH",
+  "KC_PAST": "KC_KP_ASTERISK",
+  "KC_PMNS": "KC_KP_MINUS",
+  "KC_PPLS": "KC_KP_PLUS",
+  "KC_PENT": "KC_KP_ENTER",
+  "KC_P1": "KC_KP_1",
+  "KC_P2": "KC_KP_2",
+  "KC_P3": "KC_KP_3",
+  "KC_P4": "KC_KP_4",
+  "KC_P5": "KC_KP_5",
+  "KC_P6": "KC_KP_6",
+  "KC_P7": "KC_KP_7",
+  "KC_P8": "KC_KP_8",
+  "KC_P9": "KC_KP_9",
+  "KC_P0": "KC_KP_0",
+  "KC_PDOT": "KC_KP_DOT",
+  "KC_PEQL": "KC_KP_EQUAL",
+  "KC_PCMM": "KC_KP_COMMA",
+  "KC_PSCR": "KC_PSCREEN",
+  "KC_SLCK": "KC_SCROLLLOCK",
+  "KC_BRMD": "KC_SCROLLLOCK",
+  "KC_PAUS": "KC_PAUSE",
+  "KC_BRK": "KC_PAUSE",
+  "KC_BRMU": "KC_PAUSE",
+  "KC_INS": "KC_INSERT",
+  "KC_DEL": "KC_DELETE",
+  "KC_PGDN": "KC_PGDOWN",
+  "KC_RGHT": "KC_RIGHT",
+  "KC_ENT": "KC_ENTER",
+  "KC_ESC": "KC_ESCAPE",
+  "KC_BSPC": "KC_BSPACE",
+  "KC_SPC": "KC_SPACE",
+  "KC_MINS": "KC_MINUS",
+  "KC_EQL": "KC_EQUAL",
+  "KC_LBRC": "KC_LBRACKET",
+  "KC_RBRC": "KC_RBRACKET",
+  "KC_BSLS": "KC_BSLASH",
+  "KC_SCLN": "KC_SCOLON",
+  "KC_QUOT": "KC_QUOTE",
+  "KC_GRV": "KC_GRAVE",
+  "KC_ZKHK": "KC_GRAVE",
+  "KC_COMM": "KC_COMMA",
+  "KC_SLSH": "KC_SLASH",
+  "KC_CLCK": "KC_CAPSLOCK",
+  "KC_CAPS": "KC_CAPSLOCK",
+  "KC_APP": "KC_APPLICATION",
+  "KC_LCTL": "KC_LCTRL",
+  "KC_LSFT": "KC_LSHIFT",
+  "KC_LOPT": "KC_LALT",
+  "KC_LCMD": "KC_LGUI",
+  "KC_LWIN": "KC_LGUI",
+  "KC_RCTL": "KC_RCTRL",
+  "KC_RSFT": "KC_RSHIFT",
+  "KC_ALGR": "KC_RALT",
+  "KC_ROPT": "KC_RALT",
+  "KC_RCMD": "KC_RGUI",
+  "KC_RWIN": "KC_RGUI",
+  "KC_NUHS": "KC_NONUS_HASH",
+  "KC_NUBS": "KC_NONUS_BSLASH",
+  "KC_INT1": "KC_RO",
+  "KC_INT2": "KC_KANA",
+  "KC_INT3": "KC_JYEN",
+  "KC_INT4": "KC_HENK",
+  "KC_INT5": "KC_MHEN",
+  "KC_HAEN": "KC_LANG1",
+  "KC_HANJ": "KC_LANG2",
+  "LCS(kc)": "C_S(kc)",
+  "LSG(kc)": "SGUI(kc)",
+  "LCS_T(kc)": "C_S_T(kc)",
+  "LSG_T(kc)": "SGUI_T(kc)",
+  "CL_SWAP": "MAGIC_SWAP_CONTROL_CAPSLOCK",
+  "CL_NORM": "MAGIC_UNSWAP_CONTROL_CAPSLOCK",
+  "CL_CTRL": "MAGIC_CAPSLOCK_TO_CONTROL",
+  "CL_CAPS": "MAGIC_UNCAPSLOCK_TO_CONTROL",
+  "LCG_SWP": "MAGIC_SWAP_LCTL_LGUI",
+  "LCG_NRM": "MAGIC_UNSWAP_LCTL_LGUI",
+  "RCG_SWP": "MAGIC_SWAP_RCTL_RGUI",
+  "RCG_NRM": "MAGIC_UNSWAP_RCTL_RGUI",
+  "CG_SWAP": "MAGIC_SWAP_CTL_GUI",
+  "CG_NORM": "MAGIC_UNSWAP_CTL_GUI",
+  "CG_TOGG": "MAGIC_TOGGLE_CTL_GUI",
+  "LAG_SWP": "MAGIC_SWAP_LALT_LGUI",
+  "LAG_NRM": "MAGIC_UNSWAP_LALT_LGUI",
+  "RAG_SWP": "MAGIC_SWAP_RALT_RGUI",
+  "RAG_NRM": "MAGIC_UNSWAP_RALT_RGUI",
+  "AG_SWAP": "MAGIC_SWAP_ALT_GUI",
+  "AG_NORM": "MAGIC_UNSWAP_ALT_GUI",
+  "AG_TOGG": "MAGIC_TOGGLE_ALT_GUI",
+  "GUI_OFF": "MAGIC_NO_GUI",
+  "GUI_ON": "MAGIC_UNNO_GUI",
+  "GE_SWAP": "MAGIC_SWAP_GRAVE_ESC",
+  "GE_NORM": "MAGIC_UNSWAP_GRAVE_ESC",
+  "BS_SWAP": "MAGIC_SWAP_BACKSLASH_BACKSPACE",
+  "BS_NORM": "MAGIC_UNSWAP_BACKSLASH_BACKSPACE",
+  "NK_ON": "MAGIC_HOST_NKRO",
+  "NK_OFF": "MAGIC_UNHOST_NKRO",
+  "NK_TOGG": "MAGIC_TOGGLE_NKRO",
+  "CK_TOGG": "CLICKY_TOGGLE",
+  "CK_UP": "CLICKY_UP",
+  "CK_DOWN": "CLICKY_DOWN",
+  "CK_RST": "CLICKY_RESET",
+  "KC_SYSTEM_POWER": "KC_PWR",
+  "KC_SYSTEM_SLEEP": "KC_SLEP",
+  "KC_SYSTEM_WAKE": "KC_WAKE",
+  "KC_EXECUTE": "KC_EXEC",
+  "KC_SELECT": "KC_SLCT",
+  "KC_AGAIN": "KC_AGIN",
+  "KC_PASTE": "KC_PSTE",
+  "KC_CALCULATOR": "KC_CALC",
+  "KC_MEDIA_SELECT": "KC_MSEL",
+  "KC_MY_COMPUTER": "KC_MYCM",
+  "KC_WWW_SEARCH": "KC_WSCH",
+  "KC_WWW_HOME": "KC_WHOM",
+  "KC_WWW_BACK": "KC_WBAK",
+  "KC_WWW_FORWARD": "KC_WFWD",
+  "KC_WWW_STOP": "KC_WSTP",
+  "KC_WWW_REFRESH": "KC_WREF",
+  "KC_WWW_FAVORITES": "KC_WFAV",
+  "KC_BRIGHTNESS_UP": "KC_BRIU",
+  "KC_BRIGHTNESS_DOWN": "KC_BRID",
+  "KC_MEDIA_PREV_TRACK": "KC_MPRV",
+  "KC_MEDIA_NEXT_TRACK": "KC_MNXT",
+  "KC_AUDIO_MUTE": "KC_MUTE",
+  "KC_AUDIO_VOL_DOWN": "KC_VOLD",
+  "KC_AUDIO_VOL_UP": "KC_VOLU",
+  "KC_MEDIA_STOP": "KC_MSTP",
+  "KC_MEDIA_PLAY_PAUSE": "KC_MPLY",
+  "KC_MEDIA_REWIND": "KC_MRWD",
+  "KC_MEDIA_FAST_FORWARD": "KC_MFFD",
+  "KC_MEDIA_EJECT": "KC_EJCT",
+  "KC_MS_UP": "KC_MS_U",
+  "KC_MS_DOWN": "KC_MS_D",
+  "KC_MS_LEFT": "KC_MS_L",
+  "KC_MS_RIGHT": "KC_MS_R",
+  "KC_MS_BTN1": "KC_BTN1",
+  "KC_MS_BTN2": "KC_BTN2",
+  "KC_MS_BTN3": "KC_BTN3",
+  "KC_MS_BTN4": "KC_BTN4",
+  "KC_MS_BTN5": "KC_BTN5",
+  "KC_MS_WH_UP": "KC_WH_U",
+  "KC_MS_WH_DOWN": "KC_WH_D",
+  "KC_MS_WH_LEFT": "KC_WH_L",
+  "KC_MS_WH_RIGHT": "KC_WH_R",
+  "KC_MS_ACCEL0": "KC_ACL0",
+  "KC_MS_ACCEL1": "KC_ACL1",
+  "KC_MS_ACCEL2": "KC_ACL2",
+  "KC_LOCKING_CAPS": "KC_LCAP",
+  "KC_LOCKING_NUM": "KC_LNUM",
+  "KC_LOCKING_SCROLL": "KC_LSCR",
+  "DM_REC1": "DYN_REC_START1",
+  "DM_REC2": "DYN_REC_START2",
+  "DM_RSTP": "DYN_REC_STOP",
+  "DM_PLY1": "DYN_MACRO_PLAY1",
+  "DM_PLY2": "DYN_MACRO_PLAY2",
+  "MI_Db": "MI_Cs",
+  "MI_Eb": "MI_Ds",
+  "MI_Gb": "MI_Fs",
+  "MI_Ab": "MI_Gs",
+  "MI_Bb": "MI_As",
+  "MI_Db_1": "MI_Cs_1",
+  "MI_Eb_1": "MI_Ds_1",
+  "MI_Gb_1": "MI_Fs_1",
+  "MI_Ab_1": "MI_Gs_1",
+  "MI_Bb_1": "MI_As_1",
+  "MI_Db_2": "MI_Cs_2",
+  "MI_Eb_2": "MI_Ds_2",
+  "MI_Gb_2": "MI_Fs_2",
+  "MI_Ab_2": "MI_Gs_2",
+  "MI_Bb_2": "MI_As_2",
+  "MI_Db_3": "MI_Cs_3",
+  "MI_Eb_3": "MI_Ds_3",
+  "MI_Gb_3": "MI_Fs_3",
+  "MI_Ab_3": "MI_Gs_3",
+  "MI_Bb_3": "MI_As_3",
+  "MI_Db_4": "MI_Cs_4",
+  "MI_Eb_4": "MI_Ds_4",
+  "MI_Gb_4": "MI_Fs_4",
+  "MI_Ab_4": "MI_Gs_4",
+  "MI_Bb_4": "MI_As_4",
+  "MI_Db_5": "MI_Cs_5",
+  "MI_Eb_5": "MI_Ds_5",
+  "MI_Gb_5": "MI_Fs_5",
+  "MI_Ab_5": "MI_Gs_5",
+  "MI_Bb_5": "MI_As_5",
+  "MI_VEL_0": "MI_VEL_1",
   "QK_BASIC": "KC_NO",
   "QK_BASIC_MAX": "QK_BASIC_MAX",
   "QK_MODS": "LCTL(kc)",
@@ -15764,7 +15406,6 @@ const KEYALIASES = {
   "QK_UNICODE_MAX": "QK_UNICODEMAP_PAIR_MAX",
   "QK_UNICODEMAP_PAIR": "QK_UNICODEMAP_PAIR",
   "QK_UNICODEMAP_PAIR_MAX": "QK_UNICODEMAP_PAIR_MAX",
-  "KC_TRANSPARENT": "KC_TRNS",
   "KC_BACKSPACE": "KC_BSPACE",
   "KC_LEFT_BRACKET": "KC_LBRACKET",
   "KC_RIGHT_BRACKET": "KC_RBRACKET",
@@ -15778,11 +15419,7 @@ const KEYALIASES = {
   "KC_NUM_LOCK": "KC_NUMLOCK",
   "KC_NONUS_BACKSLASH": "KC_NONUS_BSLASH",
   "KC_KB_POWER": "KC_KB_POWER",
-  "KC_EXECUTE": "KC_EXEC",
   "KC_MENU": "KC_MENU",
-  "KC_SELECT": "KC_SLCT",
-  "KC_AGAIN": "KC_AGIN",
-  "KC_PASTE": "KC_PSTE",
   "KC_KB_MUTE": "KC_KB_MUTE",
   "KC_KB_VOLUME_UP": "KC__VOLUP",
   "KC_KB_VOLUME_DOWN": "KC__VOLDOWN",
@@ -15820,54 +15457,13 @@ const KEYALIASES = {
   "KC_CLEAR_AGAIN": "KC_CLEAR_AGAIN",
   "KC_CRSEL": "KC_CRSEL",
   "KC_EXSEL": "KC_EXSEL",
-  "KC_SYSTEM_POWER": "KC_PWR",
-  "KC_SYSTEM_SLEEP": "KC_SLEP",
-  "KC_SYSTEM_WAKE": "KC_WAKE",
-  "KC_AUDIO_MUTE": "KC_MUTE",
-  "KC_AUDIO_VOL_UP": "KC_VOLU",
-  "KC_AUDIO_VOL_DOWN": "KC_VOLD",
-  "KC_MEDIA_NEXT_TRACK": "KC_MNXT",
-  "KC_MEDIA_PREV_TRACK": "KC_MPRV",
-  "KC_MEDIA_STOP": "KC_MSTP",
-  "KC_MEDIA_PLAY_PAUSE": "KC_MPLY",
-  "KC_MEDIA_SELECT": "KC_MSEL",
-  "KC_MEDIA_EJECT": "KC_EJCT",
-  "KC_CALCULATOR": "KC_CALC",
-  "KC_MY_COMPUTER": "KC_MYCM",
-  "KC_WWW_SEARCH": "KC_WSCH",
-  "KC_WWW_HOME": "KC_WHOM",
-  "KC_WWW_BACK": "KC_WBAK",
-  "KC_WWW_FORWARD": "KC_WFWD",
-  "KC_WWW_STOP": "KC_WSTP",
-  "KC_WWW_REFRESH": "KC_WREF",
-  "KC_WWW_FAVORITES": "KC_WFAV",
-  "KC_MEDIA_FAST_FORWARD": "KC_MFFD",
-  "KC_MEDIA_REWIND": "KC_MRWD",
-  "KC_BRIGHTNESS_UP": "KC_BRIU",
-  "KC_BRIGHTNESS_DOWN": "KC_BRID",
   "KC_CONTROL_PANEL": "KC_CONTROL_PANEL",
   "KC_ASSISTANT": "KC_ASSISTANT",
   "KC_MISSION_CONTROL": "KC_MISSION_CONTROL",
   "KC_LAUNCHPAD": "KC_LAUNCHPAD",
-  "KC_MS_UP": "KC_MS_U",
-  "KC_MS_DOWN": "KC_MS_D",
-  "KC_MS_LEFT": "KC_MS_L",
-  "KC_MS_RIGHT": "KC_MS_R",
-  "KC_MS_BTN1": "KC_BTN1",
-  "KC_MS_BTN2": "KC_BTN2",
-  "KC_MS_BTN3": "KC_BTN3",
-  "KC_MS_BTN4": "KC_BTN4",
-  "KC_MS_BTN5": "KC_BTN5",
   "KC_MS_BTN6": "KC_MS_BTN6",
   "KC_MS_BTN7": "KC_MS_BTN7",
   "KC_MS_BTN8": "KC_MS_BTN8",
-  "KC_MS_WH_UP": "KC_WH_U",
-  "KC_MS_WH_DOWN": "KC_WH_D",
-  "KC_MS_WH_LEFT": "KC_WH_L",
-  "KC_MS_WH_RIGHT": "KC_WH_R",
-  "KC_MS_ACCEL0": "KC_ACL0",
-  "KC_MS_ACCEL1": "KC_ACL1",
-  "KC_MS_ACCEL2": "KC_ACL2",
   "KC_LEFT_CTRL": "KC_LCTRL",
   "KC_LEFT_SHIFT": "KC_LSHIFT",
   "KC_LEFT_ALT": "KC_LALT",
@@ -16377,58 +15973,8 @@ const KEYALIASES = {
   "QK_USER_31": "QK_USER_31",
   "XXXXXXX": "KC_NO",
   "_______": "KC_TRNS",
-  "KC_ENT": "KC_ENTER",
-  "KC_ESC": "KC_ESCAPE",
-  "KC_BSPC": "KC_BSPACE",
-  "KC_SPC": "KC_SPACE",
-  "KC_MINS": "KC_MINUS",
-  "KC_EQL": "KC_EQUAL",
-  "KC_LBRC": "KC_LBRACKET",
-  "KC_RBRC": "KC_RBRACKET",
-  "KC_BSLS": "KC_BSLASH",
-  "KC_NUHS": "KC_NONUS_HASH",
-  "KC_SCLN": "KC_SCOLON",
-  "KC_QUOT": "KC_QUOTE",
-  "KC_GRV": "KC_GRAVE",
-  "KC_COMM": "KC_COMMA",
-  "KC_SLSH": "KC_SLASH",
-  "KC_CAPS": "KC_CAPSLOCK",
-  "KC_PSCR": "KC_PSCREEN",
   "KC_SCRL": "KC_SCROLLLOCK",
-  "KC_BRMD": "KC_SCROLLLOCK",
-  "KC_PAUS": "KC_PAUSE",
-  "KC_BRK": "KC_PAUSE",
-  "KC_BRMU": "KC_PAUSE",
-  "KC_INS": "KC_INSERT",
-  "KC_DEL": "KC_DELETE",
-  "KC_PGDN": "KC_PGDOWN",
-  "KC_RGHT": "KC_RIGHT",
   "KC_NUM": "KC_NUMLOCK",
-  "KC_PSLS": "KC_KP_SLASH",
-  "KC_PAST": "KC_KP_ASTERISK",
-  "KC_PMNS": "KC_KP_MINUS",
-  "KC_PPLS": "KC_KP_PLUS",
-  "KC_PENT": "KC_KP_ENTER",
-  "KC_P1": "KC_KP_1",
-  "KC_P2": "KC_KP_2",
-  "KC_P3": "KC_KP_3",
-  "KC_P4": "KC_KP_4",
-  "KC_P5": "KC_KP_5",
-  "KC_P6": "KC_KP_6",
-  "KC_P7": "KC_KP_7",
-  "KC_P8": "KC_KP_8",
-  "KC_P9": "KC_KP_9",
-  "KC_P0": "KC_KP_0",
-  "KC_PDOT": "KC_KP_DOT",
-  "KC_NUBS": "KC_NONUS_BSLASH",
-  "KC_APP": "KC_APPLICATION",
-  "KC_PEQL": "KC_KP_EQUAL",
-  "KC_PCMM": "KC_KP_COMMA",
-  "KC_INT1": "KC_RO",
-  "KC_INT2": "KC_KANA",
-  "KC_INT3": "KC_JYEN",
-  "KC_INT4": "KC_HENK",
-  "KC_INT5": "KC_MHEN",
   "KC_INT6": "KC_INTERNATIONAL_6",
   "KC_INT7": "KC_INTERNATIONAL_7",
   "KC_INT8": "KC_INTERNATIONAL_8",
@@ -16459,17 +16005,6 @@ const KEYALIASES = {
   "KC_BTN6": "KC_MS_BTN6",
   "KC_BTN7": "KC_MS_BTN7",
   "KC_BTN8": "KC_MS_BTN8",
-  "KC_LCTL": "KC_LCTRL",
-  "KC_LSFT": "KC_LSHIFT",
-  "KC_LOPT": "KC_LALT",
-  "KC_LCMD": "KC_LGUI",
-  "KC_LWIN": "KC_LGUI",
-  "KC_RCTL": "KC_RCTRL",
-  "KC_RSFT": "KC_RSHIFT",
-  "KC_ROPT": "KC_RALT",
-  "KC_ALGR": "KC_RALT",
-  "KC_RCMD": "KC_RGUI",
-  "KC_RWIN": "KC_RGUI",
   "SH_TOGG": "QK_SWAP_HANDS_TOGGLE",
   "SH_TT": "QK_SWAP_HANDS_TAP_TOGGLE",
   "SH_MON": "QK_SWAP_HANDS_MOMENTARY_ON",
@@ -16477,11 +16012,7 @@ const KEYALIASES = {
   "SH_OFF": "QK_SWAP_HANDS_OFF",
   "SH_ON": "QK_SWAP_HANDS_ON",
   "SH_OS": "QK_SWAP_HANDS_ONE_SHOT",
-  "CL_SWAP": "MAGIC_SWAP_CONTROL_CAPSLOCK",
-  "CL_NORM": "MAGIC_UNSWAP_CONTROL_CAPSLOCK",
   "CL_TOGG": "QK_MAGIC_TOGGLE_CONTROL_CAPS_LOCK",
-  "CL_CAPS": "MAGIC_UNCAPSLOCK_TO_CONTROL",
-  "CL_CTRL": "MAGIC_CAPSLOCK_TO_CONTROL",
   "AG_LSWP": "MAGIC_SWAP_LALT_LGUI",
   "AG_LNRM": "MAGIC_UNSWAP_LALT_LGUI",
   "AG_RSWP": "MAGIC_SWAP_RALT_RGUI",
@@ -16489,24 +16020,11 @@ const KEYALIASES = {
   "GU_ON": "MAGIC_UNNO_GUI",
   "GU_OFF": "MAGIC_NO_GUI",
   "GU_TOGG": "QK_MAGIC_TOGGLE_GUI",
-  "GE_SWAP": "MAGIC_SWAP_GRAVE_ESC",
-  "GE_NORM": "MAGIC_UNSWAP_GRAVE_ESC",
-  "BS_SWAP": "MAGIC_SWAP_BACKSLASH_BACKSPACE",
-  "BS_NORM": "MAGIC_UNSWAP_BACKSLASH_BACKSPACE",
   "BS_TOGG": "QK_MAGIC_TOGGLE_BACKSLASH_BACKSPACE",
-  "NK_ON": "MAGIC_HOST_NKRO",
-  "NK_OFF": "MAGIC_UNHOST_NKRO",
-  "NK_TOGG": "MAGIC_TOGGLE_NKRO",
-  "AG_SWAP": "MAGIC_SWAP_ALT_GUI",
-  "AG_NORM": "MAGIC_UNSWAP_ALT_GUI",
-  "AG_TOGG": "MAGIC_TOGGLE_ALT_GUI",
   "CG_LSWP": "MAGIC_SWAP_LCTL_LGUI",
   "CG_LNRM": "MAGIC_UNSWAP_LCTL_LGUI",
   "CG_RSWP": "MAGIC_SWAP_RCTL_RGUI",
   "CG_RNRM": "MAGIC_UNSWAP_RCTL_RGUI",
-  "CG_SWAP": "MAGIC_SWAP_CTL_GUI",
-  "CG_NORM": "MAGIC_UNSWAP_CTL_GUI",
-  "CG_TOGG": "MAGIC_TOGGLE_CTL_GUI",
   "EH_LEFT": "MAGIC_EE_HANDS_LEFT",
   "EH_RGHT": "MAGIC_EE_HANDS_RIGHT",
   "EC_SWAP": "QK_MAGIC_SWAP_ESCAPE_CAPS_LOCK",
@@ -16515,11 +16033,6 @@ const KEYALIASES = {
   "MI_ON": "QK_MIDI_ON",
   "MI_OFF": "QK_MIDI_OFF",
   "MI_TOGG": "QK_MIDI_TOGGLE",
-  "MI_Db": "MI_Cs",
-  "MI_Eb": "MI_Ds",
-  "MI_Gb": "MI_Fs",
-  "MI_Ab": "MI_Gs",
-  "MI_Bb": "MI_As",
   "MI_C1": "MI_C_1",
   "MI_Cs1": "MI_Cs_1",
   "MI_Db1": "MI_Cs_1",
@@ -16723,12 +16236,8 @@ const KEYALIASES = {
   "PB_31": "QK_PROGRAMMABLE_BUTTON_31",
   "PB_32": "QK_PROGRAMMABLE_BUTTON_32",
   "AU_TOGG": "AU_TOG",
-  "CK_TOGG": "CLICKY_TOGGLE",
   "CK_ON": "QK_AUDIO_CLICKY_ON",
   "CK_OFF": "QK_AUDIO_CLICKY_OFF",
-  "CK_UP": "CLICKY_UP",
-  "CK_DOWN": "CLICKY_DOWN",
-  "CK_RST": "CLICKY_RESET",
   "MU_TOGG": "MU_TOG",
   "MU_NEXT": "MU_MOD",
   "AU_NEXT": "QK_AUDIO_VOICE_NEXT",
@@ -16847,11 +16356,6 @@ const KEYALIASES = {
   "CM_ON": "CMB_ON",
   "CM_OFF": "CMB_OFF",
   "CM_TOGG": "CMB_TOG",
-  "DM_REC1": "DYN_REC_START1",
-  "DM_REC2": "DYN_REC_START2",
-  "DM_RSTP": "DYN_REC_STOP",
-  "DM_PLY1": "DYN_MACRO_PLAY1",
-  "DM_PLY2": "DYN_MACRO_PLAY2",
   "QK_LEAD": "QK_LEADER",
   "OS_ON": "QK_ONE_SHOT_ON",
   "OS_OFF": "QK_ONE_SHOT_OFF",

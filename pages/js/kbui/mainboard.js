@@ -120,7 +120,6 @@ addInitializer('connected', () => {
     ACTION.on('bind', (keystr) => {
       const kmid = target.dataset.kmid;
       if (keystr !== target.dataset.key) {
-        console.log('bind', keystr, target.dataset.key);
         KBINFO.keymap[selectedLayer][kmid] = keystr;
         target.dataset.key = keystr;
         target.classList.add('changed');
