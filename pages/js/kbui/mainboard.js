@@ -133,12 +133,17 @@ addInitializer('connected', () => {
     drawLayer(MAINBOARD.selectedLayer);
 
     for (let layer = 0; layer < KBINFO.layers; layer++) {
-      for (let kmid = 0; kmid < KBINFO.keymap.length; kmid++) {
-        CHANGES.queue('key' + MAINBOARD.selectedLayer + '.' + kmid, () => {
-          if (KBINFO.keymap[layer][kmid] !== BASE_KBINFO.keymap[layer][kmid]) {
-            KBAPI.updateKey(layer, kmid, keystr);
+      for (let kmid = 0; kmid < KBINFO.keymap[layer].length; kmid++) {
+        const keystr = KBINFO.keymap[layer][kmid];
+        const bkeystr = BASE_KBINFO.keymap[layer][kmid];
+        if (!((keystr === -1 || keystr === 0xFF) &&
+            (bkeystr === -1 || bkeystr === 0xFF))) {
+          if (keystr !== bkeystr) {
+            CHANGES.queue('key' + layer + '.' + kmid, () => {
+              KBAPI.updateKey(layer, kmid, keystr);
+            });
           }
-        });
+        }
       }
     }
   };
