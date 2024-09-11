@@ -9,6 +9,12 @@
 function startJSVial() {
   runInitializers('load');
 
+  if (!navigator.hid) {
+    get('#launch').style['display'] = 'none';
+    get('#nosupport').style['display'] = 'block';
+    return;
+  }
+
   if (SETTINGS.playback) {
     setTimeout(() => { doStuff(); }, 100);
   } else {
