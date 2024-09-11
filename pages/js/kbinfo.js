@@ -106,8 +106,8 @@ let KBAPI = {
   async updateKeyoverride(koid) {
     await KBAPI.wrapped.updateKeyoverride(KBINFO, koid);
   },
-  async updateQMKSetting(qfield) {
-    await KBAPI.wrapped.updateQMKSetting(KBINFO, qfield);
+  async updateQMKSetting(qsid) {
+    await KBAPI.wrapped.updateQMKSetting(KBINFO, qsid);
   }
 };
 

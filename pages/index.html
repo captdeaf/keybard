@@ -39,6 +39,7 @@
 <script type="text/javascript" src="js/kbui/mainboard.js"></script>
 <script type="text/javascript" src="js/kbui/qmk.js"></script>
 <script type="text/javascript" src="js/kbui/sampleboards.js"></script>
+<script type="text/javascript" src="js/kbui/updateall.js"></script>
 
 <!-- Binding actions -->
 <script type="text/javascript" src="js/kbui/binding.js"></script>
@@ -106,8 +107,8 @@
     <label class="menuitem" id="download-vil-nomacro">
       &darr; Download macro-less .vil file.
     </label>
-    <label class="menuitem" id="upload-file">
-      &uarr; Upload .svl or .vil file. (STUB)
+    <label class="menuitem" id="upload-file-float">
+      &uarr; Upload .svl or .vil file.
     </label>
     </div>
   </label>
@@ -925,6 +926,14 @@
     <button class="close" data-action="close">Close</button>
   </div>
   <div id="qmk-tabs"></div>
+</div>
+
+<div id="float-upload" class="floater closeable" style="width: 300px;">
+  <div class="topright">
+    <button class="close">Close</button>
+  </div>
+  Upload a .vil or .svl file:<br>
+  <input type="file" style="width: 100%;" id="upload-file">
 </div>
 
 

@@ -107,7 +107,8 @@ addInitializer('connected', () => {
   ACTION.onclick('#download-svl', () => {
     const copy = deepCopy(KBINFO);
     delete copy.payload;
-    downloadTEXT('keyboard.svl', copy);
+    const svl = JSON.stringify(copy);
+    downloadTEXT('keyboard.svl', svl);
   });
 
   ACTION.onclick('#download-svl-nomacro', () => {
@@ -116,5 +117,40 @@ addInitializer('connected', () => {
     copy.macros = repeat([], copy.macro_count);
     const svl = JSON.stringify(copy);
     downloadTEXT('keyboard-nomacro.svl', svl);
+  });
+
+  // Uploading a file.
+  ACTION.onclick('#upload-file-float', () => {
+    get('#float-upload').style['display'] = 'block';
+    const fileinput = get('#upload-file');
+    
+    fileinput.onchange = () => {
+      const file = fileinput.files[0];
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const content = evt.target.result;
+        try {
+          const js = JSON.parse(content);
+          console.log(js);
+          // Is it a .vil or a .svl file?
+          if (js.kbid) {
+            KBINFO = js;
+            updateAllChanges();
+          } else if (js.uid) {
+            console.error('No .vil support yet');
+          } else {
+            alert('Unknown json type');
+          }
+        } catch (err) {
+          console.error(err);
+          alert('Invalid .vil or .svl file');
+        }
+      };
+      reader.onerror = (evft) => {
+        console.error('Error reading file');
+      };
+
+      reader.readAsText(file);
+    }
   });
 });

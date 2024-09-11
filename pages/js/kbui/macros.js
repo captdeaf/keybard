@@ -7,6 +7,8 @@
 const MACROS = {
   // Describe a macro using its text (preferred), or keys (fallback).
   describe: null,
+  // Update changes between BASE_KBINFO and KBINFO.
+  updateAll: null,
 };
 
 addInitializer('load', () => {
@@ -207,10 +209,45 @@ addInitializer('load', () => {
     // Save the macro.
     const macro = KBINFO.macros[savebutton.dataset.mid];
     macro.actions = buildActionsFromFloat();
+    const mkey = get('#macro-' + savebutton.dataset.mid);
+    mkey.classList.add('changed');
     floater.style['display'] = 'none';
     CHANGES.queue('macro', KBAPI.updateMacros);
     KEYUI.refreshAllKeys();
   });
+
+  ////////////////////////////////////
+  //
+  //  Called when a file is uploaded or a device is connected after a file
+  //  is uploaded. Mark and queue all changes.
+  //
+  ////////////////////////////////////
+  MACROS.updateAll = () => {
+    for (let mid = 0; mid < KBINFO.macro_count; mid++) {
+      const macro = KBINFO.macros[mid];
+      const bmacro = BASE_KBINFO.macros[mid];
+      
+      let changed = false;
+      if (macro.actions.length !== bmacro.actions.length) {
+        changed = true;
+      } else {
+        for (let i = 0; i < macro.actions.length; i++) {
+          let act = macro.actions[i];
+          let bact = bmacro.actions[i];
+          if ((act[0] !== bact[0]) ||
+              (act[1] !== bact[1])) {
+            changed = true;
+          }
+        }
+      }
+
+      if (changed) {
+        const mkey = get('#macro-' + mid);
+        mkey.classList.add('changed');
+        CHANGES.queue('macro', KBAPI.updateMacros);
+      }
+    }
+  };
 
   ////////////////////////////////////
   //

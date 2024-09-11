@@ -4,12 +4,17 @@
 //
 ////////////////////////////////////
 
+const KEY_OVERRIDES = {
+  // Update changes between BASE_KBINFO and KBINFO.
+  updateAll: null,
+};
+
 addInitializer('connected', () => {
   const koBoard = get('#keyoverride-table');
 
   // korows will contain all the <tr>s for each
   // key override.
-  const korows = [];
+  let korows = [];
 
   // bit, name.
   const modLKeys = [
@@ -89,74 +94,108 @@ addInitializer('connected', () => {
   //  Render key overrides.
   //
   ////////////////////////////////////
-  for (let koid = 0; koid < KBINFO.key_override_count; koid++) {
-    const ko = KBINFO.key_overrides[koid]
-    const tds = [];
-    // Enable
-    tds.push(EL('td', {}, makeToggle('On', koid, 'options', 0x80)));
-    // Keys: trigger key and override
-    tds.push(EL('td', {}, EL('div',
-      {
-        class: 'key',
-        'data-koid': koid,
-        'data-key': ko.trigger,
-        'data-name': 'trigger',
-        'data-bound': 'keyoverride',
-      }, ''
-    )));
-    tds.push(EL('td', {}, EL('div',
-      {
-        class: 'key',
-        'data-koid': koid,
-        'data-key': ko.replacement,
-        'data-name': 'replacement',
-        'data-bound': 'keyoverride',
-      }, ''
-    )));
-    // Mod Labels
-    tds.push(EL('td', {}, [
-      EL('div', {class: 'ko-mod-row', title: 'Trigger Mods'}, 'T'),
-      EL('div', {class: 'ko-mod-row', title: 'Negative Mods'}, 'N'),
-      EL('div', {class: 'ko-mod-row', title: 'Suppressed Mods'}, 'S'),
-    ]));
+  function renderAllOverrides() {
+    koBoard.innerHTML = '';
+    korows = [];
+    for (let koid = 0; koid < KBINFO.key_override_count; koid++) {
+      const ko = KBINFO.key_overrides[koid]
+      const bko = BASE_KBINFO.key_overrides[koid];
 
-    // 3 rows of mod key toggles.
-    const rows = [];
-    for (const type of ['trigger_mods', 'negative_mod_mask', 'suppressed_mods']) {
-      const keys = [];
-      for (const [bitid, name] of modLKeys) {
-        keys.push(makeToggle(name, koid, type, bitid));
+      const tds = [];
+      // Enable
+      tds.push(EL('td', {}, makeToggle('On', koid, 'options', 0x80)));
+      // Keys: trigger key and override
+      tds.push(EL('td', {}, EL('div',
+        {
+          class: 'key',
+          'data-koid': koid,
+          'data-key': ko.trigger,
+          'data-name': 'trigger',
+          'data-bound': 'keyoverride',
+        }, ''
+      )));
+      tds.push(EL('td', {}, EL('div',
+        {
+          class: 'key',
+          'data-koid': koid,
+          'data-key': ko.replacement,
+          'data-name': 'replacement',
+          'data-bound': 'keyoverride',
+        }, ''
+      )));
+      // Mod Labels
+      tds.push(EL('td', {}, [
+        EL('div', {class: 'ko-mod-row', title: 'Trigger Mods'}, 'T'),
+        EL('div', {class: 'ko-mod-row', title: 'Negative Mods'}, 'N'),
+        EL('div', {class: 'ko-mod-row', title: 'Suppressed Mods'}, 'S'),
+      ]));
+
+      // 3 rows of mod key toggles.
+      const rows = [];
+      for (const type of ['trigger_mods', 'negative_mod_mask', 'suppressed_mods']) {
+        const keys = [];
+        for (const [bitid, name] of modLKeys) {
+          keys.push(makeToggle(name, koid, type, bitid));
+        }
+        for (const [bitid, name] of modRKeys) {
+          keys.push(makeToggle(name, koid, type, bitid));
+        }
+        rows.push(EL('div', {class: 'ko-mod-row'}, keys));
       }
-      for (const [bitid, name] of modRKeys) {
-        keys.push(makeToggle(name, koid, type, bitid));
+      tds.push(EL('td', {}, rows));
+
+      // Layers.
+      const layers = [];
+      for (let i = 0; i < KBINFO.layers; i++) {
+        layers.push(makeToggle(''+i, koid, 'layers', 1 << i));
       }
-      rows.push(EL('div', {class: 'ko-mod-row'}, keys));
+      tds.push(EL('td', {class: 'ko-layer-td'}, layers));
+
+      // Options.
+      const options = [
+        makeToggle('Activate on trigger down', koid, 'options', 0x01),
+        makeToggle('Activate on mod down', koid, 'options', 0x02),
+        makeToggle('Activate on negative mod up', koid, 'options', 0x04),
+        makeToggle('Any trigger mod activates', koid, 'options', 0x08),
+        makeToggle('No reregister trigger on deactivate', koid, 'options', 0x10),
+        makeToggle('No unregister on other key down', koid, 'options', 0x20),
+      ];
+
+      tds.push(EL('td', {class: 'ko-option-td'}, options));
+
+      // Add the row to the table.
+      let evenodd = 'even';
+      if (koid % 2 === 1) evenodd = 'odd';
+      korows.push(EL('tr', {class: 'ko-row ' + evenodd}, tds));
     }
-    tds.push(EL('td', {}, rows));
-
-    // Layers.
-    const layers = [];
-    for (let i = 0; i < KBINFO.layers; i++) {
-      layers.push(makeToggle(''+i, koid, 'layers', 1 << i));
-    }
-    tds.push(EL('td', {class: 'ko-layer-td'}, layers));
-
-    // Options.
-    const options = [
-      makeToggle('Activate on trigger down', koid, 'options', 0x01),
-      makeToggle('Activate on mod down', koid, 'options', 0x02),
-      makeToggle('Activate on negative mod up', koid, 'options', 0x04),
-      makeToggle('Any trigger mod activates', koid, 'options', 0x08),
-      makeToggle('No reregister trigger on deactivate', koid, 'options', 0x10),
-      makeToggle('No unregister on other key down', koid, 'options', 0x20),
-    ];
-
-    tds.push(EL('td', {class: 'ko-option-td'}, options));
-
-    // Add the row to the table.
-    let evenodd = 'even';
-    if (koid % 2 === 1) evenodd = 'odd';
-    korows.push(EL('tr', {class: 'ko-row ' + evenodd}, tds));
+    appendChildren(koBoard, ...korows);
   }
-  appendChildren(koBoard, ...korows);
+  renderAllOverrides();
+
+  ////////////////////////////////////
+  //
+  //  Called when a file is uploaded or a device is connected after a file
+  //  is uploaded. Mark and queue all changes.
+  //
+  ////////////////////////////////////
+  KEY_OVERRIDES.updateAll = () => {
+    renderAllOverrides();
+    for (let koid = 0; koid < KBINFO.key_override_count; koid++) {
+      const ko = KBINFO.key_overrides[koid];
+      const bko = BASE_KBINFO.key_overrides[koid];
+
+      if ((ko.layers !== bko.layers) ||
+          (ko.negative_mod_mask !== bko.negative_mod_mask) ||
+          (ko.options !== bko.options) ||
+          (ko.replacement !== bko.replacement) ||
+          (ko.suppressed_mods !== bko.suppressed_mods) ||
+          (ko.trigger !== bko.trigger) ||
+          (ko.trigger_mods !== bko.trigger_mods)) {
+        korows[koid].classList.add('changed');
+        CHANGES.queue('ko' + koid, () => {
+          KBAPI.updateKeyoverride(koid);
+        });
+      }
+    }
+  };
 });
