@@ -149,7 +149,6 @@ addInitializer('connected', () => {
   QMKSETTINGS.updateAll = () => {
     renderAllTabs();
     for (const qsid in KBINFO.settings) {
-      console.log('qsid', qsid);
       if (KBINFO.settings[qsid] !== BASE_KBINFO.settings[qsid]) {
         for (const el of getAll(`[data-qsid="${qsid}"]`)) {
           el.classList.add('changed');

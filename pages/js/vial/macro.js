@@ -113,26 +113,26 @@ Vial.macro = (function() {
       for (let mid = 0; mid < macros.length; mid++) {
         const macro = macros[mid];
         for (const action of macro.actions) {
-          if (action.type === 'text') {
+          if (action[0] === 'text') {
             const encoder = new TextEncoder();
-            const textbuffer = new Uint8Array(encoder.encode(action.value));
+            const textbuffer = new Uint8Array(encoder.encode(action[1]));
             for (let idx = 0; idx < textbuffer.length; idx++) {
               dv.setUint8(offset++, textbuffer[idx]);
             }
-          } else if (action.type === 'delay') {
+          } else if (action[0] === 'delay') {
             dv.setUint8(offset++, QMK_EXT_ID);
             dv.setUint8(offset++, MACRO_DELAY);
-            dv.setUint8(offset++, (action.value % 255) + 1);
-            dv.setUint8(offset++, Math.floor(action.value / 255) + 1);
-          } else if (action.type in MACRO_IDS) {
-            const value = KEY.parse(action.value);
+            dv.setUint8(offset++, (action[1] % 255) + 1);
+            dv.setUint8(offset++, Math.floor(action[1] / 255) + 1);
+          } else if (action[0] in MACRO_IDS) {
+            const value = KEY.parse(action[1]);
             dv.setUint8(offset++, QMK_EXT_ID);
             if (value >= 0x100) {
-              dv.setUint8(offset++, MACRO_DOUBLES[action.type]);
+              dv.setUint8(offset++, MACRO_DOUBLES[action[0]]);
               dv.setUint8(offset++, value & 0xFF);
               dv.setUint8(offset++, (value >> 8) & 0xFF);
             } else {
-              dv.setUint8(offset++, MACRO_IDS[action.type]);
+              dv.setUint8(offset++, MACRO_IDS[action[0]]);
               dv.setUint8(offset++, value);
             }
           }
