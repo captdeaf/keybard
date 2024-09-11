@@ -35,15 +35,18 @@ addInitializer('connected', () => {
 
   ////////////////////////////////////
   //
-  //  Nodelines: Mostly kinda junk stuff.
+  //  Convert to and from .vil
   //
   ////////////////////////////////////
-  function generateVIL(kbinfo, macros) {
+  function kbinfoToVIL(kbinfo, macros) {
     if (macros) {
       macros = kbinfo.macros.map((macro) => macro.actions);
     } else {
       macros = repeat([], kbinfo.macro_count);
     }
+    // JS on the browser behaves weirdly with bigints and JSON. Just using
+    // JSON.stringify on a normal kbid ends with the last 3 digits replaced
+    // with 000.
     const kbidrepl = "BiGKBidGoesHere";
     const vil = {
       combo: kbinfo.combos,
@@ -94,13 +97,57 @@ addInitializer('connected', () => {
     return jsvil;
   }
 
+  function vilToKBINFO(vil) {
+    const kbinfo = deepCopy(SVALBOARD);
+    kbinfo.combos = vil.combo;
+    kbinfo.key_overrides = vil.key_override;
+    kbinfo.macro = vil.macro.map((macro, mid) => {
+      return {actions: macro, mid: mid}
+    } );
+    kbinfo.settings = vil.settings;
+    kbinfo.tapdances = vil.tap_dance.map((td, tdid) => {
+      return {
+        tdid: tdid,
+        tap: td[0],
+        hold: td[1],
+        doubletap: td[2],
+        taphold: td[3],
+        tapms: td[4]
+      }
+    });
+
+    // Convert layout to our keymap.
+    const km = [];
+    for (let l = 0; l < kbinfo.layers; l++) {
+      km.push([]);
+      for (let r = 0; r < kbinfo.rows; r++) {
+        for (let c = 0; c < kbinfo.cols; c++) {
+          km[l][(r * kbinfo.cols) + c] = vil.layout[l][r][c];
+        }
+      }
+    }
+    kbinfo.keymap = km;
+
+    kbinfo.kbid = '' + vil.uid;
+    kbinfo.version = vil.version;
+    kbinfo.via_protocol = vil.via_protocol;
+    kbinfo.vial_protocol = vil.vial_protocol;
+    return kbinfo;
+  }
+
+  ////////////////////////////////////
+  //
+  //  File menu actions to download .vil and .svls.
+  //
+  ////////////////////////////////////
+
   ACTION.onclick('#download-vil', () => {
-    const vil = generateVIL(deepCopy(KBINFO), true);
+    const vil = kbinfoToVIL(deepCopy(KBINFO), true);
     downloadTEXT('keyboard.vil', vil);
   });
 
   ACTION.onclick('#download-vil-nomacro', () => {
-    const vil = generateVIL(deepCopy(KBINFO), false);
+    const vil = kbinfoToVIL(deepCopy(KBINFO), false);
     downloadTEXT('keyboard-nomacro.vil', vil);
   });
 
@@ -119,7 +166,11 @@ addInitializer('connected', () => {
     downloadTEXT('keyboard-nomacro.svl', svl);
   });
 
-  // Uploading a file.
+  ////////////////////////////////////
+  //
+  //  Upload menu action and working on the upload.
+  //
+  ////////////////////////////////////
   ACTION.onclick('#upload-file-float', () => {
     get('#float-upload').style['display'] = 'block';
     const fileinput = get('#upload-file');
@@ -137,7 +188,8 @@ addInitializer('connected', () => {
             KBINFO = js;
             updateAllChanges();
           } else if (js.uid) {
-            console.error('No .vil support yet');
+            KBINFO = vilToKBINFO(js);
+            updateAllChanges();
           } else {
             alert('Unknown json type');
           }
