@@ -133,35 +133,15 @@
     <div id="about">
   Svalboard Keymap Editor
   <div id="about-closer" class="toggle-about">&lt;close&gt;</div>
-  <section id="about-instant">
-    <label>
-      <input type="checkbox" class="check" id="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
-      Instant pushes (akin to Vial)
-    </label>
-  </section>
-  <section id="about-playback">
-    <label>
-      <input type="checkbox" class="check" id="do-playback" data-default="false" data-toggle="playback"/>
-      Playback a recording. (Overrides record)
-    </label>
-  </section>
-  <section id="about-record">
-    <label>
-      <input type="checkbox" class="check" id="do-record" data-default="false" data-toggle="record"/>
-      Record for playback. (requires playback off)
-    </label>
-  </section>
-  <br/>
-  <br/>
   <p>
     Developing for html/css - Make it super fast to reload the page so you
     can see changes w/o reconnecting your keyboard each time.
     <ol>
-      <li>Enable 'Record' above.</li>
+      <li>Enable 'Record' in menu.</li>
       <li>Launch, and select your keyboard. </li>
-      <li>Enable 'Playback' above.</li>
+      <li>Enable 'Playback' in menu.</li>
       <li>Reload page - It should now be near instant.</li>
-      <li>(Note: Keyboard changes will not be permanent at this point.</li>
+      <li>(Note: Keyboard changes will not be performed at this point.)</li>
     </ol>
   </p>
 </div>
@@ -172,8 +152,8 @@
 </div>
 
       <div id="nosupport" style="display: none;">
-  Your browser does not support USBHID.<br>
-  Try latest versions of Chrome (or Chromium), and MS Edge.
+  Your browser does not support WEBHID.<br>
+  Try the latest versions of Chrome (or Chromium), and MS Edge.
 </div>
 
       <div id="active" class="on-connect">
