@@ -112,12 +112,6 @@
   color: green;
 }
 
-/* Keyboard display for keymap bindings. */
-#key-selection {
-  background-color: #ccc;
-  flex: 1 1 auto;
-}
-
 /* A 'keyboard' rendering consists of:
  *
  * A kb-board: a row of kb-groups.
