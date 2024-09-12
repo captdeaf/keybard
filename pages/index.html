@@ -131,45 +131,17 @@
         </div>
       </div>
     </div>
-    <div id="about">
-  KeyBard, the Svalboard Keymap Editor
-  <div id="about-closer" class="toggle-about">&lt;close&gt;</div>
-  <p>
-    Developing for html/css - Make it super fast to reload the page so you
-    can see changes w/o reconnecting your keyboard each time.
-    <ol>
-      <li>Enable 'Record' in menu.</li>
-      <li>Launch, and select your keyboard. </li>
-      <li>Enable 'Playback' in menu.</li>
-      <li>Reload page - It should now be near instant.</li>
-      <li>(Note: Keyboard changes will not be performed at this point.)</li>
-    </ol>
-  </p>
-</div>
-
-    <div id="maingui">
-      <div id="launch">
-  LAUNCH KEYBARD
-</div>
-
-      <div id="nosupport" style="display: none;">
-  Your browser does not support WEBHID.<br>
-  Try the latest versions of Chrome (or Chromium), and MS Edge.
-</div>
-
-      <div id="active" class="on-connect">
-
-        <div id="main">
-          <div class="main-container" id="mainboard-container">
-            <div id="layer-selection"></div>
-            <div id="mainboard-box">
-              <div id="mainboard"></div>
-            </div>
-          </div>
-          <div class="main-container" id="combo-container">
-          </div>
-          <div class="main-container" id="keyoverride-container">
-            <table id="keyoverride-table" cellspacing="0" cellpadding="2">
+    <div id="main" class="on-connect">
+      <div class="main-container" id="mainboard-container">
+        <div id="layer-selection"></div>
+        <div id="mainboard-box">
+          <div id="mainboard"></div>
+        </div>
+      </div>
+      <div class="main-container" id="combo-container">
+      </div>
+      <div class="main-container" id="keyoverride-container">
+        <table id="keyoverride-table" cellspacing="0" cellpadding="2">
 <thead>
  <tr>
    <th></th>
@@ -185,32 +157,32 @@
 </tbody>
 </table>
 
-          </div>
-        </div>
-
-        <div id="key-selection">
-          <div id="allboards">
-  <div class="board-map" data-board="qwerty"><div class="kb-row"><div class="kb-group">
-  <div class="kb-row kb-mods kb-modifiers" style="width: 60vw;">
-    <div class="kbdesc extra-large">Applied Mods:</div>
-    <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
-    <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
-    <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
-    <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="key key-mod kb-key" data-modifier="MTAP" title="Mod Tap (tap for key, hold for mod)">ModTap</div>
-    <div class="key key-mod kb-key" data-modifier="RHS" title="Use right hand side">(RHS)</div>
+      </div>
+    </div>
+    <div style="flex: 1 1 auto;"></div>
+      <div id="allboards">
+  <div class="board-map" data-board="qwerty"><div class="kb-board-mods">
+  <div class="kb-group" style="left: 1vw; width: 55vw;">
+    <div class="kb-row kb-mods kb-modifiers">
+      <div class="kbdesc extra-large">Applied Mods:</div>
+      <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
+      <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
+      <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
+      <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
+      <div class="kb-blank">&nbsp;</div>
+      <div class="key key-mod kb-key" data-modifier="MTAP" title="Mod Tap (tap for key, hold for mod)">ModTap</div>
+      <div class="key key-mod kb-key" data-modifier="RHS" title="Use right hand side">(RHS)</div>
+    </div>
+  </div>
+  <div class="kb-group" style="left: 60vw; width: 25vw;">
+    <div class="kb-row kb-mods">
+      <div class="kbdesc large">Special:</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
+    </div>
   </div>
 </div>
 
-<div class="kb-group">
-  <div class="kb-row kb-mods" style="width: 30vw;">
-    <div class="kbdesc large">Special:</div>
-    <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
-    <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
-  </div>
-</div>
-</div>
 <div class="kb-board">
   <div class="kb-group">
     <div class="kb-row">
@@ -520,24 +492,25 @@
   </div>
 </div>
 </div>
-  <div class="board-map" data-board="iso"><div class="kb-row"><div class="kb-group">
-  <div class="kb-row kb-mods kb-modifiers" style="width: 60vw;">
-    <div class="kbdesc extra-large">Applied Mods:</div>
-    <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
-    <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
-    <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
-    <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="key key-mod kb-key" data-modifier="MTAP" title="Mod Tap (tap for key, hold for mod)">ModTap</div>
-    <div class="key key-mod kb-key" data-modifier="RHS" title="Use right hand side">(RHS)</div>
+  <div class="board-map" data-board="iso"><div class="kb-row"><div class="kb-board-mods">
+  <div class="kb-group" style="left: 1vw; width: 55vw;">
+    <div class="kb-row kb-mods kb-modifiers">
+      <div class="kbdesc extra-large">Applied Mods:</div>
+      <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
+      <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
+      <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
+      <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
+      <div class="kb-blank">&nbsp;</div>
+      <div class="key key-mod kb-key" data-modifier="MTAP" title="Mod Tap (tap for key, hold for mod)">ModTap</div>
+      <div class="key key-mod kb-key" data-modifier="RHS" title="Use right hand side">(RHS)</div>
+    </div>
   </div>
-</div>
-
-<div class="kb-group">
-  <div class="kb-row kb-mods" style="width: 30vw;">
-    <div class="kbdesc large">Special:</div>
-    <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
-    <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
+  <div class="kb-group" style="left: 60vw; width: 25vw;">
+    <div class="kb-row kb-mods">
+      <div class="kbdesc large">Special:</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
+    </div>
   </div>
 </div>
 </div>
@@ -849,13 +822,10 @@
   <div class="board-sel-end"></div>
 </div>
 
-        </div>
-      </div>
-    </div>
     <div id="floats" data-search="block">
       <!-- Anything inside floats prevents elementsFromPoint from
            propagating down. -->
-    <div id="float-macro" class="floater closeable" style="width: 80vw;">
+      <div id="float-macro" class="floater closeable" style="width: 80vw;">
   <div class="button-row">
     <div id="float-macro-name">M?</div>
     <div class="fill"></div>
@@ -924,6 +894,31 @@
   <input type="file" style="width: 100%;" id="upload-file">
 </div>
 
+
+      <div id="launch">
+  LAUNCH KEYBARD
+</div>
+
+      <div id="nosupport" style="display: none;">
+  Your browser does not support WEBHID.<br>
+  Try the latest versions of Chrome (or Chromium), and MS Edge.
+</div>
+
+      <div id="about">
+  KeyBard, the Svalboard Keymap Editor
+  <div id="about-closer" class="toggle-about">&lt;close&gt;</div>
+  <p>
+    Developing for html/css - Make it super fast to reload the page so you
+    can see changes w/o reconnecting your keyboard each time.
+    <ol>
+      <li>Enable 'Record' in menu.</li>
+      <li>Launch, and select your keyboard. </li>
+      <li>Enable 'Playback' in menu.</li>
+      <li>Reload page - It should now be near instant.</li>
+      <li>(Note: Keyboard changes will not be performed at this point.)</li>
+    </ol>
+  </p>
+</div>
 
     </div>
     <script type="text/javascript">

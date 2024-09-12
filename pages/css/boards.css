@@ -93,22 +93,28 @@
 
 /* Keyboard display for keymap bindings. */
 #key-selection {
+  flex: 0 0 content;
   background-color: #ccc;
-  flex: 1 1 auto;
-  position: relative;
-  overflow: auto;
 }
 
 #allboards {
+  background-color: #ccc;
   position: relative;
   bottom: 40px;
+  overflow: auto;
 }
 
 .board-map {
   position: relative;
   padding: 4px;
-  width: 100%;
   margin-bottom: 4.50px;
+}
+
+.kb-board-mods {
+  position: relative;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
 }
 
 #board-selection {
