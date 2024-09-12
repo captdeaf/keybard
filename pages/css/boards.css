@@ -36,7 +36,7 @@
 
 #main {
   flex: 0 0 content;
-  display: flex;
+  width: 100%;
 }
 
 #mainboard-container {
