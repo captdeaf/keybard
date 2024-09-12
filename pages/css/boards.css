@@ -98,7 +98,6 @@
   flex-flow: row;
   padding: 4px;
   width: 100%;
-  overflow: auto;
 }
 
 .board-sel {
@@ -111,6 +110,10 @@
   background-color: #ddd;
   color: black;
   font-size: 8pt;
+}
+
+.board-sel:hover {
+  background-color: #ffd;
 }
 
 .board-sel.active {
