@@ -6,6 +6,8 @@
 //
 ///////////////////////////////////
 
+let CONNECTED = false;
+
 function startKeyBard() {
   runInitializers('load');
 
@@ -35,8 +37,8 @@ addInitializer('load', () => {
     for (const orig of origs) {
       orig[0].style['display'] = orig[1];
     }
-    for (const menuitem of getAll('.connect-enabled')) {
-      menuitem.classList.remove('connect-enabled');
+    for (const menuitem of getAll('.connect-enable')) {
+      menuitem.classList.remove('connect-enable');
     }
   });
 });
@@ -50,31 +52,30 @@ async function tryConnect() {
   return opened;
 }
 
-async function doStuff() {
-  if (!await tryConnect()) {
-    return false;
+async function doStuff(kbinfo) {
+  if (kbinfo) {
+    KBINFO = kbinfo;
+    await initUploadedKBINFO();
+  } else {
+    if (!await tryConnect()) {
+      return false;
+    }
+    await initVial(KBINFO);
   }
-  removeElement(get('#launch'));
 
-  // TODO: other initialization paths: .vil upload, .kbi upload
-  await initVial(KBINFO);
-  // await initUploadKBInfo(WKB);
+  removeElement(get('#launch'));
 
   console.log('kbinfo', KBINFO);
   BASE_KBINFO = deepCopy(KBINFO);
 
   // Initialize KB UI
+  CONNECTED = true;
   runInitializers('connected');
 
   KEYUI.refreshAllKeys();
 }
 
-async function initUploadKBInfo(kbinfo) {
-    KBINFO = kbinfo;
-    // Regenerate keycodes for macros and features.
-    await KEY.generateAllKeycodes(kbinfo);
-    // Visual layout.
-    await Vial.kb.getKeyLayout(kbinfo);
+async function initUploadedKBINFO() {
 }
 
 async function initVial(kbinfo) {
