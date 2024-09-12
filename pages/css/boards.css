@@ -35,8 +35,8 @@
 }
 
 #main {
-  flex: 4 4 auto;
-  overflow: auto;
+  flex: 0 0 content;
+  display: flex;
 }
 
 #mainboard-container {
@@ -90,7 +90,18 @@
 }
 
 /* The sample boards at the bottom. */
+
+/* Keyboard display for keymap bindings. */
+#key-selection {
+  background-color: #ccc;
+  flex: 1 1 auto;
+  position: relative;
+  overflow: auto;
+}
+
 #allboards {
+  position: relative;
+  bottom: 40px;
 }
 
 .board-map {

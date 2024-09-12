@@ -98,7 +98,7 @@ addInitializer('connected', () => {
 
   const mbox = get('#mainboard-box');
   mbox.style.width = `${bounds.right + bounds.left + 40}px`;
-  mbox.style.height = `${bounds.bottom + 100}px`;
+  mbox.style.height = `${bounds.bottom + 60}px`;
   
   ////////////////////////////////////
   //
