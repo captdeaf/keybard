@@ -91,10 +91,14 @@ addInitializer('connected', () => {
   appendChildren(board, ...children);
 
   // This allows us to center the board on screen.
-  board.style.width = `${bounds.right + bounds.left}px`;
-  board.style.height = `${bounds.bottom + 60}px`;
-  board.style.left = `${-bounds.left}px`;
+  board.style.width = `${bounds.right + bounds.left + 20}px`;
+  board.style.height = `${bounds.bottom + 20}px`;
+  board.style.left = `20px`;
   board.style.top = `30px`;
+
+  const mbox = get('#mainboard-box');
+  mbox.style.width = `${bounds.right + bounds.left + 40}px`;
+  mbox.style.height = `${bounds.bottom + 100}px`;
   
   ////////////////////////////////////
   //
