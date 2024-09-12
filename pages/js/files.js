@@ -4,7 +4,7 @@
 //
 ////////////////////////////////////
 
-addInitializer('connected', () => {
+addInitializer('load', () => {
   ////////////////////////////////////
   //
   //  Download a JSON as a file. It accepts a filename and content
@@ -140,28 +140,30 @@ addInitializer('connected', () => {
   //  File menu actions to download .vil and .svls.
   //
   ////////////////////////////////////
+  addInitializer('connected', () => {
 
-  ACTION.onclick('#download-vil', () => {
-    const vil = kbinfoToVIL(deepCopy(KBINFO), true);
-    downloadTEXT('keyboard.vil', vil);
-  });
+    ACTION.onclick('#download-vil', () => {
+      const vil = kbinfoToVIL(deepCopy(KBINFO), true);
+      downloadTEXT('keyboard.vil', vil);
+    });
 
-  ACTION.onclick('#download-vil-nomacro', () => {
-    const vil = kbinfoToVIL(deepCopy(KBINFO), false);
-    downloadTEXT('keyboard-nomacro.vil', vil);
-  });
+    ACTION.onclick('#download-vil-nomacro', () => {
+      const vil = kbinfoToVIL(deepCopy(KBINFO), false);
+      downloadTEXT('keyboard-nomacro.vil', vil);
+    });
 
-  ACTION.onclick('#download-svl', () => {
-    const copy = deepCopy(KBINFO);
-    const svl = JSON.stringify(copy);
-    downloadTEXT('keyboard.svl', svl);
-  });
+    ACTION.onclick('#download-svl', () => {
+      const copy = deepCopy(KBINFO);
+      const svl = JSON.stringify(copy);
+      downloadTEXT('keyboard.svl', svl);
+    });
 
-  ACTION.onclick('#download-svl-nomacro', () => {
-    const copy = deepCopy(KBINFO);
-    copy.macros = repeat([], copy.macro_count);
-    const svl = JSON.stringify(copy);
-    downloadTEXT('keyboard-nomacro.svl', svl);
+    ACTION.onclick('#download-svl-nomacro', () => {
+      const copy = deepCopy(KBINFO);
+      copy.macros = repeat([], copy.macro_count);
+      const svl = JSON.stringify(copy);
+      downloadTEXT('keyboard-nomacro.svl', svl);
+    });
   });
 
   ////////////////////////////////////
