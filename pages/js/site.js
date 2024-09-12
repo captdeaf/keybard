@@ -114,22 +114,28 @@ addInitializer('load', () => {
     selectTab(target.dataset.mainboard);
   });
 
-  addInitializer('load', () => {
-    selectTab(getSaved('main-container', 'mainboard-container'));
+  selectTab(getSaved('main-container', 'mainboard-container'));
+
+  let connected = false;
+
+  addInitializer('connected', () => {
+    connected = true;
   });
 
   // Toggle a float between visible and not.
   const openFloats = {};
   ACTION.onclick('[data-open]', (target) => {
-    const floater = get(target.dataset.open);
-    let disp = target.dataset.display;
-    if (!disp) disp = 'block';
-    if (openFloats[floater]) {
-      floater.style['display'] = 'none';
-      openFloats[floater] = false;
-    } else {
-      floater.style['display'] = disp;
-      openFloats[floater] = true;
+    if (!target.classList.contains('connect-enable') || connected) {
+      const floater = get(target.dataset.open);
+      let disp = target.dataset.display;
+      if (!disp) disp = 'block';
+      if (openFloats[floater]) {
+        floater.style['display'] = 'none';
+        openFloats[floater] = false;
+      } else {
+        floater.style['display'] = disp;
+        openFloats[floater] = true;
+      }
     }
   });
   

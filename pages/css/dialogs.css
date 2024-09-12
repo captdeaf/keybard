@@ -63,6 +63,7 @@
   display: none;
   position: absolute;
   background-color: #f9f9f9;
+  color: #000;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   padding: 12px 16px;
@@ -75,6 +76,7 @@
 
 .dropdown-content > label {
   padding: 5px;
+  cursor: pointer;
   display: block;
   width: 300px;
 }
@@ -93,6 +95,9 @@
   bottom: 20px;
 }
 
+.connect-enable {
+  color: #ccc;
+}
 
 /* Floaters that go over everything else. */
 

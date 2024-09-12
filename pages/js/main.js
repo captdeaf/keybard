@@ -35,6 +35,9 @@ addInitializer('load', () => {
     for (const orig of origs) {
       orig[0].style['display'] = orig[1];
     }
+    for (const menuitem of getAll('.connect-enabled')) {
+      menuitem.classList.remove('connect-enabled');
+    }
   });
 });
 
