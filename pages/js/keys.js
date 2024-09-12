@@ -73,6 +73,7 @@ addInitializer('load', () => {
       KEYMAP[`TD(${i})`].idx = i;
     }
   };
+  addInitializer('connected', KEY.generateAllKeycodes, 1);
 
   const JS_MAP = {
     "ControlLeft": "KC_LCTRL",

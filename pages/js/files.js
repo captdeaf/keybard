@@ -172,26 +172,36 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   ACTION.onclick('#upload-file-float', () => {
-    get('#float-upload').style['display'] = 'block';
+    const disp = get('#float-upload');
+    disp.style['display'] = 'block';
     const fileinput = get('#upload-file');
     
     fileinput.onchange = () => {
       const file = fileinput.files[0];
       const reader = new FileReader();
       reader.onload = (evt) => {
+        fileinput.value = '';
+        disp.style['display'] = 'none';
         const content = evt.target.result;
         try {
           const js = JSON.parse(content);
-          console.log(js);
+          let kbinfo = null;
           // Is it a .vil or a .svl file?
           if (js.kbid) {
-            KBINFO = js;
-            updateAllChanges();
+            kbinfo = js;
           } else if (js.uid) {
-            KBINFO = vilToKBINFO(js);
-            updateAllChanges();
+            kbinfo = vilToKBINFO(js);
           } else {
             alert('Unknown json type');
+            return;
+          }
+          if (CONNECTED) {
+            console.log('connected, updating');
+            KBINFO = kbinfo;
+            updateAllChanges();
+          } else {
+            console.log('new base');
+            doStuff(kbinfo);
           }
         } catch (err) {
           console.error(err);
