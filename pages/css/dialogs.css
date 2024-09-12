@@ -117,6 +117,10 @@
   height: 280px;
 }
 
+#float-macro-render {
+  margin-top: 18px;
+}
+
 /* Floater buttons */
 .button-row {
   flex: 0 0 content;
