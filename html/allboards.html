@@ -17,18 +17,28 @@
   <div class="board-map" data-board="tapdance" id="tapdance-board">
   </div>
 </div>
-<div id="board-selection">
+<div id="board-selection" style="z-index: 200;">
   <div class="board-sel" data-board="qwerty">QWERTY</div>
-  <div class="board-sel" data-board="iso">ISO</div>
-  <div class="board-sel" data-board="media">App, Mouse, Media</div>
-  <div class="board-sel" data-board="audio">Audio and Haptics</div>
-  <div class="board-sel" data-board="quantum">QMK Keys</div>
-  <div class="board-sel" data-board="backlights">Backlights</div>
-  <div class="board-sel" data-board="magic">'Magic' keys</div>
-  <div class="board-sel" data-board="midi">MIDI</div>
+  <div class="dropdown board-sel" id="menu-top">
+    <div>International</div>
+    <div class="dropdown-content dropup">
+      <label class="board-sel" data-board="iso">ISO</label>
+    </div>
+  </div>
   <div class="board-sel" data-board="custom">Custom Keys</div>
   <div class="board-sel" data-board="layer">Layers</div>
   <div class="board-sel" data-board="macro">Macros</div>
   <div class="board-sel" data-board="tapdance">Tap dances</div>
+  <div class="dropdown board-sel" id="menu-top">
+    <div>Unusual boards</div>
+    <div class="dropdown-content dropup" style="right: 0px;">
+      <label class="board-sel" data-board="media">App, Mouse, Media</label>
+      <label class="board-sel" data-board="audio">Audio and Haptics</label>
+      <label class="board-sel" data-board="quantum">QMK Keys</label>
+      <label class="board-sel" data-board="backlights">Backlights</label>
+      <label class="board-sel" data-board="magic">'Magic' keys</label>
+      <label class="board-sel" data-board="midi">MIDI</label>
+    </div>
+  </div>
   <div class="board-sel-end"></div>
 </div>

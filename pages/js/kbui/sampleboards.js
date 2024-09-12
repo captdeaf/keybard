@@ -22,13 +22,13 @@ addInitializer('connected', () => {
   ////////////////////////////////////
   const allboards = {};
 
-  for (const sel of getAll('div.board-sel')) {
+  for (const sel of getAll('.board-sel[data-board]')) {
     allboards[sel.dataset.board] = {
       selector: sel,
     };
   }
 
-  for (const container of getAll('div.board-map')) {
+  for (const container of getAll('div.board-map[data-board]')) {
     allboards[container.dataset.board].container = container;
   }
 
@@ -40,6 +40,7 @@ addInitializer('connected', () => {
     setSaved('boardsel', name); 
     for (const board of Object.values(allboards)) {
       board.selector.classList.remove('active');
+      console.log(board.selector);
       board.container.style['display'] = 'none';
     }
     allboards[name].selector.classList.add('active');

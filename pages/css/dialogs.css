@@ -76,7 +76,7 @@
 .dropdown-content > label {
   padding: 5px;
   display: block;
-  width: 400px;
+  width: 300px;
 }
 
 .dropdown-content > label:hover {
@@ -86,6 +86,11 @@
 .dropdown-content .dropdown-content {
   position: absolute;
   margin-left: 100px;
+}
+
+.dropup {
+  position: absolute;
+  bottom: 20px;
 }
 
 

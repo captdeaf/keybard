@@ -73,21 +73,21 @@
           <div class="dropdown menu" id="menu-top">
   MENU
   <div class="dropdown-content">
-  <label class="menuitem">
+  <label>
     <input type="checkbox" class="check" id="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
     Instant pushes (akin to Vial)
   </label>
-  <label class="menuitem" data-open="#float-qmksettings" id="open-qmk">
+  <label data-open="#float-qmksettings" id="open-qmk">
     QMK Settings
   </label>
   <label class="menuitem dropdown">
     &gt; Dev options
     <div class="dropdown-content">
-      <label class="menuitem">
+      <label>
         <input type="checkbox" class="check" id="do-playback" data-default="false" data-toggle="playback"/>
         Playback a recording. (Overrides record)
       </label>
-      <label class="menuitem">
+      <label>
         <input type="checkbox" class="check" id="do-record" data-default="false" data-toggle="record"/>
         Record for playback. (requires playback off)
       </label>
@@ -96,24 +96,24 @@
   <label class="menuitem dropdown">
     &gt; Vial (.vil) and Svial (.svl) Files
     <div class="dropdown-content">
-    <label class="menuitem" id="download-svl">
+    <label id="download-svl">
       &darr; Download .svl file.
     </label>
-    <label class="menuitem" id="download-svl-nomacro">
+    <label id="download-svl-nomacro">
       &darr; Download macro-less .svl file.
     </label>
-    <label class="menuitem" id="download-vil">
+    <label id="download-vil">
       &darr; Download .vil file.
     </label>
-    <label class="menuitem" id="download-vil-nomacro">
+    <label id="download-vil-nomacro">
       &darr; Download macro-less .vil file.
     </label>
-    <label class="menuitem" id="upload-file-float">
+    <label id="upload-file-float">
       &uarr; Upload .svl or .vil file.
     </label>
     </div>
   </label>
-  <label class="menuitem" data-menu-action="menu-connect">
+  <label data-menu-action="menu-connect">
     Connect a device. (STUB)
   </label>
   <label class="menuitem toggle-about">
@@ -189,7 +189,7 @@
         <div id="key-selection">
           <div id="allboards">
   <div class="board-map" data-board="qwerty"><div class="kb-row"><div class="kb-group">
-  <div class="kb-row kb-mods kb-modifiers">
+  <div class="kb-row kb-mods kb-modifiers" style="width: 60vw;">
     <div class="kbdesc extra-large">Applied Mods:</div>
     <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
     <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
@@ -202,15 +202,10 @@
 </div>
 
 <div class="kb-group">
-  <div class="kb-row kb-mods">
+  <div class="kb-row kb-mods" style="width: 30vw;">
     <div class="kbdesc large">Special:</div>
     <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
     <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
   </div>
 </div>
 </div>
@@ -524,7 +519,7 @@
 </div>
 </div>
   <div class="board-map" data-board="iso"><div class="kb-row"><div class="kb-group">
-  <div class="kb-row kb-mods kb-modifiers">
+  <div class="kb-row kb-mods kb-modifiers" style="width: 60vw;">
     <div class="kbdesc extra-large">Applied Mods:</div>
     <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
     <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
@@ -537,15 +532,10 @@
 </div>
 
 <div class="kb-group">
-  <div class="kb-row kb-mods">
+  <div class="kb-row kb-mods" style="width: 30vw;">
     <div class="kbdesc large">Special:</div>
     <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
     <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
-    <div class="kb-blank">&nbsp;</div>
   </div>
 </div>
 </div>
@@ -831,19 +821,29 @@
   <div class="board-map" data-board="tapdance" id="tapdance-board">
   </div>
 </div>
-<div id="board-selection">
+<div id="board-selection" style="z-index: 200;">
   <div class="board-sel" data-board="qwerty">QWERTY</div>
-  <div class="board-sel" data-board="iso">ISO</div>
-  <div class="board-sel" data-board="media">App, Mouse, Media</div>
-  <div class="board-sel" data-board="audio">Audio and Haptics</div>
-  <div class="board-sel" data-board="quantum">QMK Keys</div>
-  <div class="board-sel" data-board="backlights">Backlights</div>
-  <div class="board-sel" data-board="magic">'Magic' keys</div>
-  <div class="board-sel" data-board="midi">MIDI</div>
+  <div class="dropdown board-sel" id="menu-top">
+    <div>International</div>
+    <div class="dropdown-content dropup">
+      <label class="board-sel" data-board="iso">ISO</label>
+    </div>
+  </div>
   <div class="board-sel" data-board="custom">Custom Keys</div>
   <div class="board-sel" data-board="layer">Layers</div>
   <div class="board-sel" data-board="macro">Macros</div>
   <div class="board-sel" data-board="tapdance">Tap dances</div>
+  <div class="dropdown board-sel" id="menu-top">
+    <div>Unusual boards</div>
+    <div class="dropdown-content dropup" style="right: 0px;">
+      <label class="board-sel" data-board="media">App, Mouse, Media</label>
+      <label class="board-sel" data-board="audio">Audio and Haptics</label>
+      <label class="board-sel" data-board="quantum">QMK Keys</label>
+      <label class="board-sel" data-board="backlights">Backlights</label>
+      <label class="board-sel" data-board="magic">'Magic' keys</label>
+      <label class="board-sel" data-board="midi">MIDI</label>
+    </div>
+  </div>
   <div class="board-sel-end"></div>
 </div>
 
