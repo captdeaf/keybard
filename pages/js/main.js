@@ -2,11 +2,11 @@
 //
 ////////////////////////////////////
 //
-//  Tie together all the js files for jsvial
+//  Tie together all the js files for KeyBard
 //
 ///////////////////////////////////
 
-function startJSVial() {
+function startKeyBard() {
   runInitializers('load');
 
   if (!navigator.hid) {
