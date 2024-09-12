@@ -40,7 +40,6 @@ addInitializer('connected', () => {
     setSaved('boardsel', name); 
     for (const board of Object.values(allboards)) {
       board.selector.classList.remove('active');
-      console.log(board.selector);
       board.container.style['display'] = 'none';
     }
     allboards[name].selector.classList.add('active');

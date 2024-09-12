@@ -64,6 +64,7 @@
   background-color: tan;
 }
 
+/* Macro keys for editor */
 .key-macro {
   width: 60px;
   overflow-x: hidden;
@@ -72,12 +73,14 @@
 
 .macro-action {
   position: relative;
-  min-width: 64px;
+  min-width: 70px;
+  height: 62px;
   text-align: middle;
   display: flex;
   flex-flow: column;
   border: 1px solid black;
   border-radius: 3px;
+  padding: 6px;
 }
 
 .remove-macro {

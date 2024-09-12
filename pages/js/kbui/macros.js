@@ -90,7 +90,7 @@ addInitializer('load', () => {
                 {
                   'data-macro': action[0],
                   type: 'text',
-                  value: action[0],
+                  value: action[1],
                   style: {width: '7em', resize: 'horizontal'},
                   placeholder: 'text'
                 },
@@ -103,7 +103,7 @@ addInitializer('load', () => {
                   type: 'number',
                   maxlength: 5,
                   style: {width: '5em'},
-                  value: action[0],
+                  value: action[1],
                   placeholder: 'text'
                 },
                 '');
