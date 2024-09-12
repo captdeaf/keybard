@@ -131,6 +131,31 @@
         </div>
       </div>
     </div>
+    <div id="launch">
+  LAUNCH KEYBARD
+</div>
+
+    <div id="nosupport" style="display: none;">
+  Your browser does not support WEBHID.<br>
+  Try the latest versions of Chrome (or Chromium), and MS Edge.
+</div>
+
+    <div id="about">
+  KeyBard, the Svalboard Keymap Editor
+  <div id="about-closer" class="toggle-about">&lt;close&gt;</div>
+  <p>
+    Developing for html/css - Make it super fast to reload the page so you
+    can see changes w/o reconnecting your keyboard each time.
+    <ol>
+      <li>Enable 'Record' in menu.</li>
+      <li>Launch, and select your keyboard. </li>
+      <li>Enable 'Playback' in menu.</li>
+      <li>Reload page - It should now be near instant.</li>
+      <li>(Note: Keyboard changes will not be performed at this point.)</li>
+    </ol>
+  </p>
+</div>
+
     <div id="main" class="on-connect">
       <div class="main-container" id="mainboard-container">
         <div id="layer-selection"></div>
@@ -160,7 +185,7 @@
       </div>
     </div>
     <div style="flex: 1 1 auto;"></div>
-      <div id="allboards">
+      <div id="allboards" class="on-connect">
   <div class="board-map" data-board="qwerty"><div class="kb-board-mods">
   <div class="kb-group" style="left: 1vw; width: 55vw;">
     <div class="kb-row kb-mods kb-modifiers">
@@ -796,7 +821,7 @@
   <div class="board-map" data-board="tapdance" id="tapdance-board">
   </div>
 </div>
-<div id="board-selection" style="z-index: 200;">
+<div id="board-selection" class="on-connect" style="z-index: 200;">
   <div class="board-sel" data-board="qwerty">QWERTY</div>
   <div class="dropdown board-sel" id="menu-top">
     <div>International</div>
@@ -895,31 +920,6 @@
   <input type="file" style="width: 100%;" id="upload-file">
 </div>
 
-
-      <div id="launch">
-  LAUNCH KEYBARD
-</div>
-
-      <div id="nosupport" style="display: none;">
-  Your browser does not support WEBHID.<br>
-  Try the latest versions of Chrome (or Chromium), and MS Edge.
-</div>
-
-      <div id="about">
-  KeyBard, the Svalboard Keymap Editor
-  <div id="about-closer" class="toggle-about">&lt;close&gt;</div>
-  <p>
-    Developing for html/css - Make it super fast to reload the page so you
-    can see changes w/o reconnecting your keyboard each time.
-    <ol>
-      <li>Enable 'Record' in menu.</li>
-      <li>Launch, and select your keyboard. </li>
-      <li>Enable 'Playback' in menu.</li>
-      <li>Reload page - It should now be near instant.</li>
-      <li>(Note: Keyboard changes will not be performed at this point.)</li>
-    </ol>
-  </p>
-</div>
 
     </div>
     <script type="text/javascript">
