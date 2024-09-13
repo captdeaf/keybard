@@ -27,11 +27,11 @@ let KBINFO = {
   macros: [],
   custom_keycodes: [],
   key_override_count: 0,
-  key_override_entries: [],
   combo_count: 0,
   combos: [],
   settings: {},
-  extra: {},
+  via_proto: 9,
+  vial_proto: 6,
 };
 
 // Unchanged. May be used for committing .vil or .kbinfo piecemeal?
