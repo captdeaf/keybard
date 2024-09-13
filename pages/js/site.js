@@ -116,16 +116,10 @@ addInitializer('load', () => {
 
   selectTab(getSaved('main-container', 'mainboard-container'));
 
-  let connected = false;
-
-  addInitializer('connected', () => {
-    connected = true;
-  });
-
   // Toggle a float between visible and not.
   const openFloats = {};
   ACTION.onclick('[data-open]', (target) => {
-    if (!target.classList.contains('connect-enable') || connected) {
+    if (!target.classList.contains('connect-enable') || CONNECTED) {
       const floater = get(target.dataset.open);
       let disp = target.dataset.display;
       if (!disp) disp = 'block';
