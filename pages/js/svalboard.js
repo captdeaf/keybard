@@ -157,7 +157,6 @@ const SVALBOARD = {
  "extra" : {},
  "kbid" : "5199957870438586395",
  "key_override_count" : 30,
- "key_override_entries" : [],
  "key_overrides" : [
     {
        "koid" : 0,
