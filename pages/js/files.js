@@ -137,6 +137,92 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
+  //  Generate a keymap.c version for download.
+  //
+  //  Format:
+  //
+  //  const uint16_t PROGMEM keymaps[DYNAMIC_KEYMAP_LAYER_COUNT][MATRIX_ROWS][MATRIX_COLS] = {
+  //    [#] = LAYOUT(
+  //      KC_codes, QMK style (use QMKMAP)
+  //      R1-R4, L1-L4, CNESW XX.
+  //      rt, lt down push up nail knuckle dd
+  //    )
+  //  }
+  //    Our keymap is, in groups of 6,
+  //    0: lt knuckle nail down push up dd
+  //    6: l1  SECNW KC_NO
+  //    12: l2
+  //    18: l3
+  //    24: l4
+  //    30: rt
+  //    36: r1
+  //    42: r2
+  //    48: r3
+  //    54: r4
+  //
+  //    Conversion: keymap[layer][n]
+  //
+  ////////////////////////////////////
+  addInitializer('connected', () => {
+    function kmToC(layer, start, ids, nocomma) {
+      const km = KBINFO.keymap[layer];
+      let lcomma = ','
+      if (nocomma) {
+        lcomma = '';
+      };
+      return [
+        km[start + ids[0]] + ',',
+        km[start + ids[1]] + ',',
+        km[start + ids[2]] + ',',
+        km[start + ids[3]] + ',',
+        km[start + ids[4]] + ',',
+        km[start + ids[5]] + lcomma,
+      ];
+    }
+    ACTION.onclick('#download-keymap-c', () => {
+      const kids = [2, 3, 1, 0, 4, 5];
+      const tids = [2, 3, 4, 1, 0, 5];
+      const allLayers = [
+        'const uint16_t PROGMEM keymaps[DYNAMIC_KEYMAP_LAYER_COUNT][MATRIX_ROWS][MATRIX_COLS] = {'
+      ];
+      for (let layer = 0; layer < KBINFO.keymap.length; layer++) {
+        const map = [
+          ['/*', 'Center', 'North', 'East', 'South', 'West', '(XXX)', '*/'],
+          ['/* R1 */ ', ...kmToC(layer, 36, kids), ''],
+          ['/* R2 */ ', ...kmToC(layer, 42, kids), ''],
+          ['/* R3 */ ', ...kmToC(layer, 48, kids), ''],
+          ['/* R4 */ ', ...kmToC(layer, 54, kids), ''],
+          [''],
+          ['/* L1 */ ', ...kmToC(layer, 6,  kids), ''],
+          ['/* L2 */ ', ...kmToC(layer, 12, kids), ''],
+          ['/* L3 */ ', ...kmToC(layer, 18, kids), ''],
+          ['/* L4 */ ', ...kmToC(layer, 24, kids), ''],
+          [''],
+          ['/*', 'Down', 'Pad', 'Up', 'Nail', 'Knuckle', 'Double Down', '*/'],
+          ['/* RT */ ', ...kmToC(layer, 30, tids), ''],
+          ['/* LT */ ', ...kmToC(layer, 0,  tids, true), ''],
+        ];
+
+        const strmap = [
+          `    [${layer}] = LAYOUT(`
+        ];
+        for (let i = 0; i < map.length; i++) {
+          strmap.push('        ' + map[i].map((x) => x.padEnd(20, ' ')).join('').trim());
+        }
+        if ((layer + 1) < KBINFO.keymap.length) {
+          strmap.push('      ),');
+        } else {
+          strmap.push('      )');
+        }
+        allLayers.push(strmap.join('\n'));
+      }
+      allLayers.push('};\n');
+      downloadTEXT('keymap_all.c', allLayers.join('\n\n'));
+    });
+  });
+
+  ////////////////////////////////////
+  //
   //  File menu actions to download .vil and .svls.
   //
   ////////////////////////////////////
