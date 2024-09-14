@@ -5,6 +5,21 @@
     <input type="checkbox" class="check" id="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
     Instant pushes (akin to Vial)
   </label>
+  <label class="menuitem dropdown">
+    &gt; Serial Assignment
+    <div class="dropdown-content">
+      <label data-serial="colfirst">
+        Down columns then rows (Sval: By cluster)
+      </label>
+      <label data-serial="rowfirst">
+        Across rows then down columns.
+      </label>
+      <label data-serial="svalbykey">
+        Svalboard by key direction.<br>
+        Won't work w/ other boards.
+      </label>
+    </div>
+  </label>
   <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable">
     QMK Settings
   </label>
@@ -47,7 +62,7 @@
   <label data-menu-action="menu-connect">
     Connect a device. (STUB)
   </label>
-  <label class="menuitem toggle-about">
+  <label data-open="#about" id="open-about">
     About KeyBard
   </label>
   </div>

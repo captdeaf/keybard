@@ -218,6 +218,7 @@ addInitializer('load', () => {
       }
       allLayers.push('};\n');
       downloadTEXT('keymap_all.c', allLayers.join('\n\n'));
+      ACTION.menuClose();
     });
   });
 
@@ -231,17 +232,20 @@ addInitializer('load', () => {
     ACTION.onclick('#download-vil', () => {
       const vil = kbinfoToVIL(deepCopy(KBINFO), true);
       downloadTEXT('keyboard.vil', vil);
+      ACTION.menuClose();
     });
 
     ACTION.onclick('#download-vil-nomacro', () => {
       const vil = kbinfoToVIL(deepCopy(KBINFO), false);
       downloadTEXT('keyboard-nomacro.vil', vil);
+      ACTION.menuClose();
     });
 
     ACTION.onclick('#download-svl', () => {
       const copy = deepCopy(KBINFO);
       const svl = JSON.stringify(copy);
       downloadTEXT('keyboard.svl', svl);
+      ACTION.menuClose();
     });
 
     ACTION.onclick('#download-svl-nomacro', () => {
@@ -249,6 +253,7 @@ addInitializer('load', () => {
       copy.macros = repeat([], copy.macro_count);
       const svl = JSON.stringify(copy);
       downloadTEXT('keyboard-nomacro.svl', svl);
+      ACTION.menuClose();
     });
   });
 
