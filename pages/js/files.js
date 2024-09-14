@@ -1,6 +1,6 @@
 ////////////////////////////////////
 //
-//  Downloads and Uploads of .vil and .svl
+//  Downloads and Uploads of .vil and .kbi
 //
 ////////////////////////////////////
 
@@ -224,7 +224,7 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
-  //  File menu actions to download .vil and .svls.
+  //  File menu actions to download .vil and .kbis.
   //
   ////////////////////////////////////
   addInitializer('connected', () => {
@@ -241,18 +241,18 @@ addInitializer('load', () => {
       ACTION.menuClose();
     });
 
-    ACTION.onclick('#download-svl', () => {
+    ACTION.onclick('#download-kbi', () => {
       const copy = deepCopy(KBINFO);
-      const svl = JSON.stringify(copy);
-      downloadTEXT('keyboard.svl', svl);
+      const kbi = JSON.stringify(copy);
+      downloadTEXT('keyboard.kbi', kbi);
       ACTION.menuClose();
     });
 
-    ACTION.onclick('#download-svl-nomacro', () => {
+    ACTION.onclick('#download-kbi-nomacro', () => {
       const copy = deepCopy(KBINFO);
       copy.macros = repeat([], copy.macro_count);
-      const svl = JSON.stringify(copy);
-      downloadTEXT('keyboard-nomacro.svl', svl);
+      const kbi = JSON.stringify(copy);
+      downloadTEXT('keyboard-nomacro.kbi', kbi);
       ACTION.menuClose();
     });
   });
@@ -277,7 +277,7 @@ addInitializer('load', () => {
         try {
           const js = JSON.parse(content);
           let kbinfo = null;
-          // Is it a .vil or a .svl file?
+          // Is it a .vil or a .kbi file?
           if (js.kbid) {
             kbinfo = js;
           } else if (js.uid) {
@@ -296,7 +296,7 @@ addInitializer('load', () => {
           }
         } catch (err) {
           console.error(err);
-          alert('Invalid .vil or .svl file');
+          alert('Invalid .vil or .kbi file');
         }
       };
       reader.onerror = (evft) => {
