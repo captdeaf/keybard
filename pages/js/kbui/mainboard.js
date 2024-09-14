@@ -209,14 +209,15 @@ addInitializer('connected', () => {
 
   function prepKeyAssignment(target) {
     ACTION.selectKey(target);
+    const curLayer = MAINBOARD.selectedLayer;
     ACTION.on('bind', (keystr) => {
       const kmid = target.dataset.kmid;
       if (keystr !== target.dataset.key) {
-        KBINFO.keymap[MAINBOARD.selectedLayer][kmid] = keystr;
+        KBINFO.keymap[curLayer][kmid] = keystr;
         target.dataset.key = keystr;
         target.classList.add('changed');
-        CHANGES.queue('key' + MAINBOARD.selectedLayer + '.' + kmid, () => {
-          KBAPI.updateKey(MAINBOARD.selectedLayer, kmid, keystr);
+        CHANGES.queue('key' + curLayer + '.' + kmid, () => {
+          KBAPI.updateKey(curLayer, kmid, keystr);
         });
         KEYUI.refreshKey(target);
       }
