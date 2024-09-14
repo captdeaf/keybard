@@ -12,6 +12,9 @@
 //    ACTION.trigger('bindkey', ...)
 //
 ////////////////////////////////////
+
+const SAMPLE_LAYERS = {};
+
 addInitializer('connected', () => {
 
   ////////////////////////////////////
@@ -106,4 +109,32 @@ addInitializer('connected', () => {
     appendBoard('layer', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
   }
 
+  ////////////////////////////////////
+  //
+  //  Sample layers. This populates the dropup menu with our sample boards.
+  //
+  ////////////////////////////////////
+  const menu = get('#sample-layers');
+  for (const [kbname, layers] of Object.entries(SAMPLE_LAYERS)) {
+    const els = [];
+    for (const [layername, map] of Object.entries(layers)) {
+      els.push(EL('label', {
+        'data-sample-kb': kbname,
+        'data-sample-layer': layername,
+      }, layername));
+    }
+    const content = EL('div', {
+      class: 'dropdown-content',
+    }, els);
+    appendChildren(menu, EL('label', {
+      class: 'menuitem dropdown'
+    }, kbname, content));
+  }
+
+  ACTION.onclick('[data-sample-kb]', (target) => {
+    const kmap = SAMPLE_LAYERS[target.dataset.sampleKb][target.dataset.sampleLayer];
+    KBINFO.keymap[MAINBOARD.selectedLayer] = kmap;
+    updateAllChanges();
+    ACTION.menuClose();
+  });
 });
