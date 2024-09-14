@@ -10,6 +10,8 @@ const ACTION = {
   // Currently selected key for binding target.
   selectedKey: null,
   selectKey: null,
+  // 'close' the menus
+  menuClose: null,
   // Custom events
   on: null,
   trigger: null,
@@ -37,6 +39,31 @@ addInitializer('load', () => {
       ACTION.selectedKey = keyelement;
       ACTION.selectedKey.classList.add('active');
     }
+  };
+
+  ////////////////////////////////////
+  //
+  //  On clicking a menu item (whether dropdown or dropup),
+  //  allow event handlers to remove the menu.
+  //
+  ////////////////////////////////////
+  ACTION.menuClose = () => {
+    const allDropdowns = findAll('.dropdown');
+    const allDropups = findAll('.dropup');
+    for (const m of allDropdowns) {
+      m.classList.remove('dropdown');
+    }
+    for (const m of allDropups) {
+      m.classList.remove('dropup');
+    }
+    setTimeout(() => {
+      for (const m of allDropdowns) {
+        m.classList.add('dropdown');
+      }
+      for (const m of allDropups) {
+        m.classList.add('dropup');
+      }
+    });
   };
 
   ////////////////////////////////////

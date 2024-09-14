@@ -36,24 +36,6 @@ addInitializer('load', () => {
     }
   }
 
-  // The 'about' / config window.
-  const desc = get('#about');
-  const toggles = getAll('.toggle-about');
-
-  const descdisplay = desc.style['display'];
-
-  const toggleAbout = addToggle('about-shown', false, function(enabled) {
-    if (enabled) {
-      desc.style['display'] = 'none';
-    } else {
-      desc.style['display'] = descdisplay;
-    }
-  });
-
-  for (const toggle of toggles) {
-    toggle.onclick = toggleAbout;
-  }
-
   ////////////////////////////////////
   //
   //  Config options inside About (or elsewhere)
@@ -130,6 +112,7 @@ addInitializer('load', () => {
         floater.style['display'] = disp;
         openFloats[floater] = true;
       }
+      ACTION.menuClose();
     }
   });
   

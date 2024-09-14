@@ -34,6 +34,7 @@ addInitializer('connected', () => {
 
   ACTION.onclick('.board-sel', (target) => {
     displayBoard(target.dataset.board);
+    ACTION.menuClose();
   });
 
   function displayBoard(name) {

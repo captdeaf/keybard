@@ -154,7 +154,60 @@ addInitializer('connected', () => {
     }
   };
 
-  ACTION.onclick('[data-bound="main"]', (target) => {
+  let serial = {};
+
+  function arytomap(ary) {
+    ary = ary.filter((kmid) => {
+      return findAll('[data-kmid="' + kmid + '"]').length > 0;
+    });
+    const ret = {};
+    ret[ary[ary.length - 1]] = ary[0];
+    for (let i = 0; i < (ary.length - 1); i++) {
+      ret[ary[i]] = ary[i+1];
+    }
+    return ret;
+  }
+
+  const serials = {
+    colfirst: () => {
+      return arytomap(range(KBINFO.keymap[0].length));
+    },
+    rowfirst: () => {
+      const ret = [];
+      for (let col = 0; col < KBINFO.cols; col++) {
+        for (let row = 0; row < KBINFO.rows; row++) {
+          ret.push(row * KBINFO.cols + col);
+        }
+      }
+      return arytomap(ret);
+    },
+    svalbykey: () => {
+      return arytomap([
+        // N keys
+        27, 21, 15, 9, 39, 45, 51, 57,
+        // C keys
+        26, 20, 14, 8, 38, 44, 50, 56,
+        // S keys
+        24, 18, 12, 6, 36, 42, 48, 54,
+        // W keys
+        28, 22, 16, 10, 40, 46, 52, 58,
+        // E keys
+        25, 19, 13, 7, 37, 43, 49, 55,
+
+        // L Cluster
+        0, 1, 2, 3, 4, 5,
+        // R Cluster
+        30, 31, 32, 33, 34, 35,
+      ]);
+    },
+  }
+
+  ACTION.onclick('[data-serial]', (target) => {
+    serial = serials[target.dataset.serial]();
+    ACTION.menuClose();
+  });
+
+  function prepKeyAssignment(target) {
     ACTION.selectKey(target);
     ACTION.on('bind', (keystr) => {
       const kmid = target.dataset.kmid;
@@ -166,9 +219,15 @@ addInitializer('connected', () => {
           KBAPI.updateKey(MAINBOARD.selectedLayer, kmid, keystr);
         });
         KEYUI.refreshKey(target);
-        ACTION.selectKey();
+      }
+      ACTION.selectKey();
+      if (kmid in serial) {
+        prepKeyAssignment(get(`[data-kmid="${serial[kmid]}"]`));
       }
     });
+  }
+  ACTION.onclick('[data-bound="main"]', (target) => {
+    prepKeyAssignment(target);
   });
 
   ////////////////////////////////////

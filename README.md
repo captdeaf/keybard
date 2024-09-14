@@ -59,6 +59,10 @@ project, we welcome PRs, and suggestions =).
    - Keyboard Custom keys.
 
 # TODO
+
+ - Protocol:
+   - Macros now fetch and push the entire 798 byte macro memory. Should
+     only fetch and pull until the macro_count'th null byte.
  
  - Adding documentation and help windows or context links to explain things.
  
@@ -68,10 +72,16 @@ project, we welcome PRs, and suggestions =).
    - HRM / BRM examples.
    - Macro examples for various fields. (SWE/writing/etc).
  
+ - Apply example layouts:
+   - By layer
+   - By all layers.
+ 
  - Test / simulate?
 
  - UI design improvements. Ongoing and constant =).
    - Custom names for layers. Maybe combos and tap dances.
+   - Layer toggles rather than MO/TT/DF/OSL for every #?
+     e.g: "(MO-Momentary) (DF - Default) (OSL - One Shot)" "0 1 2 3 ..."
 
 # Development
 
@@ -79,8 +89,8 @@ Below is for anyone interested in contributing to KeyBard.
 
 ## Terminology
 
-Vial, QMK, and other projects overload various terms. I'm trying to
-keep them separate for this project.
+Vial and QMK overload various terms. I'm trying to keep them separate for this
+project.
 
 - Keymap: Physical keys to key strings.
 
