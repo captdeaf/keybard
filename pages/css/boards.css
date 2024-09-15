@@ -37,6 +37,8 @@
 #main {
   flex: 0 0 content;
   width: 100%;
+  overflow: scroll;
+  max-height: 45vh;
 }
 
 #mainboard-container {
