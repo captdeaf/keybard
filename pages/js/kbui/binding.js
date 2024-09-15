@@ -109,22 +109,24 @@ addInitializer('connected', () => {
   ////////////////////////////////////
 
   ACTION.onclick('[data-bind]', (target) => {
-    let keystr = target.dataset.key;
-    const mask = getMask();
-    if (mask !== 0 && target.dataset.bind === 'keymask') {
-      try {
-        const keyid = KEY.parse(keystr);
-        keystr = KEY.stringify(keyid + getMask());
-      } catch (err) {
-        return;
+    if (ACTION.selectedKey) {
+      let keystr = target.dataset.key;
+      const mask = getMask();
+      if (mask !== 0 && target.dataset.bind === 'keymask') {
+        try {
+          const keyid = KEY.parse(keystr);
+          keystr = KEY.stringify(keyid + getMask());
+        } catch (err) {
+          return;
+        }
       }
-    }
-    if (target.dataset.bind === 'key-mod') {
-      const cur = KEY.parse(ACTION.selectedKey.dataset.key);
-      const curstr = KEY.stringify(cur & 0xFF);
-      keystr = target.dataset.key.replace('(kc)', `(${curstr})`);
-    }
+      if (target.dataset.bind === 'key-mod') {
+        const cur = KEY.parse(ACTION.selectedKey.dataset.key);
+        const curstr = KEY.stringify(cur & 0xFF);
+        keystr = target.dataset.key.replace('(kc)', `(${curstr})`);
+      }
 
-    ACTION.trigger('bind', keystr);
+      ACTION.trigger('bind', keystr);
+    }
   });
 });
