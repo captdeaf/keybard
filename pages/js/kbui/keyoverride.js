@@ -130,9 +130,15 @@ addInitializer('connected', () => {
         EL('div', {class: 'ko-mod-row', title: 'Suppressed Mods'}, 'S'),
       ]));
 
+      const rowTypes = [
+        ['trigger_mods', "Trigger Mods - require one or all of these."],
+        ['negative_mod_mask', "Negative mods - don't function if these are down."],
+        ['suppressed_mod', "Suppressed mods - don't send mod, even if pressed."],
+      ];
+
       // 3 rows of mod key toggles.
       const rows = [];
-      for (const type of ['trigger_mods', 'negative_mod_mask', 'suppressed_mods']) {
+      for (const [type, title] of rowTypes) {
         const keys = [];
         for (const [bitid, name] of modLKeys) {
           keys.push(makeToggle(name, koid, type, bitid));
@@ -140,7 +146,7 @@ addInitializer('connected', () => {
         for (const [bitid, name] of modRKeys) {
           keys.push(makeToggle(name, koid, type, bitid));
         }
-        rows.push(EL('div', {class: 'ko-mod-row'}, keys));
+        rows.push(EL('div', {class: 'ko-mod-row', title: title}, keys));
       }
       tds.push(EL('td', {}, rows));
 
