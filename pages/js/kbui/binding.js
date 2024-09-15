@@ -113,8 +113,8 @@ addInitializer('connected', () => {
     const mask = getMask();
     if (mask !== 0 && target.dataset.bind === 'keymask') {
       try {
-        const maskstr = KEY.stringify(getMask());
-        keystr = maskstr.replace(/kc/, keystr);
+        const keyid = KEY.parse(keystr);
+        keystr = KEY.stringify(keyid + getMask());
       } catch (err) {
         return;
       }
