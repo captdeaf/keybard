@@ -60,8 +60,9 @@
 <script type="text/javascript" src="js/vial/qmk.js"></script>
 <script type="text/javascript" src="js/vial/api.js"></script>
 
-<!-- Sample layers -->
+<!-- Sample layers and kbinfos-->
 <script type="text/javascript" src="js/samples/svalboard.js"></script>
+<script type="text/javascript" src="js/samples/svalboard-dvorak.kbi.js"></script>
 
 <!-- Upload and download files -->
 <script type="text/javascript" src="js/files.js"></script>
@@ -113,6 +114,11 @@
       <label id="download-keymap-c" class="connect-enable">
         &darr; Download keymap_all.c
       </label>
+    </div>
+  </label>
+  <label class="menuitem dropdown">
+    &gt; Sample .kbis - replace entire board functionality.
+    <div class="dropdown-content" id="sample-kbis">
     </div>
   </label>
   <label class="menuitem dropdown">
@@ -182,22 +188,22 @@
 
     <div id="main" class="on-connect">
       <div class="main-container" id="mainboard-container">
-        <div id="layer-selection"></div>
-        <div id="mainboard-box">
-          <div class="top-left">
-            <div class="dropdown board-sel">
-              <div>Pre-made layers</div>
-              <div id="sample-layers" class="dropdown-content">
-              </div>
-            </div>
-          </div>
-          <div id="mainboard"></div>
+  <div id="layer-selection"></div>
+  <div id="mainboard-box">
+    <div class="top-left">
+      <div class="dropdown board-sel">
+        <div>Pre-made layers</div>
+        <div id="sample-layers" class="dropdown-content">
         </div>
       </div>
-      <div class="main-container" id="combo-container">
-      </div>
-      <div class="main-container" id="keyoverride-container">
-        <table id="keyoverride-table" cellspacing="0" cellpadding="2">
+    </div>
+    <div id="mainboard"></div>
+  </div>
+</div>
+<div class="main-container" id="combo-container">
+</div>
+<div class="main-container" id="keyoverride-container">
+  <table id="keyoverride-table" cellspacing="0" cellpadding="2">
 <thead>
  <tr>
    <th></th>
@@ -213,21 +219,22 @@
 </tbody>
 </table>
 
-      </div>
+</div>
+
     </div>
     <div style="flex: 1 1 auto;"></div>
       <div id="allboards" class="on-connect">
   <div class="board-map" data-board="qwerty"><div class="kb-board-mods">
   <div class="kb-group" style="left: 1vw; width: 55vw;">
-    <div class="kb-row kb-mods kb-modifiers">
+    <div class="kb-row kb-mods kb-modifiers" title="All selected Mods will be applied to keys assigned.">
       <div class="kbdesc extra-large">Applied Mods:</div>
       <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
       <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
       <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
       <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
       <div class="kb-blank">&nbsp;</div>
-      <div class="key key-mod kb-key" data-modifier="MTAP" title="Mod Tap (tap for key, hold for mod)">ModTap</div>
-      <div class="key key-mod kb-key" data-modifier="RHS" title="Use right hand side">(RHS)</div>
+      <div class="key key-mod kb-key" data-modifier="RHS" title="By default, mods use Left-hand keys by default. Select RHS to use Right-hand keys instead.">RHS</div>
+      <div class="key key-mod kb-key" data-modifier="MTAP" title="Selecting ModTap will assign the mod on Hold, with the assigned key on Tap.">ModTap</div>
     </div>
   </div>
   <div class="kb-group" style="left: 60vw; width: 25vw;">
@@ -550,15 +557,15 @@
 </div>
   <div class="board-map" data-board="iso"><div class="kb-row"><div class="kb-board-mods">
   <div class="kb-group" style="left: 1vw; width: 55vw;">
-    <div class="kb-row kb-mods kb-modifiers">
+    <div class="kb-row kb-mods kb-modifiers" title="All selected Mods will be applied to keys assigned.">
       <div class="kbdesc extra-large">Applied Mods:</div>
       <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
       <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
       <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
       <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
       <div class="kb-blank">&nbsp;</div>
-      <div class="key key-mod kb-key" data-modifier="MTAP" title="Mod Tap (tap for key, hold for mod)">ModTap</div>
-      <div class="key key-mod kb-key" data-modifier="RHS" title="Use right hand side">(RHS)</div>
+      <div class="key key-mod kb-key" data-modifier="RHS" title="By default, mods use Left-hand keys by default. Select RHS to use Right-hand keys instead.">RHS</div>
+      <div class="key key-mod kb-key" data-modifier="MTAP" title="Selecting ModTap will assign the mod on Hold, with the assigned key on Tap.">ModTap</div>
     </div>
   </div>
   <div class="kb-group" style="left: 60vw; width: 25vw;">
@@ -765,6 +772,73 @@
   </div>
 </div>
 </div>
+  <div class="board-map" data-board="modtaps"><div class="kb-board">
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc" style="width: 400px; max-width: 400px;">Hold for mod(s), tap for key.</div>
+    </div>
+    <div class="kb-row">
+      <div class="kbdesc" title="Left hand side mods">LHS</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSFT_T(kc)" title="LSft_T(kc) - Left Shift when held, kc when tapped">Shift (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCTL_T(kc)" title="LCtl_T(kc) - Left Control when held, kc when tapped">Ctrl (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LALT_T(kc)" title="LAlt_T(kc) - Left Alt when held, kc when tapped">Alt (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LGUI_T(kc)" title="LGui_T(kc) - Left GUI when held, kc when tapped">Gui (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="C_S_T(kc)" title="LCS_T(kc) - Left Control + Left Shift when held, kc when tapped">Ctrl + Shift (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCA_T(kc)" title="LCA_T(kc) - LCTL + LALT when held, kc when tapped">Ctrl + Alt (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCG_T(kc)" title="LCG_T(kc) - LCTL + LGUI when held, kc when tapped">Ctrl + Gui (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSA_T(kc)" title="LSA_T(kc) - LSFT + LALT when held, kc when tapped">Shift + Alt (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="SGUI_T(kc)" title="LSG_T(kc) - LGUI + LSFT when held, kc when tapped">Shift + Gui (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCAG_T(kc)" title="LCAG_T(kc) - LCTL + LALT + LGUI when held, kc when tapped">Ctrl + Gui + Alt (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="MEH_T(kc)" title="Meh_T(kc) - LCTL + LSFT + LALT when held, kc when tapped">Ctrl + Shift + Alt (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="ALL_T(kc)" title="ALL_T(kc) - LCTL + LSFT + LALT + LGUI when held, kc when tapped">Ctrl + Shift + Alt + Gui (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="kbdesc" title="Right hand side mods">RHS</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSFT_T(kc)" title="RSft_T(kc) - Right Shift when held, kc when tapped">Shift (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCTL_T(kc)" title="RCtl_T(kc) - Right Control when held, kc when tapped">Ctrl (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RALT_T(kc)" title="RAlt_T(kc) - Right Alt when held, kc when tapped">Alt (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RGUI_T(kc)" title="RGui_T(kc) - Right GUI when held, kc when tapped">Gui (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCG_T(kc)" title="RCG_T(kc) - RCTL + RGUI when held, kc when tapped">Ctrl + Gui (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCAG_T(kc)" title="RCAG_T(kc) - RCTL + RALT + RGUI when held, kc when tapped">Ctrl + Alt + Gui (kc)</div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc" style="width: 400px; max-width: 400px;">Hold for layer, tap for key.</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT0(kc)" data-layer="0" title="LT0 - Hold for layer 0, tap for (kc)">LT0(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT1(kc)" data-layer="1" title="LT1 - Hold for layer 1, tap for (kc)">LT1(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT2(kc)" data-layer="2" title="LT2 - Hold for layer 2, tap for (kc)">LT2(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT3(kc)" data-layer="3" title="LT3 - Hold for layer 3, tap for (kc)">LT3(kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT4(kc)" data-layer="4" title="LT4 - Hold for layer 4, tap for (kc)">LT4(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT5(kc)" data-layer="5" title="LT5 - Hold for layer 5, tap for (kc)">LT5(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT6(kc)" data-layer="6" title="LT6 - Hold for layer 6, tap for (kc)">LT6(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT7(kc)" data-layer="7" title="LT7 - Hold for layer 7, tap for (kc)">LT7(kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT8(kc)" data-layer="8" title="LT8 - Hold for layer 8, tap for (kc)">LT8(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT9(kc)" data-layer="9" title="LT9 - Hold for layer 9, tap for (kc)">LT9(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT10(kc)" data-layer="11" title="LT10 - Hold for layer 10, tap for (kc)">LT10(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT11(kc)" data-layer="12" title="LT11 - Hold for layer 11, tap for (kc)">LT11(kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT12(kc)" data-layer="13" title="LT12 - Hold for layer 12, tap for (kc)">LT12(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT13(kc)" data-layer="14" title="LT13 - Hold for layer 13, tap for (kc)">LT13(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT14(kc)" data-layer="15" title="LT14 - Hold for layer 14, tap for (kc)">LT14(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT15(kc)" data-layer="16" title="LT15 - Hold for layer 15, tap for (kc)">LT15(kc)</div>
+    </div>
+  </div>
+</div>
+</div>
   <div class="board-map" data-board="quantum"><div class="kb-board">
   <div class="kb-group">
     <div class="kb-row">
@@ -772,6 +846,8 @@
     </div>
     <div class="kb-row">
       <div class="kbdesc" title="Left hand side mods">LHS</div>
+    </div>
+    <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LSFT)" title="Enable Left Shift for one keypress">OSM LSft</div>
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LCTL)" title="Enable Left Control for one keypress">OSM LCtl</div>
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LALT)" title="Enable Left Alt for one keypress">OSM LAlt</div>
@@ -792,6 +868,8 @@
     </div>
     <div class="kb-row">
       <div class="kbdesc" title="Right hand side mods">RHS</div>
+    </div>
+    <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RSFT)" title="Enable Right Shift for one keypress">OSM RSft</div>
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL)" title="Enable Right Control for one keypress">OSM RCtl</div>
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RALT)" title="Enable Right Alt for one keypress">OSM RAlt</div>
@@ -817,6 +895,8 @@
     </div>
     <div class="kb-row">
       <div class="kbdesc" title="Left hand side mods">LHS</div>
+    </div>
+    <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSFT(kc)" title="LSFT(kc): LSft (kc)">LSft (kc)</div>
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCTL(kc)" title="LCTL(kc): LCtl (kc)">LCtl (kc)</div>
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LALT(kc)" title="LALT(kc): LAlt (kc)">LAlt (kc)</div>
@@ -834,6 +914,8 @@
     </div>
     <div class="kb-row">
       <div class="kbdesc" title="Right hand side mods">RHS</div>
+    </div>
+    <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSFT(kc)" title="RSFT(kc): RSft (kc)">RSft (kc)</div>
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCTL(kc)" title="RCTL(kc): RCtl (kc)">RCtl (kc)</div>
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RALT(kc)" title="RALT(kc): RAlt (kc)">RAlt (kc)</div>
@@ -841,42 +923,12 @@
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCG(kc)" title="RCTL + RGUI">RCG (kc)</div>
     </div>
   </div>
-  <div class="kb-group">
-    <div class="kb-row">
-      <div class="kbdesc" title="Hold for mod(s), tap for key.">Tap-holds</div>
-    </div>
-    <div class="kb-row">
-      <div class="kbdesc" title="Left hand side mods">LHS</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSFT_T(kc)" title="Left Shift when held, kc when tapped">LSft_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCTL_T(kc)" title="Left Control when held, kc when tapped">LCtl_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LALT_T(kc)" title="Left Alt when held, kc when tapped">LAlt_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LGUI_T(kc)" title="Left GUI when held, kc when tapped">LGui_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="C_S_T(kc)" title="Left Control + Left Shift when held, kc when tapped">LCS_T (kc)</div>
-    </div>
-    <div class="kb-row">
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCA_T(kc)" title="LCTL + LALT when held, kc when tapped">LCA_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCG_T(kc)" title="LCTL + LGUI when held, kc when tapped">LCG_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSA_T(kc)" title="LSFT + LALT when held, kc when tapped">LSA_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="SGUI_T(kc)" title="LGUI + LSFT when held, kc when tapped">LSG_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCAG_T(kc)" title="LCTL + LALT + LGUI when held, kc when tapped">LCAG_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="MEH_T(kc)" title="LCTL + LSFT + LALT when held, kc when tapped">Meh_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="ALL_T(kc)" title="LCTL + LSFT + LALT + LGUI when held, kc when tapped">ALL_T (kc)</div>
-    </div>
-    <div class="kb-row">
-      <div class="kbdesc" title="Right hand side mods">RHS</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSFT_T(kc)" title="Right Shift when held, kc when tapped">RSft_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCTL_T(kc)" title="Right Control when held, kc when tapped">RCtl_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RALT_T(kc)" title="Right Alt when held, kc when tapped">RAlt_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RGUI_T(kc)" title="Right GUI when held, kc when tapped">RGui_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCG_T(kc)" title="RCTL + RGUI when held, kc when tapped">RCG_T (kc)</div>
-      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCAG_T(kc)" title="RCTL + RALT + RGUI when held, kc when tapped">RCAG_T (kc)</div>
-    </div>
-  </div>
 </div>
 </div>
   <!-- Dynamically generated from kbinfo -->
   <div class="board-map" data-board="custom"></div>
-  <div class="board-map" data-board="layer"></div>
+  <div class="board-map" data-board="layer">
+  </div>
   <!-- More complex boards. -->
   <div class="board-map" data-board="macro" id="macro-board">
   </div>
@@ -895,6 +947,7 @@
   <div class="board-sel" data-board="layer">Layers</div>
   <div class="board-sel" data-board="macro">Macros</div>
   <div class="board-sel" data-board="tapdance">Tap dances</div>
+  <div class="board-sel" data-board="modtaps">Mod Hold, Tap Keys</div>
   <div class="board-sel" data-board="quantum">QMK Keys</div>
   <div class="dropdown board-sel" id="menu-top">
     <div>Unusual boards</div>
