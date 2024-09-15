@@ -83,4 +83,28 @@ const Vial = {
     return kbinfo
   },
 
+  pollMatrix: async (kbinfo) => {
+    let data = await Vial.USB.send(Vial.USB.CMD_VIA_GET_KEYBOARD_VALUE, [Vial.USB.VIA_SWITCH_MATRIX_STATE]);
+    const rowbytes = Math.ceil(kbinfo.cols / 8);;
+    // First two bytes of each row are VIA's confirmation.
+    let offset = 2;
+
+    const kmpressed = [];
+    for (let row = 0; row < kbinfo.rows; row++) {
+      const rowpressed = [];
+      const coldata = data.slice(offset, offset + rowbytes);
+      for (let col = 0; col < kbinfo.cols; col++) {
+        const colbyte = Math.floor(col / 8);
+        const colbit = 1 << (col % 8);
+        if ((coldata[colbyte] & colbit) !== 0) {
+          rowpressed.push(true);
+        } else {
+          rowpressed.push(false);
+        }
+      }
+      offset += rowbytes;
+      kmpressed.push(rowpressed);
+    }
+    return kmpressed;
+  },
 };
