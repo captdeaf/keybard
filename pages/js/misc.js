@@ -20,6 +20,8 @@ const EDITABLE_NAMES = Object.assign({}, {
     // Examples for svalboard.
     [0]: 'default',
     [4]: 'NAS',
+    [5]: 'Fn Keys',
+    [15]: 'Mouse',
   },
   macro: {},
   combo: {},
