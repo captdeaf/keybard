@@ -194,10 +194,10 @@ addInitializer('connected', () => {
         // E keys
         25, 19, 13, 7, 37, 43, 49, 55,
 
-        // L Cluster
-        0, 1, 2, 3, 4, 5,
-        // R Cluster
-        30, 31, 32, 33, 34, 35,
+        // Thumb clusters, Claussen-style.
+        // Top row
+        3, 5, 1, 31, 35, 33,
+        4, 2, 0, 30, 32, 34,
       ]);
     },
   }
