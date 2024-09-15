@@ -99,6 +99,14 @@ addInitializer('load', () => {
 
   function vilToKBINFO(vil) {
     const kbinfo = deepCopy(SVALBOARD);
+
+    // Update counts
+    kbinfo.key_override_count = vil.key_override.length;
+    kbinfo.combo_count = vil.combo.length;
+    kbinfo.macro_count = vil.macro.length;
+    kbinfo.tapdance_count = vil.tap_dance.length;
+    
+    // Update values
     kbinfo.combos = vil.combo;
     kbinfo.key_overrides = vil.key_override;
     kbinfo.macro = vil.macro.map((macro, mid) => {

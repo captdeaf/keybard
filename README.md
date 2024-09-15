@@ -57,6 +57,9 @@ project, we welcome PRs, and suggestions =).
    - App/media/mouse
    - backlight/quantum
    - Keyboard Custom keys.
+ 
+ - Sample layers you can apply.
+   - Broke your sval layout? Apply QWERTY!
 
 # TODO
 
@@ -67,16 +70,10 @@ project, we welcome PRs, and suggestions =).
  - Adding documentation and help windows or context links to explain things.
  
  - Example layouts.
-   - DH qwerty
    - DH dvoroak
    - HRM / BRM examples.
-   - Macro examples for various fields. (SWE/writing/etc).
- 
- - Apply example layouts:
-   - By layer
-   - By all layers.
- 
- - Test / simulate?
+   - Fn
+   - Mice
 
  - UI design improvements. Ongoing and constant =).
    - Custom names for layers. Maybe combos and tap dances.
