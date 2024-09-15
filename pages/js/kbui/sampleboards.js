@@ -14,8 +14,9 @@
 ////////////////////////////////////
 
 const SAMPLE_LAYERS = {};
+const SAMPLE_KBIS = {};
 
-addInitializer('connected', () => {
+addInitializer('load', () => {
 
   ////////////////////////////////////
   //
@@ -86,35 +87,47 @@ addInitializer('connected', () => {
     }
   }
 
-  // Custom keycode labels.
-  if (KBINFO.custom_keycodes) {
-    appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 8);
-  }
-
-  // All layer selections.
-  if (KBINFO.layers) {
-    const layers = range(KBINFO.layers);
-
-    // Layers: MO (Momentarily)
-    function label(text) {
-      return EL('div', {
-        class: 'kbdesc layer-list-head',
-      }, text);
+  addInitializer('connected', () => {
+    // Custom keycode labels.
+    if (KBINFO.custom_keycodes) {
+      appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 8);
     }
-    appendBoard('layer', layers.map((i) => 'MO(' + i + ')'), 16, label('MO'));
-    appendBoard('layer', layers.map((i) => 'DF(' + i + ')'), 16, label('DF'));
-    appendBoard('layer', layers.map((i) => 'TG(' + i + ')'), 16, label('TG'));
-    appendBoard('layer', layers.map((i) => 'TT(' + i + ')'), 16, label('TT'));
-    appendBoard('layer', layers.map((i) => 'OSL(' + i + ')'), 16, label('OSL'));
-    appendBoard('layer', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
-  }
+
+    // All layer selections.
+    if (KBINFO.layers) {
+      const layers = range(KBINFO.layers);
+
+      // Layers: MO (Momentarily)
+      function label(text) {
+        return EL('div', {
+          class: 'kbdesc layer-list-head',
+        }, text);
+      }
+      appendBoard('layer', layers.map((i) => 'MO(' + i + ')'), 16, label('MO'));
+      appendBoard('layer', layers.map((i) => 'DF(' + i + ')'), 16, label('DF'));
+      appendBoard('layer', layers.map((i) => 'TG(' + i + ')'), 16, label('TG'));
+      appendBoard('layer', layers.map((i) => 'TT(' + i + ')'), 16, label('TT'));
+      appendBoard('layer', layers.map((i) => 'OSL(' + i + ')'), 16, label('OSL'));
+      appendBoard('layer', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
+    }
+
+    // modtaps lists layers for layer on hold, key on tap.
+    // Disable the layer keys we don't use.
+    // There are only 16 LT*(kc) keys, so don't go over.
+    for (let i = 0; i < 16; i++) {
+      if (KBINFO.layers <= i) {
+        get('[data-layer="' + i + '"]').style['display'] = 'none';
+      }
+    }
+  });
+
 
   ////////////////////////////////////
   //
   //  Sample layers. This populates the dropup menu with our sample boards.
   //
   ////////////////////////////////////
-  const menu = get('#sample-layers');
+  const layermenu = get('#sample-layers');
   for (const [kbname, layers] of Object.entries(SAMPLE_LAYERS)) {
     const els = [];
     for (const [layername, map] of Object.entries(layers)) {
@@ -126,7 +139,7 @@ addInitializer('connected', () => {
     const content = EL('div', {
       class: 'dropdown-content',
     }, els);
-    appendChildren(menu, EL('label', {
+    appendChildren(layermenu, EL('label', {
       class: 'menuitem dropdown'
     }, kbname, content));
   }
@@ -134,6 +147,37 @@ addInitializer('connected', () => {
   ACTION.onclick('[data-sample-kb]', (target) => {
     const kmap = SAMPLE_LAYERS[target.dataset.sampleKb][target.dataset.sampleLayer];
     KBINFO.keymap[MAINBOARD.selectedLayer] = kmap;
+    updateAllChanges();
+    ACTION.menuClose();
+  });
+
+  ////////////////////////////////////
+  //
+  //  Sample kbinfos - replace the entire kbinfo. Kinda like uploading,
+  //  but we have them for examples.
+  //
+  ////////////////////////////////////
+
+  const kbimenu = get('#sample-kbis');
+  for (const [kbname, kbis] of Object.entries(SAMPLE_KBIS)) {
+    const els = [];
+    for (const [kbiname, map] of Object.entries(kbis)) {
+      els.push(EL('label', {
+        'data-sample-kbi': kbname,
+        'data-sample-kbid': kbiname,
+      }, kbiname));
+    }
+    const content = EL('div', {
+      class: 'dropdown-content',
+    }, els);
+    appendChildren(kbimenu, EL('label', {
+      class: 'menuitem dropdown'
+    }, kbname, content));
+  }
+
+  ACTION.onclick('[data-sample-kbi]', (target) => {
+    const kbi = SAMPLE_KBIS[target.dataset.sampleKbi][target.dataset.sampleKbid];
+    KBINFO = kbi;
     updateAllChanges();
     ACTION.menuClose();
   });

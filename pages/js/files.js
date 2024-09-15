@@ -109,7 +109,7 @@ addInitializer('load', () => {
     // Update values
     kbinfo.combos = vil.combo;
     kbinfo.key_overrides = vil.key_override;
-    kbinfo.macro = vil.macro.map((macro, mid) => {
+    kbinfo.macros = vil.macro.map((macro, mid) => {
       return {actions: macro, mid: mid}
     } );
     kbinfo.settings = vil.settings;
