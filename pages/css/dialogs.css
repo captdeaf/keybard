@@ -130,6 +130,11 @@
   margin-top: 18px;
 }
 
+#float-matrix-tester {
+  min-width: 90%;
+  min-height: 70%;
+}
+
 /* Floater buttons */
 .button-row {
   flex: 0 0 content;
