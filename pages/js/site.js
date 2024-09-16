@@ -93,6 +93,7 @@ addInitializer('load', () => {
     setSaved('main-container', target);
   }
   ACTION.onclick('[data-mainboard]', (target) => {
+    ACTION.selectKey();
     selectTab(target.dataset.mainboard);
   });
 
