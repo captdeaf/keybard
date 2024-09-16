@@ -83,11 +83,19 @@
   padding: 6px;
 }
 
-.remove-macro {
-  position: absolute;
-  top: 2px;
-  right: 2px;
+.macro-buttons {
   font-size: 12px;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  font-weight: bold;
+}
+
+.macro-buttons div {
+  margin-right: 6px;
+}
+
+.remove-macro {
   color: red;
 }
 

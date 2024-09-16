@@ -15,30 +15,25 @@ addInitializer('load', () => {
   ////////////////////////////////////
   //
   //  Describe a macro. If there's any text in the macro, then just use that.
-  //  If no text, then return stringified version of keys.
+  //  If no text, then return a symbol indicating it's used.
   //
   ////////////////////////////////////
   function describeMacro(mid, macro) {
-    const texts = [];
-    const otherwise = [];
-    for (const act of macro.actions) {
-      if (act[0] === 'text') {
-        texts.push(act[1]);
-      } else if (act[0] === 'down') {
-        otherwise.push('↧' + KEYUI.getKeyText(act[1]));
-      } else if (act[0] === 'up') {
-        otherwise.push('↥' + KEYUI.getKeyText(act[1]));
-      } else if (act[0] === 'tap') {
-        otherwise.push('↨' + KEYUI.getKeyText(act[1]));
+    if (macro.actions.length > 0) {
+      const texts = [];
+      for (const act of macro.actions) {
+        if (act[0] === 'text') {
+          texts.push(act[1]);
+        }
+      }
+      if (texts.length == 0) {
+        texts.push('*');
+      }
+      if (texts.length > 0) {
+        return "M" + mid + ': ' + texts.join(' ');
       }
     }
-    if (texts.length > 0) {
-      return "M" + mid + ': ' + texts.join(' ');
-    } else if (otherwise.length > 0) {
-      return "M" + mid + ': ' + otherwise.join(' ');
-    } else {
-      return "M" + mid;
-    }
+    return "M" + mid;
   }
   MACROS.describe = describeMacro;
 
@@ -52,17 +47,37 @@ addInitializer('load', () => {
     const ret = {
       el: EL(...args),
     };
-    const remove = EL('div', {class: 'remove-macro'}, 'X');
     ret.wrap = EL('div', {class: 'macro-action'}, [
-      EL('div', {class: 'macro-type'}, desc),
-      remove,
+      EL('div', {class: 'macro-buttons'}, [
+        EL('div', {class: 'swap-macro-back'}, '&lt;'),
+        EL('div', {class: 'remove-macro'}, 'X'),
+        EL('div', {class: 'swap-macro-forward'}, '&gt;'),
+        EL('div', {class: 'macro-type'}, desc),
+      ]),
       ret.el,
     ]);
-    remove.onclick = () => {
-      ret.wrap.replaceWith('');
-    };
     return ret;
   };
+
+  ACTION.onclick('.remove-macro', (target) => {
+    target.parentElement.parentElement.replaceWith('');
+  });
+
+  ACTION.onclick('.swap-macro-back', (target) => {
+    const thismacro = target.parentElement.parentElement;
+    const sib = thismacro.previousSibling;
+    if (sib) {
+      thismacro.parentElement.insertBefore(thismacro, sib);
+    }
+  });
+
+  ACTION.onclick('.swap-macro-forward', (target) => {
+    const thismacro = target.parentElement.parentElement;
+    const sib = thismacro.nextSibling;
+    if (sib) {
+      thismacro.parentElement.insertBefore(sib, thismacro);
+    }
+  });
 
   function wrapKeyAction(type, value) {
     const ret = wrapAction(type, 'div',
