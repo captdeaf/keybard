@@ -139,11 +139,6 @@ addInitializer('load', () => {
         'data-key': 'TD(' + tdid + ')',
         class: "key kb-key key-tapdance",
       }, '');
-      keytpl.oncontextmenu = (ev) => {
-        renderTapdanceFloat(KBINFO.tapdances[tdid]);
-        ev.preventDefault();
-        return false;
-      }
       if (!rows[rowid]) {rows[rowid] = [];}
       rows[rowid].push(keytpl);
     }
@@ -160,12 +155,50 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
+  //  Context menu for tap dance keys in the sample board.
+  //
+  ////////////////////////////////////
+  ACTION.on('key-tapdance-edit', (target) => {
+    const tdid = target.dataset.tdid;
+    renderTapdanceFloat(KBINFO.tapdances[tdid]);
+  });
+
+  ACTION.on('key-tapdance-clear', (target) => {
+    const tdid = target.dataset.tdid;
+    const td = KBINFO.tapdances[tdid];
+    td.tap = 'KC_NO';
+    td.hold = 'KC_NO';
+    td.taphold = 'KC_NO';
+    td.doubletap = 'KC_NO';
+    td.tapms = 200;
+    target.classList.add('changed');
+    CHANGES.queue('TD' + tdid, () => {
+      KBAPI.updateTapdance(tdid);
+    });
+    KEYUI.refreshAllKeys();
+  });
+
+  ACTION.on('key-tapdance-revert', (target) => {
+    const tdid = target.dataset.tdid;
+    target.classList.remove('changed');
+    KBINFO.tapdances[tdid] = structuredClone(BASE_KBINFO.tapdances[tdid]);
+    CHANGES.clear('TD' + tdid);
+    KEYUI.refreshAllKeys();
+  });
+
+  ACTION.addContextMenu('[data-tdid]', [
+    { name: 'Edit Tapdance', trigger: 'key-tapdance-edit' },
+    { name: 'Clear Tapdance', trigger: 'key-tapdance-clear' },
+    { name: 'Revert Tapdance', trigger: 'key-tapdance-revert' },
+  ]);
+
+  ////////////////////////////////////
+  //
   //  For context-menu tapdance creation.
   //
   ////////////////////////////////////
   TAPDANCE.findEmpty = () => {
     for (let tdid = 0; tdid < KBINFO.tapdance_count; tdid++) {
-      console.log('checking', tdid);
       const td = KBINFO.tapdances[tdid];
       if ((td.tap === 'KC_NO') &&
           (td.hold === 'KC_NO') &&

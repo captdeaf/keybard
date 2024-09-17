@@ -299,15 +299,11 @@ addInitializer('load', () => {
       const rowid = Math.floor(mid/10);
       const keytpl = EL('div', {
         id: "macro-" + mid,
+        'data-mid': mid,
         'data-bind': 'key',
         'data-key': 'M' + mid,
         class: "key kb-key key-macro",
       }, '');
-      keytpl.oncontextmenu = (ev) => {
-        renderMacroFloat(KBINFO.macros[mid]);
-        ev.preventDefault();
-        return false;
-      }
       if (!rows[rowid]) {rows[rowid] = [];}
       rows[rowid].push(keytpl);
     }
@@ -321,4 +317,36 @@ addInitializer('load', () => {
                       "To edit macros, R-click one.");
     appendChildren(macroBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
   });
+
+  ////////////////////////////////////
+  //
+  //  Context menu for macro keys in the sample board.
+  //
+  ////////////////////////////////////
+  ACTION.on('key-macro-edit', (target) => {
+    renderMacroFloat(KBINFO.macros[target.dataset.mid]);
+  });
+
+  ACTION.on('key-macro-clear', (target) => {
+    const macro = KBINFO.macros[target.dataset.mid];
+    if (macro.actions.length > 0) {
+      macro.actions = [];
+      target.classList.add('changed');
+      CHANGES.queue('macro', KBAPI.updateMacros);
+      KEYUI.refreshAllKeys();
+    }
+  });
+
+  ACTION.on('key-macro-revert', (target) => {
+    const macro = KBINFO.macros[target.dataset.mid];
+    macro.actions = structuredClone(BASE_KBINFO.macros[target.dataset.mid].actions);
+    target.classList.remove('changed');
+    KEYUI.refreshAllKeys();
+  });
+
+  ACTION.addContextMenu('[data-mid]', [
+    { name: 'Edit Macro', trigger: 'key-macro-edit' },
+    { name: 'Clear Macro', trigger: 'key-macro-clear' },
+    { name: 'Revert Macro', trigger: 'key-macro-revert' },
+  ]);
 });
