@@ -10,14 +10,20 @@ const ACTION = {
   // Currently selected key for binding target.
   selectedKey: null,
   selectKey: null,
-  // 'close' the menus
+  // hide/close the menus
   menuClose: null,
   // Custom events
   on: null,
   trigger: null,
   // onclick(selector, cb(target))
   onclick: null,
+  // addConextMenu(selector, menu)
+  // Context menus. menu is a list of:
+  // {name: 'name', trigger: 'trigger-name'}
+  addContextMenu: null,
 };
+
+
 addInitializer('load', () => {
   ////////////////////////////////////
   //
@@ -96,6 +102,38 @@ addInitializer('load', () => {
     clickables.push({sel: selector, cb: cb});
   };
 
+  const cmenus = [];
+  let contextTarget = null;
+  const menuContainer = get('#allmenus');
+  ACTION.addContextMenu = (selector, items) => {
+    const menuItems = [];
+    for (const item of items) {
+      menuItems.push(EL('label', {
+        'data-context-trigger': item.trigger,
+      }, item.name));
+    }
+    const menu = EL('div', {
+        class: 'context-menu',
+      },
+      menuItems,
+    );
+    appendChildren(menuContainer, menu);
+    cmenus.push({sel: selector, menu: menu});
+  };
+
+  ACTION.onclick('[data-context-trigger]', (target) => {
+    const trigger = target.dataset.contextTrigger;
+    ACTION.trigger(trigger, contextTarget);
+    for (const cmenu of findAll('.context-menu')) {
+      cmenu.style['display'] = 'none';
+    }
+    setTimeout(() => {
+      for (const cmenu of findAll('.context-menu')) {
+        cmenu.style['display'] = '';
+      }
+    }, 300);
+  })
+
   ////////////////////////////////////
   //
   // Bind all window clicks.
@@ -112,6 +150,34 @@ addInitializer('load', () => {
           evt.stopPropagation();
           evt.preventDefault();
           clickable.cb(target);
+          return false;
+        }
+      }
+      target = target.parentElement;
+    }
+    return true;
+  };
+
+  document.oncontextmenu = (evt) => {
+    if (SETTINGS.disableRightClicks) return true;
+    let target = evt.target;
+    while (target) {
+      for (const cmenu of cmenus) {
+        if (target.matches(cmenu.sel)) {
+          evt.stopPropagation();
+          evt.preventDefault();
+
+          // We have a menu, render and position it.
+          contextTarget = target;
+          cmenu.menu.style['left'] = (evt.clientX - 10) + 'px';
+          cmenu.menu.style['top'] = (evt.clientY - 20) + 'px';
+          cmenu.menu.classList.add('show');
+          // We remove the 'show', letting the
+          // :hover take over rendering.
+          setTimeout(() => {
+            cmenu.menu.classList.remove('show');
+          }, 300);
+
           return false;
         }
       }

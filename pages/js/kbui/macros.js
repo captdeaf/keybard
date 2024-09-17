@@ -9,6 +9,10 @@ const MACROS = {
   describe: null,
   // Update changes between BASE_KBINFO and KBINFO.
   updateAll: null,
+  // Find and return the first empty macro, for assignment.
+  findEmpty: null,
+  // Edit a macro, intended for "find, edit & bind"
+  edit: null,
 };
 
 addInitializer('load', () => {
@@ -230,6 +234,24 @@ addInitializer('load', () => {
     CHANGES.queue('macro', KBAPI.updateMacros);
     KEYUI.refreshAllKeys();
   });
+
+  ////////////////////////////////////
+  //
+  //  For context-menu macro creation.
+  //
+  ////////////////////////////////////
+  MACROS.findEmpty = () => {
+    for (let mid = 0; mid < KBINFO.macro_count; mid++) {
+      if (KBINFO.macros[mid].actions.length === 0) {
+        return mid;
+      }
+    }
+    return -1;
+  };
+
+  MACROS.edit = (mid) => {
+    renderMacroFloat(KBINFO.macros[mid]);
+  };
 
   ////////////////////////////////////
   //

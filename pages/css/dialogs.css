@@ -103,6 +103,34 @@
   color: #ccc;
 }
 
+/* Context menu */
+.context-menu {
+  display: none;
+  position: fixed;
+  border: 1px solid black;
+  background-color: #ffc;
+  border-radius: 2px;
+}
+
+.context-menu.show {
+  display: block;
+}
+
+.context-menu:hover {
+  display: block;
+}
+
+.context-menu > label {
+  padding: 5px;
+  cursor: pointer;
+  display: block;
+  min-width: 100px;
+}
+
+.context-menu > label:hover {
+  background-color: #dfd;
+}
+
 /* Floaters that go over everything else. */
 
 .floater {
