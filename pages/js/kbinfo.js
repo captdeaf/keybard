@@ -64,9 +64,17 @@ const CHANGES = {
     }
   },
 
+  clear(desc) {
+    if (desc in CHANGES.todo) {
+      delete CHANGES.todo[desc];
+    }
+  },
+
   commit() {
     for (const [desc, change] of Object.entries(CHANGES.todo)) {
-      change.cb();
+      if (change && change.cb) {
+        change.cb();
+      }
     }
     CHANGES.todo = {};
     for (const el of findAll('.changed')) {

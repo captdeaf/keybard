@@ -361,7 +361,13 @@ addInitializer('connected', () => {
   });
 
   ACTION.on('key-assign-kcno', (target) => {
+    const kmid = target.dataset.kmid;
+    const layer = MAINBOARD.selectedLayer;
     if (target.dataset.key !== 'KC_NO') {
+      KBINFO.keymap[layer][kmid] = 'KC_NO';
+      CHANGES.queue('key' + layer + '.' + kmid, () => {
+        KBAPI.updateKey(layer, kmid, 'KC_NO');
+      });
       target.dataset.key = 'KC_NO';
       target.classList.add('changed');
       KEYUI.refreshKey(target);
@@ -369,7 +375,13 @@ addInitializer('connected', () => {
   });
 
   ACTION.on('key-assign-transparent', (target) => {
+    const kmid = target.dataset.kmid;
+    const layer = MAINBOARD.selectedLayer;
     if (target.dataset.key !== 'KC_TRNS') {
+      KBINFO.keymap[layer][kmid] = 'KC_TRNS';
+      CHANGES.queue('key' + layer + '.' + kmid, () => {
+        KBAPI.updateKey(layer, kmid, 'KC_TRNS');
+      });
       target.dataset.key = 'KC_TRNS';
       target.classList.add('changed');
       KEYUI.refreshKey(target);
@@ -378,6 +390,8 @@ addInitializer('connected', () => {
 
   ACTION.on('key-revert', (target) => {
     const kmid = target.dataset.kmid;
+    const layer = MAINBOARD.selectedLayer;
+    CHANGES.clear('key' + layer + '.' + kmid);
     const oldkey = BASE_KBINFO.keymap[MAINBOARD.selectedLayer][kmid];
     target.dataset.key = oldkey;
     target.classList.remove('changed');
