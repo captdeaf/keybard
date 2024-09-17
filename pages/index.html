@@ -26,6 +26,7 @@
 <!-- keys.js, definitions for KC_foo, and mapping, e.g: 3 -> KC_A -->
 <script type="text/javascript" src="js/keygen.js"></script>
 <script type="text/javascript" src="js/keys.js"></script>
+<script type="text/javascript" src="js/jskeys.js"></script>
 <script type="text/javascript" src="js/kbinfo.js"></script>
 
 <!-- USB proto -->
@@ -81,6 +82,10 @@
   <label>
     <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
     Instant pushes (akin to Vial)
+  </label>
+  <label>
+    <input type="checkbox" class="check" data-toggle-name="do-typebind" data-default="false" data-toggle="typebind"/>
+    Typing binds a key.
   </label>
   <label class="menuitem dropdown">
     &gt; Serial Assignment
