@@ -64,7 +64,7 @@ addInitializer('load', () => {
   function appendBoard(name, keys, length, extra) {
     if (!length) length = 20;
     if (keys && keys.length > 0) {
-      const board = allboards[name].container;
+      const board = get(name);
       let row = null;
       for (const i of range(keys.length)) {
         if ((i % length) === 0) {
@@ -90,7 +90,7 @@ addInitializer('load', () => {
   addInitializer('connected', () => {
     // Custom keycode labels.
     if (KBINFO.custom_keycodes) {
-      appendBoard('custom', KBINFO.custom_keycodes.map((x) => x.name), 8);
+      appendBoard('#kb-custom', KBINFO.custom_keycodes.map((x) => x.name), 5);
     }
 
     // All layer selections.
@@ -103,12 +103,12 @@ addInitializer('load', () => {
           class: 'kbdesc layer-list-head',
         }, text);
       }
-      appendBoard('layer', layers.map((i) => 'MO(' + i + ')'), 16, label('MO'));
-      appendBoard('layer', layers.map((i) => 'DF(' + i + ')'), 16, label('DF'));
-      appendBoard('layer', layers.map((i) => 'TG(' + i + ')'), 16, label('TG'));
-      appendBoard('layer', layers.map((i) => 'TT(' + i + ')'), 16, label('TT'));
-      appendBoard('layer', layers.map((i) => 'OSL(' + i + ')'), 16, label('OSL'));
-      appendBoard('layer', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
+      appendBoard('[data-board="layer"]', layers.map((i) => 'MO(' + i + ')'), 16, label('MO'));
+      appendBoard('[data-board="layer"]', layers.map((i) => 'DF(' + i + ')'), 16, label('DF'));
+      appendBoard('[data-board="layer"]', layers.map((i) => 'TG(' + i + ')'), 16, label('TG'));
+      appendBoard('[data-board="layer"]', layers.map((i) => 'TT(' + i + ')'), 16, label('TT'));
+      appendBoard('[data-board="layer"]', layers.map((i) => 'OSL(' + i + ')'), 16, label('OSL'));
+      appendBoard('[data-board="layer"]', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
     }
 
     // modtaps lists layers for layer on hold, key on tap.
