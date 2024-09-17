@@ -66,7 +66,7 @@ async function doStuff(kbinfo) {
   removeElement(get('#launch'));
 
   console.log('kbinfo', KBINFO);
-  BASE_KBINFO = deepCopy(KBINFO);
+  BASE_KBINFO = structuredClone(KBINFO);
 
   // Initialize KB UI
   CONNECTED = true;

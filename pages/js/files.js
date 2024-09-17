@@ -98,7 +98,7 @@ addInitializer('load', () => {
   }
 
   function vilToKBINFO(vil) {
-    const kbinfo = deepCopy(SVALBOARD);
+    const kbinfo = structuredClone(SVALBOARD);
 
     // Update counts
     kbinfo.key_override_count = vil.key_override.length;
@@ -238,27 +238,27 @@ addInitializer('load', () => {
   addInitializer('connected', () => {
 
     ACTION.onclick('#download-vil', () => {
-      const vil = kbinfoToVIL(deepCopy(KBINFO), true);
+      const vil = kbinfoToVIL(structuredClone(KBINFO), true);
       downloadTEXT('keyboard.vil', vil);
       ACTION.menuClose();
     });
 
     ACTION.onclick('#download-vil-nomacro', () => {
-      const vil = kbinfoToVIL(deepCopy(KBINFO), false);
+      const vil = kbinfoToVIL(structuredClone(KBINFO), false);
       downloadTEXT('keyboard-nomacro.vil', vil);
       ACTION.menuClose();
     });
 
     ACTION.onclick('#download-kbi', () => {
-      const copy = deepCopy(KBINFO);
+      const copy = structuredClone(KBINFO);
       const kbi = JSON.stringify(copy);
       downloadTEXT('keyboard.kbi', kbi);
       ACTION.menuClose();
     });
 
     ACTION.onclick('#download-kbi-nomacro', () => {
-      const copy = deepCopy(KBINFO);
-      copy.macros = repeat([], copy.macro_count);
+      const copy = structuredClone(KBINFO);
+      copy.macros = range(copy.macro_count).map((mid) => {return {mid: mid, actions: []}});
       const kbi = JSON.stringify(copy);
       downloadTEXT('keyboard-nomacro.kbi', kbi);
       ACTION.menuClose();
