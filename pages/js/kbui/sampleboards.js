@@ -141,12 +141,43 @@ addInitializer('load', () => {
     }, els);
     appendChildren(layermenu, EL('label', {
       class: 'menuitem dropdown'
-    }, kbname, content));
+    }, '&gt; ' + kbname, content));
   }
 
+  // Generic
+  appendChildren(layermenu,
+    EL('label', {
+      'data-sample-kb': 'fill',
+      'data-sample-key': 'KC_NO',
+    }, 'Disable all keys'),
+    EL('label', {
+      'data-sample-kb': 'fill',
+      'data-sample-key': 'KC_TRNS',
+    }, 'Mark all keys transparent'),
+    EL('label', {
+      'data-sample-kb': 'fillEmpty',
+      'data-sample-key': 'KC_TRNS',
+    }, 'Change all disabled keys to transparent'),
+  );
+
   ACTION.onclick('[data-sample-kb]', (target) => {
-    const kmap = SAMPLE_LAYERS[target.dataset.sampleKb][target.dataset.sampleLayer];
-    KBINFO.keymap[MAINBOARD.selectedLayer] = kmap;
+    const which = target.dataset.sampleKb;
+    if (which === 'fill') {
+      const km = KBINFO.keymap[MAINBOARD.selectedLayer];
+      const key = target.dataset.sampleKey;
+      KBINFO.keymap[MAINBOARD.selectedLayer] = km.map(() => key);
+    } else if (which === 'fillEmpty') {
+      const km = KBINFO.keymap[MAINBOARD.selectedLayer];
+      const key = target.dataset.sampleKey;
+      for (let kmid = 0; kmid < km.length; kmid++) {
+        if (km[kmid] === 'KC_NO') {
+          km[kmid] = key;
+        }
+      }
+    } else {
+      const kmap = SAMPLE_LAYERS[which][target.dataset.sampleLayer];
+      KBINFO.keymap[MAINBOARD.selectedLayer] = structuredClone(kmap);
+    }
     updateAllChanges();
     ACTION.menuClose();
   });

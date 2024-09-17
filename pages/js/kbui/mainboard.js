@@ -321,15 +321,21 @@ addInitializer('connected', () => {
   });
 
   ACTION.addContextMenu('[data-bound="main"]', [
-    { name: 'Assign & edit empty macro', trigger: 'key-assign-macro' },
-    { name: 'Assign & edit empty tapdance', trigger: 'key-assign-tapdance' },
+    { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
+    { name: 'Assign & edit tapdance', trigger: 'key-assign-tapdance' },
     { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
     { name: 'Make transparent', trigger: 'key-assign-transparent' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
   ACTION.on('key-assign-macro', (target) => {
-    const mid = MACROS.findEmpty();
+    let mid = -1;
+    const m = target.dataset.key.match(/^M(\d+)$/);
+    if (m) {
+      mid = parseInt(m[1]);
+    } else {
+      mid = MACROS.findEmpty();
+    }
     if (mid >= 0) {
       target.dataset.key = `M${mid}`;
       target.classList.add('changed');
@@ -339,7 +345,13 @@ addInitializer('connected', () => {
   });
 
   ACTION.on('key-assign-tapdance', (target) => {
-    const tdid = TAPDANCE.findEmpty();
+    let tdid = -1;
+    const m = target.dataset.key.match(/^TD\((\d+)\)$/);
+    if (m) {
+      tdid = parseInt(m[1]);
+    } else {
+      tdid = TAPDANCE.findEmpty();
+    }
     if (tdid >= 0) {
       target.dataset.key = `TD(${tdid})`;
       target.classList.add('changed');

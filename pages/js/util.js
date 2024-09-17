@@ -203,21 +203,6 @@ function lockValue(val) {
   return new Proxy(val, PROXY);
 }
 
-////////////////////////////////////
-//
-//  Deep copy. I know structuredClone exists, this is just an equivalent of
-//  assign and structuredClone() combined. This also works with Proxy objects,
-//  which structuredClone() does not.
-//
-////////////////////////////////////
-function deepCopy(...objs) {
-  const assigns = [];
-  for (const obj of [objs].flat()) {
-    assigns.push(JSON.parse(JSON.stringify(obj)));
-  }
-  return Object.assign({}, ...assigns);
-}
-
 // A wrapper around xzwasm's decompression.
 function decompress(buffer) {
   buff = buffer;

@@ -73,7 +73,7 @@ const CHANGES = {
       el.classList.remove('changed');
     }
 
-    BASE_KBINFO = deepCopy(KBINFO);
+    BASE_KBINFO = structuredClone(KBINFO);
   }
 };
 
