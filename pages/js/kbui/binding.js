@@ -129,4 +129,13 @@ addInitializer('connected', () => {
       ACTION.trigger('bind', keystr);
     }
   });
+
+  document.onkeydown = (evt) => {
+    if (!SETTINGS.typebind) {
+      return true;
+    }
+
+    const keystr = JSMAP.convert(evt);
+    ACTION.trigger('bind', keystr);
+  }
 });
