@@ -130,12 +130,16 @@ addInitializer('connected', () => {
     }
   });
 
+  // Type-bind.
   document.onkeydown = (evt) => {
-    if (!SETTINGS.typebind) {
+    if (!SETTINGS.typebind || !ACTION.selectedKey) {
       return true;
     }
 
     const keystr = JSMAP.convert(evt);
     ACTION.trigger('bind', keystr);
+    evt.stopPropagation();
+    evt.preventDefault();
+    return false;
   }
 });
