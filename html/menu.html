@@ -23,15 +23,19 @@
   <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable">
     QMK Settings
   </label>
-  <label class="menuitem dropdown">
+  <label class="menuitem dropdown" for="">
     &gt; Dev options
     <div class="dropdown-content">
       <label>
-        <input type="checkbox" class="check" id="do-playback" data-default="false" data-toggle="playback"/>
+        <input type="checkbox" class="check" data-toggle-name="do-disable-rclicks" data-default="false" data-toggle="disableRightClicks"/>
+        Disable context menus (enable 'inspect'/etc)
+      </label>
+      <label>
+        <input type="checkbox" class="check" data-toggle-name="do-playback" data-default="false" data-toggle="playback"/>
         Playback a recording. (Overrides record)
       </label>
       <label>
-        <input type="checkbox" class="check" id="do-record" data-default="false" data-toggle="record"/>
+        <input type="checkbox" class="check" data-toggle-name="do-record" data-default="false" data-toggle="record"/>
         Record for playback. (requires playback off)
       </label>
       <label id="download-keymap-c" class="connect-enable">

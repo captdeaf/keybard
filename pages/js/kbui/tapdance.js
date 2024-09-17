@@ -10,6 +10,10 @@ const TAPDANCE = {
   describe: null,
   // Update changes between BASE_KBINFO and KBINFO.
   updateAll: null,
+  // Find and return the first empty tapdance, for assignment.
+  findEmpty: null,
+  // Edit a tapdance, intended for "find, edit & bind"
+  edit: null,
 };
 
 addInitializer('load', () => {
@@ -100,43 +104,43 @@ addInitializer('load', () => {
     KEYUI.refreshAllKeys();
   });
 
-  ////////////////////////////////////
-  //
-  //  Binding: This is kinda done a little backwards. The user clicks a key in
-  //  the tapdance to rebind, we get that event. Then the user clicks a key in
-  //  the sample boards. That gets redirected to us via ACTION.trigger.
-  //
-  ////////////////////////////////////
-  ACTION.onclick('[data-bound="tapdance"]', (target) => {
-    ACTION.selectKey(target);
-    ACTION.on('bind', (keystr) => {
-      target.dataset.key = keystr;
-      KEYUI.refreshKey(target);
-      // Clear key selection.
-      ACTION.selectKey();
-    });
-  });
-
-  ////////////////////////////////////
-  //
-  //  Add a tapdance button to the tapdance board for each tapdance the kb
-  //  supports.
-  //
-  ////////////////////////////////////
   addInitializer('connected', () => {
+    ////////////////////////////////////
+    //
+    //  Binding: This is kinda done a little backwards. The user clicks a key in
+    //  the tapdance to rebind, we get that event. Then the user clicks a key in
+    //  the sample boards. That gets redirected to us via ACTION.trigger.
+    //
+    ////////////////////////////////////
+    ACTION.onclick('[data-bound="tapdance"]', (target) => {
+      ACTION.selectKey(target);
+      ACTION.on('bind', (keystr) => {
+        target.dataset.key = keystr;
+        KEYUI.refreshKey(target);
+        // Clear key selection.
+        ACTION.selectKey();
+      });
+    });
+
+    ////////////////////////////////////
+    //
+    //  Add a tapdance button to the tapdance board for each tapdance the kb
+    //  supports.
+    //
+    ////////////////////////////////////
     const tapdanceBoard = get('#tapdance-board');
     const rows = [];
-    for (let idx = 0; idx < KBINFO.tapdance_count; idx++) {
-      const mid = idx;
-      const rowid = Math.floor(mid/10);
+    for (let tdid = 0; tdid < KBINFO.tapdance_count; tdid++) {
+      const rowid = Math.floor(tdid/10);
       const keytpl = EL('div', {
-        id: "tapdance-" + mid,
+        id: "tapdance-" + tdid,
+        'data-tdid': tdid,
         'data-bind': 'key',
-        'data-key': 'TD(' + mid + ')',
+        'data-key': 'TD(' + tdid + ')',
         class: "key kb-key key-tapdance",
       }, '');
       keytpl.oncontextmenu = (ev) => {
-        renderTapdanceFloat(KBINFO.tapdances[mid]);
+        renderTapdanceFloat(KBINFO.tapdances[tdid]);
         ev.preventDefault();
         return false;
       }
@@ -153,6 +157,29 @@ addInitializer('load', () => {
                       "To edit tapdances, R-click one.");
     appendChildren(tapdanceBoard, EL('div', {class: 'kb-group'}, header, ...rowEls));
   });
+
+  ////////////////////////////////////
+  //
+  //  For context-menu tapdance creation.
+  //
+  ////////////////////////////////////
+  TAPDANCE.findEmpty = () => {
+    for (let tdid = 0; tdid < KBINFO.tapdance_count; tdid++) {
+      console.log('checking', tdid);
+      const td = KBINFO.tapdances[tdid];
+      if ((td.tap === 'KC_NO') &&
+          (td.hold === 'KC_NO') &&
+          (td.taphold === 'KC_NO') &&
+          (td.doubletap === 'KC_NO')) {
+        return tdid;
+      }
+    }
+    return -1;
+  };
+
+  TAPDANCE.edit = (tdid) => {
+    renderTapdanceFloat(KBINFO.tapdances[tdid]);
+  };
 
   ////////////////////////////////////
   //

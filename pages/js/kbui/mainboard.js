@@ -319,4 +319,56 @@ addInitializer('connected', () => {
   ACTION.onclick('#print-layers', () => {
     MAINBOARD.printLayers(range(16));
   });
+
+  ACTION.addContextMenu('[data-bound="main"]', [
+    { name: 'Assign & edit empty macro', trigger: 'key-assign-macro' },
+    { name: 'Assign & edit empty tapdance', trigger: 'key-assign-tapdance' },
+    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Make transparent', trigger: 'key-assign-transparent' },
+    { name: 'Revert change', trigger: 'key-revert' },
+  ]);
+
+  ACTION.on('key-assign-macro', (target) => {
+    const mid = MACROS.findEmpty();
+    if (mid >= 0) {
+      target.dataset.key = `M${mid}`;
+      target.classList.add('changed');
+      KEYUI.refreshKey(target);
+      MACROS.edit(mid);
+    }
+  });
+
+  ACTION.on('key-assign-tapdance', (target) => {
+    const tdid = TAPDANCE.findEmpty();
+    if (tdid >= 0) {
+      target.dataset.key = `TD(${tdid})`;
+      target.classList.add('changed');
+      KEYUI.refreshKey(target);
+      TAPDANCE.edit(tdid);
+    }
+  });
+
+  ACTION.on('key-assign-kcno', (target) => {
+    if (target.dataset.key !== 'KC_NO') {
+      target.dataset.key = 'KC_NO';
+      target.classList.add('changed');
+      KEYUI.refreshKey(target);
+    }
+  });
+
+  ACTION.on('key-assign-transparent', (target) => {
+    if (target.dataset.key !== 'KC_TRNS') {
+      target.dataset.key = 'KC_TRNS';
+      target.classList.add('changed');
+      KEYUI.refreshKey(target);
+    }
+  });
+
+  ACTION.on('key-revert', (target) => {
+    const kmid = target.dataset.kmid;
+    const oldkey = BASE_KBINFO.keymap[MAINBOARD.selectedLayer][kmid];
+    target.dataset.key = oldkey;
+    target.classList.remove('changed');
+    KEYUI.refreshKey(target);
+  });
 });
