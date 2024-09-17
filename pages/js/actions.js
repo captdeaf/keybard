@@ -167,6 +167,8 @@ addInitializer('load', () => {
           evt.stopPropagation();
           evt.preventDefault();
 
+          ACTION.selectKey();
+
           // We have a menu, render and position it.
           contextTarget = target;
           cmenu.menu.style['left'] = (evt.clientX - 10) + 'px';
