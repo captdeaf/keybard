@@ -155,6 +155,8 @@ addInitializer('load', () => {
       }
       target = target.parentElement;
     }
+    // If any unhandled clicks, unselect a key.
+    ACTION.selectKey();
     return true;
   };
 

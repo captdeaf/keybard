@@ -164,6 +164,9 @@ addInitializer('load', () => {
     if (modmask !== 0) {
       const kcstr = CODEMAP[keyid];
       const maskstr = CODEMAP[modmask];
+      if (!maskstr) {
+        return "0x" + keynum.toString(16).padStart(4, '0');
+      }
       if (maskstr.match(/^(\w+)\(kc\)/)) {
         return maskstr.replace(/\(kc\)/, '(' + kcstr + ')');
       } else if (keyid === 0) {
@@ -205,7 +208,7 @@ addInitializer('load', () => {
       return cmask + keymask;
     } else {
       console.log("Unknown key string: ", keystr);
-      return "UNKNOWN";
+      return parseInt(keystr);
     }
   };
 
