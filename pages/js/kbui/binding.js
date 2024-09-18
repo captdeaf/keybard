@@ -130,17 +130,38 @@ addInitializer('connected', () => {
     }
   });
 
-  // Type-bind - if typebind is enabled, then let keydowns trigger
-  // bind actions.
+  ////////////////////////////////////
+  //
+  //  TypeBind - select a key, then press a key to bind it.
+  //
+  //  We want to separate taps (bind this key) from holds (apply to next key).
+  //
+  //  Fortunately we're not dealing with speed-typists here!
+  //
+  ////////////////////////////////////
+  let lastDown = null;
   document.onkeydown = (evt) => {
     if (!SETTINGS.typebind || !ACTION.selectedKey) {
       return true;
     }
-
-    const keystr = JSMAP.convert(evt);
-    ACTION.trigger('bind', keystr);
+    lastDown = JSMAP.convert(evt);
     evt.stopPropagation();
     evt.preventDefault();
     return false;
-  }
+  };
+
+  document.onkeyup = (evt) => {
+    if (!SETTINGS.typebind || !ACTION.selectedKey) {
+      return true;
+    }
+    const cur = JSMAP.convert(evt);
+    if (lastDown === cur) {
+      const keystr = JSMAP.convert(evt);
+      lastDown = keystr;
+      ACTION.trigger('bind', keystr);
+    }
+    evt.stopPropagation();
+    evt.preventDefault();
+    return false;
+  };
 });

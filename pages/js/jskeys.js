@@ -107,40 +107,26 @@ const JSMAP = {
     'MetaRight': 'KC_RGUI',
   },
 
-  shifted: {
-    'Digit1': 'LSFT(KC_1)', // !
-    'Digit2': 'LSFT(KC_2)', // @
-    'Digit3': 'LSFT(KC_3)', // #
-    'Digit4': 'LSFT(KC_4)', // $
-    'Digit5': 'LSFT(KC_5)', // %
-    'Digit6': 'LSFT(KC_6)', // ^
-    'Digit7': 'LSFT(KC_7)', // &
-    'Digit8': 'LSFT(KC_8)', // *
-    'Digit9': 'LSFT(KC_9)', // (
-    'Digit0': 'LSFT(KC_0)', // )
-    'Minus': 'LSFT(KC_MINUS)', // _
-    'Equal': 'LSFT(KC_EQUAL)', // +
-    'BracketLeft': 'LSFT(KC_LBRACKET)', // {
-    'BracketRight': 'LSFT(KC_RBRACKET)', // }
-    'Backslash': 'LSFT(KC_BSLASH)', // |
-    'Semicolon': 'LSFT(KC_SEMICOLON)', // :
-    'Quote': 'LSFT(KC_QUOTE)', // "
-    'Comma': 'LSFT(KC_COMMA)', // <
-    'Period': 'LSFT(KC_DOT)', // >
-    'Slash': 'LSFT(KC_SLASH)', // ?
-    'Backquote': 'LSFT(KC_GRAVE)', // ~
-  },
-
   convert: (evt) => {
     const code = evt.code;
-    const shift = evt.shiftKey;
-
-    if (shift && JSMAP.shifted[code]) {
-      return JSMAP.shifted[code];
+    let mask = 0;
+    if (evt.ctrlKey && !(code === 'ControlLeft' || code === 'ControlRight')) {
+      mask += 0x0100;
+    }
+    if (evt.shiftKey && !(code === 'ShiftLeft' || code === 'ShiftRight')) {
+      mask += 0x0200;
+    }
+    if (evt.altKey && !(code === 'AltLeft' || code === 'AltRight')) {
+      mask += 0x0400;
+    }
+    if (evt.metaKey && !(code === 'MetaLeft' || code === 'MetaRight')) {
+      mask += 0x0800;
     }
 
     if (JSMAP.keys[code]) {
-      return JSMAP.keys[code];
+      const keystr = JSMAP.keys[code];
+      const newcode = KEY.parse(keystr);
+      return KEY.stringify(newcode + mask);
     }
 
     return undefined;
