@@ -136,29 +136,8 @@ addInitializer('load', () => {
         'data-sample-layer': layername,
       }, layername));
     }
-    const content = EL('div', {
-      class: 'dropdown-content',
-    }, els);
-    appendChildren(layermenu, EL('label', {
-      class: 'menuitem dropdown'
-    }, '&gt; ' + kbname, content));
+    appendChildren(layermenu, els);
   }
-
-  // Generic
-  appendChildren(layermenu,
-    EL('label', {
-      'data-sample-kb': 'fill',
-      'data-sample-key': 'KC_NO',
-    }, 'Disable all keys'),
-    EL('label', {
-      'data-sample-kb': 'fill',
-      'data-sample-key': 'KC_TRNS',
-    }, 'Mark all keys transparent'),
-    EL('label', {
-      'data-sample-kb': 'fillEmpty',
-      'data-sample-key': 'KC_TRNS',
-    }, 'Change all disabled keys to transparent'),
-  );
 
   ACTION.onclick('[data-sample-kb]', (target) => {
     const which = target.dataset.sampleKb;
@@ -208,8 +187,12 @@ addInitializer('load', () => {
 
   ACTION.onclick('[data-sample-kbi]', (target) => {
     const kbi = SAMPLE_KBIS[target.dataset.sampleKbi][target.dataset.sampleKbid];
-    KBINFO = kbi;
-    updateAllChanges();
+    if (CONNECTED) {
+      KBINFO = kbi;
+      updateAllChanges();
+    } else {
+      doStuff(kbi);
+    }
     ACTION.menuClose();
   });
 });
