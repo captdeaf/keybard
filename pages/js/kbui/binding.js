@@ -65,12 +65,12 @@ addInitializer('connected', () => {
       }
     }
 
-    try {
-      const maskstr = KEY.stringify(getMask());
+    const maskid = getMask();
+    if (maskid in CODEMAP) {
       for (const el of allModBars) {
         el.style['background-color'] = '';
       }
-    } catch (err) {
+    } else {
       for (const el of allModBars) {
         el.style['background-color'] = 'red';
       }
@@ -113,11 +113,11 @@ addInitializer('connected', () => {
       let keystr = target.dataset.key;
       const mask = getMask();
       if (mask !== 0 && target.dataset.bind === 'keymask') {
+        const keyid = KEY.parse(keystr);
         try {
-          const keyid = KEY.parse(keystr);
           keystr = KEY.stringify(keyid + getMask());
         } catch (err) {
-          return;
+          keystr = "0x" + (keyid + getMask()).toString(16);
         }
       }
       if (target.dataset.bind === 'key-mod') {
@@ -130,7 +130,8 @@ addInitializer('connected', () => {
     }
   });
 
-  // Type-bind.
+  // Type-bind - if typebind is enabled, then let keydowns trigger
+  // bind actions.
   document.onkeydown = (evt) => {
     if (!SETTINGS.typebind || !ACTION.selectedKey) {
       return true;
