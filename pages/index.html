@@ -207,8 +207,22 @@
     <div class="top-left">
       <div class="dropdown board-sel">
         <div>Layer operations</div>
-        <div id="sample-layers" class="dropdown-content">
-        </div>
+        <label class="dropdown-content" style="width: 200px;">
+          <label class="dropdown">
+            Apply a sample layer
+            <div id="sample-layers" class="dropdown-content">
+            </div>
+          </label>
+          <label data-sample-kb="fill" data-sample-key="KC_NO">
+            Wipe and disable all keys.
+          </label>
+          <label data-sample-kb="fill" data-sample-key="KC_TRNS">
+            Wipe and change all keys to transparent.
+          </label>
+          <label data-sample-kb="fillEmpty" data-sample-key="KC_TRNS">
+            Change disabled keys to transparent.
+          </label>
+        </label>
       </div>
     </div>
     <div id="mainboard"></div>
