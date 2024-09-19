@@ -112,14 +112,15 @@ addInitializer('load', () => {
     //  the sample boards. That gets redirected to us via ACTION.trigger.
     //
     ////////////////////////////////////
-    ACTION.onclick('[data-bound="tapdance"]', (target) => {
-      ACTION.selectKey(target);
-      ACTION.on('bind', (keystr) => {
-        target.dataset.key = keystr;
-        KEYUI.refreshKey(target);
-        // Clear key selection.
-        ACTION.selectKey();
-      });
+    ACTION.on('bind-tapdance', (keystr, target) => {
+      target.dataset.key = keystr;
+      KEYUI.refreshKey(target);
+    });
+
+    ACTION.on('key-revert-tapdance', (target) => {
+      const oldkeystr = BASE_KBINFO.tapdances[editID][target.dataset.tapdanceType];
+      target.dataset.key = oldkeystr;
+      KEYUI.refreshKey(target);
     });
 
     ////////////////////////////////////

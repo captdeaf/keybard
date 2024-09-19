@@ -95,18 +95,22 @@ addInitializer('connected', () => {
   //
   //  The main logic for key selection.
   //
-  //  1) A key that needs rebinding is selected. It has its own
-  //     ACTION bind. It binds a callback to ACTION.on('bind')
+  //  1) A key that needs rebinding (identified by [data-bound]) is selected. It
+  //     is assigned as the ACTION.selectedKey.
   //
-  //  2) A key on sample boards is selected. This is where the
-  //     ACTION.onclick below comes into play.
-  //    - keymask for all non-special keys, so they can be
-  //      LCTRL(kc)'d, etc, 
+  //  2) A key on sample boards is selected (ID'd by [data-bind]) is clicked.
+  //     ACTION.on('bind', ...) routes it to 'bind-' + selectedKey.dataset.bound
+  //     - The onclick also supports a keymask for all non-special keys, so
+  //       they can be LCTRL(kc)'d, etc, 
   //
   //  3) Call ACTION.trigger('bind', keystr) with the resulting
   //     KC_?? or LCTRL(KC_??).
   //
   ////////////////////////////////////
+
+  ACTION.onclick('[data-bound]', (target) => {
+    ACTION.selectKey(target);
+  });
 
   ACTION.onclick('[data-bind]', (target) => {
     if (ACTION.selectedKey) {
@@ -128,6 +132,117 @@ addInitializer('connected', () => {
 
       ACTION.trigger('bind', keystr);
     }
+  });
+
+  ACTION.on('bind', (keystr) => {
+    const key = ACTION.selectedKey;
+    if (key) {
+      ACTION.selectKey();
+      ACTION.trigger('bind-' + key.dataset.bound, keystr, key);
+    }
+  });
+
+  ////////////////////////////////////
+  //
+  //  Context menu for all bindable keys.
+  //
+  ////////////////////////////////////
+  
+  // Main board
+  ACTION.addContextMenu('[data-bound="main"]', [
+    { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
+    { name: 'Assign & edit tapdance', trigger: 'key-assign-tapdance' },
+    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Make transparent', trigger: 'key-assign-transparent' },
+    { name: 'Revert change', trigger: 'key-revert' },
+  ]);
+
+  // Combo keys: input
+  ACTION.addContextMenu('[data-bound="combo"]:not([data-idx="4"])', [
+    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Revert change', trigger: 'key-revert' },
+  ]);
+
+  // Combo output
+  ACTION.addContextMenu('[data-bound="combo"][data-idx="4"]', [
+    { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
+    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Revert change', trigger: 'key-revert' },
+  ]);
+
+  // Tap dance outputs
+  ACTION.addContextMenu('[data-bound="tapdance"]', [
+    { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
+    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Revert change', trigger: 'key-revert' },
+  ]);
+
+  // Key override in+out
+  ACTION.addContextMenu('[data-bound="keyoverride"]', [
+    { name: 'Revert change', trigger: 'key-revert' },
+  ]);
+
+  // Macros
+  ACTION.addContextMenu('[data-bound="macro"]', [
+    { name: 'Revert change', trigger: 'key-revert' },
+  ]);
+
+  ACTION.on('key-assign-macro', (target) => {
+    ACTION.selectKey(target);
+    const kmid = target.dataset.kmid;
+    const layer = MAINBOARD.selectedLayer;
+    let mid = -1;
+    const m = target.dataset.key.match(/^M(\d+)$/);
+    if (m) {
+      mid = parseInt(m[1]);
+    } else {
+      mid = MACROS.findEmpty();
+    }
+    if (mid >= 0) {
+      const keystr = `M${mid}`;
+      ACTION.trigger('bind', keystr);
+      MACROS.edit(mid);
+    }
+  });
+
+  ACTION.on('key-assign-tapdance', (target) => {
+    ACTION.selectKey(target);
+    const kmid = target.dataset.kmid;
+    const layer = MAINBOARD.selectedLayer;
+    let tdid = -1;
+    const m = target.dataset.key.match(/^TD\((\d+)\)$/);
+    if (m) {
+      tdid = parseInt(m[1]);
+    } else {
+      tdid = TAPDANCE.findEmpty();
+    }
+    if (tdid >= 0) {
+      const keystr = `TD(${tdid})`;
+      ACTION.trigger('bind', keystr);
+      TAPDANCE.edit(tdid);
+    }
+  });
+
+  ACTION.on('key-assign-kcno', (target) => {
+    ACTION.selectKey(target);
+    const kmid = target.dataset.kmid;
+    const layer = MAINBOARD.selectedLayer;
+    if (target.dataset.key !== 'KC_NO') {
+      ACTION.trigger('bind', 'KC_NO');
+    }
+  });
+
+  ACTION.on('key-assign-transparent', (target) => {
+    ACTION.selectKey(target);
+    if (target.dataset.key !== 'KC_TRNS') {
+      ACTION.trigger('bind', 'KC_TRNS');
+    }
+  });
+
+  ACTION.on('key-revert', (target) => {
+    ACTION.selectKey(target);
+    ACTION.trigger('key-revert-' + target.dataset.bound, target);
+    ACTION.selectKey();
   });
 
   ////////////////////////////////////

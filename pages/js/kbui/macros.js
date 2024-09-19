@@ -89,7 +89,7 @@ addInitializer('load', () => {
                              class: 'key key-' + type,
                              'data-key': value,
                              'data-macro': type,
-                             'data-div-bound': 'macro',
+                             'data-bound': 'macro',
                            },
                            '');
     KEYUI.refreshKey(ret.el);
@@ -182,14 +182,11 @@ addInitializer('load', () => {
   //  in the sample boards. That gets redirected to us via ACTION.trigger.
   //
   ////////////////////////////////////
-  ACTION.onclick('[data-div-bound="macro"]', (target) => {
-    ACTION.selectKey(target);
-    ACTION.on('bind', (keystr) => {
-      target.dataset.key = keystr;
-      KEYUI.refreshKey(target);
-      // Clear key selection.
-      ACTION.selectKey();
-    });
+  ACTION.on('bind-macro', (keystr, target) => {
+    target.dataset.key = keystr;
+    KEYUI.refreshKey(target);
+    // Clear key selection.
+    ACTION.selectKey();
   });
 
   ////////////////////////////////////

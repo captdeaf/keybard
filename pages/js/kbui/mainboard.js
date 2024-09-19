@@ -143,6 +143,7 @@ addInitializer('connected', () => {
     if (!printable) {
       KEYUI.refreshAllKeys();
     }
+    ACTION.selectKey();
   }
 
   ////////////////////////////////////
@@ -225,26 +226,24 @@ addInitializer('connected', () => {
 
   function prepKeyAssignment(target) {
     ACTION.selectKey(target);
-    const curLayer = MAINBOARD.selectedLayer;
-    ACTION.on('bind', (keystr) => {
-      const kmid = target.dataset.kmid;
-      if (keystr !== target.dataset.key) {
-        KBINFO.keymap[curLayer][kmid] = keystr;
-        target.dataset.key = keystr;
-        target.classList.add('changed');
-        CHANGES.queue('key' + curLayer + '.' + kmid, () => {
-          KBAPI.updateKey(curLayer, kmid, keystr);
-        });
-        KEYUI.refreshKey(target);
-      }
-      ACTION.selectKey();
-      if (kmid in serial) {
-        prepKeyAssignment(get(`[data-kmid="${serial[kmid]}"]`));
-      }
-    });
   }
-  ACTION.onclick('[data-bound="main"]', (target) => {
-    prepKeyAssignment(target);
+
+  ACTION.on('bind-main', (keystr, target) => {
+    const kmid = target.dataset.kmid;
+    const curLayer = MAINBOARD.selectedLayer;
+    if (keystr !== target.dataset.key) {
+      KBINFO.keymap[curLayer][kmid] = keystr;
+      target.dataset.key = keystr;
+      target.classList.add('changed');
+      CHANGES.queue('key' + curLayer + '.' + kmid, () => {
+        KBAPI.updateKey(curLayer, kmid, keystr);
+      });
+      KEYUI.refreshKey(target);
+    }
+    ACTION.selectKey();
+    if (kmid in serial) {
+      prepKeyAssignment(get(`[data-kmid="${serial[kmid]}"]`));
+    }
   });
 
   ////////////////////////////////////
@@ -320,93 +319,10 @@ addInitializer('connected', () => {
     MAINBOARD.printLayers(range(16));
   });
 
-  ACTION.addContextMenu('[data-bound="main"]', [
-    { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
-    { name: 'Assign & edit tapdance', trigger: 'key-assign-tapdance' },
-    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
-    { name: 'Make transparent', trigger: 'key-assign-transparent' },
-    { name: 'Revert change', trigger: 'key-revert' },
-  ]);
-
-  ACTION.on('key-assign-macro', (target) => {
+  ACTION.on('key-revert-main', (target) => {
     const kmid = target.dataset.kmid;
     const layer = MAINBOARD.selectedLayer;
-    let mid = -1;
-    const m = target.dataset.key.match(/^M(\d+)$/);
-    if (m) {
-      mid = parseInt(m[1]);
-    } else {
-      mid = MACROS.findEmpty();
-    }
-    if (mid >= 0) {
-      target.dataset.key = `M${mid}`;
-      target.classList.add('changed');
-      KEYUI.refreshKey(target);
-      MACROS.edit(mid);
-      KBINFO.keymap[layer][kmid]
-      CHANGES.queue('key' + layer + '.' + kmid, () => {
-        KBAPI.updateKey(layer, kmid, target.dataset.key);
-      });
-    }
-  });
-
-  ACTION.on('key-assign-tapdance', (target) => {
-    const kmid = target.dataset.kmid;
-    const layer = MAINBOARD.selectedLayer;
-    let tdid = -1;
-    const m = target.dataset.key.match(/^TD\((\d+)\)$/);
-    if (m) {
-      tdid = parseInt(m[1]);
-    } else {
-      tdid = TAPDANCE.findEmpty();
-    }
-    if (tdid >= 0) {
-      target.dataset.key = `TD(${tdid})`;
-      target.classList.add('changed');
-      KEYUI.refreshKey(target);
-      TAPDANCE.edit(tdid);
-
-      KBINFO.keymap[layer][kmid] = target.dataset.key;
-      CHANGES.queue('key' + layer + '.' + kmid, () => {
-        KBAPI.updateKey(layer, kmid, target.dataset.key);
-      });
-    }
-  });
-
-  ACTION.on('key-assign-kcno', (target) => {
-    const kmid = target.dataset.kmid;
-    const layer = MAINBOARD.selectedLayer;
-    if (target.dataset.key !== 'KC_NO') {
-      target.dataset.key = 'KC_NO';
-      target.classList.add('changed');
-      KEYUI.refreshKey(target);
-
-      KBINFO.keymap[layer][kmid] = target.dataset.key;
-      CHANGES.queue('key' + layer + '.' + kmid, () => {
-        KBAPI.updateKey(layer, kmid, target.dataset.key);
-      });
-    }
-  });
-
-  ACTION.on('key-assign-transparent', (target) => {
-    const kmid = target.dataset.kmid;
-    const layer = MAINBOARD.selectedLayer;
-    if (target.dataset.key !== 'KC_TRNS') {
-      target.dataset.key = 'KC_TRNS';
-      target.classList.add('changed');
-      KEYUI.refreshKey(target);
-
-      KBINFO.keymap[layer][kmid] = target.dataset.key;
-      CHANGES.queue('key' + layer + '.' + kmid, () => {
-        KBAPI.updateKey(layer, kmid, target.dataset.key);
-      });
-    }
-  });
-
-  ACTION.on('key-revert', (target) => {
-    const kmid = target.dataset.kmid;
-    const layer = MAINBOARD.selectedLayer;
-    const oldkey = BASE_KBINFO.keymap[MAINBOARD.selectedLayer][kmid];
+    const oldkey = BASE_KBINFO.keymap[layer][kmid];
     target.dataset.key = oldkey;
     target.classList.remove('changed');
     KEYUI.refreshKey(target);
