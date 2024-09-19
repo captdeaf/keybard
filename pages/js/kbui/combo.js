@@ -77,28 +77,39 @@ addInitializer('connected', () => {
   //  the sample boards. That gets redirected to us via ACTION.trigger.
   //
   ////////////////////////////////////
-  ACTION.onclick('[data-bound="combo"]', (target) => {
-    ACTION.selectKey(target);
-    ACTION.on('bind', (keystr) => {
-      // Set combo key.
-      const cmbid = target.dataset.cmbid;
-      const idx = target.dataset.idx;
-      const combo = KBINFO.combos[cmbid];
-      combo[idx] = keystr;
+  ACTION.on('bind-combo', (keystr, target) => {
+    // Set combo key.
+    const cmbid = target.dataset.cmbid;
+    const idx = target.dataset.idx;
+    const combo = KBINFO.combos[cmbid];
+    combo[idx] = keystr;
 
-      // Trigger the change in the keyboard.
-      for (const combokey of getAll('[data-cmbid="' + cmbid + '"]')) {
-        combokey.classList.add('changed');
-      }
-      CHANGES.queue('combo' + cmbid, () => {
-        KBAPI.updateCombo(cmbid);
-      });
-
-      // Set combo key.
-      target.dataset.key = keystr;
-      KEYUI.refreshKey(target);
-      // Clear key selection.
-      ACTION.selectKey();
+    // Trigger the change in the keyboard.
+    for (const combokey of getAll('[data-cmbid="' + cmbid + '"]')) {
+      combokey.classList.add('changed');
+    }
+    CHANGES.queue('combo' + cmbid, () => {
+      KBAPI.updateCombo(cmbid);
     });
+
+    // Set combo key.
+    target.dataset.key = keystr;
+    KEYUI.refreshKey(target);
+    // Clear key selection.
+    ACTION.selectKey();
+  });
+
+  ACTION.on('key-revert-combo', (target) => {
+    // Set combo key.
+    const cmbid = target.dataset.cmbid;
+    const idx = target.dataset.idx;
+    const combo = KBINFO.combos[cmbid];
+
+    const oldkeystr = BASE_KBINFO.combos[cmbid][idx];
+    combo[idx] = oldkeystr;
+
+    // Set combo key.
+    target.dataset.key = oldkeystr;
+    KEYUI.refreshKey(target);
   });
 });

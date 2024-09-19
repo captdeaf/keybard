@@ -110,6 +110,7 @@
   border: 1px solid black;
   background-color: #ffc;
   border-radius: 2px;
+  z-index: 5000;
 }
 
 .context-menu.show {
