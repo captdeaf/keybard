@@ -37,6 +37,9 @@ addInitializer('load', () => {
     if (key.title) {
       title = title + ': ' + key.title;
     }
+    if (keystr === "LCTL_T(kc)") {
+      console.log(keystr, title, key);
+    }
     if (key.type === 'macro') {
       const d = MACROS.describe(key.idx, KBINFO.macros[key.idx]);
       return {
@@ -86,6 +89,7 @@ addInitializer('load', () => {
       title: title,
     }
   }
+
   KEYUI.getKeyText = (keystr) => {
     return KEY.parseDesc(keystr).str;
   }
