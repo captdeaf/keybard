@@ -38,7 +38,7 @@ addInitializer('load', () => {
     }
 
     // Populate USER00...USER63 keys as needed.
-    const userStart = KEYMAP['QK_KB'].code;
+    const userStart = KEYMAP['USER00'].code;
     for (let i = 0; i < 64; i++) {
       const userkey = 'USER' + ('' + i).padStart(2, '0');
       const code = KEYMAP[userkey].code;
@@ -261,6 +261,7 @@ addInitializer('load', () => {
         const key = KEYMAP[m[2]];
         return {
           type: 'key', str: mod.str.replace(/\(kc\)/, '') + key.str,
+          title: key.title,
         };
       }
     }
