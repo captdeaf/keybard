@@ -23,6 +23,9 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   function describeMacro(mid, macro) {
+    if (!macro) {
+      macro = KBINFO.macros[mid];
+    }
     if (macro.actions.length > 0) {
       const texts = [];
       for (const act of macro.actions) {
@@ -34,7 +37,7 @@ addInitializer('load', () => {
         texts.push('*');
       }
       if (texts.length > 0) {
-        return "M" + mid + ': ' + texts.join(' ');
+        return texts.join(' ');
       }
     }
     return "M" + mid;
