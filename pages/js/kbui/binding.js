@@ -49,8 +49,6 @@ addInitializer('connected', () => {
     key.dataset.normal = key.innerHTML;
   }
 
-  const allModBars = getAll('.kb-modifiers');
-
   ACTION.onclick('[data-modifier]', (target) => {
     const enabled = !mods[target.dataset.modifier];
     mods[target.dataset.modifier] = enabled;
@@ -62,17 +60,6 @@ addInitializer('connected', () => {
     } else {
       for (const key of allKeys) {
         key.classList.remove('selected');
-      }
-    }
-
-    const maskid = getMask();
-    if (maskid in CODEMAP) {
-      for (const el of allModBars) {
-        el.style['background-color'] = '';
-      }
-    } else {
-      for (const el of allModBars) {
-        el.style['background-color'] = 'red';
       }
     }
 
