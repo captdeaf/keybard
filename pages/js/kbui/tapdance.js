@@ -24,9 +24,14 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   function describeTapdance(tdid, tapdance) {
-    const ret = ['TD(' + tdid + ')'];
+    if (!tapdance) {
+      tapdance = KBINFO.tapdances[tdid];
+    }
+    const ret = [];
     for (const k of ['tap', 'hold', 'doubletap', 'taphold']) {
-      if (tapdance[k]) ret.push(KEY.parseDesc(tapdance[k]).str);
+      if (tapdance[k]) {
+        ret.push(KEYUI.getKeyContents(tapdance[k]).str);
+      }
     }
     return ret.join(' ');
   }

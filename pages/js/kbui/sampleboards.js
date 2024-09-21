@@ -76,7 +76,7 @@ addInitializer('load', () => {
         }
         appendChildren(row, EL('div',
           {
-            class: 'key large kbdesc',
+            class: 'key large',
             'data-bind': 'key',
             'data-key': keys[i],
             title: keys[i],

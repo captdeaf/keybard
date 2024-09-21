@@ -15,9 +15,6 @@ const KEY = {
   // When a KBINFO is loaded, generateAllKeycodes updates our
   // custom user keycodes for title and text.
   generateAllKeycodes: null,
-  // Given a key string, such as LCTRL(KC_A), return an object
-  // describing it so it can be rendered.
-  parseDesc: null,
   // Parse a string, such as KC_A, into an integer representation.
   parse: null,
   parseKeymap: null,
@@ -27,6 +24,12 @@ const KEY = {
 };
 
 addInitializer('load', () => {
+  ////////////////////////////////////
+  //
+  //  When a keyboard is connected, update our keymap with its
+  //  custom key information.
+  //
+  ////////////////////////////////////
   KEY.generateAllKeycodes = () => {
     function K(qmkid, str, opts) {
       if (!opts) opts = {};
@@ -73,67 +76,14 @@ addInitializer('load', () => {
       KEYMAP[`TD(${i})`].idx = i;
     }
   };
+
   addInitializer('connected', KEY.generateAllKeycodes, 1);
 
-  const JS_MAP = {
-    "ControlLeft": "KC_LCTRL",
-    "ControlRight": "KC_RCTRL",
-    "ShiftLeft": "KC_LSHIFT",
-    "ShiftRight": "KC_RSHIFT",
-    "AltLeft": "KC_LALT",
-    "AltRight": "KC_RALT",
-    "MetaLeft": "KC_LGUI",
-    "MetaRight": "KC_RGUI",
-    "Enter": "KC_ENTER",
-    "Escape": "KC_ESC",
-    "Backspace": "KC_BSPC",
-    "Tab": "KC_TAB",
-    "Space": "KC_SPC",
-    "ArrowLeft": "KC_LEFT",
-    "ArrowUp": "KC_UP",
-    "ArrowRight": "KC_RGHT",
-    "ArrowDown": "KC_DOWN",
-    "Delete": "KC_DEL",
-    "Insert": "KC_INS",
-    "Home": "KC_HOME",
-    "End": "KC_END",
-    "PageUp": "KC_PGUP",
-    "PageDown": "KC_PGDN",
-    "F1": "KC_F1",
-    "F2": "KC_F2",
-    "F3": "KC_F3",
-    "F4": "KC_F4",
-    "F5": "KC_F5",
-    "F6": "KC_F6",
-    "F7": "KC_F7",
-    "F8": "KC_F8",
-    "F9": "KC_F9",
-    "F10": "KC_F10",
-    "F11": "KC_F11",
-    "F12": "KC_F12",
-    "Numpad0": "KC_P0",
-    "Numpad1": "KC_P1",
-    "Numpad2": "KC_P2",
-    "Numpad3": "KC_P3",
-    "Numpad4": "KC_P4",
-    "Numpad5": "KC_P5",
-    "Numpad6": "KC_P6",
-    "Numpad7": "KC_P7",
-    "Numpad8": "KC_P8",
-    "Numpad9": "KC_P9",
-    "NumpadAdd": "KC_PPLS",
-    "NumpadSubtract": "KC_PMNS",
-    "NumpadMultiply": "KC_PAST",
-    "NumpadDivide": "KC_PSLS",
-    "NumpadDecimal": "KC_PDOT",
-    "NumpadEnter": "KC_PENT",
-    "CapsLock": "KC_CAPS",
-    "ScrollLock": "KC_SLCK",
-    "Pause": "KC_PAUS",
-    "PrintScreen": "KC_PSCR"
-  }
-
-  // .vil files show LSFT(KC_QUO) instead of KC_DQUO like we do.
+  ////////////////////////////////////
+  //
+  //  .vil files have a more limited keyset than we do.
+  //
+  ////////////////////////////////////
   KEY.vilify = (keystr) => {
     const keynum = KEY.parse(keystr);
     const modmask = keynum & 0xFF00;
@@ -158,6 +108,12 @@ addInitializer('load', () => {
     }
   };
 
+  ////////////////////////////////////
+  //
+  //  Convert a keynum to a string. e.g: 0x0004 -> 'KC_A',
+  //  0x0104 -> "LCTRL(KC_A)"
+  //
+  ////////////////////////////////////
   KEY.stringify = (keynum) => {
     const modmask = keynum & 0xFF00;
     const keyid = keynum & 0x00FF;
@@ -184,8 +140,14 @@ addInitializer('load', () => {
     }
   };
 
+  ////////////////////////////////////
+  //
+  //  Convert keystring to keynum. e.g: "KC_A" -> 0x0004,
+  //  "LCTRL(KC_A)" -> 0x0104
+  //
+  ////////////////////////////////////
   KEY.parse = (keystr) => {
-    if (!keystr) { return 0xFF; }
+    if (!keystr || keystr === -1 || keystr === 0xFF) { return 0xFF; }
     if (keystr in KEYALIASES) {
       keystr = KEYALIASES[keystr];
     }

@@ -34,6 +34,18 @@
   white-space: pre;
 }
 
+.key-top {
+  background-color: #888;
+  color: #fff;
+  position: absolute;
+  display: block;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: var(--key-border-radius);
+  border-top-right-radius: var(--key-border-radius);
+}
+
 .key.changed {
   background-color: #dfd;
 }
@@ -108,11 +120,13 @@
  */
 
 .key-layer {
-  position: absolute;
   background-color: #F6EACB;
+  width: 100%;
   inset: 0;
+  height: 100%;
   border-radius: var(--key-border-radius);
   display: flex;
+  padding-top: 12px;
   justify-content: center;
   align-items: center;
 }

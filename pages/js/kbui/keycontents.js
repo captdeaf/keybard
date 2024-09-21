@@ -8,7 +8,7 @@
 
 const KEYUI = {
   // return a {str: ..., title: ...} object.
-  getKeyText: null,
+  getKeyContents: null,
   // Refresh a key's display.
   refreshKey: null,
   // Refresh every key in the app, except those with the class kb-norender
@@ -16,83 +16,124 @@ const KEYUI = {
 };
 
 addInitializer('load', () => {
-  const KEY_DESCS = {
-    layer: {
-      MO:  ['MO', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
-      DF:  ['DF', 'Make default layer: ', 'key-layer key-layer-df'],
-      TG:  ['TG', 'Toggle to layer: ', 'key-layer key-layer-tg'],
-      TT:  ['TT', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
-      OSL: ['OSL', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
-      TO:  ['TO', 'Make layer default: ', 'key-layer key-layer-to'],
-    },
-    'macro': {M: ['M', 'Macro: ', 'key-macro']},
-    'tapdance': {TD: ['TD', 'Tap Dance: ', 'key-tapdance']},
+  const LAYERKEYS = {
+    MO:  ['MO', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
+    DF:  ['DF', 'Make default layer: ', 'key-layer key-layer-df'],
+    TG:  ['TG', 'Toggle to layer: ', 'key-layer key-layer-tg'],
+    TT:  ['TT', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
+    OSL: ['OSL', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
+    TO:  ['TO', 'Make layer default: ', 'key-layer key-layer-to'],
   };
 
-  // Given a key string, e.g: KC_A, KC_NO, LCTL(KC_A), etc,
-  // return a {label: 'LCTRL A', title: <onhover>}
+  ////////////////////////////////////
+  //
+  //  Given a key string, e.g: KC_A, KC_NO, LCTL(KC_A), etc,
+  //  return a {str: 'A', title: <onhover>, top: 'LCTRL'}
+  //
+  ////////////////////////////////////
   function getKeyContents(keystr) {
-    let key = KEY.parseDesc(keystr);
-    let title = keystr;
-    if (key.title) {
-      title = title + ': ' + key.title;
-    }
-    if (keystr === "LCTL_T(kc)") {
-      console.log(keystr, title, key);
-    }
-    if (key.type === 'macro') {
-      const d = MACROS.describe(key.idx, KBINFO.macros[key.idx]);
+    const orig = keystr;
+    let m;
+
+    m = keystr.match(/^\d/);
+    if (m) {
+      const keyid = parseInt(keystr);
       return {
-        text: d.slice(0, 10),
-        title: d,
+        title: 'Unknown: ' + keyid,
+        str: keystr,
       }
     }
-    if (key.type === 'tapdance') {
-      const d = TAPDANCE.describe(key.idx, KBINFO.tapdances[key.idx]);
-      return {
-        text: d.slice(0, 10),
-        title: d,
-      }
+    const keyid = KEY.parse(keystr);
+
+    if (keyid === 0) {
+      return KEYMAP['KC_NO'];
     }
-    if (KEY_DESCS[key.type]) {
-      const desc = KEY_DESCS[key.type][key.mask];
-      const names = EDITABLE_NAMES[key.type];
-      if (names && names[key.idx]) {
-        return {
-          text: '<div class="' + desc[2] + '">' + names[key.idx] + '</div>',
-          title: keystr + ': ' + desc[1] + names[key.idx],
-        }
-      }
+
+    if (!keyid) {
       return {
-        text: desc[0] + ' ' + key.idx,
-        title: desc[1] + ' ' + key.idx,
-      }
-    }
-    if (!key || key.str === undefined) {
-      console.log(`Key ${keystr} doesn't work?`);
-      return {
-        text: `??? BUST ${keystr} ???`,
-        title: " busted? ",
+        str: '??Invld??',
+        title: 'Invalid key string',
       }
     }
 
-    let m = key.str.match(/^(\w+\s*)\((\w+)\)/);
-    if (m && m[2] !== 'kc') {
+    if (keystr in KEYALIASES) {
+      keystr = KEYALIASES[keystr];
+    }
+
+    if (keystr.startsWith('KC_') && ((keyid & 0xFF00) === 0)) {
+      return KEYMAP[keystr];
+    }
+
+    m = keystr.match(/^(\w+)\((\d+)\)$/);
+    if (m) {
+      if (keyid in CODEMAP) {
+        // TODO: MO(), etc with custom layer names.
+        const mkey = KEYMAP[CODEMAP[keyid]];
+        let top = m[1];
+        let lname = m[2];
+        if (m[1] in LAYERKEYS) {
+          if (m[2] in EDITABLE_NAMES.layer) {
+            lname = EDITABLE_NAMES.layer[m[2]];
+          }
+          let str = `(${lname})`;
+          const ldesc = LAYERKEYS[m[1]];
+          return {
+            top: keystr,
+            str: `<span class="key-layer">${lname}</span>`,
+            title: ldesc[1] + lname,
+          };
+        }
+        if (m[1] === 'TD') {
+          return {
+            top: keystr,
+            str: TAPDANCE.describe(m[2]),
+            title: 'Tap Dance ' + lname,
+          };
+        }
+        return {
+          str: lname,
+          top: m[1] + '()',
+          title: mkey.title,
+        };
+      }
+    }
+
+    m = keystr.match(/^M(\d+)$/);
+    if (m) {
+      const desc = MACROS.describe(m[1]);
       return {
-        text: m[1] + '\n' + KEY.parseDesc(m[2]).str,
-        title: title,
+        str: desc.slice(0, 6),
+        top: keystr,
+        title: keystr + ': ' + desc,
       };
     }
 
-    return {
-      text: key.str,
-      title: title,
+    m = keystr.match(/^(\w+)\((.*)\)$/);
+    if (m) {
+      let modmask = keyid & 0xFF00;
+      let kcmask = keyid & 0x00FF;
+      if (modmask in CODEMAP && kcmask in CODEMAP) {
+        const modkey = KEYMAP[CODEMAP[modmask]];
+        const kckey = KEYMAP[CODEMAP[kcmask]];
+        const modstr = modkey.str.replace('(kc)', '').trim();
+        return {
+          top: modstr,
+          str: kckey.str,
+          title: modkey.title + ' ' + kckey.title,
+        }
+      }
     }
+
+    if (keyid in CODEMAP) {
+      return KEYMAP[CODEMAP[keyid]];
+    }
+    return {
+      str: '??INVLD??',
+      title: 'Invalid keystring: ' + keystr,
+    };
   }
 
-  KEYUI.getKeyText = (keystr) => {
-    return KEY.parseDesc(keystr).str;
-  }
+  KEYUI.getKeyContents = getKeyContents;
 
   ////////////////////////////////////
   //
@@ -101,9 +142,13 @@ addInitializer('load', () => {
   ////////////////////////////////////
   function refreshKey(keyimage) {
     if (keyimage.dataset.key) {
-      const content = getKeyContents(keyimage.dataset.key);
-      keyimage.setAttribute('title', content.title);
-      keyimage.innerHTML = content.text;
+      const desc = getKeyContents(keyimage.dataset.key);
+      keyimage.setAttribute('title', desc.title);
+      let content = desc.str;
+      if (desc.top) {
+        content = `<span class="key-top">${desc.top}</span>\n${desc.str}`;
+      }
+      keyimage.innerHTML = content;
     }
   }
 
