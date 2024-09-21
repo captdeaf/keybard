@@ -19,7 +19,7 @@
 //
 ////////////////////////////////////
 
-let KBINFO = {
+const DEFAULT_KBINFO = {
   layers: 16,
   keylayout: {},
   keymap: [],
@@ -32,6 +32,31 @@ let KBINFO = {
   settings: {},
   via_proto: 9,
   vial_proto: 6,
+};
+
+let KBINFO = {};
+Object.assign(KBINFO, DEFAULT_KBINFO);
+
+////////////////////////////////////
+//
+//  Set the current active KBINFO. Not BASE_KBINFO.
+//  This is where we update older versions if necessary.
+//
+////////////////////////////////////
+function setActiveKBINFO(kbinfo) {
+  if (!('cosmetic' in kbinfo)) {
+    kbinfo.cosmetic = getSaved('names', {
+      layer: {
+        '0': 'default',
+        '4': 'NAS',
+        '5': 'Fn Keys',
+        '15': 'Mouse',
+      }
+    });
+  }
+  // TODO: Other corrections?
+  KBINFO = {};
+  Object.assign(KBINFO, DEFAULT_KBINFO, kbinfo);
 };
 
 // Unchanged. May be used for committing .vil or .kbinfo piecemeal?

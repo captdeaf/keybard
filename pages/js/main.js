@@ -54,13 +54,15 @@ async function tryConnect() {
 
 async function doStuff(kbinfo) {
   if (kbinfo) {
-    KBINFO = kbinfo;
+    setActiveKBINFO(kbinfo);
     await initUploadedKBINFO();
   } else {
     if (!await tryConnect()) {
       return false;
     }
-    await initVial(KBINFO);
+    const kbinfo = {};
+    await initVial(kbinfo);
+    setActiveKBINFO(kbinfo);
   }
 
   removeElement(get('#launch'));

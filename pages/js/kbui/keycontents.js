@@ -72,9 +72,7 @@ addInitializer('load', () => {
         let top = m[1];
         let lname = m[2];
         if (m[1] in LAYERKEYS) {
-          if (m[2] in EDITABLE_NAMES.layer) {
-            lname = EDITABLE_NAMES.layer[m[2]];
-          }
+          lname = getEditableName('layer', m[2], lname);
           let str = `(${lname})`;
           const ldesc = LAYERKEYS[m[1]];
           return {
@@ -84,10 +82,11 @@ addInitializer('load', () => {
           };
         }
         if (m[1] === 'TD') {
+          const desc = TAPDANCE.describe(m[2]);
           return {
             top: keystr,
-            str: TAPDANCE.describe(m[2]),
-            title: 'Tap Dance ' + lname,
+            str: desc.slice(0,5),
+            title: `Tap Dance ${m[2]} - ${desc}`,
           };
         }
         return {

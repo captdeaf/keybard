@@ -296,7 +296,7 @@ addInitializer('load', () => {
           }
           if (CONNECTED) {
             console.log('connected, updating');
-            KBINFO = kbinfo;
+            setActiveKBINFO(kbinfo);
             updateAllChanges();
           } else {
             console.log('new base');
