@@ -69,14 +69,15 @@ project, we welcome PRs, and suggestions =).
  
  - Adding documentation and help windows or context links to explain things.
  
- - Example layouts.
+ - Example layers.
    - Fn
    - Mice
  
  - Example full .kbis - all 16 layers, macros, combos, etc.
    - DH QWERTY
-   - DH Dvorak
    - HRM/BRM examples.
+ 
+ - Rewrite KEYUI.getKeyContents + KEY.parseDesc(), they're a bit inconsistent.
 
  - UI design improvements. Ongoing and constant =).
    - Custom names for layers. Maybe combos and tap dances.
