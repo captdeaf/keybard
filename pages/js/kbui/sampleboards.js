@@ -188,7 +188,7 @@ addInitializer('load', () => {
   ACTION.onclick('[data-sample-kbi]', (target) => {
     const kbi = SAMPLE_KBIS[target.dataset.sampleKbi][target.dataset.sampleKbid];
     if (CONNECTED) {
-      KBINFO = kbi;
+      setActiveKBINFO(kbi);
       updateAllChanges();
     } else {
       doStuff(kbi);

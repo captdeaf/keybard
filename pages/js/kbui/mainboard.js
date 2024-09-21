@@ -255,7 +255,7 @@ addInitializer('connected', () => {
   children = [];
   for (let i = 0; i < KBINFO.layers; i++) {
     const layerid = i;
-    let layerName = strDefault(EDITABLE_NAMES.layer[i], i);
+    let layerName = getEditableName('layer', i, '' + i);
     const layerSel = EL('div', {
       'data-layerid': layerid,
       'class': 'layer',
@@ -275,7 +275,7 @@ addInitializer('connected', () => {
   //
   ////////////////////////////////////
 
-  MAINBOARD.printLayers = (layers) => {
+  MAINBOARD.printLayers = (layerids) => {
     var printer = window.open('', '_blank');
     printer.document.write('<html>');
     printer.document.write('<head>')
@@ -285,11 +285,26 @@ addInitializer('connected', () => {
     printer.document.write('</head>');
     printer.document.write('<body>');
 
+    function isEmpty(layerid) {
+      const layer = KBINFO.keymap[layerid];
+      for (let i = 0; i < layer.length; i++) {
+        if (layer[i] !== 'KC_NO') {
+          return false;
+        }
+      }
+      return true;
+    }
+
     // Render each layer.
-    for (const layerid of layers) {
+    for (const layerid of layerids) {
+      if (isEmpty(layerid)) {
+        console.log('is empty', layerid, KBINFO.keymap[layerid]);
+        continue;
+      }
       let name = `Layer ${layerid}`;
-      if (layerid in EDITABLE_NAMES.layer) {
-        name = `Layer ${layerid} - ${EDITABLE_NAMES.layer[layerid]}`;
+      const customname = getEditableName('layer', layerid);
+      if (customname) {
+        name = `Layer ${layerid} - ${customname}`;
       }
       const div = EL('div', {class: 'printable-mainboard', id: 'p-' + layerid},
         EL('p', {class: 'printable-title'},
