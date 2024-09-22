@@ -85,7 +85,7 @@ addInitializer('load', () => {
           const desc = TAPDANCE.describe(m[2]);
           return {
             top: keystr,
-            str: desc.slice(0,5),
+            str: desc.slice(0,7),
             title: `Tap Dance ${m[2]} - ${desc}`,
           };
         }
