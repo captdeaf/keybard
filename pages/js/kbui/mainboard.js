@@ -259,13 +259,15 @@ addInitializer('connected', () => {
     const layerSel = EL('div', {
       'data-layerid': layerid,
       'class': 'layer',
-    }, editableName('layer', i));
-    layerSel.onclick = () => {
-      drawLayer(layerid);
-    }
+    });
+    makeEditableName(layerSel, 'layer', i);
     children.push(layerSel);
   }
   appendChildren(layerSelection, ...children);
+
+  ACTION.onclick('[data-layerid]', (target) => {
+    drawLayer(target.dataset.layerid);
+  });
 
   drawLayer(0);
 
