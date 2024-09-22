@@ -75,6 +75,7 @@ addInitializer('connected', () => {
         const mkey = matrixKeys[row][col];
         if (mkey) {
           if (data[row][col]) {
+            console.log('activating', row, col);
             mkey.classList.add('active');
             mkey.classList.add('changed');
           } else {
@@ -90,10 +91,11 @@ addInitializer('connected', () => {
 
   ACTION.onclick('[data-action="matrix-poll"]', (target) => {
     if (!keepPolling) {
-      target.addEventListener('mouseleave', () => {
+      target.onmouseleave = () => {
         console.log('done polling');
         keepPolling = false;
-      });
+        target.onmouseleave = null;
+      };
       setTimeout(() => {
         console.log('polling');
         keepPolling = true;

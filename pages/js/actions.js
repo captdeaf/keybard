@@ -161,7 +161,9 @@ addInitializer('load', () => {
   };
 
   document.oncontextmenu = (evt) => {
-    if (SETTINGS.disableRightClicks) return true;
+    if (SETTINGS.disableRightClicks) {
+      return true;
+    }
     let target = evt.target;
     while (target) {
       for (const cmenu of cmenus) {
