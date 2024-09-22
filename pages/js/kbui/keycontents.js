@@ -114,7 +114,7 @@ addInitializer('load', () => {
       if (modmask in CODEMAP && kcmask in CODEMAP) {
         const modkey = KEYMAP[CODEMAP[modmask]];
         const kckey = KEYMAP[CODEMAP[kcmask]];
-        const modstr = modkey.str.replace('(kc)', '').trim();
+        const modstr = modkey.str.replace('(kc)', '').replace('\n','_').trim();
         return {
           top: modstr,
           str: kckey.str,
