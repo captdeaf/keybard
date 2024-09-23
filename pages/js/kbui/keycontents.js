@@ -111,9 +111,9 @@ addInitializer('load', () => {
     if (m) {
       const desc = MACROS.describe(m[1]);
       return {
-        str: desc.slice(0, 6),
+        str: desc.str.slice(0, 6),
         top: keystr,
-        title: keystr + ': ' + desc,
+        title: keystr + ': ' + desc.title,
       };
     }
 
