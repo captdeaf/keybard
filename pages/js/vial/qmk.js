@@ -60,7 +60,7 @@ Vial.qmk = (function() {
         val = await Vial.USB.sendVial(Vial.USB.CMD_VIAL_QMK_SETTINGS_GET, [qsid], {unpack: unpack});
         settings[qsid] = val[1];
       }
-      KBINFO.settings = settings;
+      kbinfo.settings = settings;
     },
     async push(kbinfo, qsid) {
       const val = kbinfo.settings[qsid];
