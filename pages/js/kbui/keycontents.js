@@ -43,6 +43,11 @@ addInitializer('load', () => {
         str: keystr,
       }
     }
+
+    if (keystr in KEYALIASES) {
+      keystr = KEYALIASES[keystr];
+    }
+
     const keyid = KEY.parse(keystr);
 
     if (keyid === 0) {
@@ -56,12 +61,17 @@ addInitializer('load', () => {
       }
     }
 
-    if (keystr in KEYALIASES) {
-      keystr = KEYALIASES[keystr];
-    }
-
     if (keystr.startsWith('KC_') && ((keyid & 0xFF00) === 0)) {
       return KEYMAP[keystr];
+    }
+
+    m = keystr.match(/^OSM\((.*)\)$/);
+    if (m) {
+      return {
+        top: 'OSM',
+        str: m[1].replace(/MOD_/g, ''),
+        title: keystr,
+      };
     }
 
     m = keystr.match(/^(\w+)\((\d+)\)$/);
