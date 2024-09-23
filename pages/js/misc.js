@@ -21,7 +21,7 @@ function getEditableName(type, index, def) {
   } else if (type in local && index in local[type]) {
     return index + ': ' + local[type];
   } else {
-    return def;
+    return index;
   }
 }
 
