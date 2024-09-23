@@ -108,13 +108,8 @@ addInitializer('load', () => {
       const floater = get(target.dataset.open);
       let disp = target.dataset.display;
       if (!disp) disp = 'block';
-      if (openFloats[floater]) {
-        floater.style['display'] = 'none';
-        openFloats[floater] = false;
-      } else {
-        floater.style['display'] = disp;
-        openFloats[floater] = true;
-      }
+      floater.style['display'] = disp;
+      openFloats[floater] = true;
       ACTION.menuClose();
     }
   });
