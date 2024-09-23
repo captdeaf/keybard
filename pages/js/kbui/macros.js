@@ -27,20 +27,58 @@ addInitializer('load', () => {
       macro = KBINFO.macros[mid];
     }
     if (macro.actions.length > 0) {
-      const texts = [];
+      const all = [];
+      const title = [];
+      let texts = [];
+      const shorts = [];
       for (const act of macro.actions) {
+        const mkey = act[1].replace('KC_', '');
         if (act[0] === 'text') {
           texts.push(act[1]);
+          title.push(act[1]);
+        } else if (act[0] === 'down') {
+          all.push(mkey)
+          if (mkey.length === 1) {
+            shorts.push(mkey);
+          }
+          title.push('down', act[1]);
+        } else if (act[0] === 'up') {
+          all.push(mkey)
+          title.push('up', act[1]);
+          if (mkey.length === 1) {
+            shorts.push(mkey);
+          }
+        } else if (act[0] === 'tap') {
+          all.push(mkey)
+          title.push('tap', act[1]);
+          if (mkey.length === 1) {
+            shorts.push(mkey);
+          }
+        } else if (act[0] === 'delay') {
+          all.push(mkey)
+          title.push('delay', act[1]);
+          if (mkey.length === 1) {
+            shorts.push(mkey);
+          }
         }
       }
-      if (texts.length == 0) {
-        texts.push('*');
+      if (texts.length === 0) {
+        texts = shorts;
+      }
+      if (texts.length === 0) {
+        texts = ['***'];
       }
       if (texts.length > 0) {
-        return texts.join(' ');
+        return {
+          str: texts.join('').slice(0, 7),
+          title: title.join(''),
+        }
       }
     }
-    return "M" + mid;
+    return {
+      str: "M" + mid,
+      title: "M" + mid,
+    };
   }
   MACROS.describe = describeMacro;
 
