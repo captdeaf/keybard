@@ -1034,9 +1034,17 @@
       <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ACL2" title="Set mouse acceleration to 2">Mouse Accel 2</div>
     </div>
   </div>
-  <div class="kb-group" id="kb-custom">
+  <div class="kb-group" id="kb-custom" style="width: 400px;">
+    <div class="kb-row" style="width: 100%;">
+      <div class="kbdesc" style="justify-content: left; width: 400px; max-width: 400px; position: relative; left: 0px;">Keyboard's custom keys</div>
+    </div>
+  </div>
+  <div class="kb-group">
     <div class="kb-row">
-      <div class="kbdesc">Keyboard's custom keys</div>
+      <div class="kbdesc" style="justify-content: left; width: 200px; position: relative; left: 0px;">Special keys that don't fit elsewhere.</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_REPEAT" title="Repeat last keypress">Repeat</div>
     </div>
   </div>
 </div>
@@ -1057,7 +1065,7 @@
       <label class="board-sel" data-board="iso">ISO</label>
     </div>
   </div>
-  <div class="board-sel" data-board="custom">Mouse and Custom Keys</div>
+  <div class="board-sel" data-board="custom">Mouse and Special Keys</div>
   <div class="board-sel" data-board="layer">Layers</div>
   <div class="board-sel" data-board="macro">Macros</div>
   <div class="board-sel" data-board="tapdance">Tap dances</div>
