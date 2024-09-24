@@ -32,7 +32,12 @@ addInitializer('load', () => {
       let texts = [];
       const shorts = [];
       for (const act of macro.actions) {
-        const mkey = act[1].replace('KC_', '');
+        let mkey;
+        if (act[0] === 'delay') {
+          mkey = act[1];
+        } else {
+          mkey = act[1].replace('KC_', '');
+        }
         if (act[0] === 'text') {
           texts.push(act[1]);
           title.push(act[1]);
@@ -71,7 +76,7 @@ addInitializer('load', () => {
       if (texts.length > 0) {
         return {
           str: texts.join('').slice(0, 7),
-          title: title.join(''),
+          title: title.join(' '),
         }
       }
     }
