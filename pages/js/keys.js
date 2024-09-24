@@ -103,7 +103,6 @@ addInitializer('load', () => {
     } else if (keynum in CODEMAP) {
       return CODEMAP[keynum];
     } else {
-      console.log("err wtf?", keynum, keyid, modmask);
       return '????';
     }
   };
@@ -135,7 +134,6 @@ addInitializer('load', () => {
     } else if (keynum in CODEMAP) {
       return CODEMAP[keynum];
     } else {
-      console.log("err wtf?", keynum, keyid, modmask);
       return '????';
     }
   };
@@ -157,9 +155,6 @@ addInitializer('load', () => {
     if (keystr === -1) {
       return 0xFF;
     }
-    if (!keystr.match) {
-      console.log("Unknown key string: ", keystr);
-    }
     const match = keystr.match(/^(\w+)\((\w+)\)$/);
     if (match) {
       const cmask = KEYMAP[match[1] + '(kc)'].code;
@@ -169,7 +164,6 @@ addInitializer('load', () => {
       const keymask = KEYMAP[match[2]].code;
       return cmask + keymask;
     } else {
-      console.log("Unknown key string: ", keystr);
       return parseInt(keystr);
     }
   };

@@ -21,6 +21,8 @@ const ACTION = {
   // Context menus. menu is a list of:
   // {name: 'name', trigger: 'trigger-name'}
   addContextMenu: null,
+  // Are there any floaters open?
+  getOpenFloats: null,
 };
 
 
@@ -132,7 +134,7 @@ addInitializer('load', () => {
         cmenu.style['display'] = '';
       }
     }, 300);
-  })
+  });
 
   ////////////////////////////////////
   //
@@ -190,5 +192,16 @@ addInitializer('load', () => {
       target = target.parentElement;
     }
     return true;
+  };
+
+  ////////////////////////////////////
+  //
+  //  Are there any open floaters?
+  //
+  ////////////////////////////////////
+  ACTION.getOpenFloats = () => {
+    return getAll('.floater').filter((i) => {
+      return i.getBoundingClientRect().width > 0;
+    });
   };
 }, 0); // Loads first.

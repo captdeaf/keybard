@@ -141,12 +141,14 @@ addInitializer('connected', () => {
     { name: 'Assign & edit tapdance', trigger: 'key-assign-tapdance' },
     { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
     { name: 'Make transparent', trigger: 'key-assign-transparent' },
+    { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
   // Combo keys: input
   ACTION.addContextMenu('[data-bound="combo"]:not([data-idx="4"])', [
     { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
@@ -154,6 +156,7 @@ addInitializer('connected', () => {
   ACTION.addContextMenu('[data-bound="combo"][data-idx="4"]', [
     { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
     { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
@@ -161,16 +164,19 @@ addInitializer('connected', () => {
   ACTION.addContextMenu('[data-bound="tapdance"]', [
     { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
     { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
   // Key override in+out
   ACTION.addContextMenu('[data-bound="keyoverride"]', [
+    { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
   // Macros
   ACTION.addContextMenu('[data-bound="macro"]', [
+    { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
@@ -243,6 +249,9 @@ addInitializer('connected', () => {
   ////////////////////////////////////
   let lastDown = null;
   document.onkeydown = (evt) => {
+    if (ACTION.getOpenFloats().length > 0) {
+      return true;
+    }
     if (!SETTINGS.typebind || !ACTION.selectedKey) {
       return true;
     }
@@ -253,6 +262,9 @@ addInitializer('connected', () => {
   };
 
   document.onkeyup = (evt) => {
+    if (ACTION.getOpenFloats().length > 0) {
+      return true;
+    }
     if (!SETTINGS.typebind || !ACTION.selectedKey) {
       return true;
     }
@@ -266,4 +278,41 @@ addInitializer('connected', () => {
     evt.preventDefault();
     return false;
   };
+
+  ////////////////////////////////////
+  //
+  //  Manual bind - enter a key string or a hex code.
+  //
+  ////////////////////////////////////
+  const manualFloat = get('#float-manual-key');
+  const manualEntry = get('#manual-key');
+  const manualOutput = get('#manual-output');
+  ACTION.on('key-assign-manual', (target) => {
+    ACTION.selectKey(target);
+    manualFloat.style['display'] = 'block';
+    manualEntry.value = target.dataset.key;
+    manualOutput.innerHTML = target.dataset.key;
+  });
+  ACTION.onclick('#float-manual-key', () => {
+    manualEntry.focus();
+  });
+  manualEntry.onkeyup = (evt) => {
+    let val;
+    try {
+      val = KEY.stringify(KEY.parse(manualEntry.value));
+    } catch (err) {
+      val = '????';
+      manualOutput.innerHTML = '<span style="color: red;">Unknown Key</span>';
+    }
+    if (val === '????') {
+      manualOutput.innerHTML = '<span style="color: red;">Unknown Key</span>';
+    } else {
+      manualOutput.innerHTML = `<span style="color: green;">${val}</span>`;
+      if (evt.key === 'Enter') {
+        ACTION.trigger('bind', val);
+        manualFloat.style['display'] = 'none';
+      }
+    }
+    return false;
+  }
 });
