@@ -69,7 +69,7 @@ addInitializer('load', () => {
       for (const m of allDropups) {
         m.classList.add('dropup');
       }
-    });
+    }, 300);
   };
 
   ////////////////////////////////////
