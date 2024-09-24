@@ -91,7 +91,7 @@ addInitializer('connected', () => {
     const name = target.dataset.name;
     // Update KO
     const oldkeystr = BASE_KBINFO.key_overrides[koid][name];
-    KBINFO.key_overrides[koid][name] = keystr;
+    KBINFO.key_overrides[koid][name] = oldkeystr;
 
     CHANGES.clear('ko' + koid);
 
