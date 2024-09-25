@@ -10275,19 +10275,19 @@ const KEYMAP = {
   "FN_MO23": {
     "code": 0x7c78,
     "qmkid": "FN_MO23",
-    "str": "FN_MO23",
-    "title": "FN_MO23"
+    "str": "QK_REPEAT_KEY",
+    "title": "QK_REPEAT_KEY"
   },
   "QK_REPEAT_KEY": {
     "code": 0x7c79,
     "qmkid": "QK_REPEAT_KEY",
-    "str": "QK_REPEAT_KEY",
+    "str": "Repeat",
     "title": "QK_REPEAT_KEY"
   },
   "QK_ALT_REPEAT_KEY": {
     "code": 0x7c7a,
     "qmkid": "QK_ALT_REPEAT_KEY",
-    "str": "QK_ALT_REPEAT_KEY",
+    "str": "AltRep",
     "title": "QK_ALT_REPEAT_KEY"
   },
   "USER00": {
@@ -12106,6 +12106,7 @@ const KEYALIASES = {
   "DYN_MACRO_PLAY2": "DYN_MACRO_PLAY2",
   "FN_MO13": "FN_MO13",
   "FN_MO23": "FN_MO23",
+  "QK_REPEAT_KEY": "QK_REPEAT_KEY",
   "USER00": "USER00",
   "USER01": "USER01",
   "USER02": "USER02",
@@ -12715,7 +12716,6 @@ const KEYALIASES = {
   "QK_AUTOCORRECT_TOGGLE": "QK_AUTOCORRECT_TOGGLE",
   "QK_TRI_LAYER_LOWER": "FN_MO13",
   "QK_TRI_LAYER_UPPER": "FN_MO23",
-  "QK_REPEAT_KEY": "QK_REPEAT_KEY",
   "QK_ALT_REPEAT_KEY": "QK_ALT_REPEAT_KEY",
   "QK_KB_0": "USER00",
   "QK_KB_1": "USER01",
