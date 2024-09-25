@@ -77,7 +77,7 @@
     <div id="head">
       <div id="topbar-container">
         <div id="topbar">
-          <div class="dropdown menu" id="menu-top">
+          <div class="dropdown menu menu-top">
   MENU
   <div class="dropdown-content">
   <label>
@@ -183,24 +183,6 @@
   Try the latest versions of Chrome (or Chromium), and MS Edge.
 </div>
 
-    <div id="about" class="closeable" style="display: none;">
-  KeyBard, the Svalboard Keymap Editor
-  <div class="topright">
-    <button class="close" data-action="close">Close</button>
-  </div>
-  <p>
-    Developing for html/css - Make it super fast to reload the page so you
-    can see changes w/o reconnecting your keyboard each time.
-    <ol>
-      <li>Enable 'Record' in menu.</li>
-      <li>Launch, and select your keyboard. </li>
-      <li>Enable 'Playback' in menu.</li>
-      <li>Reload page - It should now be near instant.</li>
-      <li>(Note: Keyboard changes will not be performed at this point.)</li>
-    </ol>
-  </p>
-</div>
-
     <div id="main" class="on-connect">
       <div class="main-container" id="mainboard-container">
   <div id="layer-selection"></div>
@@ -251,7 +233,7 @@
 </div>
 
     </div>
-    <div style="flex: 1 1 auto;"></div>
+    <div style="flex: 1 1 auto;">
       <div id="allboards" class="on-connect">
   <div class="board-map" data-board="qwerty"><div class="kb-board-mods">
   <div class="kb-group" style="left: 1vw; width: 55vw;">
@@ -1059,7 +1041,7 @@
 </div>
 <div id="board-selection" class="on-connect" style="z-index: 200;">
   <div class="board-sel" data-board="qwerty">QWERTY</div>
-  <div class="dropdown board-sel" id="menu-top">
+  <div class="dropdown board-sel menu-top">
     <div>International</div>
     <div class="dropdown-content dropup">
       <label class="board-sel" data-board="iso">ISO</label>
@@ -1084,10 +1066,11 @@
   <div class="board-sel-end"></div>
 </div>
 
+    </div>
     <div id="floats" data-search="block">
-      <!-- Anything inside floats prevents elementsFromPoint from
-           propagating down. -->
-      <div id="float-macro" class="floater closeable" style="width: 80vw; min-height: 120px;">
+  <!-- Anything inside floats prevents elementsFromPoint from
+       propagating down. -->
+  <div id="float-macro" class="floater closeable" style="width: 80vw; min-height: 120px;">
   <div class="button-row">
     <div id="float-macro-name">M?</div>
     <div class="fill"></div>
@@ -1107,7 +1090,7 @@
   <div class="fill"></div>
 </div>
 
-<div id="float-tapdance" class="floater closeable">
+  <div id="float-tapdance" class="floater closeable">
   <div class="button-row">
     <div id="float-tapdance-name">TD(?)</div>
     <div class="topright">
@@ -1142,14 +1125,14 @@
   </div>
 </div>
 
-<div id="float-qmksettings" class="floater closeable">
+  <div id="float-qmksettings" class="floater closeable">
   <div class="topright">
     <button class="close" data-action="close">Close</button>
   </div>
   <div id="qmk-tabs"></div>
 </div>
 
-<div id="float-upload" class="floater closeable" style="width: 300px;">
+  <div id="float-upload" class="floater closeable" style="width: 300px;">
   <div class="topright">
     <button class="close">Close</button>
   </div>
@@ -1157,7 +1140,7 @@
   <input type="file" style="width: 100%;" id="upload-file">
 </div>
 
-<div id="float-matrix-tester" class="floater closeable">
+  <div id="float-matrix-tester" class="floater closeable">
   <div>
     <button class="matrix-start" data-action="matrix-poll" title="Start poll. Polling ends when mouse leaves this button.">Begin Poll</button>
     <button class="close" data-action="close">Close</button>
@@ -1166,7 +1149,7 @@
   </div>
 </div>
 
-<div id="float-manual-key" class="floater closeable" style="width: 300px;">
+  <div id="float-manual-key" class="floater closeable" style="width: 300px;">
   <div class="topright">
     <button class="close">Close</button>
   </div>
@@ -1174,11 +1157,34 @@
   <br>
   <input type="text" style="width: 100%;" id="manual-key">
   <span id="manual-output"></span>
+  <br>
+  Press Enter to save.
 </div>
 
+  <div id="about" class="floater closeable" style="display: none; height: 60%;">
+  KeyBard, the Svalboard Keymap Editor
+  <div class="topright">
+    <button class="close" data-action="close">Close</button>
+  </div>
+  <p>
+    TODO: populate this with more help.
+  </p>
+  <p>
+    Developing for html/css - Make it super fast to reload the page so you
+    can see changes w/o reconnecting your keyboard each time.
+    <ol>
+      <li>Enable 'Record' in menu.</li>
+      <li>Launch, and select your keyboard. </li>
+      <li>Enable 'Playback' in menu.</li>
+      <li>Reload page - It should now be near instant.</li>
+      <li>(Note: Keyboard changes will not be performed at this point.)</li>
+    </ol>
+  </p>
+</div>
 
-      <div id="allmenus"></div>
-    </div>
+</div>
+
+    <div id="allmenus"></div>
     <script type="text/javascript">
       (function() {
         startKeyBard();

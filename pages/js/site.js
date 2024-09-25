@@ -69,8 +69,7 @@ addInitializer('load', () => {
   ////////////////////////////////////
   // Clicking a .close hides its parent that has .closeable
   ACTION.onclick('.close', (target) => {
-    const closeable = getParent(target, '.closeable');
-    closeable.style['display'] = 'none';
+    ACTION.closeFloats();
   });
 
   // Main container selection: mainboard, combos, key overrides.
@@ -106,11 +105,7 @@ addInitializer('load', () => {
   ACTION.onclick('[data-open]', (target) => {
     if (!target.classList.contains('connect-enable') || CONNECTED) {
       const floater = get(target.dataset.open);
-      let disp = target.dataset.display;
-      if (!disp) disp = 'block';
-      floater.style['display'] = disp;
-      openFloats[floater] = true;
-      ACTION.menuClose();
+      ACTION.showFloat(floater);
     }
   });
   

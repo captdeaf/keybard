@@ -289,9 +289,9 @@ addInitializer('connected', () => {
   const manualOutput = get('#manual-output');
   ACTION.on('key-assign-manual', (target) => {
     ACTION.selectKey(target);
-    manualFloat.style['display'] = 'block';
     manualEntry.value = target.dataset.key;
     manualOutput.innerHTML = target.dataset.key;
+    ACTION.showFloat(manualFloat);
   });
   ACTION.onclick('#float-manual-key', () => {
     manualEntry.focus();
@@ -310,7 +310,7 @@ addInitializer('connected', () => {
       manualOutput.innerHTML = `<span style="color: green;">${val}</span>`;
       if (evt.key === 'Enter') {
         ACTION.trigger('bind', val);
-        manualFloat.style['display'] = 'none';
+        ACTION.closeFloats();
       }
     }
     return false;

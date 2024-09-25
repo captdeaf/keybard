@@ -1,8 +1,21 @@
 /* About app - and help.  */
 
+#floats {
+  display: none;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  background-color: #9999;
+}
+
+#floats > div {
+  display: none;
+}
+
 #about {
   position: absolute;
-  z-index: 500;
   top: 5em;
   left: 5em;
   width: 80%;
@@ -65,7 +78,7 @@
   background-color: #f9f9f9;
   color: #000;
   min-width: 60px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
   padding: 12px 16px;
   z-index: 1;
 }
@@ -81,8 +94,14 @@
   min-width: 100px;
 }
 
-#menu-top .dropdown-content > label {
+.menu-top .dropdown-content > label {
   min-width: 300px;
+}
+
+.menu-top.close > * {
+  position: fixed;
+  top: 100vh;
+  left: 100vw;
 }
 
 .dropdown-content > label:hover {
