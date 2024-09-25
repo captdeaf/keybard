@@ -92,7 +92,7 @@ addInitializer('load', () => {
       }
       vil.layout.push(layer);
     }
-    let jsvil = JSON.stringify(vil);
+    let jsvil = JSON.stringify(vil, undefined, 2);
     jsvil = jsvil.replace('"' + kbidrepl + '"', KBINFO.kbid);
     return jsvil;
   }
@@ -251,7 +251,7 @@ addInitializer('load', () => {
 
     ACTION.onclick('#download-kbi', () => {
       const copy = structuredClone(KBINFO);
-      const kbi = JSON.stringify(copy);
+      const kbi = JSON.stringify(copy, undefined, 2);
       downloadTEXT('keyboard.kbi', kbi);
       ACTION.menuClose();
     });
@@ -259,7 +259,7 @@ addInitializer('load', () => {
     ACTION.onclick('#download-kbi-nomacro', () => {
       const copy = structuredClone(KBINFO);
       copy.macros = range(copy.macro_count).map((mid) => {return {mid: mid, actions: []}});
-      const kbi = JSON.stringify(copy);
+      const kbi = JSON.stringify(copy, undefined, 2);
       downloadTEXT('keyboard-nomacro.kbi', kbi);
       ACTION.menuClose();
     });
