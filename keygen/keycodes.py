@@ -353,6 +353,9 @@ def doit():
     K("KC_PSTE", "Paste", alias=["KC_PASTE"])
     K("KC_FIND", "Find")
 
+    K("QK_REPEAT_KEY", "Repeat", alias=["QK_REP"])
+    K("QK_ALT_REPEAT_KEY", "AltRep", alias=["QK_AREP"])
+
     K("KC_CALC", "Calc", "Launch Calculator (Windows)", alias=["KC_CALCULATOR"])
     K("KC_MAIL", "Mail", "Launch Mail (Windows)")
     K("KC_MSEL", "Media\nPlayer", "Launch Media Player (Windows)", alias=["KC_MEDIA_SELECT"])

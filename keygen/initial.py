@@ -1238,6 +1238,8 @@ def define():
     Key(0x7c57, "DYN_MACRO_PLAY2"   , "DYN_MACRO_PLAY2"   , "DYN_MACRO_PLAY2"   )
     Key(0x7c77, "FN_MO13"           , "FN_MO13"           , "FN_MO13"           )
     Key(0x7c78, "FN_MO23"           , "FN_MO23"           , "FN_MO23"           )
+    Key(0x7c78, "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     )
+    Key(0x7c78, "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     )
     Key(0x7e00, "USER00"            , "USER00"            , "USER00"            )
     Key(0x7e01, "USER01"            , "USER01"            , "USER01"            )
     Key(0x7e02, "USER02"            , "USER02"            , "USER02"            )
