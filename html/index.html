@@ -30,18 +30,14 @@
     </div>
     {{launch.html}}
     {{nosupport.html}}
-    {{about.html}}
     <div id="main" class="on-connect">
       {{mainboard.html}}
     </div>
-    <div style="flex: 1 1 auto;"></div>
+    <div style="flex: 1 1 auto;">
       {{allboards.html}}
-    <div id="floats" data-search="block">
-      <!-- Anything inside floats prevents elementsFromPoint from
-           propagating down. -->
-      {{floats.html}}
-      <div id="allmenus"></div>
     </div>
+    {{floats.html}}
+    <div id="allmenus"></div>
     <script type="text/javascript">
       (function() {
         startKeyBard();

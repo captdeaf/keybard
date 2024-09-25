@@ -96,6 +96,11 @@ addInitializer('connected', () => {
         keepPolling = false;
         target.onmouseleave = null;
       };
+      target.onkeydown = (evt) => {
+        evt.preventDefault();
+        evt.stopPropagation();
+        return false;
+      };
       setTimeout(() => {
         console.log('polling');
         keepPolling = true;

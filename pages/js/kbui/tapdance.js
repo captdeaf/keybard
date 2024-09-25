@@ -88,7 +88,7 @@ addInitializer('load', () => {
 
     editID = tapdance.tdid;
 
-    floater.style['display'] = 'flex';
+    ACTION.showFloat(floater);
   }
 
   ////////////////////////////////////

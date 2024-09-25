@@ -17,6 +17,9 @@ const ACTION = {
   trigger: null,
   // onclick(selector, cb(target))
   onclick: null,
+  // Floats: show and hide.
+  showFloat: null,
+  closeFloats: null,
   // addConextMenu(selector, menu)
   // Context menus. menu is a list of:
   // {name: 'name', trigger: 'trigger-name'}
@@ -27,6 +30,7 @@ const ACTION = {
 
 
 addInitializer('load', () => {
+  let floatOpen = false;
   ////////////////////////////////////
   //
   //  selectKey - This is a handy wrapper for class="key" selection.
@@ -55,21 +59,14 @@ addInitializer('load', () => {
   //  allow event handlers to remove the menu.
   //
   ////////////////////////////////////
+  const allDropdowns = findAll('.menu-top');
   ACTION.menuClose = () => {
-    const allDropdowns = findAll('.dropdown');
-    const allDropups = findAll('.dropup');
     for (const m of allDropdowns) {
-      m.classList.remove('dropdown');
-    }
-    for (const m of allDropups) {
-      m.classList.remove('dropup');
+      m.classList.add('close');
     }
     setTimeout(() => {
       for (const m of allDropdowns) {
-        m.classList.add('dropdown');
-      }
-      for (const m of allDropups) {
-        m.classList.add('dropup');
+        m.classList.remove('close');
       }
     }, 300);
   };
@@ -147,6 +144,9 @@ addInitializer('load', () => {
   document.onclick = (evt) => {
     let target = evt.target;
     while (target) {
+      if (target.matches('#floats')) {
+        break;
+      }
       for (const clickable of clickables) {
         if (target.matches(clickable.sel)) {
           evt.stopPropagation();
@@ -192,6 +192,30 @@ addInitializer('load', () => {
       target = target.parentElement;
     }
     return true;
+  };
+
+
+  ////////////////////////////////////
+  //
+  //  Managing floats
+  //
+  ////////////////////////////////////
+  const floatPane = get('#floats');
+  const allFloats = getAll('.floater');
+  ACTION.showFloat = (target) => {
+    floatOpen = true;
+    ACTION.closeFloats();
+    ACTION.menuClose();
+    floatPane.style['display'] = 'block';
+    target.style['display'] = 'block';
+  };
+
+  ACTION.closeFloats = () => {
+    floatOpen = false;
+    floatPane.style['display'] = 'none';
+    for (const floater of allFloats) {
+      floater.style['display'] = 'none';
+    }
   };
 
   ////////////////////////////////////
