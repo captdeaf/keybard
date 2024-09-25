@@ -118,7 +118,7 @@ const CODEMAP = {
   0x0076: "KC_MENU",
   0x0077: "KC_SLCT",
   0x0078: "KC_STOP",
-  0x0079: "KC_REPEAT",
+  0x0079: "KC_REDO",
   0x007a: "KC_UNDO",
   0x007b: "KC_CUT",
   0x007c: "KC_COPY",
@@ -2268,11 +2268,11 @@ const KEYMAP = {
     "str": "Stop",
     "title": "KC_STOP"
   },
-  "KC_REPEAT": {
+  "KC_REDO": {
     "code": 0x0079,
-    "qmkid": "KC_REPEAT",
-    "str": "Again",
-    "title": "KC_REPEAT"
+    "qmkid": "KC_REDO",
+    "str": "Redo",
+    "title": "KC_REDO"
   },
   "KC_UNDO": {
     "code": 0x007a,
@@ -10986,7 +10986,7 @@ const KEYALIASES = {
   "KC_HELP": "KC_HELP",
   "KC_SLCT": "KC_SLCT",
   "KC_STOP": "KC_STOP",
-  "KC_REPEAT": "KC_REPEAT",
+  "KC_REDO": "KC_REDO",
   "KC_UNDO": "KC_UNDO",
   "KC_CUT": "KC_CUT",
   "KC_COPY": "KC_COPY",
@@ -12188,7 +12188,6 @@ const KEYALIASES = {
   "KC_EXECUTE": "KC_EXEC",
   "KC_MENU": "KC_MENU",
   "KC_SELECT": "KC_SLCT",
-  "KC_AGAIN": "KC_REPEAT",
   "KC_PASTE": "KC_PSTE",
   "KC_KB_MUTE": "KC_KB_MUTE",
   "KC_KB_VOLUME_UP": "KC_VOLUP",
@@ -12829,7 +12828,6 @@ const KEYALIASES = {
   "KC_NUBS": "KC_NONUS_BSLASH",
   "KC_APP": "KC_APPLICATION",
   "KC_PEQL": "KC_KP_EQUAL",
-  "KC_AGIN": "KC_REPEAT",
   "KC_PCMM": "KC_KP_COMMA",
   "KC_INT1": "KC_RO",
   "KC_INT2": "KC_KANA",
@@ -13301,6 +13299,8 @@ const KEYALIASES = {
   "RAG_NRM": "MAGIC_UNSWAP_RALT_RGUI",
   "GUI_OFF": "MAGIC_NO_GUI",
   "GUI_ON": "MAGIC_UNNO_GUI",
+  "KC_AGAIN": "KC_REDO",
+  "KC_AGIN": "KC_REDO",
   "KC_LOCKING_CAPS": "KC_LCAP",
   "KC_LOCKING_NUM": "KC_LNUM",
   "KC_LOCKING_SCROLL": "KC_LSCR",

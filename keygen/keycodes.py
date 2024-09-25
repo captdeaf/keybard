@@ -346,7 +346,7 @@ def doit():
     K("KC_HELP", "Help")
     K("KC_SLCT", "Select", alias=["KC_SELECT"])
     K("KC_STOP", "Stop")
-    K("KC_AGIN", "Again", alias=["KC_AGAIN"])
+    K("KC_REDO", "Redo", alias=["KC_AGAIN", "KC_AGIN"])
     K("KC_UNDO", "Undo")
     K("KC_CUT", "Cut")
     K("KC_COPY", "Copy")
