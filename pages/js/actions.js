@@ -177,14 +177,17 @@ addInitializer('load', () => {
 
           // We have a menu, render and position it.
           contextTarget = target;
-          cmenu.menu.style['left'] = (evt.clientX - 10) + 'px';
-          cmenu.menu.style['top'] = (evt.clientY - 20) + 'px';
+          cmenu.menu.style['left'] = (evt.clientX - 30) + 'px';
+          cmenu.menu.style['top'] = (evt.clientY - 15) + 'px';
           cmenu.menu.classList.add('show');
           // We remove the 'show', letting the
           // :hover take over rendering.
-          setTimeout(() => {
-            cmenu.menu.classList.remove('show');
-          }, 300);
+          const watchHover = setInterval(() => {
+            if (cmenu.menu.matches(':hover')) {
+              cmenu.menu.classList.remove('show');
+              clearInterval(watchHover);
+            }
+          }, 100);
 
           return false;
         }
