@@ -1,7 +1,7 @@
 /* boards.css, for rendering the different boards. */
 
 #layer-selection {
-  flex: 1;
+  flex: 0 0 content;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -10,6 +10,7 @@
   padding-bottom: 4px;
   margin-bottom: 4px;
   width: 100%;
+  height: 2em;
 }
 
 #layer-selection .layer {
@@ -24,6 +25,11 @@
   cursor: pointer;
 }
 
+.main-container {
+  width: 100%;
+  height: 100%;
+}
+
 #layer-selection .layer.selected {
   background-color: #333;
   color: #e5e5e5;
@@ -34,24 +40,30 @@
   flex: 1 1 auto;
 }
 
-#main {
-  flex: 0 0 content;
+#mainbody {
+  position: relative;
   width: 100%;
-  overflow: auto;
-  max-height: 60vh;
+  height: 100%;
+}
+
+#topboard {
+  width: 100%;
   border-bottom: 1px solid black;
+  overflow: auto;
 }
 
 #mainboard-container {
   display: flex;
   flex-flow: column;
   justify-content: center;
+  overflow: auto;
   align-items: center;
 }
 
 #mainboard-box {
   display: block;
   max-width: 100vw;
+  width: 100vw;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
@@ -100,9 +112,10 @@
 }
 
 #allboards {
+  display: block;
+  flex: 1 1 auto;
   background-color: #ccc;
-  position: relative;
-  bottom: 40px;
+  width: 100%;
   overflow: auto;
 }
 

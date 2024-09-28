@@ -12,7 +12,6 @@ function startKeyBard() {
   runInitializers('load');
 
   if (!navigator.hid) {
-    get('#about').style['display'] = 'none';
     get('#launch').style['display'] = 'none';
     get('#nosupport').style['display'] = 'block';
     return;
@@ -66,6 +65,7 @@ async function doStuff(kbinfo) {
   }
 
   removeElement(get('#launch'));
+  removeElement(get('#nosupport'));
 
   console.log('kbinfo', KBINFO);
   BASE_KBINFO = structuredClone(KBINFO);

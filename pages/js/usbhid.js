@@ -97,7 +97,6 @@ const USB = {
   initListener: () => {
     USB.device.addEventListener('inputreport', (ev) => {
       if (USB.listener) {
-        x = ev.data;
         USB.listener(ev.data.buffer, ev);
       }
     });

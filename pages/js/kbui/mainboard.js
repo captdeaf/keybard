@@ -94,19 +94,20 @@ addInitializer('connected', () => {
     appendChildren(par, ...children);
 
     // This allows us to center the board on screen.
-    par.style.width = `${bounds.right + bounds.left + 20}px`;
-    par.style.height = `${bounds.bottom + 20}px`;
-    par.style.left = `20px`;
-    par.style.top = `30px`;
+    par.style['width'] = `${bounds.right + bounds.left + 40}px`;
+    par.style['height'] = `${bounds.bottom + 20}px`;
+    par.style['left'] = `20px`;
+    par.style['top'] = `0px`;
 
     return mykeys;
   }
   const boardKeys = renderBoardInto(board);
 
-  const mbox = get('#mainboard-box');
-  mbox.style.width = `${board.style.width + 20}px`;
-  mbox.style.height = `${board.style.height + 40}px`;
-  mbox.style['max-height'] = `${board.style.height + 40}px`;
+  const mbox = get('#topboard');
+  x = mbox;
+  // mbox.style['width'] = `${parseInt(board.style.width) + 20}px`;
+  mbox.style['height'] = `${parseInt(board.style.height) + 80}px`;
+  mbox.style['max-height'] = `${parseInt(board.style.height) + 80}px`;
   
   ////////////////////////////////////
   //

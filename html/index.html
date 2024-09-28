@@ -28,12 +28,10 @@
         </div>
       </div>
     </div>
-    {{launch.html}}
-    {{nosupport.html}}
-    <div id="main" class="on-connect">
-      {{mainboard.html}}
-    </div>
-    <div style="flex: 1 1 auto;">
+    <div id="mainbody">
+      <div id="topboard" class="on-connect">
+        {{mainboard.html}}
+      </div>
       {{allboards.html}}
     </div>
     {{floats.html}}
@@ -43,5 +41,7 @@
         startKeyBard();
       })();
     </script>
+    {{launch.html}}
+    {{nosupport.html}}
   </body>
 </html>
