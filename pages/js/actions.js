@@ -227,7 +227,7 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   ACTION.getOpenFloats = () => {
-    return getAll('.floater').filter((i) => {
+    return getAll('#floats .floater').filter((i) => {
       return i.getBoundingClientRect().width > 0;
     });
   };

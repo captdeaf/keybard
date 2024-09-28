@@ -88,7 +88,7 @@ addInitializer('load', () => {
 
     editID = tapdance.tdid;
 
-    ACTION.showFloat(floater);
+    floater.style['display'] = 'block';
   }
 
   ////////////////////////////////////
@@ -107,6 +107,7 @@ addInitializer('load', () => {
       KBAPI.updateTapdance(editID);
     });
     KEYUI.refreshAllKeys();
+    floater.style['display'] = 'none';
   });
 
   addInitializer('connected', () => {

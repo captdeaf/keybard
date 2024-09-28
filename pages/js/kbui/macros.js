@@ -210,7 +210,7 @@ addInitializer('load', () => {
     savebutton.dataset.mid = macro.mid;
 
     renderMacroActions(macro, actions);
-    ACTION.showFloat(floater);
+    floater.style['display'] = 'block';
   }
 
   ACTION.onclick('[data-macro-add]', (target) => {
@@ -273,7 +273,7 @@ addInitializer('load', () => {
     macro.actions = buildActionsFromFloat();
     const mkey = get('#macro-' + savebutton.dataset.mid);
     mkey.classList.add('changed');
-    ACTION.closeFloats();
+    floater.style['display'] = 'none';
     CHANGES.queue('macro', KBAPI.updateMacros);
     KEYUI.refreshAllKeys();
   });

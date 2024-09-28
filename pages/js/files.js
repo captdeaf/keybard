@@ -281,7 +281,7 @@ addInitializer('load', () => {
       const reader = new FileReader();
       reader.onload = (evt) => {
         fileinput.value = '';
-        disp.style['display'] = 'none';
+        ACTION.closeFloats();
         const content = evt.target.result;
         try {
           const js = JSON.parse(content);
