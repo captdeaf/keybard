@@ -272,6 +272,7 @@ addInitializer('load', () => {
   ////////////////////////////////////
   ACTION.onclick('#upload-file-float', () => {
     const disp = get('#float-upload');
+    ACTION.showFloat(disp);
     disp.style['display'] = 'block';
     const fileinput = get('#upload-file');
     
