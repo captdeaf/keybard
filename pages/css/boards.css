@@ -10,7 +10,7 @@
   padding-bottom: 4px;
   margin-bottom: 4px;
   width: 100%;
-  height: 2em;
+  height: 30px;
 }
 
 #layer-selection .layer {
@@ -23,11 +23,6 @@
   align-items: center;
   padding: 4px 10px;
   cursor: pointer;
-}
-
-.main-container {
-  width: 100%;
-  height: 100%;
 }
 
 #layer-selection .layer.selected {
@@ -113,7 +108,7 @@
 
 #allboards {
   display: block;
-  flex: 1 1 auto;
+  flex: 1 1 content;
   background-color: #ccc;
   width: 100%;
   overflow: auto;
@@ -133,8 +128,7 @@
 }
 
 #board-selection {
-  position: absolute;
-  bottom: 5px;
+  flex: 0 0 content;
   height: 40px;
   margin-left: 1em;
   display: flex;
