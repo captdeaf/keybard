@@ -35,10 +35,9 @@
 }
 
 #main {
-  flex: 0 0 content;
+  flex: content;
   width: 100%;
   overflow: auto;
-  max-height: 60vh;
   border-bottom: 1px solid black;
 }
 
@@ -120,14 +119,16 @@
 }
 
 #board-selection {
-  position: absolute;
-  bottom: 5px;
-  height: 40px;
-  margin-left: 1em;
-  display: flex;
-  flex-flow: row;
-  padding: 4px;
-  width: 100%;
+    padding-left: 1em;
+    bottom: 5px;
+    height: 40px;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    justify-content: center;
 }
 
 .board-sel {
