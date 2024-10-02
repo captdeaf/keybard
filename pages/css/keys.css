@@ -16,6 +16,12 @@
   white-space: pre;
 }
 
+.keycap {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
 .key {
   --key-border-radius: 4px;
   position: relative;

@@ -26,30 +26,59 @@ addInitializer('connected', () => {
   //
   //  Render a single keyreturning the .keyimage for updating.
   //
+  //  Basically a$modified version of KLE's template, since I don't want
+  //  to import all of its libraries.
+  //
+  //  A key consists of:
+  //    Outer div: keycap for rotation
+  //    Inner divs: for key. This can be multiple divs, but only one
+  //                should have the key label rendered into it.
+  //
   ///////////////////////////////////
   function renderKey(kmid, opts) {
-    const style = {
-      width: (opts.w * 30 + ((opts.w - 1)*5)) + 'px',
-      height: (opts.h * 30 + ((opts.h - 1)*5)) + 'px',
-      top: ((opts.y) * 35) + 'px',
-      left: ((opts.x) * 35) + 'px',
-      position: 'absolute',
-    };
-    if (opts.r) {
-      style.transform = 'rotate(' + opts.r + 'deg)';
+    const kle = KLE.calc(opts);
+    const key = kle.key;
+    const sizes = kle.sizes;
+    const parms = kle.parms;
+
+    const outerClasses = ['keycap'];
+    if (key.ghost) outerClasses.push('ghosted');
+    if (key.decal) outerClasses.push('decal');
+
+    const outerStyle = {};
+    if (key.rotation_angle) {
+      outerStyle['transform'] = `rotate(${key.rotation_angle}deg)`;
+      outerStyle['transform-origin'] = `${parms.origin_x}px ${parms.origin_y}px`;
     }
+
+    const keystyle = {
+      'left': `${parms.outercapx + 3}px`,
+      'top': `${parms.outercapy + 3}px`,
+      'width': `${parms.outercapwidth - 6}px`,
+      'height': `${parms.outercapheight - 6}px`,
+      'border-width': `${sizes.strokeWidth}px`,
+      'border-radius': `${sizes.roundOuter}px`,
+    };
     const keyimage = EL('div', {
-      class: 'key',
+      class: 'key keyborder',
       'data-kmid': kmid,
-      style: style,
-    }, ' ');
+      style: keystyle,
+    }, `${kmid}`);
+
+    const children = [];
+    children.push(keyimage);
+
+    const keycap = EL('div', {
+      class: outerClasses,
+      style: outerStyle,
+    }, children);
 
     const keydata = {
+      cap: keycap,
       image: keyimage,
       id: kmid,
       ...opts,
     }
-
     return keydata;
   }
 
@@ -89,7 +118,7 @@ addInitializer('connected', () => {
       bounds.right = Math.max(bounds.right, left + width);
       bounds.bottom = Math.max(bounds.bottom, top + height);
 
-      children.push(mykeys[kmid].image);
+      children.push(keydata.cap);
     }
     appendChildren(par, ...children);
 
