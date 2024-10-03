@@ -3,7 +3,7 @@
 import re
 from glob import glob
 
-TEMPLATE_RE = re.compile(r'\{\{([\w\./]+)\}\}')
+TEMPLATE_RE = re.compile(r'\{\{([*\w\./]+)\}\}')
 
 def optimize(content):
     return content

@@ -64,6 +64,56 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
+  //  Tips for using keybard.
+  //
+  ////////////////////////////////////
+  const tipcontainer = get('#float-tips');
+  const alltips = getAll('#tiptip .tip');
+  const tipcount = alltips.length;
+  const TIPS = {
+    idx: 0,
+    pick: (idx) => {
+      TIPS.idx = idx;
+      for (const tip of alltips) {
+        tip.style['display'] = 'none';
+      }
+      alltips[idx].style['display'] = 'block';
+    },
+    show: () => {
+      setSaved('tips', 'show');
+      ACTION.showFloat(tipcontainer);
+    },
+    hide: () => {
+      setSaved('tips', 'hide');
+      ACTION.closeFloats();
+    },
+    prev: () => {
+      let idx = TIPS.idx - 1;
+      if (idx < 0) {
+        idx = tipcount - 1;
+      }
+      TIPS.pick(idx);
+    },
+    next: () => {
+      let idx = TIPS.idx + 1;
+      if (idx >= tipcount) {
+        idx = 0;
+      }
+      TIPS.pick(idx);
+    },
+  };
+
+  TIPS.pick(Math.floor(Math.random() * tipcount));
+  if (getSaved('tips', 'show') === 'show') {
+    TIPS.show();
+  }
+
+  ACTION.onclick('[data-tip]', (el) => {
+    TIPS[el.dataset.tip]();
+  });
+
+  ////////////////////////////////////
+  //
   //  Basic dialog and window interactions.
   //
   ////////////////////////////////////

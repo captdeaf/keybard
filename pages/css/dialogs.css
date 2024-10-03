@@ -165,8 +165,8 @@
   max-width: 80%;
   flex-shrink: 1;
   min-height: 5vh;
-  height: 20%;
   max-height: 80vh;
+  overflow-y: auto;
   z-index: 1000;
   flex-flow: column;
 }
