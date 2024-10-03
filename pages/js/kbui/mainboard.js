@@ -330,7 +330,6 @@ addInitializer('connected', () => {
     // Render each layer.
     for (const layerid of layerids) {
       if (isEmpty(layerid)) {
-        console.log('is empty', layerid, KBINFO.keymap[layerid]);
         continue;
       }
       let name = `Layer ${layerid}`;

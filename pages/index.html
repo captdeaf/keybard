@@ -162,6 +162,9 @@
   <label id="print-layers" class="connect-enable">
     Print layer maps.
   </label>
+  <label data-tip="show" id="open-tips">
+    Keybard Tips.
+  </label>
   <label data-open="#about" id="open-about">
     About KeyBard
   </label>
@@ -1121,6 +1124,80 @@
   </p>
 </div>
 
+  <div id="float-tips" class="floater closeable" style="min-width: 300px;">
+    <div class="tiptop">
+      <button data-tip="prev">Previous Tip</button>
+      <button data-tip="hide">Close</button>
+      <button data-tip="next">Next Tip</button>
+    </div>
+    <div id="tiptip">
+      <div class="tip">
+  <h3>Quick actions for keys</h3>
+  <p>
+    Did you know: R-Clicking a key in your keyboard map will show you some easy
+    shortcuts! If this doesn't work, be aware that the most common cause is a
+    browser extension intended to prevent websites from hijacking context menus
+  </p>
+  <p>
+    You can assign and edit an unused macro or tapdance instantly, enter a
+    key code by its raw QMK value, clear or disable it, or revert the change
+    before committing it!
+  </p>
+  <p>
+    This also works for most keys you can bind in combos, key overrides, macros,
+    and tap dance!
+  </p>
+  <img src="images/tip-contextmenu.png"/ style="width: 300px;">
+</div>
+<div class="tip">
+  <h3>TypeBind</h3>
+  <p>
+    Did you know: While normally you click a key in your keyboard, then a key
+    in the example boards to bind it to - you can use your keyboard to bind
+    it to a key! Enable "Typing binds a key" in the menu, then click a key
+    to assign to, then just type the key on your keyboard!
+  </p>
+  <p>
+    Bonus: works exceptionally well with Serial Assignment!
+  </p>
+  <img src="images/tip-typebind.png"/ style="width: 300px;">
+</div>
+<div class="tip">
+  <h3>Printing layer maps</h3>
+  <p>
+    Did you know: While the default UI is annoying to print, Keybard has a
+    "print" option in the menu that opens a new window with all your
+    non-empty layers. You can remove them at will, and print out an easy
+    reference sheet!
+  </p>
+  <img src="images/tip-print.png"/ style="width: 500px;">
+</div>
+<div class="tip">
+  <h3>Serial Assignment</h3>
+  <p>
+    Did you know: You don't have to click each key one by one to assign to
+    them. Select a serial assignment method under MENU-&gt; Serial Assignment,
+    and select a key. When it's bound to a new key, the active key to select
+    jumps to the next in its series.
+  </p>
+  <img src="images/tip-serial.png"/ style="width: 60vw; height: 30vh;">
+</div>
+<div class="tip">
+  <h3>Layer names</h3>
+  <p>
+    Did you know: You can assign cosmetic names to your layers in Keybard!
+    These are in-memory, and saved in your .kbi file on download, so other apps
+    such as vial will not recognize or show layer names.
+  </p>
+  <p>
+    To rename a layer, r-click its number in the layer selection tab, and
+    enter its name! To clear, just submit an empty string at the prompt.
+  </p>
+  <img src="images/tip-layername.png"/ style="width: 400px;">
+</div>
+
+    </div>
+  </div>
 </div>
 
     <div id="float-macro" class="floater closeable" style="width: 80vw; min-height: 120px;">
