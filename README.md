@@ -88,6 +88,9 @@ device is connected. It is the 'static' version.
 KBINFO is considered the 'current' and editable kbinfo - change keys, add
 macros, etc. Unless you have 'instant' on, this will differ from BASE_KBINFO.
 
+If you want to make mass changes, then perform the changes on KBINFO, and
+call updateAllChanges().
+
 On commit, BASE_KBINFO and KBINFO will be identical.
 
 All downloads are of KBINFO. All uploads replace KBINFO. Only if 'instant' is
