@@ -133,7 +133,6 @@ addInitializer('connected', () => {
   const boardKeys = renderBoardInto(board);
 
   const mbox = get('#topboard');
-  x = mbox;
   // mbox.style['width'] = `${parseInt(board.style.width) + 20}px`;
   mbox.style['height'] = `${parseInt(board.style.height) + 80}px`;
   mbox.style['max-height'] = `${parseInt(board.style.height) + 80}px`;
