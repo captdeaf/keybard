@@ -32,9 +32,9 @@ addInitializer('connected', () => {
     for (const el of getAll(`[data-qsid="${qfield.qsid}"]`)) {
       el.classList.add('changed');
     }
-    CHANGES.queue('qmk' + qfield.qsid, () => {
-      KBAPI.updateQMKSetting(qfield.qsid);
-    });
+    CHANGES.queue('qmk' + qfield.qsid, () => (
+      KBAPI.updateQMKSetting(qfield.qsid)
+    ));
   }
 
   function qmkGetInteger(qfield, kbinfo) {
@@ -46,9 +46,9 @@ addInitializer('connected', () => {
     for (const el of getAll(`[data-qsid="${qfield.qsid}"]`)) {
       el.classList.add('changed');
     }
-    CHANGES.queue('qmk' + qfield.qsid, () => {
-      KBAPI.updateQMKSetting(qfield.qsid);
-    });
+    CHANGES.queue('qmk' + qfield.qsid, () => (
+      KBAPI.updateQMKSetting(qfield.qsid)
+    ));
   }
 
   ////////////////////////////////////
@@ -153,9 +153,9 @@ addInitializer('connected', () => {
         for (const el of getAll(`[data-qsid="${qsid}"]`)) {
           el.classList.add('changed');
         }
-        CHANGES.queue('qmk' + qsid, () => {
-          KBAPI.updateQMKSetting(qsid);
-        });
+        CHANGES.queue('qmk' + qsid, () => (
+          KBAPI.updateQMKSetting(qsid)
+        ));
       }
     }
   };

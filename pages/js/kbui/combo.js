@@ -63,9 +63,9 @@ addInitializer('connected', () => {
           KEYUI.refreshKey(combokey);
           combokey.classList.add('changed');
         }
-        CHANGES.queue('combo' + cmbid, () => {
-          KBAPI.updateCombo(cmbid);
-        });
+        CHANGES.queue('combo' + cmbid, () => (
+          KBAPI.updateCombo(cmbid)
+        ));
       }
     }
   };
@@ -88,9 +88,9 @@ addInitializer('connected', () => {
     for (const combokey of getAll('[data-cmbid="' + cmbid + '"]')) {
       combokey.classList.add('changed');
     }
-    CHANGES.queue('combo' + cmbid, () => {
-      KBAPI.updateCombo(cmbid);
-    });
+    CHANGES.queue('combo' + cmbid, () => (
+      KBAPI.updateCombo(cmbid)
+    ));
 
     // Set combo key.
     target.dataset.key = keystr;

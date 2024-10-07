@@ -78,9 +78,9 @@ let BASE_KBINFO;
 const CHANGES = {
   // Queue and commit changes.
   todo: {},
-  queue(desc, cb) {
+  async queue(desc, cb) {
     if (SETTINGS.instant) {
-      cb();
+      await cb();
     } else {
       CHANGES.todo[desc] = {
         desc: desc,
@@ -95,10 +95,10 @@ const CHANGES = {
     }
   },
 
-  commit() {
+  async commit() {
     for (const [desc, change] of Object.entries(CHANGES.todo)) {
       if (change && change.cb) {
-        change.cb();
+        await change.cb();
       }
     }
     CHANGES.todo = {};
