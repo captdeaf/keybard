@@ -192,9 +192,9 @@ addInitializer('connected', () => {
         if (!((keystr === -1 || keystr === 0xFF) &&
             (bkeystr === -1 || bkeystr === 0xFF))) {
           if (keystr !== bkeystr) {
-            CHANGES.queue('key' + layer + '.' + kmid, () => {
-              KBAPI.updateKey(layer, kmid, keystr);
-            });
+            CHANGES.queue('key' + layer + '.' + kmid, () => (
+              KBAPI.updateKey(layer, kmid, keystr)
+            ));
           }
         }
       }
@@ -265,9 +265,9 @@ addInitializer('connected', () => {
       KBINFO.keymap[curLayer][kmid] = keystr;
       target.dataset.key = keystr;
       target.classList.add('changed');
-      CHANGES.queue('key' + curLayer + '.' + kmid, () => {
-        KBAPI.updateKey(curLayer, kmid, keystr);
-      });
+      CHANGES.queue('key' + curLayer + '.' + kmid, () => (
+        KBAPI.updateKey(curLayer, kmid, keystr)
+      ));
       KEYUI.refreshKey(target);
     }
     ACTION.selectKey();

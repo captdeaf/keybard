@@ -103,9 +103,9 @@ addInitializer('load', () => {
     }
     tapdance['tapms'] = parseInt(divs['tapms'].value);
     get('#tapdance-' + editID).classList.add('changed');
-    CHANGES.queue('TD' + editID, () => {
-      KBAPI.updateTapdance(editID);
-    });
+    CHANGES.queue('TD' + editID, () => (
+      KBAPI.updateTapdance(editID)
+    ));
     KEYUI.refreshAllKeys();
     floater.style['display'] = 'none';
   });
@@ -179,9 +179,9 @@ addInitializer('load', () => {
     td.doubletap = 'KC_NO';
     td.tapms = 200;
     target.classList.add('changed');
-    CHANGES.queue('TD' + tdid, () => {
-      KBAPI.updateTapdance(tdid);
-    });
+    CHANGES.queue('TD' + tdid, () => (
+      KBAPI.updateTapdance(tdid)
+    ));
     KEYUI.refreshAllKeys();
   });
 
@@ -234,9 +234,9 @@ addInitializer('load', () => {
       for (const i of ['tap', 'hold', 'doubletap', 'taphold', 'tapms']) {
         if (td[i] !== btd[i]) {
           get('#tapdance-' + tdid).classList.add('changed');
-          CHANGES.queue('TD' + tdid, () => {
-            KBAPI.updateTapdance(tdid);
-          });
+          CHANGES.queue('TD' + tdid, () => (
+            KBAPI.updateTapdance(tdid)
+          ));
           break;
         }
       }

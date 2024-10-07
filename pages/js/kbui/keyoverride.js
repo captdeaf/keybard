@@ -63,9 +63,9 @@ addInitializer('connected', () => {
     }
 
     korows[koid].classList.add('changed');
-    CHANGES.queue('ko' + koid, () => {
-      KBAPI.updateKeyoverride(koid);
-    });
+    CHANGES.queue('ko' + koid, () => (
+      KBAPI.updateKeyoverride(koid)
+    ));
   });
 
   // Bind action for the keys.
@@ -76,9 +76,9 @@ addInitializer('connected', () => {
     KBINFO.key_overrides[koid][name] = keystr;
 
     korows[koid].classList.add('changed');
-    CHANGES.queue('ko' + koid, () => {
-      KBAPI.updateKeyoverride(koid);
-    });
+    CHANGES.queue('ko' + koid, () => (
+      KBAPI.updateKeyoverride(koid)
+    ));
 
     // Update UI
     target.dataset.key = keystr;
@@ -209,9 +209,9 @@ addInitializer('connected', () => {
           (ko.trigger !== bko.trigger) ||
           (ko.trigger_mods !== bko.trigger_mods)) {
         korows[koid].classList.add('changed');
-        CHANGES.queue('ko' + koid, () => {
-          KBAPI.updateKeyoverride(koid);
-        });
+        CHANGES.queue('ko' + koid, () => (
+          KBAPI.updateKeyoverride(koid)
+        ));
       }
     }
   };
