@@ -144,7 +144,7 @@ addInitializer('connected', () => {
       const rowTypes = [
         ['trigger_mods', "Trigger Mods - require one or all of these."],
         ['negative_mod_mask', "Negative mods - don't function if these are down."],
-        ['suppressed_mod', "Suppressed mods - don't send mod, even if pressed."],
+        ['suppressed_mods', "Suppressed mods - don't send mod, even if pressed."],
       ];
 
       // 3 rows of mod key toggles.
