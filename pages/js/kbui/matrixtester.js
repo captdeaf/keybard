@@ -22,12 +22,13 @@ addInitializer('connected', () => {
   ///////////////////////////////////
   function renderMatrixKey(kmid, opts) {
     const style = {
-      width: (opts.w * 30 + ((opts.w - 1)*5)) + 'px',
-      height: (opts.h * 30 + ((opts.h - 1)*5)) + 'px',
       top: ((opts.y) * 35 + 20) + 'px',
       left: ((opts.x) * 35 + 20) + 'px',
+      width: (opts.width * 30 + ((opts.width - 1)*5)) + 'px',
+      height: (opts.height * 30 + ((opts.height - 1)*5)) + 'px',
       position: 'absolute',
     };
+    console.log('matrix style', style, opts);
     if (opts.r) {
       style.transform = 'rotate(' + opts.r + 'deg)';
     }
