@@ -105,6 +105,10 @@
   left: 100vw;
 }
 
+.dropdown-content > label.selected {
+  background-color: #ddf;
+}
+
 .dropdown-content > label:hover {
   background-color: #dfd;
 }
