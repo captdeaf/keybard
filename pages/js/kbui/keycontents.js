@@ -17,12 +17,12 @@ const KEYUI = {
 
 addInitializer('load', () => {
   const LAYERKEYS = {
-    MO:  ['MO', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
-    DF:  ['DF', 'Make default layer: ', 'key-layer key-layer-df'],
-    TG:  ['TG', 'Toggle to layer: ', 'key-layer key-layer-tg'],
-    TT:  ['TT', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
-    OSL: ['OSL', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
-    TO:  ['TO', 'Make layer default: ', 'key-layer key-layer-to'],
+    MO:  ['Hold', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
+    DF:  ['Def', 'Make default layer: ', 'key-layer key-layer-df'],
+    TG:  ['Toggle', 'Toggle to layer: ', 'key-layer key-layer-tg'],
+    TT:  ['Switch', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
+    OSL: ['OneShot', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
+    TO:  ['MkDef', 'Make layer default: ', 'key-layer key-layer-to'],
   };
 
   ////////////////////////////////////
@@ -66,6 +66,7 @@ addInitializer('load', () => {
     m = keystr.match(/^OSM\((.*)\)$/);
     if (m) {
       return {
+        type: 'OSM',
         top: 'OSM',
         str: m[1].replace(/MOD_/g, ''),
         title: keystr,
@@ -80,24 +81,28 @@ addInitializer('load', () => {
         let top = m[1];
         let lname = m[2];
         if (m[1] in LAYERKEYS) {
-          lname = getEditableName('layer', m[2], lname);
+          lname = getEditableName('layer', m[2], lname, true);
           let str = `(${lname})`;
           const ldesc = LAYERKEYS[m[1]];
           return {
+            type: 'layer',
+            layertext: ldesc[0],
             top: keystr,
-            str: `<span class="key-layer">${lname}</span>`,
+            str: lname,
             title: ldesc[1] + lname,
           };
         }
         if (m[1] === 'TD') {
           const desc = TAPDANCE.describe(m[2]);
           return {
+            type: 'tapdance',
             top: keystr,
             str: desc.slice(0,7),
             title: `Tap Dance ${m[2]} - ${desc}`,
           };
         }
         return {
+          type: 'other',
           str: lname,
           top: m[1] + '()',
           title: mkey.title,
@@ -109,6 +114,7 @@ addInitializer('load', () => {
     if (m) {
       const desc = MACROS.describe(m[1]);
       return {
+        type: 'macro',
         str: desc.str.slice(0, 6),
         top: keystr,
         title: keystr + ': ' + desc.title,
@@ -122,8 +128,10 @@ addInitializer('load', () => {
       if (modmask in CODEMAP && kcmask in CODEMAP) {
         const modkey = KEY.define(modmask);
         const kckey = KEY.define(kcmask);
-        const modstr = modkey.str.replace('(kc)', '').replace('\n','_').trim();
+        const modstr = modkey.str.replace('(kc)', '').replace('\n',' ').trim();
         return {
+          type: 'modmask',
+          mods: modstr,
           top: modstr,
           str: kckey.str,
           title: modkey.title + ' ' + kckey.title,
@@ -144,23 +152,58 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
-  //  refreshAllKeys: Update the contents of every .key in the page.
+  //  refreshKey: Update the contents of a single .key, using its keystr.
   //
   ////////////////////////////////////
+  function sizedElement(tag, opts, content, width) {
+    const el = EL(tag, opts, content);
+    if (content.includes('\n')) {
+      el.style['font-size'] = '8px';
+    } else if (content.length >= 6) {
+      el.style['font-size'] = '8px';
+    } else if (content.length >= 2) {
+      el.style['font-size'] = '12px';
+    } else {
+      el.style['font-size'] = '20px';
+    }
+    return el;
+  }
+
   function refreshKey(keyimage) {
+    const width = parseInt(keyimage.style['width']);
     if (keyimage.dataset.key) {
       const desc = getKeyContents(keyimage.dataset.key);
       keyimage.setAttribute('title', desc.title);
       let content = desc.str;
-      if (desc.top) {
-        content = `<span class="key-top">${desc.top}</span>\n${desc.str}`;
+      const children = [];
+      if (desc.type === 'layer') {
+        children.push(sizedElement('span', {class: 'key-bottom key-type key-layer'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, width));
+      } else if (desc.type === 'modmask') {
+        children.push(sizedElement('span', {class: 'key-bottom key-type key-modmask'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-top'}, desc.mods, width));
+      } else if (desc.type === 'macro') {
+        children.push(sizedElement('span', {class: 'key-bottom key-type key-macro'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
+      } else {
+        if (desc.top) {
+          children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
+        }
+        children.push(sizedElement('span', {}, desc.str, width));
       }
-      keyimage.innerHTML = content;
+      keyimage.innerHTML = '';
+      appendChildren(keyimage, children);
     }
   }
 
   KEYUI.refreshKey = refreshKey;
 
+  ////////////////////////////////////
+  //
+  //  Refresh all keys across the board, usually when defining something that
+  //  may have an impact on other existing keys (e.g: macros, tapdances).
+  //
+  ////////////////////////////////////
   KEYUI.refreshAllKeys = () => {
     const allKeys = getAll('.key:not(.kb-norender)');
     for (const key of allKeys) {

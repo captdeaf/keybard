@@ -26,6 +26,8 @@ addInitializer('connected', () => {
       left: ((opts.x) * 35 + 20) + 'px',
       width: (opts.width * 30 + ((opts.width - 1)*5)) + 'px',
       height: (opts.height * 30 + ((opts.height - 1)*5)) + 'px',
+      'min-width': (opts.width * 30 + ((opts.width - 1)*5)) + 'px',
+      'min-height': (opts.height * 30 + ((opts.height - 1)*5)) + 'px',
       position: 'absolute',
     };
     if (opts.r) {
@@ -75,7 +77,6 @@ addInitializer('connected', () => {
         const mkey = matrixKeys[row][col];
         if (mkey) {
           if (data[row][col]) {
-            console.log('activating', row, col);
             mkey.classList.add('active');
             mkey.classList.add('changed');
           } else {
@@ -92,7 +93,6 @@ addInitializer('connected', () => {
   ACTION.onclick('[data-action="matrix-poll"]', (target) => {
     if (!keepPolling) {
       target.onmouseleave = () => {
-        console.log('done polling');
         keepPolling = false;
         target.onmouseleave = null;
       };
@@ -102,7 +102,6 @@ addInitializer('connected', () => {
         return false;
       };
       setTimeout(() => {
-        console.log('polling');
         keepPolling = true;
         MATRIX.poll();
       }, 10);

@@ -15,7 +15,8 @@
 
 #layer-selection .layer {
   white-space: nowrap;
-  background-color: #e5e5e5;
+  background-color: #fff;
+  border: 1px solid black;
   border-radius: 4px;
   font-size: 12px;
   display: flex;
@@ -49,6 +50,7 @@
 }
 
 #mainboard-container {
+  background-color: #fff;
   display: flex;
   flex-flow: column;
   justify-content: center;
@@ -103,18 +105,19 @@
 /* Keyboard display for keymap bindings. */
 #key-selection {
   flex: 0 0 content;
-  background-color: #ccc;
+  background-color: #fff;
 }
 
 #allboards {
   display: block;
   flex: 1 1 content;
-  background-color: #ccc;
+  background-color: #fff;
   width: 100%;
   overflow: auto;
 }
 
 .board-map {
+  min-width: 800px;
   position: relative;
   padding: 4px;
   margin-bottom: 4.50px;
@@ -125,6 +128,7 @@
   display: flex;
   flex-flow: row;
   width: 100%;
+  margin-bottom: 6px;
 }
 
 #board-selection {

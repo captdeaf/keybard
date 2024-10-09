@@ -25,15 +25,15 @@
 .key {
   --key-border-radius: 4px;
   position: relative;
-  background-color: #e5e5e5;
+  background-color: #fff;
+  border: 1px solid black;
   border-radius: var(--key-border-radius);
-  height: 30px;
-  min-width: 30px;
+  min-height: 40px;
+  min-width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 2px;
-  font-size: 10px;
+  font-size: 20px;
   cursor: pointer;
   text-align: center;
   line-height: normal;
@@ -50,6 +50,15 @@
   left: 0px;
   border-top-left-radius: var(--key-border-radius);
   border-top-right-radius: var(--key-border-radius);
+}
+
+.key-bottom {
+  padding-top: 16px;
+  position: absolute;
+  display: block;
+  width: 100%;
+  top: 0px;
+  left: 0px;
 }
 
 .key.changed {
@@ -125,22 +134,26 @@
  * e.g: a key that triggers a layer has a span.key-layer.
  */
 
-.key-layer {
-  background-color: #F6EACB;
+.key-type {
   width: 100%;
   inset: 0;
   height: 100%;
   border-radius: var(--key-border-radius);
   display: flex;
-  padding-top: 12px;
   justify-content: center;
   align-items: center;
 }
 
-.key-layer-mo {
-  font-style: italic;
-  font-weight: bold;
-  color: green;
+.key-layer {
+  background-color: #ebffe1;
+}
+
+.key-modmask {
+  background-color: #e1ebFF;
+}
+
+.key-macro {
+  background-color: #ffebe1;
 }
 
 /* A 'keyboard' rendering consists of:
