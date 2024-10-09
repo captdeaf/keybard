@@ -44,11 +44,6 @@ addInitializer('connected', () => {
     return mask;
   }
 
-  const shiftableKeys = getAll('[data-shifted]');
-  for (const key of shiftableKeys) {
-    key.dataset.normal = key.innerHTML;
-  }
-
   ACTION.onclick('[data-modifier]', (target) => {
     const enabled = !mods[target.dataset.modifier];
     mods[target.dataset.modifier] = enabled;
@@ -60,20 +55,6 @@ addInitializer('connected', () => {
     } else {
       for (const key of allKeys) {
         key.classList.remove('selected');
-      }
-    }
-
-    // SHIFT is special: When enabled, show the 'shifted' version of
-    // every key on the sample boards.
-    if (target.dataset.modifier === 'SHIFT') {
-      if (enabled) {
-        for (const key of shiftableKeys) {
-          key.innerHTML = key.dataset.shifted;
-        }
-      } else {
-        for (const key of shiftableKeys) {
-          key.innerHTML = key.dataset.normal;
-        }
       }
     }
   });

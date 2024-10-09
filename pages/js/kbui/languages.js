@@ -8,9 +8,9 @@
 
 addInitializer('load', () => {
   const menuitem = get('#menu-international');
-  const children = [];
+  const allMenuItems = [];
   for (const [k, v] of Object.entries(LANGUAGE_KEYS)) {
-    children.push(
+    allMenuItems.push(
       EL('label',
          {
            'data-language': v,
@@ -19,11 +19,26 @@ addInitializer('load', () => {
         k)
     );
   }
-  appendChildren(menuitem, children);
+  appendChildren(menuitem, allMenuItems);
+
+  function selectLanguage(lang, refresh) {
+    KEY.localization = setSaved('language', lang);
+    if (refresh) {
+      KEYUI.refreshAllKeys();
+    }
+    for (const el of allMenuItems) {
+      if (el.dataset.language === lang) {
+        el.classList.add('selected');
+      } else {
+        el.classList.remove('selected');
+      }
+    }
+  }
+
+  selectLanguage(getSaved('language', 'english_us'), false);
 
   ACTION.onclick('[data-language]', (target) => {
-    KEY.localization = target.dataset.language;
+    selectLanguage(target.dataset.language, true);
     ACTION.menuClose();
-    KEYUI.refreshAllKeys();
   });
 });
