@@ -44,14 +44,12 @@ addInitializer('load', () => {
       }
     }
 
-    if (keystr in KEYALIASES) {
-      keystr = KEYALIASES[keystr];
-    }
+    keystr = KEY.canonical(keystr);
 
     const keyid = KEY.parse(keystr);
 
     if (keyid === 0) {
-      return KEYMAP['KC_NO'];
+      return KEY.define('KC_NO');
     }
 
     if (!keyid) {
@@ -62,7 +60,7 @@ addInitializer('load', () => {
     }
 
     if (keystr.startsWith('KC_') && ((keyid & 0xFF00) === 0)) {
-      return KEYMAP[keystr];
+      return KEY.define(keystr);
     }
 
     m = keystr.match(/^OSM\((.*)\)$/);
@@ -78,7 +76,7 @@ addInitializer('load', () => {
     if (m) {
       if (keyid in CODEMAP) {
         // TODO: MO(), etc with custom layer names.
-        const mkey = KEYMAP[CODEMAP[keyid]];
+        const mkey = KEY.define(keyid);
         let top = m[1];
         let lname = m[2];
         if (m[1] in LAYERKEYS) {
@@ -122,8 +120,8 @@ addInitializer('load', () => {
       let modmask = keyid & 0xFF00;
       let kcmask = keyid & 0x00FF;
       if (modmask in CODEMAP && kcmask in CODEMAP) {
-        const modkey = KEYMAP[CODEMAP[modmask]];
-        const kckey = KEYMAP[CODEMAP[kcmask]];
+        const modkey = KEY.define(modmask);
+        const kckey = KEY.define(kcmask);
         const modstr = modkey.str.replace('(kc)', '').replace('\n','_').trim();
         return {
           top: modstr,
@@ -134,7 +132,7 @@ addInitializer('load', () => {
     }
 
     if (keyid in CODEMAP) {
-      return KEYMAP[CODEMAP[keyid]];
+      return KEY.define(keyid);
     }
     return {
       str: '??INVLD??',
