@@ -23,6 +23,8 @@ const KEY = {
   stringifyKeymap: null,
   // Get a key definition from keymap. define('KC_A')
   define: null,
+  // Which keymap are we localized to.
+  localization: 'english_us',
 };
 
 addInitializer('load', () => {
@@ -126,6 +128,14 @@ addInitializer('load', () => {
       keystr = CODEMAP[keystr];
     }
     keystr = KEY.canonical(keystr);
+    if (KEY.localization) {
+      const kmap = LANGUAGE_MAP[KEY.localization];
+      const ret = structuredClone(KEYMAP[keystr]);
+      if (kmap && keystr in kmap) {
+        ret.str = kmap[keystr];
+      }
+      return ret;
+    }
     if (keystr in KEYMAP) {
       return KEYMAP[keystr];
     }

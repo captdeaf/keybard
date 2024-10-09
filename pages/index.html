@@ -25,6 +25,7 @@
 
 <!-- keys.js, definitions for KC_foo, and mapping, e.g: 3 -> KC_A -->
 <script type="text/javascript" src="js/keygen.js"></script>
+<script type="text/javascript" src="js/languages.js"></script>
 <script type="text/javascript" src="js/keys.js"></script>
 <script type="text/javascript" src="js/jskeys.js"></script>
 <script type="text/javascript" src="js/kbinfo.js"></script>
@@ -34,6 +35,7 @@
 
 <!-- UI just for keyboard stuff -->
 <script type="text/javascript" src="js/kbui/keycontents.js"></script>
+<script type="text/javascript" src="js/kbui/languages.js"></script>
 <script type="text/javascript" src="js/kbui/macros.js"></script>
 <script type="text/javascript" src="js/kbui/tapdance.js"></script>
 <script type="text/javascript" src="js/kbui/combo.js"></script>
@@ -104,6 +106,11 @@
         Svalboard by key direction.<br>
         Won't work w/ other boards.
       </label>
+    </div>
+  </label>
+  <label class="menuitem dropdown">
+    &gt; International keyboards
+    <div id="menu-international" class="dropdown-content">
     </div>
   </label>
   <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable">
@@ -579,7 +586,7 @@
   </div>
 </div>
 </div>
-  <div class="board-map" data-board="iso"><div class="kb-row"><div class="kb-board-mods">
+  <div class="board-map" data-board="international"><div class="kb-row"><div class="kb-board-mods">
   <div class="kb-group" style="left: 1vw; width: 55vw;">
     <div class="kb-row kb-mods kb-modifiers" title="All selected Mods will be applied to keys assigned.">
       <div class="kbdesc extra-large">Mods to apply:</div>
@@ -602,6 +609,33 @@
 </div>
 </div>
 <div class="kb-board">
+  <div class="kb-spam">
+    <div class="key kb-key" data-bind="keymask" data-key="KC_NONUS_HASH"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_NONUS_BSLASH"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_RO"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_KP_COMMA"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_TILD"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_AT"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_CIRC"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_AMPR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_ASTR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_LPRN"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_RPRN"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_UNDS"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_PLUS"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_LCBR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_RCBR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_LT"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_GT"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_COLN"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_QUES"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_DQUO"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_PIPE"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_DLR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_EXLM"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_HASH"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_PERC"></div>
+  </div>
   <div class="kb-group">
     <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_NONUS_HASH" title="Non-US # and ~">~ #</div>
@@ -1037,12 +1071,7 @@
 </div>
 <div id="board-selection" class="on-connect" style="z-index: 200;">
   <div class="board-sel" data-board="qwerty">QWERTY</div>
-  <div class="dropdown board-sel menu-top">
-    <div>International</div>
-    <div class="dropdown-content dropup">
-      <label class="board-sel" data-board="iso">ISO</label>
-    </div>
-  </div>
+  <div class="board-sel" data-board="international">International</div>
   <div class="board-sel" data-board="custom">Mouse and Special Keys</div>
   <div class="board-sel" data-board="layer">Layers</div>
   <div class="board-sel" data-board="macro">Macros</div>

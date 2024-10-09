@@ -28,7 +28,6 @@ addInitializer('connected', () => {
       height: (opts.height * 30 + ((opts.height - 1)*5)) + 'px',
       position: 'absolute',
     };
-    console.log('matrix style', style, opts);
     if (opts.r) {
       style.transform = 'rotate(' + opts.r + 'deg)';
     }
