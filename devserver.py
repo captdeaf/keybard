@@ -44,7 +44,7 @@ def main():
     )
 
     # This server.
-    parser.add_argument('-b', '--bind', default='localhost', type=str)
+    parser.add_argument('-b', '--bind', default='0.0.0.0', type=str)
     parser.add_argument('-p', '--port', default='8000', type=int)
 
     args = parser.parse_args()

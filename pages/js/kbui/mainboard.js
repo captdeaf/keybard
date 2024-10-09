@@ -54,8 +54,8 @@ addInitializer('connected', () => {
     const keystyle = {
       'left': `${parms.outercapx + 3}px`,
       'top': `${parms.outercapy + 3}px`,
-      'width': `${parms.outercapwidth - 6}px`,
-      'height': `${parms.outercapheight - 6}px`,
+      'width': `${parms.outercapwidth}px`,
+      'height': `${parms.outercapheight}px`,
       'border-width': `${sizes.strokeWidth}px`,
       'border-radius': `${sizes.roundOuter}px`,
     };
