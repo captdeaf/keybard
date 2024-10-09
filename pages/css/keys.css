@@ -204,6 +204,10 @@
   max-width: 120px;
 }
 
+.kb-intl {
+  background-color: #ffebe1;
+}
+
 .kb-blank {
   flex: 1 1 auto;
   min-width: 30px;
