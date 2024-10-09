@@ -32,6 +32,8 @@ addInitializer('load', () => {
     }
   }
 
+  const intlKeys = getAll('[data-intl="yes"]');
+
   function selectLanguage(lang, refresh) {
     KEY.localization = setSaved('language', lang);
     if (refresh) {
@@ -42,6 +44,13 @@ addInitializer('load', () => {
         el.classList.add('selected');
       } else {
         el.classList.remove('selected');
+      }
+    }
+    for (const el of intlKeys) {
+      if (el.dataset.key in LANGUAGE_MAP[lang]) {
+        el.style['display'] = 'block';
+      } else {
+        el.style['display'] = 'none';
       }
     }
   }
