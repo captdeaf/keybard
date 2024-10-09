@@ -21,6 +21,8 @@ const KEY = {
   // Convert an integer representation of a keypress into a string.
   stringify: null,
   stringifyKeymap: null,
+  // Get a key definition from keymap. define('KC_A')
+  define: null,
 };
 
 addInitializer('load', () => {
@@ -105,6 +107,37 @@ addInitializer('load', () => {
     } else {
       return '????';
     }
+  };
+
+  ////////////////////////////////////
+  //
+  //  Return a key definition for a given keystr.
+  //
+  ////////////////////////////////////
+  KEY.define = (keystr) => {
+    const orig = keystr;
+    if (keystr.match && keystr.match(/^0x\w+$/)) {
+      keystr = parseInt(keystr, 16);
+    }
+    if (typeof(keystr) === 'number' || keystr.match(/^\d+$/)) {
+      keystr = parseInt(keystr);
+    }
+    if (keystr in CODEMAP) {
+      keystr = CODEMAP[keystr];
+    }
+    keystr = KEY.canonical(keystr);
+    if (keystr in KEYMAP) {
+      return KEYMAP[keystr];
+    }
+    console.log('Unknown keystr', orig, keystr);
+    return undefined;
+  };
+
+  KEY.canonical = (keystr) => {
+    if (keystr in KEYALIASES) {
+      return KEYALIASES[keystr];
+    }
+    return keystr;
   };
 
   ////////////////////////////////////
