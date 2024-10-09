@@ -21,6 +21,17 @@ addInitializer('load', () => {
   }
   appendChildren(menuitem, allMenuItems);
 
+  for (const lang of Object.values(LANGUAGE_MAP)) {
+    for (const [k, v] of Object.entries(lang)) {
+      if (!(k in KEYALIASES)) {
+        console.log("key not in aliases", k);
+      } else if (k !== KEYALIASES[k]) {
+        console.log("Aliasing lang", k, KEYALIASES[k]);
+        lang[KEYALIASES[k]] = v;
+      }
+    }
+  }
+
   function selectLanguage(lang, refresh) {
     KEY.localization = setSaved('language', lang);
     if (refresh) {
