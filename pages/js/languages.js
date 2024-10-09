@@ -31,7 +31,7 @@ const LANGUAGE_MAP = {
     "KC_2": "\"\n2",
     "KC_3": "£\n3",
     "KC_QUOTE": "@\n'",
-    "KC_BACKSLASH": "~\n#",
+    "KC_BSLASH": "~\n#",
     "KC_NONUS_HASH": "|\n\\"
   },
   "french_azerty": {
