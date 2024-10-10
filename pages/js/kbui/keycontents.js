@@ -78,10 +78,8 @@ addInitializer('load', () => {
       if (keyid in CODEMAP) {
         // TODO: MO(), etc with custom layer names.
         const mkey = KEY.define(keyid);
-        let top = m[1];
-        let lname = m[2];
+        const lname = getEditableName('layer', m[2], m[2], true);
         if (m[1] in LAYERKEYS) {
-          lname = getEditableName('layer', m[2], lname, true);
           let str = `(${lname})`;
           const ldesc = LAYERKEYS[m[1]];
           return {
@@ -106,6 +104,26 @@ addInitializer('load', () => {
           str: lname,
           top: m[1] + '()',
           title: mkey.title,
+        };
+      }
+    }
+    m = keystr.match(/^LT(\d+)\((.*)\)$/);
+    if (m) {
+      let lname = getEditableName('layer', m[1], m[1], true);
+      if (m[2] === 'kc') {
+        return {
+          type: 'layerhold',
+          layertext: `Hold(${lname})`,
+          str: '',
+          title: `${keystr}: Layer ${lname} on hold, (kc) otherwise.`,
+        };
+      } else {
+        const kckey = KEY.define(m[2]);
+        return {
+          type: 'layerhold',
+          layertext: `Hold(${m[1]})`,
+          str: kckey.str,
+          title: `${keystr}: Layer ${lname} on hold, (${m[2]}) otherwise.`,
         };
       }
     }
@@ -179,8 +197,9 @@ addInitializer('load', () => {
 
   function sizedElement(tag, opts, content, width) {
     const el = EL(tag, opts, content);
-    el.style['display'] = 'block';
-    if (content.includes('\n')) {
+    if (width === 0) {
+      el.style['font-size'] = '12px';
+    } else if (content.includes('\n')) {
       el.style['font-size'] = '10px';
       el.style['font-weight'] = 'bold';
       el.style['text-wrap'] = 'balance';
@@ -231,7 +250,10 @@ addInitializer('load', () => {
       const children = [];
       if (desc.type === 'layer') {
         children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, width));
+        children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
+      } else if (desc.type === 'layerhold') {
+        children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
       } else if (desc.type === 'modmask') {
         children.push(sizedElement('span', {class: 'key-midt key-type key-modmask'}, desc.str, width));
         children.push(sizedElement('span', {class: 'key-bottom'}, showModMask(desc.modids), width));
@@ -240,7 +262,7 @@ addInitializer('load', () => {
         children.push(sizedElement('span', {class: 'key-top'}, showModMask(desc.modids), width));
       } else if (desc.type === 'macro') {
         children.push(sizedElement('span', {class: 'key-midb key-type key-macro'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
+        children.push(sizedElement('span', {class: 'key-top'}, desc.top, 0));
       } else {
         if (desc.top) {
           children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
@@ -261,7 +283,8 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   KEYUI.refreshAllKeys = () => {
-    const allKeys = getAll('.key:not(.kb-norender)');
+    // const allKeys = getAll('.key:not(.kb-norender)');
+    const allKeys = getAll('.key');
     for (const key of allKeys) {
       refreshKey(key);
     }
