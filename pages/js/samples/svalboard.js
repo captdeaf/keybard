@@ -19,5 +19,16 @@ SAMPLE_LAYERS.Svalboard = {
     "KC_G", "KC_D", "KC_NO" , "KC_W", "KC_RBRACKET", "KC_T", "KC_C", "KC_LBRACKET", "KC_NO" ,
     "KC_V", "KC_LGUI", "KC_N", "KC_R", "KC_B", "KC_NO" , "KC_Z", "KC_MINUS", "KC_S",
     "KC_L", "KC_SLASH", "KC_NO"
-  ]
+  ],
+  SETTINGS: [
+    "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+    "KC_TRNS", "KC_TRNS", "USER17", "KC_TRNS", "KC_TRNS", -1, "USER03",
+    "KC_TRNS", "USER05", "USER02", "KC_TRNS", -1, "USER01", "KC_TRNS",
+    "USER04", "USER00", "KC_TRNS", -1, "KC_TRNS", "KC_TRNS", "USER07",
+    "USER09", "KC_TRNS", -1, "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+    "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS",
+    "KC_TRNS", -1, "RGB_VAD", "KC_TRNS", "KC_TRNS", "RGB_VAI", "KC_TRNS", -1,
+    "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", -1, "KC_TRNS",
+    "KC_TRNS", "KC_TRNS", "KC_TRNS", "KC_TRNS", -1
+  ],
 };
