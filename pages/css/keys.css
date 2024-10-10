@@ -61,10 +61,6 @@
   left: 0px;
 }
 
-.key.changed {
-  background-color: #dfd;
-}
-
 .key:hover {
   background-color: #ffd;
 }
@@ -154,6 +150,10 @@
 
 .key-macro {
   background-color: #ffebe1;
+}
+
+.changed,.changed .key-bottom {
+  background-color: #ffd !important;
 }
 
 /* A 'keyboard' rendering consists of:
