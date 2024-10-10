@@ -46,6 +46,7 @@
   position: absolute;
   display: block;
   width: 100%;
+  height: 14px;
   top: 0px;
   left: 0px;
   border-top-left-radius: var(--key-border-radius);
@@ -55,12 +56,14 @@
 .key-midb,.key-midt {
   position: absolute;
   display: block;
+  vertical-align: top;
   width: 100%;
   left: 0px;
   top: 0px;
 }
 
 .key-midt {
+  padding-bottom: 16px;
 }
 
 .key-midb {
@@ -68,6 +71,7 @@
 }
 
 .key-bottom {
+  height: 14px;
   background-color: #8c8;
   color: #fff;
   position: absolute;
