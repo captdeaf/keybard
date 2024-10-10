@@ -144,11 +144,23 @@
 .board-sel {
   cursor: pointer;
   flex: 4 0 content;
-  padding: 0.2em;
+  padding: 5px;
   border: 2px solid #bbb;
   border-radius: 3px;
   margin-left: 4px;
   background-color: #ddd;
+  color: black;
+  font-size: 8pt;
+}
+
+.board-sel-unusual {
+  cursor: pointer;
+  flex: 4 0 content;
+  padding: 5px;
+  border: 2px solid #bbb;
+  border-radius: 3px;
+  margin-left: 4px;
+  background-color: #bbb;
   color: black;
   font-size: 8pt;
 }
