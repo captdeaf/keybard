@@ -177,9 +177,17 @@ addInitializer('load', () => {
 
           // We have a menu, render and position it.
           contextTarget = target;
-          cmenu.menu.style['left'] = (evt.clientX - 30) + 'px';
-          cmenu.menu.style['top'] = (evt.clientY - 15) + 'px';
+          cmenu.menu.style['left'] = '30px';
+          cmenu.menu.style['top'] = '15px';
           cmenu.menu.classList.add('show');
+          const menubounds = cmenu.menu.getBoundingClientRect();
+          const winbounds = document.documentElement.getBoundingClientRect();
+          const bounds = {
+            x: Math.min(evt.clientX - 30, winbounds.width - menubounds.width),
+            y: Math.min(evt.clientY - 15, winbounds.height - menubounds.height),
+          }
+          cmenu.menu.style['left'] = Math.floor(bounds.x) + 'px';
+          cmenu.menu.style['top'] = Math.floor(bounds.y) + 'px';
           // We remove the 'show', letting the
           // :hover take over rendering.
           const watchHover = setInterval(() => {
