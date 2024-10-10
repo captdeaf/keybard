@@ -52,20 +52,38 @@
   border-top-right-radius: var(--key-border-radius);
 }
 
-.key-bottom {
-  padding-top: 16px;
+.key-midb,.key-midt {
   position: absolute;
   display: block;
   width: 100%;
-  top: 0px;
   left: 0px;
+  top: 0px;
+}
+
+.key-midt {
+}
+
+.key-midb {
+  padding-top: 16px;
+}
+
+.key-bottom {
+  background-color: #8c8;
+  color: #fff;
+  position: absolute;
+  display: block;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  border-bottom-left-radius: var(--key-border-radius);
+  border-bottom-right-radius: var(--key-border-radius);
 }
 
 .key:hover {
   background-color: #ffd;
 }
 
-.key.active {
+.key.active,.key.active .key-midt,.key.active .key-midb {
   background-color: #fdd;
 }
 
@@ -152,7 +170,7 @@
   background-color: #ffebe1;
 }
 
-.changed,.changed .key-bottom {
+.changed,.changed .key-midt,.changed .key-midb {
   background-color: #ffd !important;
 }
 
