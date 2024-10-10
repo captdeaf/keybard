@@ -255,8 +255,17 @@ addInitializer('load', () => {
         children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
         children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
       } else if (desc.type === 'modmask') {
-        children.push(sizedElement('span', {class: 'key-midt key-type key-modmask'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-bottom'}, showModMask(desc.modids), width));
+        const show = showModMask(desc.modids);
+        const keys = desc.str.split('\n');
+        if (keys.length === 1) {
+          keys.push(keys[0]);
+        }
+        if (show.includes('S')) {
+          children.push(sizedElement('span', {class: 'key-midt key-type key-modmask'}, keys[0], width));
+        } else {
+          children.push(sizedElement('span', {class: 'key-midt key-type key-modmask'}, keys[1], width));
+        }
+        children.push(sizedElement('span', {class: 'key-bottom'}, show, width));
       } else if (desc.type === 'modtap') {
         children.push(sizedElement('span', {class: 'key-midb key-type key-modmask'}, desc.str, width));
         children.push(sizedElement('span', {class: 'key-top'}, showModMask(desc.modids), width));
