@@ -37,13 +37,16 @@ addInitializer('connected', () => {
   //  key_override[koid][name] += value (or -= on deselect)
   //
   ////////////////////////////////////
-  function makeToggle(desc, koid, name, value) {
-    let classes = 'ko-toggle';
+  function makeToggle(desc, koid, name, value, classes) {
+    if (!classes) {
+      classes = [];
+    }
+    classes.push('ko-toggle');
     if ((KBINFO.key_overrides[koid][name] & value) !== 0) {
-      classes = 'ko-toggle checked';
+      classes.push('checked');
     }
     return EL('div', {
-      class: classes,
+      class: classes.join(' '),
       'data-koid': koid,
       'data-name': name,
       'data-value': value,
@@ -114,7 +117,7 @@ addInitializer('connected', () => {
 
       const tds = [];
       // Enable
-      tds.push(EL('td', {}, makeToggle('On', koid, 'options', 0x80)));
+      tds.push(EL('td', {}, makeToggle('', koid, 'options', 0x80, ['ko-enabled'])));
       // Keys: trigger key and override
       tds.push(EL('td', {}, EL('div',
         {
