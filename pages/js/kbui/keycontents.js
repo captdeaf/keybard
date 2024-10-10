@@ -89,7 +89,7 @@ addInitializer('load', () => {
             layertext: ldesc[0],
             top: keystr,
             str: lname,
-            title: ldesc[1] + lname,
+            title: keystr + ': ' + ldesc[1] + lname,
           };
         }
         if (m[1] === 'TD') {
@@ -158,7 +158,8 @@ addInitializer('load', () => {
   function sizedElement(tag, opts, content, width) {
     const el = EL(tag, opts, content);
     if (content.includes('\n')) {
-      el.style['font-size'] = '8px';
+      el.style['font-size'] = '12px';
+      el.style['font-weight'] = 'bold';
     } else if (content.length >= 6) {
       el.style['font-size'] = '8px';
     } else if (content.length >= 2) {
