@@ -118,17 +118,17 @@ addInitializer('connected', () => {
   
   // Main board
   ACTION.addContextMenu('[data-bound="main"]', [
-    { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
-    { name: 'Assign & edit tapdance', trigger: 'key-assign-tapdance' },
     { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
     { name: 'Make transparent', trigger: 'key-assign-transparent' },
+    { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
+    { name: 'Assign & edit tapdance', trigger: 'key-assign-tapdance' },
     { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
 
   // Combo keys: input
   ACTION.addContextMenu('[data-bound="combo"]:not([data-idx="4"])', [
-    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Clear', trigger: 'key-assign-kcno' },
     { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);
@@ -136,7 +136,7 @@ addInitializer('connected', () => {
   // Combo output
   ACTION.addContextMenu('[data-bound="combo"][data-idx="4"]', [
     { name: 'Assign & edit macro', trigger: 'key-assign-macro' },
-    { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
+    { name: 'Clear', trigger: 'key-assign-kcno' },
     { name: 'Enter key by code or value', trigger: 'key-assign-manual' },
     { name: 'Revert change', trigger: 'key-revert' },
   ]);

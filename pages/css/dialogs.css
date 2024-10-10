@@ -132,8 +132,9 @@
   display: none;
   position: fixed;
   border: 1px solid black;
-  background-color: #ffc;
-  border-radius: 2px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #fff;
   z-index: 5000;
 }
 
