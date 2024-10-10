@@ -121,6 +121,25 @@ addInitializer('load', () => {
       };
     }
 
+    m = keystr.match(/^(\w+_T)\((.*)\)$/);
+    if (m) {
+      let modmask = keyid & 0xFF00;
+      let kcmask = keyid & 0x00FF;
+      if (modmask in CODEMAP && kcmask in CODEMAP) {
+        const modkey = KEY.define(modmask);
+        const kckey = KEY.define(kcmask);
+        const modstr = modkey.str.replace('(kc)', '').replace('\n',' ').trim();
+        return {
+          type: 'modtap',
+          mods: modstr,
+          modids: modmask,
+          top: modstr,
+          str: kckey.str,
+          title: modkey.title + ' ' + kckey.title,
+        }
+      }
+    }
+
     m = keystr.match(/^(\w+)\((.*)\)$/);
     if (m) {
       let modmask = keyid & 0xFF00;
@@ -132,6 +151,7 @@ addInitializer('load', () => {
         return {
           type: 'modmask',
           mods: modstr,
+          modids: modmask,
           top: modstr,
           str: kckey.str,
           title: modkey.title + ' ' + kckey.title,
@@ -152,24 +172,56 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
-  //  refreshKey: Update the contents of a single .key, using its keystr.
+  //  Helper functions for refreshKey
   //
   ////////////////////////////////////
+  // Resize an element's contents depending on its parents' width.
+
   function sizedElement(tag, opts, content, width) {
     const el = EL(tag, opts, content);
+    el.style['display'] = 'block';
     if (content.includes('\n')) {
-      el.style['font-size'] = '12px';
+      el.style['font-size'] = '10px';
       el.style['font-weight'] = 'bold';
-    } else if (content.length >= 6) {
+      el.style['text-wrap'] = 'balance';
+    } else if (content.length >= 7) {
       el.style['font-size'] = '8px';
+      el.style['text-wrap'] = 'balance';
     } else if (content.length >= 2) {
       el.style['font-size'] = '12px';
+      el.style['text-wrap'] = 'balance';
     } else {
       el.style['font-size'] = '20px';
     }
     return el;
   }
 
+  const masks = {
+    0x100: ['Ctrl', 'C'],
+    0x200: ['Shft', 'S'],
+    0x400: ['Alt', 'A'],
+    0x800: ['GUI', 'G'],
+    0x1000: ['RHS', 'R'],
+  };
+  // For modmask: Show "Shift A", "C+S A", "C+S+A A", etc.
+  function showModMask(modids) {
+    const allmods = [];
+    for (const [k, v] of Object.entries(masks)) {
+      if (modids & k) {
+        allmods.push(v);
+      }
+    }
+    if (allmods.length > 1) {
+      return allmods.map((m) => m[1]).join('+');
+    }
+    return allmods.map((m) => m[0]).join('+');
+  }
+
+  ////////////////////////////////////
+  //
+  //  refreshKey: Update the contents of a single .key, using its keystr.
+  //
+  ////////////////////////////////////
   function refreshKey(keyimage) {
     const width = parseInt(keyimage.style['width']);
     if (keyimage.dataset.key) {
@@ -178,13 +230,16 @@ addInitializer('load', () => {
       let content = desc.str;
       const children = [];
       if (desc.type === 'layer') {
-        children.push(sizedElement('span', {class: 'key-bottom key-type key-layer'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
         children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, width));
       } else if (desc.type === 'modmask') {
-        children.push(sizedElement('span', {class: 'key-bottom key-type key-modmask'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, desc.mods, width));
+        children.push(sizedElement('span', {class: 'key-midt key-type key-modmask'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-bottom'}, showModMask(desc.modids), width));
+      } else if (desc.type === 'modtap') {
+        children.push(sizedElement('span', {class: 'key-midb key-type key-modmask'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-top'}, showModMask(desc.modids), width));
       } else if (desc.type === 'macro') {
-        children.push(sizedElement('span', {class: 'key-bottom key-type key-macro'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-midb key-type key-macro'}, desc.str, width));
         children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
       } else {
         if (desc.top) {
