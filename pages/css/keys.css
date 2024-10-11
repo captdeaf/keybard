@@ -53,6 +53,11 @@
   border-top-right-radius: var(--key-border-radius);
 }
 
+.key > span {
+  width: 100%;
+  overflow: hidden;
+}
+
 .key-midb,.key-midt {
   position: absolute;
   display: block;

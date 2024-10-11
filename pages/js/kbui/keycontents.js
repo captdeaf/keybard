@@ -196,23 +196,12 @@ addInitializer('load', () => {
   // Resize an element's contents depending on its parents' width.
 
   function sizedElement(tag, opts, content, width) {
-    const el = EL(tag, opts, content);
-    if (width === 0) {
-      el.style['font-size'] = '12px';
-    } else if (content.includes('\n')) {
-      el.style['font-size'] = '10px';
-      el.style['font-weight'] = 'bold';
-      el.style['text-wrap'] = 'balance';
-    } else if (content.length >= 7) {
-      el.style['font-size'] = '8px';
-      el.style['text-wrap'] = 'balance';
-    } else if (content.length >= 2) {
-      el.style['font-size'] = '12px';
-      el.style['text-wrap'] = 'balance';
-    } else {
-      el.style['font-size'] = '20px';
-    }
-    return el;
+    const el = EL('div',
+        {
+          class: 'shrinkme'
+        },
+        content);
+    return EL(tag, opts, el);
   }
 
   const masks = {
@@ -280,6 +269,16 @@ addInitializer('load', () => {
       }
       keyimage.innerHTML = '';
       appendChildren(keyimage, children);
+    }
+
+    if (false) {
+      try {
+        for (const el of findAll('.shrinkme', keyimage)) {
+          el.style['width'] = (Math.max(parseInt(getComputedStyle(el.parentElement).getPropertyValue('width')), 40)*0.9) + 'px';
+          el.style['height'] = (Math.max(parseInt(getComputedStyle(el.parentElement).getPropertyValue('height')), 40)*0.9) + 'px';
+          textFit(el, {alignVert: true, alignHoriz: true, multiline: true});
+        }
+      } catch (err) {}
     }
   }
 
