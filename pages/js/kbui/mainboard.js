@@ -143,6 +143,9 @@ addInitializer('connected', () => {
   //
   ////////////////////////////////////
   function drawLayer(layerid, keys, printable) {
+    if (layerid < 0 || layerid >= KBINFO.layers) {
+      layerid = 0;
+    }
     if (!keys) {
       keys = boardKeys;
     }
@@ -295,10 +298,11 @@ addInitializer('connected', () => {
   appendChildren(layerSelection, ...children);
 
   ACTION.onclick('[data-layerid]', (target) => {
+    setSaved('layerid', target.dataset.layerid);
     drawLayer(target.dataset.layerid);
   });
 
-  drawLayer(0);
+  drawLayer(getSaved('layerid', 0));
 
   ////////////////////////////////////
   //
