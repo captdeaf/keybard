@@ -52,15 +52,15 @@ addInitializer('connected', () => {
     }
 
     const keystyle = {
-      'left': `${parms.outercapx + 3}px`,
-      'top': `${parms.outercapy + 3}px`,
+      'left': `${(parms.outercapx * 1.05) + 3}px`,
+      'top': `${(parms.outercapy * 1.05) + 3}px`,
       'width': `${parms.outercapwidth}px`,
       'height': `${parms.outercapheight}px`,
       'border-width': `${sizes.strokeWidth}px`,
       'border-radius': `${sizes.roundOuter}px`,
     };
     const keyimage = EL('div', {
-      class: 'key keyborder',
+      class: 'key',
       'data-kmid': kmid,
       style: keystyle,
     }, `${kmid}`);

@@ -1,7 +1,7 @@
 /* keys.css, styles for boards and keys. */
 
 .kbdesc {
-  min-width: 30px;
+  min-width: 70px;
   max-width: 120px;
   height: 3.50px;
   display: flex;
@@ -236,8 +236,10 @@
 
 .kb-key {
   flex: 1 1 auto;
+  margin: 1px;
   min-width: 30px;
   max-width: 120px;
+  width: 40px;
 }
 
 .kb-intl {
@@ -247,29 +249,38 @@
 
 .kb-blank {
   flex: 1 1 auto;
-  min-width: 30px;
+  min-width: 60px;
   max-width: 120px;
+}
+
+.kb-desc {
+  width: 70px;
 }
 
 /* These are for relative key sizes. e.g: spacebar is the width of 8 normal
  * keys. */
 .extra-large {
+  width: 120px;
   flex: 3 3 auto;
 }
 
 .spacebar {
+  width: 320px;
   flex: 8 8 auto;
 }
 
 .large {
+  width: 80px;
   flex: 2 2 auto;
 }
 
 .medium {
+  width: 60px;
   flex: 1.5 1.5 auto;
 }
 
 .small {
+  width: 30px;
   flex: 0.75 0.75 auto;
 }
 

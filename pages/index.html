@@ -242,19 +242,16 @@
     </div>
     <div id="allboards" class="on-connect">
   <div class="board-map" data-board="qwerty"><div class="kb-board-mods">
-  <div class="kb-group" style="left: 1%; width: 68%;">
+  <div class="kb-group">
     <div class="kb-row kb-mods kb-modifiers" title="All selected Mods will be applied to keys assigned.">
       <div class="kbdesc extra-large">Mods to apply:</div>
       <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
       <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
       <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
       <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
-      <div class="kb-blank">&nbsp;</div>
-      <div class="key key-mod kb-key" data-modifier="RHS" title="By default, mods use Left-hand keys by default. Select RHS to use Right-hand keys instead.">RHS</div>
-      <div class="key key-mod kb-key" data-modifier="MTAP" title="Selecting ModTap will assign the mod on Hold, with the assigned key on Tap.">ModTap</div>
     </div>
   </div>
-  <div class="kb-group" style="left: 70%; width: 28%;">
+  <div class="kb-group">
     <div class="kb-row kb-mods">
       <div class="kbdesc large">Special:</div>
       <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
@@ -283,7 +280,7 @@
 
     <!-- Number Row -->
     <div class="kb-row">
-      <div class="key kb-key" data-bind="keymask" data-key="KC_GRAVE" data-shifted="~">~<br>`</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_GRAVE" data-shifted="~">~<br>`</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_1" data-shifted="!">!<br>1</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_2" data-shifted="@">@<br>2</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_3" data-shifted="#">#<br>3</div>
@@ -296,11 +293,12 @@
       <div class="key kb-key" data-bind="keymask" data-key="KC_0" data-shifted=")">)<br>0</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_MINUS" data-shifted="_">_<br>-</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_EQUAL" data-shifted="+">+<br>=</div>
+      <div class="key kb-key large" data-bind="keymask" data-key="KC_BSPACE">Bckspc</div>
     </div>
 
     <!-- QWERTY Row -->
     <div class="kb-row">
-      <div class="key kb-key large" data-bind="keymask" data-key="KC_TAB">Tab</div>
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_TAB">Tab</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_Q" data-shifted="Q">q</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_W" data-shifted="W">w</div>
       <div class="key kb-key" data-bind="keymask" data-key="KC_E" data-shifted="E">e</div>
@@ -397,7 +395,6 @@
       <div class="key kb-key" data-bind="keymask" data-key="KC_PAUSE">Pause</div>
     </div>
     <div class="kb-row">
-      <div class="key kb-key large" data-bind="keymask" data-key="KC_BSPACE">Bckspc</div>
       <div class="key kb-key small" data-bind="keymask" data-key="KC_INSERT">Ins</div>
       <div class="key kb-key small" data-bind="keymask" data-key="KC_HOME">Home</div>
       <div class="key kb-key small" data-bind="keymask" data-key="KC_PGUP">Pgup</div>
@@ -628,19 +625,16 @@
 </div>
 </div>
   <div class="board-map" data-board="international"><div class="kb-row"><div class="kb-board-mods">
-  <div class="kb-group" style="left: 1%; width: 68%;">
+  <div class="kb-group">
     <div class="kb-row kb-mods kb-modifiers" title="All selected Mods will be applied to keys assigned.">
       <div class="kbdesc extra-large">Mods to apply:</div>
       <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
       <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
       <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
       <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
-      <div class="kb-blank">&nbsp;</div>
-      <div class="key key-mod kb-key" data-modifier="RHS" title="By default, mods use Left-hand keys by default. Select RHS to use Right-hand keys instead.">RHS</div>
-      <div class="key key-mod kb-key" data-modifier="MTAP" title="Selecting ModTap will assign the mod on Hold, with the assigned key on Tap.">ModTap</div>
     </div>
   </div>
-  <div class="kb-group" style="left: 70%; width: 28%;">
+  <div class="kb-group">
     <div class="kb-row kb-mods">
       <div class="kbdesc large">Special:</div>
       <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
@@ -955,10 +949,7 @@
   <div class="board-map" data-board="quantum"><div class="kb-board">
   <div class="kb-group">
     <div class="kb-row">
-      <div class="kbdesc" title="Enable a mod for a single keypress.">One Shot Mods</div>
-    </div>
-    <div class="kb-row">
-      <div class="kbdesc" title="Left hand side mods">LHS</div>
+      <div class="kbdesc" title="Left hand side mods">One-Shot LHS</div>
     </div>
     <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LSFT)" title="Enable Left Shift for one keypress">OSM LSft</div>
@@ -980,7 +971,7 @@
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_HYPR)" title="Enable Left Control, Shift, Alt, and GUI for one keypress">OSM Hyper</div>
     </div>
     <div class="kb-row">
-      <div class="kbdesc" title="Right hand side mods">RHS</div>
+      <div class="kbdesc" title="Right hand side mods">One-Shot RHS</div>
     </div>
     <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RSFT)" title="Enable Right Shift for one keypress">OSM RSft</div>
@@ -1004,10 +995,7 @@
   </div>
   <div class="kb-group">
     <div class="kb-row">
-      <div class="kbdesc" title="Send one or more mods w/ another key">Mod masks</div>
-    </div>
-    <div class="kb-row">
-      <div class="kbdesc" title="Left hand side mods">LHS</div>
+      <div class="kbdesc" title="Left hand side mods">LHS ModMasks</div>
     </div>
     <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCTL(kc)" title="LCtrl + (kc)">LCTL (kc)</div>
@@ -1031,7 +1019,7 @@
     </div>
 
     <div class="kb-row">
-      <div class="kbdesc" title="Right hand side mods">RHS</div>
+      <div class="kbdesc" title="Right hand side mods">RHS ModMasks</div>
     </div>
     <div class="kb-row">
       <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCTL(kc)" title="RCtrl + (kc)">RCTL (kc)</div>

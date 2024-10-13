@@ -38,16 +38,41 @@ addInitializer('connected', () => {
     appendChildren(panecontainer, pane);
   }
 
-  function showit(evt) {
-    showPane(evt.target);
-  }
-
-  function hideit(evt) {
+  function hidePane(evt) {
     panecontainer.innerHTML = '';
   }
 
-  for (const el of getAll('[data-bound]')) {
-    el.onmouseenter = showit;
-    el.onmouseleave = hideit;
+  let keymatch = null;
+
+  let curX = 0;
+  let curY = 0;
+
+  function updatePane() {
+    const elements = document.elementsFromPoint(curX, curY);
+    if (document.hasFocus()) {
+      let match = null;
+      for (const el of elements) {
+        if (el.matches('[data-key]')) {
+          match = el;
+          break;
+        }
+      }
+      if (match !== keymatch) {
+        keymatch = match;
+        if (keymatch) {
+          showPane(keymatch);
+        } else {
+          hidePane();
+        }
+      }
+    }
   }
+
+  setInterval(updatePane, 200);
+
+  document.onmousemove = (evt) => {
+    curX = evt.clientX;
+    curY = evt.clientY;
+    updatePane();
+  };
 });
