@@ -76,6 +76,11 @@ addInitializer('load', () => {
       if (texts.length > 0) {
         return {
           str: texts.join('').slice(0, 7),
+          title: texts.join(' '),
+        }
+      } else if (title.length > 0) {
+        return {
+          str: title.join('').slice(0, 7),
           title: title.join(' '),
         }
       }
