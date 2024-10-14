@@ -9,7 +9,24 @@ addInitializer('connected', () => {
 
   function showPaneForKey(keyimage) {
     const keystr = keyimage.dataset.key;
-    const contents = KEYUI.getKeyContents(keyimage.dataset.key).title;
+
+    const desc = KEYUI.getKeyContents(keyimage.dataset.key);
+
+    let contents = desc.title;
+
+    if (desc.type === 'tapdance') {
+      let td = KBINFO.tapdances[desc.tdid];
+      let all = [];
+      all.push(`tap: ${td.tap}`);
+      all.push(`hold: ${td.hold}`);
+      if (td.taphold !== 'KC_NO') {
+        all.push(`tap-hold: ${td.taphold}`);
+      }
+      if (td.doubletap !== 'KC_NO') {
+        all.push(`doubletap: ${td.doubletap}`);
+      }
+      contents = all.join('<br>');
+    }
     showPane(keyimage, keystr, contents);
   }
 

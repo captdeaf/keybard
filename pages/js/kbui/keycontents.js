@@ -95,7 +95,8 @@ addInitializer('load', () => {
           return {
             type: 'tapdance',
             top: keystr,
-            str: desc.slice(0,7),
+            tdid: m[2],
+            str: desc,
             title: `Tap Dance ${m[2]} - ${desc}`,
           };
         }
@@ -133,7 +134,7 @@ addInitializer('load', () => {
       const desc = MACROS.describe(m[1]);
       return {
         type: 'macro',
-        str: desc.str.slice(0, 6),
+        str: desc.str,
         top: keystr,
         title: keystr + ': ' + desc.title,
       };
@@ -196,6 +197,7 @@ addInitializer('load', () => {
   // Resize an element's contents depending on its parents' width.
 
   function sizedElement(tag, opts, content, width) {
+    content = content.slice(0,8);
     const el = EL(tag, opts, content);
     if (width === 0) {
       el.style['font-size'] = '12px';

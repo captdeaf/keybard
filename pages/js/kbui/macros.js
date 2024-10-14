@@ -75,12 +75,12 @@ addInitializer('load', () => {
       }
       if (texts.length > 0) {
         return {
-          str: texts.join('').slice(0, 7),
+          str: texts.join(''),
           title: texts.join(' '),
         }
       } else if (title.length > 0) {
         return {
-          str: title.join('').slice(0, 7),
+          str: title.join(''),
           title: title.join(' '),
         }
       }
