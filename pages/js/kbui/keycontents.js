@@ -257,7 +257,6 @@ addInitializer('load', () => {
     const width = parseInt(keyimage.style['width']);
     if (keyimage.dataset.key) {
       const desc = getKeyContents(keyimage.dataset.key);
-      keyimage.setAttribute('data-title', desc.title);
       let content = desc.str;
       const children = [];
       if (desc.type === 'layer') {

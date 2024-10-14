@@ -89,15 +89,18 @@ addInitializer('connected', () => {
       }
     }
     if (match !== keymatch) {
-      if (match && match.dataset.key) {
-        showPaneForKey(match);
-      } else if (match && match.dataset.title) {
-        showPane(match, '', match.dataset.title);
-      } else {
-        hidePane();
+      keymatch = match;
+      if (match && match.dataset) {
+        if (match.dataset.key && !match.dataset.key.match(/^KC_/)) {
+          showPaneForKey(match);
+          return;
+        } else if (match.dataset.title) {
+          showPane(match, '', match.dataset.title);
+          return;
+        } 
       }
+      hidePane();
     }
-    keymatch = match;
   }
 
   setInterval(updatePane, 200);
