@@ -40,20 +40,6 @@
   white-space: pre;
 }
 
-.keypane {
-  padding: 5px;
-  min-width: 100px;
-  min-height: 80px;
-  border: 1px solid black;
-  border-radius: 3px;
-  background-color: #fff;
-}
-
-.keypane .panetitle {
-  font-size: 10px;
-  padding: 3px;
-}
-
 .key-attop {
   color: #0a0;
   position: absolute;
@@ -306,4 +292,27 @@
 
 #macro-board {
   width: 100%;
+}
+
+/* Key pane */
+
+.keypane {
+  min-width: 100px;
+  min-height: 80px;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: #fff;
+}
+
+.keypane .panetitle {
+  padding: 6px;
+  background-color: #e1ebff;
+  border-bottom: 0px solid black;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.keypane .panebody {
+  padding: 6px;
+  font-size: 20px;
 }

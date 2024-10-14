@@ -89,7 +89,7 @@ addInitializer('load', () => {
             layertext: ldesc[0],
             top: keystr,
             str: lname,
-            title: keystr + ': ' + ldesc[1] + lname,
+            title: ldesc[1] + lname,
           };
         }
         if (m[1] === 'TD') {
@@ -118,7 +118,7 @@ addInitializer('load', () => {
           type: 'layerhold',
           layertext: `Hold(${lname})`,
           str: '',
-          title: `${keystr}: Layer ${lname} on hold, (kc) otherwise.`,
+          title: `Layer ${lname} on hold, Selected Key otherwise.`,
         };
       } else {
         const kckey = KEY.define(m[2]);
@@ -126,7 +126,7 @@ addInitializer('load', () => {
           type: 'layerhold',
           layertext: `Hold(${m[1]})`,
           str: kckey.str,
-          title: `${keystr}: Layer ${lname} on hold, (${m[2]}) otherwise.`,
+          title: `Layer ${lname} on hold, ${m[2]} otherwise.`,
         };
       }
     }
@@ -138,7 +138,7 @@ addInitializer('load', () => {
         type: 'macro',
         str: desc.str,
         top: keystr,
-        title: keystr + ': ' + desc.title,
+        title: desc.title,
       };
     }
 
@@ -150,13 +150,17 @@ addInitializer('load', () => {
         const modkey = KEY.define(modmask);
         const kckey = KEY.define(kcmask);
         const modstr = modkey.str.replace('(kc)', '').replace('\n',' ').trim();
+        let kctitle = kckey.title;
+        if (kctitle === 'KC_NO') {
+          kctitle = 'Selected Key';
+        }
         return {
           type: 'modtap',
           mods: modstr,
           modids: modmask,
           top: modstr,
           str: kckey.str,
-          title: modkey.title + ' ' + kckey.title,
+          title: modkey.title,
         }
       }
     }
@@ -169,13 +173,17 @@ addInitializer('load', () => {
         const modkey = KEY.define(modmask);
         const kckey = KEY.define(kcmask);
         const modstr = modkey.str.replace('(kc)', '').replace('\n',' ').trim();
+        let kctitle = kckey.title;
+        if (kctitle === 'KC_NO') {
+          kctitle = 'Selected Key';
+        }
         return {
           type: 'modmask',
           mods: modstr,
           modids: modmask,
           top: modstr,
           str: kckey.str,
-          title: modkey.title + ' ' + kckey.title,
+          title: modkey.title + ' + ' + kctitle,
         }
       }
     }

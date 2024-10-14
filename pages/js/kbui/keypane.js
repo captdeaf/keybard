@@ -56,7 +56,7 @@ addInitializer('connected', () => {
     );
 
     if (contents) {
-      appendChildren(pane, contents);
+      appendChildren(pane, EL('div', {class: 'panebody'}, contents));
     }
 
     panecontainer.innerHTML = '';
