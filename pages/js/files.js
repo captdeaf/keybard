@@ -11,13 +11,26 @@ addInitializer('load', () => {
   //  as arguments.
   //
   ////////////////////////////////////
-  function downloadTEXT(filename, content) {
+  async function downloadTEXT(content, opts) {
+    try {
+      const handle = await window.showSaveFilePicker(opts);
+      const writable = await handle.createWritable();
+      const blob = new Blob([content], { type: 'text/plain' });
+      await writable.write(blob);
+      await writable.close();
+    } catch (err) {
+      console.error("Error saving file", err);
+    }
+  }
+  function downloadTEXT_deprec(filename, content) {
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement('a');
     link.href = url;
+    // link.setAttribute('download', filename);
     link.setAttribute('download', filename);
+    link.setAttribute('target', '_blank');
 
     document.body.appendChild(link);
     link.click();
@@ -225,7 +238,15 @@ addInitializer('load', () => {
         allLayers.push(strmap.join('\n'));
       }
       allLayers.push('};\n');
-      downloadTEXT('keymap_all.c', allLayers.join('\n\n'));
+      downloadTEXT(allLayers.join('\n\n'), {
+        suggestedName: 'keymap_all.c',
+        types: [{
+          description: 'C files',
+          accept: {
+            'text/c': ['.c'],
+          },
+        }],
+      });
       ACTION.menuClose();
     });
   });
@@ -239,20 +260,44 @@ addInitializer('load', () => {
 
     ACTION.onclick('#download-vil', () => {
       const vil = kbinfoToVIL(structuredClone(KBINFO), true);
-      downloadTEXT('keyboard.vil', vil);
+      downloadTEXT(vil, {
+        suggestedName: 'keyboard.vil',
+        types: [{
+          description: 'Vial .vil files',
+          accept: {
+            'text/vial': ['.vil'],
+          },
+        }],
+      });
       ACTION.menuClose();
     });
 
     ACTION.onclick('#download-vil-nomacro', () => {
       const vil = kbinfoToVIL(structuredClone(KBINFO), false);
-      downloadTEXT('keyboard-nomacro.vil', vil);
+      downloadTEXT(vil, {
+        suggestedName: 'keyboard-nomacro.vil',
+        types: [{
+          description: 'Vial .vil files',
+          accept: {
+            'text/vial': ['.vil'],
+          },
+        }],
+      });
       ACTION.menuClose();
     });
 
     ACTION.onclick('#download-kbi', () => {
       const copy = structuredClone(KBINFO);
       const kbi = JSON.stringify(copy, undefined, 2);
-      downloadTEXT('keyboard.kbi', kbi);
+      downloadTEXT(kbi, {
+        suggestedName: 'keyboard.kbi',
+        types: [{
+          description: 'Keybard .kbi files',
+          accept: {
+            'text/vial': ['.kbi'],
+          },
+        }],
+      });
       ACTION.menuClose();
     });
 
@@ -260,7 +305,15 @@ addInitializer('load', () => {
       const copy = structuredClone(KBINFO);
       copy.macros = range(copy.macro_count).map((mid) => {return {mid: mid, actions: []}});
       const kbi = JSON.stringify(copy, undefined, 2);
-      downloadTEXT('keyboard-nomacro.kbi', kbi);
+      downloadTEXT(kbi, {
+        suggestedName: 'keyboard-nomacro.kbi',
+        types: [{
+          description: 'Keybard .kbi files',
+          accept: {
+            'text/vial': ['.kbi'],
+          },
+        }],
+      });
       ACTION.menuClose();
     });
   });
