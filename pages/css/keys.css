@@ -176,7 +176,7 @@
 
 .key-layer {
   background-position: top center;
-  background-image: url("/images/layer-bg.png");
+  background-image: url("../images/layer-bg.png");
   background-size: 20px 20px;
   background-repeat: no-repeat;
   font-weight: bold;
@@ -188,7 +188,7 @@
 
 .key-macro {
   background-position: top center;
-  background-image: url("/images/ellipsis.png");
+  background-image: url("../images/ellipsis.png");
   background-size: 20px 20px;
   background-repeat: no-repeat;
   font-weight: bold;
