@@ -45,15 +45,6 @@ addInitializer('load', () => {
     const orig = keystr;
     let m;
 
-    m = keystr.match(/^\d/);
-    if (m) {
-      const keyid = parseInt(keystr);
-      return {
-        title: 'Unknown: ' + keyid,
-        str: keystr,
-      }
-    }
-
     keystr = KEY.canonical(keystr);
 
     const keyid = KEY.parse(keystr);
@@ -63,6 +54,7 @@ addInitializer('load', () => {
     }
 
     if (!keyid) {
+      console.log('invalid', keystr);
       return {
         str: '??Invld??',
         title: 'Invalid key string',
@@ -192,9 +184,9 @@ addInitializer('load', () => {
       return KEY.define(keyid);
     }
     return {
-      str: '??INVLD??',
-      title: 'Invalid keystring: ' + keystr,
-    };
+      str: keystr,
+      title: 'Unknown: ' + keystr,
+    }
   }
 
   KEYUI.getKeyContents = getKeyContents;

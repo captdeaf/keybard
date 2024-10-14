@@ -144,6 +144,9 @@ addInitializer('load', () => {
   };
 
   KEY.canonical = (keystr) => {
+    if (keystr.match(/^0x/)) {
+      return keystr;
+    }
     if (keystr in KEYALIASES) {
       return KEYALIASES[keystr];
     }
@@ -159,7 +162,7 @@ addInitializer('load', () => {
   KEY.stringify = (keynum) => {
     const modmask = keynum & 0xFF00;
     const keyid = keynum & 0x00FF;
-    if (modmask !== 0) {
+    if (modmask !== 0 && keyid in CODEMAP) {
       const kcstr = CODEMAP[keyid];
       const maskstr = CODEMAP[modmask];
       if (!maskstr) {
@@ -177,7 +180,7 @@ addInitializer('load', () => {
     } else if (keynum in CODEMAP) {
       return CODEMAP[keynum];
     } else {
-      return '????';
+      return `0x${keynum.toString(16)}`;
     }
   };
 
@@ -188,6 +191,7 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   KEY.parse = (keystr) => {
+    const orig = keystr;
     if (!keystr || keystr === -1 || keystr === 0xFF) { return 0xFF; }
     if (keystr in KEYALIASES) {
       keystr = KEYALIASES[keystr];
@@ -204,11 +208,12 @@ addInitializer('load', () => {
       if (match[2] === 'kc') {
         match[2] = 'KC_NO';
       }
-      const keymask = KEYMAP[match[2]].code;
-      return cmask + keymask;
-    } else {
-      return parseInt(keystr);
+      if (match[2] in KEYMAP) {
+        const keymask = KEYMAP[match[2]].code;
+        return cmask + keymask;
+      }
     }
+    return parseInt(keystr);
   };
 
   // Given MO(1), return:

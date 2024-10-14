@@ -278,21 +278,15 @@ addInitializer('connected', () => {
     manualEntry.focus();
   });
   manualEntry.onkeyup = (evt) => {
-    let val;
-    try {
-      val = KEY.stringify(KEY.parse(manualEntry.value));
-    } catch (err) {
-      val = '????';
-      manualOutput.innerHTML = '<span style="color: red;">Unknown Key</span>';
-    }
-    if (val === '????') {
+    const val = KEY.stringify(KEY.parse(manualEntry.value));
+    if (val.match(/^0/)) {
       manualOutput.innerHTML = '<span style="color: red;">Unknown Key</span>';
     } else {
       manualOutput.innerHTML = `<span style="color: green;">${val}</span>`;
-      if (evt.key === 'Enter') {
-        ACTION.trigger('bind', val);
-        ACTION.closeFloats();
-      }
+    }
+    if (evt.key === 'Enter') {
+      ACTION.trigger('bind', val);
+      ACTION.closeFloats();
     }
     return false;
   }
