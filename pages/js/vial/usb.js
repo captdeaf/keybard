@@ -71,7 +71,7 @@ Vial.USB = lockValue({
     return Vial.USB.send(Vial.USB.CMD_VIA_VIAL_PREFIX, vargs, flags);
   },
 
-  getViaBuffer: async (cmd, size, opts) => {
+  getViaBuffer: async (cmd, size, opts, check) => {
     // Fetch a buffer, 28 bytes at a time.
     // This is for Via messages that expect:
     //   send(cmd_get_buffer, [offset, size])
@@ -90,6 +90,10 @@ Vial.USB = lockValue({
       }
 
       alldata.push(...data);
+
+      if (check && check(alldata)) {
+        break;
+      }
 
       offset += chunksize;
     }

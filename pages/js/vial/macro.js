@@ -23,12 +23,16 @@ Vial.macro = (function() {
 
   return {
     async get(kbinfo) {
+      function checkComplete(data) {
+        return data.filter((x) => x === 0).length >= kbinfo.macro_count;
+      }
       // Macros are stored as one big chunk of memory, at 28 bytes per fetch.
       // null-separated. In svalboard, it's 795 bytes.
       const macro_memory = await Vial.USB.getViaBuffer(
           Vial.USB.CMD_VIA_MACRO_GET_BUFFER,
           kbinfo.macros_size,
-          {slice: 4, uint8: true, bytes: 1}
+          {slice: 4, uint8: true, bytes: 1},
+          checkComplete,
       );
 
       const raw_macros = Vial.macro.split(kbinfo, macro_memory);
@@ -38,9 +42,18 @@ Vial.macro = (function() {
       // Macros are stored as one big chunk of memory, at 28 bytes per fetch.
       // null-separated. In svalboard, it's 795 bytes.
       const raw = Vial.macro.dump(kbinfo.macros_size, kbinfo.macros);
+      const rawview = new Uint8Array(raw);
+      let i;
+      let count = 0;
+      for (i = 0; i < kbinfo.macros_size && count <= kbinfo.macro_count; i++) {
+        if (rawview[i] === 0) {
+          count++;
+        }
+      }
+      const size = i;
       const macro_memory = await Vial.USB.pushViaBuffer(
         Vial.USB.CMD_VIA_MACRO_SET_BUFFER,
-        kbinfo.macros_size,
+        size,
         raw
       );
     },
