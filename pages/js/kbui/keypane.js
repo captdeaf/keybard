@@ -7,10 +7,16 @@
 addInitializer('connected', () => {
   const panecontainer = get('#panecontainer');
 
-  function showPane(keyimage) {
-    const keybounds = keyimage.getBoundingClientRect();
-    let x = keybounds.x + (keybounds.width / 2) - 50;
-    let y = keybounds.y - 100;
+  function showPaneForKey(keyimage) {
+    const keystr = keyimage.dataset.key;
+    const contents = KEYUI.getKeyContents(keyimage.dataset.key).title;
+    showPane(keyimage, keystr, contents);
+  }
+
+  function showPane(el, title, contents) {
+    const bounds = el.getBoundingClientRect();
+    let x = bounds.x + (bounds.width / 2) - 50;
+    let y = bounds.y - 100;
 
     const winbounds = document.documentElement.getBoundingClientRect();
 
@@ -29,10 +35,12 @@ addInitializer('connected', () => {
           left: x + 'px',
         }
       },
-      EL('div', {class: 'panetitle'}, keyimage.dataset.key),
+      EL('div', {class: 'panetitle'}, title),
     );
 
-    appendChildren(pane, KEYUI.getKeyContents(keyimage.dataset.key).title);
+    if (contents) {
+      appendChildren(pane, contents);
+    }
 
     panecontainer.innerHTML = '';
     appendChildren(panecontainer, pane);
@@ -55,16 +63,20 @@ addInitializer('connected', () => {
         if (el.matches('[data-key]')) {
           match = el;
           break;
+        } else if (el.matches('[data-title]')) {
+          match = el;
         }
       }
       if (match !== keymatch) {
-        keymatch = match;
-        if (keymatch) {
-          showPane(keymatch);
+        if (match && match.dataset.key) {
+          showPaneForKey(match);
+        } else if (match && match.dataset.title) {
+          showPane(match, '', match.dataset.title);
         } else {
           hidePane();
         }
       }
+      keymatch = match;
     }
   }
 

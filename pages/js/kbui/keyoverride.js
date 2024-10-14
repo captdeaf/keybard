@@ -139,9 +139,9 @@ addInitializer('connected', () => {
       )));
       // Mod Labels
       tds.push(EL('td', {}, [
-        EL('div', {class: 'ko-mod-row', title: 'Trigger Mods'}, 'T'),
-        EL('div', {class: 'ko-mod-row', title: 'Negative Mods'}, 'N'),
-        EL('div', {class: 'ko-mod-row', title: 'Suppressed Mods'}, 'S'),
+        EL('div', {class: 'ko-mod-row', 'data-title': 'Trigger Mods'}, 'T'),
+        EL('div', {class: 'ko-mod-row', 'data-title': 'Negative Mods'}, 'N'),
+        EL('div', {class: 'ko-mod-row', 'data-title': 'Suppressed Mods'}, 'S'),
       ]));
 
       const rowTypes = [
@@ -160,7 +160,7 @@ addInitializer('connected', () => {
         for (const [bitid, name] of modRKeys) {
           keys.push(makeToggle(name, koid, type, bitid));
         }
-        rows.push(EL('div', {class: 'ko-mod-row', title: title}, keys));
+        rows.push(EL('div', {class: 'ko-mod-row', 'data-title': title}, keys));
       }
       tds.push(EL('td', {}, rows));
 
