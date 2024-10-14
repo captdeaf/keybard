@@ -28,7 +28,17 @@ addInitializer('load', () => {
   ////////////////////////////////////
   //
   //  Given a key string, e.g: KC_A, KC_NO, LCTL(KC_A), etc,
-  //  return a {str: 'A', title: <onhover>, top: 'LCTRL'}
+  //  return:
+  //
+  //  Values: {
+  //    str: What to show as an individual key.
+  //    title: Full information about the key.
+  //    type: If not a plain KC_ key, the type of key it is. 'macro'/'layer'/etc.
+  //
+  //    And additional values depending on type, for rendering.
+  //
+  //    'title' should be shown as-is in the key pane.
+  //  }
   //
   ////////////////////////////////////
   function getKeyContents(keystr) {
@@ -252,7 +262,9 @@ addInitializer('load', () => {
       const children = [];
       if (desc.type === 'layer') {
         children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
+        if (desc.layertext !== 'Hold') {
+          children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
+        }
       } else if (desc.type === 'layerhold') {
         children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
         children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
@@ -269,11 +281,13 @@ addInitializer('load', () => {
         }
         children.push(sizedElement('span', {class: 'key-bottom'}, show, width));
       } else if (desc.type === 'modtap') {
-        children.push(sizedElement('span', {class: 'key-midb key-type key-modmask'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-midb key-type key-modtap'}, desc.str, width));
         children.push(sizedElement('span', {class: 'key-top'}, showModMask(desc.modids), width));
       } else if (desc.type === 'macro') {
         children.push(sizedElement('span', {class: 'key-midb key-type key-macro'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, desc.top, 0));
+      } else if (desc.type === 'tapdance') {
+        children.push(sizedElement('span', {class: 'key-type key-tapdance'}, desc.str, width));
+        children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
       } else {
         if (desc.top) {
           children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));

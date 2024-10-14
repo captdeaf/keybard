@@ -54,6 +54,18 @@
   padding: 3px;
 }
 
+.key-attop {
+  color: #0a0;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 14px;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: var(--key-border-radius);
+  border-top-right-radius: var(--key-border-radius);
+}
+
 .key-top {
   background-color: #888;
   color: #fff;
@@ -102,7 +114,7 @@
 }
 
 .key.active,.key.active .key-midt,.key.active .key-midb {
-  background-color: #fdd;
+  background-color: #fdd !important;
 }
 
 /* kb-mods: the modifier keys. Instead of clicking ctrl in the keyboard to have
@@ -177,15 +189,23 @@
 }
 
 .key-layer {
-  background-color: #ebffe1;
+  background-position: top center;
+  background-image: url("/images/layer-bg.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  font-weight: bold;
 }
 
-.key-modmask {
+.key-modtap,.key-tapdance {
   background-color: #e1ebFF;
 }
 
 .key-macro {
-  background-color: #ffebe1;
+  background-position: top center;
+  background-image: url("/images/ellipsis.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  font-weight: bold;
 }
 
 .changed,.changed .key-midt,.changed .key-midb {
