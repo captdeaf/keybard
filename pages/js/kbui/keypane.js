@@ -71,30 +71,33 @@ addInitializer('connected', () => {
 
   let curX = 0;
   let curY = 0;
+  let lastX = 0;
+  let lastY = 0;
 
   function updatePane() {
     const elements = document.elementsFromPoint(curX, curY);
-    if (document.hasFocus()) {
-      let match = null;
-      for (const el of elements) {
-        if (el.matches('[data-key]')) {
-          match = el;
-          break;
-        } else if (el.matches('[data-title]')) {
-          match = el;
-        }
+    let match = null;
+    if (curX === lastX && curY === lastY) return;
+    lastX = curX;
+    lastY = curY;
+    for (const el of elements) {
+      if (el.matches('[data-key]')) {
+        match = el;
+        break;
+      } else if (el.matches('[data-title]')) {
+        match = el;
       }
-      if (match !== keymatch) {
-        if (match && match.dataset.key) {
-          showPaneForKey(match);
-        } else if (match && match.dataset.title) {
-          showPane(match, '', match.dataset.title);
-        } else {
-          hidePane();
-        }
-      }
-      keymatch = match;
     }
+    if (match !== keymatch) {
+      if (match && match.dataset.key) {
+        showPaneForKey(match);
+      } else if (match && match.dataset.title) {
+        showPane(match, '', match.dataset.title);
+      } else {
+        hidePane();
+      }
+    }
+    keymatch = match;
   }
 
   setInterval(updatePane, 200);
