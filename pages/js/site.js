@@ -54,6 +54,7 @@ addInitializer('load', () => {
           const commit = get('#commit')
           if (enabled) {
             commit.style['display'] = 'none';
+            CHANGES.commit();
           } else {
             commit.style['display'] = 'inline-block';
           }
