@@ -207,7 +207,7 @@ addInitializer('load', () => {
   // Resize an element's contents depending on its parents' width.
 
   function sizedElement(tag, opts, content, width) {
-    content = content.slice(0,8);
+    content = content.split('\n').map((i) => i.slice(0,8)).join('\n');
     const el = EL(tag, opts, content);
     if (width === 0) {
       el.style['font-size'] = '12px';
