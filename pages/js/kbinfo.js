@@ -81,6 +81,11 @@ const CHANGES = {
   async queue(desc, cb) {
     if (SETTINGS.instant) {
       await cb();
+      setTimeout(() => {
+        for (const el of findAll('.changed')) {
+          el.classList.remove('changed');
+        }
+      }, 10);
     } else {
       CHANGES.todo[desc] = {
         desc: desc,
