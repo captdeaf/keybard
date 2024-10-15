@@ -145,7 +145,7 @@ addInitializer('load', () => {
     let target = evt.target;
     while (target) {
       if (target.matches('#floats')) {
-        break;
+        return true;
       }
       for (const clickable of clickables) {
         if (target.matches(clickable.sel)) {
@@ -157,7 +157,7 @@ addInitializer('load', () => {
       }
       target = target.parentElement;
     }
-    // If any unhandled clicks, unselect a key.
+    // If any unhandled clicks, deselect keys.
     ACTION.selectKey();
     return true;
   };
