@@ -211,9 +211,12 @@ addInitializer('load', () => {
     const el = EL(tag, opts, content);
     if (width === 0) {
       el.style['font-size'] = '12px';
+    } else if (content.includes('\n') && content.length === 3) {
+      el.style['font-weight'] = 'bold';
+      el.style['font-size'] = '12px';
+      el.style['text-wrap'] = 'balance';
     } else if (content.includes('\n')) {
       el.style['font-size'] = '10px';
-      el.style['font-weight'] = 'bold';
       el.style['text-wrap'] = 'balance';
     } else if (content.length >= 7) {
       el.style['font-size'] = '8px';
