@@ -1,0 +1,66 @@
+name: Push pages to pages
+
+on:
+  push:
+    branches-ignore:
+      - githubpages
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  push-directory-to-pages:
+    runs-on: ubuntu-latest
+    steps:
+    # Check out the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Ensure you are on the correct branch
+    - name: Get the branch name
+      run: |
+        echo "Pushed from branch: ${{ github.ref_name }}"
+
+    # Commit and push changes to 'pages' branch
+    - name: Copy changes to allpages branch
+      run: |
+        cp -r pages temppages
+        git fetch
+        echo "git remote"
+        git remote
+        echo "git branch"
+        git branch
+        #git checkout origin/allpages
+        git switch allpages
+        if [[ "${{ github.ref_name }}" == "master" ]]; then
+          echo "Copying from master location to pages branch"
+          cd temppages
+          for file in * ; do rm -rf "../ghpages/$file" ; done
+          cd ..
+          cp -ar temppages/* ghpages/
+        else
+          echo "Copying from other branches location to pages branch"
+          rm -rf "ghpages/${{github.ref_name}}"
+          cp -r temppages "ghpages/${{github.ref_name}}"
+        fi
+        git config --global user.email "autopages@keybard.svalboard.app"
+        git config --global user.name "AutoPages"
+        echo hi > ghpages/foot
+        git add ghpages
+        git commit -am "Update from ${{ github.ref_name }}"
+        git push origin allpages
+
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
+
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: 'ghpages'
+
+    # Deploy to github pages
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v4
