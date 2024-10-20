@@ -1131,6 +1131,15 @@ const CODEMAP = {
   0x74f0: "QK_STENO_BOLT",
   0x74f1: "QK_STENO_GEMINI",
   0x74f2: "QK_STENO_COMB",
+  0x74f3: "STN_TKL",
+  0x74f4: "STN_PWL",
+  0x74f5: "STN_HRL",
+  0x74f6: "STN_FRR",
+  0x74f7: "STN_PBR",
+  0x74f8: "STN_LGR",
+  0x74f9: "STN_TSR",
+  0x74fa: "STN_DZR",
+  0x74fb: "STN_AO",
   0x74fc: "QK_STENO_COMB_MAX",
   0x74ff: "QK_STENO_MAX",
   0x7700: "M0",
@@ -8409,14 +8418,68 @@ const KEYMAP = {
   "QK_STENO_COMB": {
     "code": 0x74f2,
     "qmkid": "QK_STENO_COMB",
-    "str": "QK_STENO_COMB",
-    "title": "QK_STENO_COMB"
+    "str": "SS\u2013",
+    "title": "Steno combined initial SS"
+  },
+  "STN_TKL": {
+    "code": 0x74f3,
+    "qmkid": "STN_TKL",
+    "str": "TK\u2013",
+    "title": "Steno combined initial TK"
+  },
+  "STN_PWL": {
+    "code": 0x74f4,
+    "qmkid": "STN_PWL",
+    "str": "PW\u2013",
+    "title": "Steno combined initial PW"
+  },
+  "STN_HRL": {
+    "code": 0x74f5,
+    "qmkid": "STN_HRL",
+    "str": "HR\u2013",
+    "title": "Steno combined initial HR"
+  },
+  "STN_FRR": {
+    "code": 0x74f6,
+    "qmkid": "STN_FRR",
+    "str": "\u2013FR",
+    "title": "Steno combined final FR"
+  },
+  "STN_PBR": {
+    "code": 0x74f7,
+    "qmkid": "STN_PBR",
+    "str": "\u2013PB",
+    "title": "Steno combined final PB"
+  },
+  "STN_LGR": {
+    "code": 0x74f8,
+    "qmkid": "STN_LGR",
+    "str": "\u2013LG",
+    "title": "Steno combined final LG"
+  },
+  "STN_TSR": {
+    "code": 0x74f9,
+    "qmkid": "STN_TSR",
+    "str": "\u2013TS",
+    "title": "Steno combined final TS"
+  },
+  "STN_DZR": {
+    "code": 0x74fa,
+    "qmkid": "STN_DZR",
+    "str": "\u2013DZ",
+    "title": "Steno combined final DZ"
+  },
+  "STN_AO": {
+    "code": 0x74fb,
+    "qmkid": "STN_AO",
+    "str": "\u2013AO\u2013",
+    "title": "Steno combined vowel AO"
   },
   "QK_STENO_COMB_MAX": {
     "code": 0x74fc,
     "qmkid": "QK_STENO_COMB_MAX",
-    "str": "QK_STENO_COMB_MAX",
-    "title": "QK_STENO_COMB_MAX"
+    "str": "\u2013EU\u2013",
+    "title": "Steno combined vowel EU"
   },
   "QK_STENO_MAX": {
     "code": 0x74ff,
@@ -13850,6 +13913,18 @@ const KEYALIASES = {
   "STN_NC": "STN_NC",
   "STN_ZR": "STN_ZR",
   "STN__MAX": "STN_ZR",
+  "STN_S3": "QK_STENO_COMB",
+  "STN_TKL": "STN_TKL",
+  "STN_PWL": "STN_PWL",
+  "STN_HRL": "STN_HRL",
+  "STN_FRR": "STN_FRR",
+  "STN_PBR": "STN_PBR",
+  "STN_LGR": "STN_LGR",
+  "STN_TSR": "STN_TSR",
+  "STN_DZR": "STN_DZR",
+  "STN_AO": "STN_AO",
+  "STN_EU": "QK_STENO_COMB_MAX",
+  "STN_COMB_MAX": "QK_STENO_COMB_MAX",
   "KC_NLCK": "KC_NUMLOCK",
   "KC_SLCK": "KC_SCROLLLOCK",
   "KC_ZKHK": "KC_GRAVE",

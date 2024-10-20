@@ -5,11 +5,19 @@ import pycparser
 from pycparser import c_ast
 
 values = {}
+paths = []
+cpp_args = []
+
+for arg in sys.argv[1:]:
+    if arg.startswith('-'):
+        cpp_args.append(arg)
+    else:
+        paths.append(arg)
 
 def process_file(path):
     global values
 
-    ast = pycparser.parse_file(path, use_cpp=True)
+    ast = pycparser.parse_file(path, use_cpp=True, cpp_args=cpp_args)
 
     for declaration in ast.ext:
         process_declaration(declaration)
@@ -41,6 +49,5 @@ def process_declaration(declaration):
 
         print(name, '=', value)
 
-if __name__ == '__main__':
-    for path in sys.argv[1:]:
-        process_file(path)
+for path in paths:
+    process_file(path)
