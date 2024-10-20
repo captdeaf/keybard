@@ -8151,110 +8151,110 @@ const KEYMAP = {
   "STN_NUM": {
     "code": 0x74c1,
     "qmkid": "STN_NUM",
-    "str": "STN_NUM",
-    "title": "STN_NUM"
+    "str": "#\u2081",
+    "title": "Steno number bar (1)"
   },
   "STN_N2": {
     "code": 0x74c2,
     "qmkid": "STN_N2",
-    "str": "STN_N2",
-    "title": "STN_N2"
+    "str": "#\u2082",
+    "title": "Steno number bar (2)"
   },
   "STN_N3": {
     "code": 0x74c3,
     "qmkid": "STN_N3",
-    "str": "STN_N3",
-    "title": "STN_N3"
+    "str": "#\u2083",
+    "title": "Steno number bar (3)"
   },
   "STN_N4": {
     "code": 0x74c4,
     "qmkid": "STN_N4",
-    "str": "STN_N4",
-    "title": "STN_N4"
+    "str": "#\u2084",
+    "title": "Steno number bar (4)"
   },
   "STN_N5": {
     "code": 0x74c5,
     "qmkid": "STN_N5",
-    "str": "STN_N5",
-    "title": "STN_N5"
+    "str": "#\u2085",
+    "title": "Steno number bar (5)"
   },
   "STN_N6": {
     "code": 0x74c6,
     "qmkid": "STN_N6",
-    "str": "STN_N6",
-    "title": "STN_N6"
+    "str": "#\u2086",
+    "title": "Steno number bar (6)"
   },
   "STN_SL": {
     "code": 0x74c7,
     "qmkid": "STN_SL",
-    "str": "STN_SL",
-    "title": "STN_SL"
+    "str": "S\u2013\u2081",
+    "title": "Steno initial S (upper)"
   },
   "STN_S2": {
     "code": 0x74c8,
     "qmkid": "STN_S2",
-    "str": "STN_S2",
-    "title": "STN_S2"
+    "str": "S\u2013\u2082",
+    "title": "Steno initial S (lower)"
   },
   "STN_TL": {
     "code": 0x74c9,
     "qmkid": "STN_TL",
-    "str": "STN_TL",
-    "title": "STN_TL"
+    "str": "T\u2013",
+    "title": "Steno initial T"
   },
   "STN_KL": {
     "code": 0x74ca,
     "qmkid": "STN_KL",
-    "str": "STN_KL",
-    "title": "STN_KL"
+    "str": "K\u2013",
+    "title": "Steno initial K"
   },
   "STN_PL": {
     "code": 0x74cb,
     "qmkid": "STN_PL",
-    "str": "STN_PL",
-    "title": "STN_PL"
+    "str": "P\u2013",
+    "title": "Steno initial P"
   },
   "STN_WL": {
     "code": 0x74cc,
     "qmkid": "STN_WL",
-    "str": "STN_WL",
-    "title": "STN_WL"
+    "str": "W\u2013",
+    "title": "Steno initial W"
   },
   "STN_HL": {
     "code": 0x74cd,
     "qmkid": "STN_HL",
-    "str": "STN_HL",
-    "title": "STN_HL"
+    "str": "H\u2013",
+    "title": "Steno initial H"
   },
   "STN_RL": {
     "code": 0x74ce,
     "qmkid": "STN_RL",
-    "str": "STN_RL",
-    "title": "STN_RL"
+    "str": "R\u2013",
+    "title": "Steno initial R"
   },
   "STN_A": {
     "code": 0x74cf,
     "qmkid": "STN_A",
-    "str": "STN_A",
-    "title": "STN_A"
+    "str": "\u2013A\u2013",
+    "title": "Steno vowel A"
   },
   "STN_O": {
     "code": 0x74d0,
     "qmkid": "STN_O",
-    "str": "STN_O",
-    "title": "STN_O"
+    "str": "\u2013O\u2013",
+    "title": "Steno vowel O"
   },
   "STN_STR": {
     "code": 0x74d1,
     "qmkid": "STN_STR",
-    "str": "STN_STR",
-    "title": "STN_STR"
+    "str": "*\u2081",
+    "title": "Steno star (upper left)"
   },
   "STN_ST2": {
     "code": 0x74d2,
     "qmkid": "STN_ST2",
-    "str": "STN_ST2",
-    "title": "STN_ST2"
+    "str": "*\u2082",
+    "title": "Steno star (lower left)"
   },
   "STN_RES1": {
     "code": 0x74d3,
@@ -8277,122 +8277,122 @@ const KEYMAP = {
   "STN_ST3": {
     "code": 0x74d6,
     "qmkid": "STN_ST3",
-    "str": "STN_ST3",
-    "title": "STN_ST3"
+    "str": "*\u2083",
+    "title": "Steno star (upper right)"
   },
   "STN_ST4": {
     "code": 0x74d7,
     "qmkid": "STN_ST4",
-    "str": "STN_ST4",
-    "title": "STN_ST4"
+    "str": "*\u2084",
+    "title": "Steno star (lower right)"
   },
   "STN_E": {
     "code": 0x74d8,
     "qmkid": "STN_E",
-    "str": "STN_E",
-    "title": "STN_E"
+    "str": "\u2013E\u2013",
+    "title": "Steno vowel E"
   },
   "STN_U": {
     "code": 0x74d9,
     "qmkid": "STN_U",
-    "str": "STN_U",
-    "title": "STN_U"
+    "str": "\u2013U\u2013",
+    "title": "Steno vowel U"
   },
   "STN_FR": {
     "code": 0x74da,
     "qmkid": "STN_FR",
-    "str": "STN_FR",
-    "title": "STN_FR"
+    "str": "\u2013F",
+    "title": "Steno final F"
   },
   "STN_RR": {
     "code": 0x74db,
     "qmkid": "STN_RR",
-    "str": "STN_RR",
-    "title": "STN_RR"
+    "str": "\u2013R",
+    "title": "Steno final R"
   },
   "STN_PR": {
     "code": 0x74dc,
     "qmkid": "STN_PR",
-    "str": "STN_PR",
-    "title": "STN_PR"
+    "str": "\u2013P",
+    "title": "Steno final P"
   },
   "STN_BR": {
     "code": 0x74dd,
     "qmkid": "STN_BR",
-    "str": "STN_BR",
-    "title": "STN_BR"
+    "str": "\u2013B",
+    "title": "Steno final B"
   },
   "STN_LR": {
     "code": 0x74de,
     "qmkid": "STN_LR",
-    "str": "STN_LR",
-    "title": "STN_LR"
+    "str": "\u2013L",
+    "title": "Steno final L"
   },
   "STN_GR": {
     "code": 0x74df,
     "qmkid": "STN_GR",
-    "str": "STN_GR",
-    "title": "STN_GR"
+    "str": "\u2013G",
+    "title": "Steno final G"
   },
   "STN_TR": {
     "code": 0x74e0,
     "qmkid": "STN_TR",
-    "str": "STN_TR",
-    "title": "STN_TR"
+    "str": "\u2013T",
+    "title": "Steno final T"
   },
   "STN_SR": {
     "code": 0x74e1,
     "qmkid": "STN_SR",
-    "str": "STN_SR",
-    "title": "STN_SR"
+    "str": "\u2013S",
+    "title": "Steno final S"
   },
   "STN_DR": {
     "code": 0x74e2,
     "qmkid": "STN_DR",
-    "str": "STN_DR",
-    "title": "STN_DR"
+    "str": "\u2013D",
+    "title": "Steno final D"
   },
   "STN_N7": {
     "code": 0x74e3,
     "qmkid": "STN_N7",
-    "str": "STN_N7",
-    "title": "STN_N7"
+    "str": "#\u2087",
+    "title": "Steno number bar (7)"
   },
   "STN_N8": {
     "code": 0x74e4,
     "qmkid": "STN_N8",
-    "str": "STN_N8",
-    "title": "STN_N8"
+    "str": "#\u2088",
+    "title": "Steno number bar (8)"
   },
   "STN_N9": {
     "code": 0x74e5,
     "qmkid": "STN_N9",
-    "str": "STN_N9",
-    "title": "STN_N9"
+    "str": "#\u2089",
+    "title": "Steno number bar (9)"
   },
   "STN_NA": {
     "code": 0x74e6,
     "qmkid": "STN_NA",
-    "str": "STN_NA",
-    "title": "STN_NA"
+    "str": "#\u2081\u2080",
+    "title": "Steno number bar (10)"
   },
   "STN_NB": {
     "code": 0x74e7,
     "qmkid": "STN_NB",
-    "str": "STN_NB",
-    "title": "STN_NB"
+    "str": "#\u2081\u2081",
+    "title": "Steno number bar (11)"
   },
   "STN_NC": {
     "code": 0x74e8,
     "qmkid": "STN_NC",
-    "str": "STN_NC",
-    "title": "STN_NC"
+    "str": "#\u2081\u2082",
+    "title": "Steno number bar (12)"
   },
   "STN_ZR": {
     "code": 0x74e9,
     "qmkid": "STN_ZR",
-    "str": "STN_ZR",
-    "title": "STN_ZR"
+    "str": "\u2013Z",
+    "title": "Steno final Z"
   },
   "QK_STENO_BOLT": {
     "code": 0x74f0,
