@@ -72,7 +72,6 @@ addInitializer('connected', () => {
 
     setTimeout(() => {
       const panebounds = pane.getBoundingClientRect();
-      console.log("panebounds", bounds, panebounds);
       if ((panebounds.y + panebounds.height) > bounds.y) {
         pane.style['top'] = (bounds.y + bounds.height + 10) + 'px';
       }
