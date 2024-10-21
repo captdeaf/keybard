@@ -71,18 +71,11 @@ addInitializer('load', () => {
         texts = shorts;
       }
       if (texts.length === 0) {
-        texts = ['***'];
+        texts = ['M' + mid];
       }
-      if (texts.length > 0) {
-        return {
-          str: texts.join(''),
-          title: title.join(' '),
-        }
-      } else if (title.length > 0) {
-        return {
-          str: '...',
-          title: title.join(' '),
-        }
+      return {
+        str: texts.join(''),
+        title: title.join(' '),
       }
     }
     return {
