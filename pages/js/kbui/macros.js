@@ -76,11 +76,11 @@ addInitializer('load', () => {
       if (texts.length > 0) {
         return {
           str: texts.join(''),
-          title: texts.join(' '),
+          title: title.join(' '),
         }
       } else if (title.length > 0) {
         return {
-          str: title.join(''),
+          str: '...',
           title: title.join(' '),
         }
       }
