@@ -123,7 +123,13 @@ addInitializer('load', () => {
     kbinfo.combos = vil.combo;
     kbinfo.key_overrides = vil.key_override;
     kbinfo.macros = vil.macro.map((macro, mid) => {
-      return {actions: macro, mid: mid}
+      const actions = [];
+      for (const act of macro) {
+        for (let i = 1; i < act.length; i++) {
+          actions.push([act[0], act[i]]);
+        }
+      }
+      return {actions: actions, mid: mid}
     } );
     kbinfo.settings = vil.settings;
     kbinfo.tapdances = vil.tap_dance.map((td, tdid) => {

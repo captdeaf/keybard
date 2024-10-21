@@ -89,25 +89,28 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   KEY.vilify = (keystr) => {
-    const keynum = KEY.parse(keystr);
-    const modmask = keynum & 0xFF00;
-    const keyid = keynum & 0x00FF;
-    if (modmask !== 0) {
-      const kcstr = CODEMAP[keyid];
-      const maskstr = CODEMAP[modmask];
-      if (maskstr.match(/^(\w+)\(kc\)/)) {
-        return maskstr.replace(/\(kc\)/, '(' + kcstr + ')');
-      } else if (keyid === 0) {
-        return maskstr;
+    try {
+      const keynum = KEY.parse(keystr);
+      const modmask = keynum & 0xFF00;
+      const keyid = keynum & 0x00FF;
+      if (modmask !== 0) {
+        const kcstr = CODEMAP[keyid];
+        const maskstr = CODEMAP[modmask];
+        if (maskstr) {
+          if (maskstr && maskstr.match(/^(\w+)\(kc\)/)) {
+            return maskstr.replace(/\(kc\)/, '(' + kcstr + ')');
+          } else if (keyid === 0) {
+            return maskstr;
+          } else if (keynum in CODEMAP) {
+            return CODEMAP[keynum];
+          }
+        }
       } else if (keynum in CODEMAP) {
         return CODEMAP[keynum];
-      } else {
-        return '0x' + keynum.toString(16).padStart(4, '0');
       }
-    } else if (keynum in CODEMAP) {
-      return CODEMAP[keynum];
-    } else {
-      return '????';
+      return '0x' + keynum.toString(16).padStart(4, '0');
+    } catch (err) {
+      console.log("Cannot vilify key", keystr);
     }
   };
 
