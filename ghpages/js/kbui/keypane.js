@@ -27,6 +27,11 @@ addInitializer('connected', () => {
       }
       contents = all.join('<br>');
     }
+    if (keystr === 'KC_NO') {
+      contents = "Disabled key";
+    } else if (keystr === 'KC_TRNS') {
+      contents = "Transparent key (fall-through to next active layer)";
+    }
     showPane(keyimage, keystr, contents);
   }
 
@@ -38,9 +43,14 @@ addInitializer('connected', () => {
     const winbounds = document.documentElement.getBoundingClientRect();
 
     x = Math.min(x, winbounds.width - 180);
-    y = Math.min(y, winbounds.height - 140);
+    y = Math.min(y, winbounds.height - 300);
     x = Math.max(x, 5);
     y = Math.max(y, 5);
+
+    let titlediv = undefined;
+    if (title) {
+      titlediv = EL('div', {class: 'panetitle'}, title);
+    }
 
     const pane = EL(
       'div',
@@ -50,14 +60,24 @@ addInitializer('connected', () => {
           position: 'fixed',
           top: y + 'px',
           left: x + 'px',
+          visibility: 'hidden',
         }
       },
-      EL('div', {class: 'panetitle'}, title),
+      titlediv
     );
 
     if (contents) {
       appendChildren(pane, EL('div', {class: 'panebody'}, contents));
     }
+
+    setTimeout(() => {
+      const panebounds = pane.getBoundingClientRect();
+      console.log("panebounds", bounds, panebounds);
+      if ((panebounds.y + panebounds.height) > bounds.y) {
+        pane.style['top'] = (bounds.y + bounds.height + 10) + 'px';
+      }
+      pane.style['visibility'] = 'visible';
+    }, 20);
 
     panecontainer.innerHTML = '';
     appendChildren(panecontainer, pane);
@@ -73,6 +93,9 @@ addInitializer('connected', () => {
   let curY = 0;
   let lastX = 0;
   let lastY = 0;
+  const showFor = {
+    KC_TRNS: true,
+  };
 
   function updatePane() {
     const elements = document.elementsFromPoint(curX, curY);
@@ -91,7 +114,8 @@ addInitializer('connected', () => {
     if (match !== keymatch) {
       keymatch = match;
       if (match && match.dataset) {
-        if (match.dataset.key && !match.dataset.key.match(/^KC_/)) {
+        const k = match.dataset.key;
+        if (k && (showFor[k] || !match.dataset.key.match(/^KC_.$/))) {
           showPaneForKey(match);
           return;
         } else if (match.dataset.title) {
