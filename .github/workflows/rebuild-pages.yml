@@ -2,6 +2,8 @@ name: Push pages to pages (dev)
 
 on:
   push:
+    paths:
+      - pages/**
     branches-ignore:
       - allpages
       - prod
@@ -49,8 +51,8 @@ jobs:
         fi
         git config --global user.email "autopages@keybard.svalboard.app"
         git config --global user.name "AutoPages"
-        echo hi > ghpages/foot
         git add ghpages
+        echo "It's okay if this step fails, it just means changes were outside of pages/"
         git commit -am "Update from ${{ github.ref_name }}"
         git push origin allpages
 
