@@ -1,9 +1,10 @@
-name: Push pages to pages
+name: Push pages to pages (dev)
 
 on:
   push:
     branches-ignore:
-      - githubpages
+      - allpages
+      - prod
 
 permissions:
   contents: write
@@ -12,6 +13,7 @@ permissions:
 
 jobs:
   push-directory-to-pages:
+    if: github.repository_owner != 'svalboard'
     runs-on: ubuntu-latest
     steps:
     # Check out the repository
