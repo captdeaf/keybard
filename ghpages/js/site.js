@@ -44,7 +44,7 @@ addInitializer('load', () => {
   getAll('input[type="checkbox"][data-toggle]').map((el) => {
     el.onchange = addToggle(
       el.dataset.toggleName,
-      el.dataset.toggle === 'true',
+      el.dataset.default === 'true',
       (enabled) => {
         SETTINGS[el.dataset.toggle] = enabled;
         el.checked = enabled;
