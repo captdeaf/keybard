@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/keys.css" />
     <link rel="stylesheet" type="text/css" href="css/mainboard.css" />
     <link rel="stylesheet" type="text/css" href="css/sampleboards.css" />
+    <link rel="stylesheet" type="text/css" href="css/colorpicker.css" />
 
     <!-- Basic libraries -->
 <script type="text/javascript" src="js/util.js"></script>
@@ -1180,6 +1181,17 @@
       <li>(Note: Keyboard changes will not be performed at this point.)</li>
     </ol>
   </p>
+</div>
+
+  <div id="colorpicker" class="floater closeable" style="display: none; height: 60%;">
+  Layer Color Picker
+  <div class="topright">
+    <button class="close" data-action="close">Close</button>
+  </div>
+  <div id="color-slider-bg">
+    <input id="color-slider" type="range" min="0" max="360" value="180">
+  </div>
+  <div id="color-light">&nbsp;</div>
 </div>
 
   <div id="float-tips" class="floater closeable" style="min-width: 300px;">
