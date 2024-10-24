@@ -12,20 +12,14 @@ const LAYER_COLORS = {
 }
 
 addInitializer('connected', () => {
-  LAYER_COLORS.getLayerColor = async (layer) => {
-    const hsv = await USB.send(0xEE, [0x10, layer], {unpack: 'BBB'});
-    return hsv;
+  let layer = 0;
+  LAYER_COLORS.setLayerColor = async (l) => {
+    layer = l;
+    ACTION.showFloat(pickerFloat);
   };
 
-  LAYER_COLORS.setLayerColor = async (layer, h, s, v) => {
-    await USB.send(0xEE, [0x11, layer, h, s, v]);
+  LAYER_COLORS.update = async () => {
+    console.log('update colors', args);
+    Vial.sval.setLayerColor(KBINFO, ...args);
   };
-
-  LAYER_COLORS.setLayerColor2 = async (layer, h, s, v) => {
-    h = Math.floor((h/360) * 256) % 256;
-    s = Math.floor(s * 255);
-    v = Math.floor(v * 255);
-    await USB.send(0xEE, [0x11, layer, h, s, v]);
-  };
-
 });
