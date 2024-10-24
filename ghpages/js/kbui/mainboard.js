@@ -187,8 +187,10 @@ addInitializer('connected', () => {
   MAINBOARD.updateAll = () => {
     drawLayer(MAINBOARD.selectedLayer);
 
-    for (let layer = 0; layer < KBINFO.layers; layer++) {
-      for (let kmid = 0; kmid < KBINFO.keymap[layer].length; kmid++) {
+    for (let ilayer = 0; ilayer < KBINFO.layers; ilayer++) {
+      const layer = ilayer;
+      for (let ikmid = 0; ikmid < KBINFO.keymap[layer].length; ikmid++) {
+        const kmid = ikmid;
         const keystr = KBINFO.keymap[layer][kmid];
         const bkeystr = BASE_KBINFO.keymap[layer][kmid];
         if (!((keystr === -1 || keystr === 0xFF) &&
