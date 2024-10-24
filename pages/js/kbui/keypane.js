@@ -108,6 +108,8 @@ addInitializer('connected', () => {
         break;
       } else if (el.matches('[data-title]')) {
         match = el;
+      } else if (el.matches('#floats')) {
+        break;
       }
     }
     if (match !== keymatch) {
