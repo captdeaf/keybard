@@ -29,21 +29,17 @@ addInitializer('connected', () => {
   const led = get('#color-light');
 
   const slider = get('#color-slider');
-  slider.onchange = () => {
+  slider.oninput = () => {
     led.style['background-color'] = `hsl(${Math.floor(slider.value)}, 100%, 50%)`;
+  };
+  slider.onchange = () => {
     const hsv = hslToHsv(Math.floor(slider.value), 100, 50);
-    console.log('lc', hsv);
     Vial.sval.setLayerColor(KBINFO, layer, Math.floor((hsv[0]/360)*255), 255, 255);
-  }
+  };
 
   LAYER_COLORS.setLayerColor = async (l) => {
     layer = l;
     ACTION.showFloat(pickerFloat);
-  };
-
-  LAYER_COLORS.update = async () => {
-    console.log('update colors', args);
-    Vial.sval.setLayerColor(KBINFO, ...args);
   };
 });
 
