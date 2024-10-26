@@ -7,4 +7,9 @@ addInitializer('connected', () => {
     KBINFO.keymap[b] = tmp;
     updateAllChanges();
   };
+  TOOLS.numberize = () => {
+    getAll('[data-kmid]').forEach((el) => {
+      el.innerText = el.dataset.kmid;
+    });
+  };
 });
