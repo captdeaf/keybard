@@ -17,6 +17,9 @@ const Vial = {
     // Load combos, macros, etc.
     await Vial.kb.getFeatures(kbinfo);
 
+    // Check to see if we're using a new Sval protocol.
+    await Vial.sval.check(kbinfo);
+
     // Regenerate keycodes for macros and features.
     await KEY.generateAllKeycodes(kbinfo);
 
@@ -34,6 +37,7 @@ const Vial = {
 
     // Visual layout.
     await Vial.kb.getKeyLayout(kbinfo);
+
     return kbinfo;
   },
 
