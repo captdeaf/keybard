@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KeyBard interface</title>
+    <!-- Third party scripts and stylesheets -->
+    <script type="text/javascript" src="thirdparty/xzwasm.min.js"></script>
+
+    <!-- JSVial style and script. -->
+        <link rel="stylesheet" type="text/css" href="css/scaffolding.css" />
+    <link rel="stylesheet" type="text/css" href="css/dialogs.css" />
+    <link rel="stylesheet" type="text/css" href="css/keys.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainboard.css" />
+    <link rel="stylesheet" type="text/css" href="css/sampleboards.css" />
+
+    <!-- Basic libraries -->
+<script type="text/javascript" src="js/util.js"></script>
+<script type="text/javascript" src="js/misc.js"></script>
+
+<!-- Scaffolding -->
+<script type="text/javascript" src="js/site.js"></script>
+<script type="text/javascript" src="js/actions.js"></script>
+
+<!-- 'constants' -->
+<script type="text/javascript" src="js/svalboard.js"></script>
+
+<!-- keys.js, definitions for KC_foo, and mapping, e.g: 3 -> KC_A -->
+<script type="text/javascript" src="js/keygen.js"></script>
+<script type="text/javascript" src="js/languages.js"></script>
+<script type="text/javascript" src="js/keys.js"></script>
+<script type="text/javascript" src="js/jskeys.js"></script>
+<script type="text/javascript" src="js/kbinfo.js"></script>
+
+<!-- USB proto -->
+<script type="text/javascript" src="js/usbhid.js"></script>
+
+<!-- UI just for keyboard stuff -->
+<script type="text/javascript" src="js/kbui/keycontents.js"></script>
+<script type="text/javascript" src="js/kbui/languages.js"></script>
+<script type="text/javascript" src="js/kbui/macros.js"></script>
+<script type="text/javascript" src="js/kbui/tapdance.js"></script>
+<script type="text/javascript" src="js/kbui/combo.js"></script>
+<script type="text/javascript" src="js/kbui/keyoverride.js"></script>
+<script type="text/javascript" src="js/kbui/mainboard.js"></script>
+<script type="text/javascript" src="js/kbui/qmk.js"></script>
+<script type="text/javascript" src="js/kbui/sampleboards.js"></script>
+<script type="text/javascript" src="js/kbui/updateall.js"></script>
+<script type="text/javascript" src="js/kbui/matrixtester.js"></script>
+<script type="text/javascript" src="js/kbui/keypane.js"></script>
+
+<!-- Binding actions -->
+<script type="text/javascript" src="js/kbui/binding.js"></script>
+
+<!-- QMK Settings. -->
+<script type="text/javascript" src="js/qmk_settings.js"></script>
+
+<!-- Keyboard-layout-editor renderer. -->
+<script type="text/javascript" src="js/kle.js"></script>
+
+<!-- vial. Split into many scripts. -->
+<script type="text/javascript" src="js/vial/vial.js"></script>
+<script type="text/javascript" src="js/vial/usb.js"></script>
+<script type="text/javascript" src="js/vial/kb.js"></script>
+<script type="text/javascript" src="js/vial/macro.js"></script>
+<script type="text/javascript" src="js/vial/combo.js"></script>
+<script type="text/javascript" src="js/vial/tapdance.js"></script>
+<script type="text/javascript" src="js/vial/keyoverride.js"></script>
+<script type="text/javascript" src="js/vial/qmk.js"></script>
+<script type="text/javascript" src="js/vial/api.js"></script>
+
+<!-- Sample layers and kbinfos-->
+<script type="text/javascript" src="js/samples/svalboard.js"></script>
+<script type="text/javascript" src="js/samples/svalboard-dvorak.kbi.js"></script>
+<script type="text/javascript" src="js/samples/svalboard-qwerty.kbi.js"></script>
+
+<!-- Upload and download files -->
+<script type="text/javascript" src="js/files.js"></script>
+
+<!-- Handy tools -->
+<script type="text/javascript" src="js/tools.js"></script>
+
+<!-- Main to tie it all together. -->
+<script type="text/javascript" src="js/main.js"></script>
+
+  </head>
+  <body>
+    <div id="head">
+      <div id="topbar-container">
+        <div id="topbar">
+          <div class="dropdown menu menu-top">
+  MENU
+  <div class="dropdown-content">
+  <label>
+    <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="true" data-toggle="instant" data-extra="hideCommit"/>
+    Instant pushes (akin to Vial)
+  </label>
+  <label>
+    <input type="checkbox" class="check" data-toggle-name="do-typebind" data-default="false" data-toggle="typebind"/>
+    Typing binds a key.
+  </label>
+  <label class="menuitem dropdown">
+    &gt; Serial Assignment
+    <div class="dropdown-content">
+      <label data-serial="colfirst">
+        Down columns then rows (Sval: By cluster)
+      </label>
+      <label data-serial="rowfirst">
+        Across rows then down columns.
+      </label>
+      <label data-serial="svalbykey">
+        Svalboard by key direction.<br>
+        Won't work w/ other boards.
+      </label>
+    </div>
+  </label>
+  <label class="menuitem dropdown">
+    &gt; International keyboards
+    <div id="menu-international" class="dropdown-content">
+    </div>
+  </label>
+  <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable">
+    QMK Settings
+  </label>
+  <label data-open="#float-matrix-tester" class="connect-enable">
+    Open Matrix Tester
+  </label>
+  <hr>
+  <label class="menuitem dropdown">
+    &gt; Sample .kbis - replace entire board functionality.
+    <div class="dropdown-content" id="sample-kbis">
+    </div>
+  </label>
+  <label class="menuitem dropdown">
+    &gt; Upload and Download
+    <div class="dropdown-content">
+      <label id="download-kbi" class="connect-enable">
+        &darr; Download .kbi file.
+      </label>
+      <label id="download-kbi-nomacro" class="connect-enable">
+        &darr; Download macro-less .kbi file.
+      </label>
+      <label id="download-vil" class="connect-enable">
+        &darr; Download .vil file.
+      </label>
+      <label id="download-vil-nomacro" class="connect-enable">
+        &darr; Download macro-less .vil file.
+      </label>
+      <label id="upload-file-float">
+        &uarr; Upload .kbi or .vil file.
+      </label>
+    </div>
+  </label>
+  <hr>
+  <label class="menuitem dropdown" for="">
+    &gt; Dev options
+    <div class="dropdown-content">
+      <label>
+        <input type="checkbox" class="check" data-toggle-name="do-disable-rclicks" data-default="false" data-toggle="disableRightClicks"/>
+        Disable context menus (enable 'inspect'/etc)
+      </label>
+      <label>
+        <input type="checkbox" class="check" data-toggle-name="do-playback" data-default="false" data-toggle="playback"/>
+        Playback a recording. (Overrides record)
+      </label>
+      <label>
+        <input type="checkbox" class="check" data-toggle-name="do-record" data-default="false" data-toggle="record"/>
+        Record for playback. (requires playback off)
+      </label>
+      <label id="download-keymap-h" class="connect-enable">
+        &darr; Download keymap_all.h
+      </label>
+    </div>
+  </label>
+  <label id="print-layers" class="connect-enable">
+    Print layer maps.
+  </label>
+  <label data-tip="show" id="open-tips">
+    Keybard Tips.
+  </label>
+  <label data-open="#about" id="open-about">
+    About KeyBard
+  </label>
+  </div>
+</div>
+
+          <div id="main-selection" class="on-connect">
+            <div class="main-select" data-mainboard="mainboard-container" id="select-mainboard">Keyboard Map</div>
+            <div class="main-select" data-mainboard="combo-container" id="select-combo">Combos</div>
+            <div class="main-select" data-mainboard="keyoverride-container" id="select-keyoverride">Key Overrides</div>
+          </div>
+          <div><button class="on-connect" id="commit">COMMIT CHANGES</button></div>
+        </div>
+      </div>
+    </div>
+    <div id="topboard" class="on-connect">
+      <div class="main-container" id="mainboard-container">
+  <div id="layer-selection"></div>
+  <div id="mainboard-box">
+    <div class="top-left">
+      <div class="dropdown board-sel">
+        <div>Layer operations</div>
+        <label class="dropdown-content" style="width: 200px;">
+          <label class="dropdown">
+            Apply a sample layer
+            <div id="sample-layers" class="dropdown-content">
+            </div>
+          </label>
+          <label data-sample-kb="fill" data-sample-key="KC_NO">
+            Wipe and disable all keys.
+          </label>
+          <label data-sample-kb="fill" data-sample-key="KC_TRNS">
+            Wipe and change all keys to transparent.
+          </label>
+          <label data-sample-kb="fillEmpty" data-sample-key="KC_TRNS">
+            Change disabled keys to transparent.
+          </label>
+        </label>
+      </div>
+    </div>
+    <div id="mainboard"></div>
+  </div>
+</div>
+<div class="main-container" id="combo-container">
+</div>
+<div class="main-container" id="keyoverride-container">
+  <table id="keyoverride-table" cellspacing="0" cellpadding="2">
+<thead>
+ <tr>
+   <th></th>
+   <th>In</th>
+   <th>Out</th>
+   <th></th>
+   <th><div class="ko-modcol">Mod masks</div></th>
+   <th>Layers</th>
+   <th>Options</th>
+ </tr>
+</thead>
+<tbody id="keyoverride-table">
+</tbody>
+</table>
+
+</div>
+
+    </div>
+    <div id="allboards" class="on-connect">
+  <div class="board-map" data-board="qwerty"><div class="kb-board-mods">
+  <div class="kb-group">
+    <div class="kb-row kb-mods kb-modifiers" data-title="All selected Mods will be applied to keys assigned.">
+      <div class="kbdesc extra-large">Mods to apply:</div>
+      <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
+      <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
+      <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
+      <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row kb-mods">
+      <div class="kbdesc large">Special:</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
+    </div>
+  </div>
+</div>
+
+<div class="kb-board">
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="key kb-key" data-bind="keymask" data-key="KC_ESCAPE">Esc</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F1">F1</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F2">F2</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F3">F3</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F4">F4</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F5">F5</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F6">F6</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F7">F7</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F8">F8</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F9">F9</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F10">F10</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F11">F11</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F12">F12</div>
+    </div>
+
+    <!-- Number Row -->
+    <div class="kb-row">
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_GRAVE" data-shifted="~">~<br>`</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_1" data-shifted="!">!<br>1</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_2" data-shifted="@">@<br>2</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_3" data-shifted="#">#<br>3</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_4" data-shifted="$">$<br>4</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_5" data-shifted="%">%<br>5</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_6" data-shifted="^">^<br>6</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_7" data-shifted="&amp;">&amp;<br>7</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_8" data-shifted="*">*<br>8</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_9" data-shifted="(">(<br>9</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_0" data-shifted=")">)<br>0</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_MINUS" data-shifted="_">_<br>-</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_EQUAL" data-shifted="+">+<br>=</div>
+      <div class="key kb-key large" data-bind="keymask" data-key="KC_BSPACE">Bckspc</div>
+    </div>
+
+    <!-- QWERTY Row -->
+    <div class="kb-row">
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_TAB">Tab</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_Q" data-shifted="Q">q</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_W" data-shifted="W">w</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_E" data-shifted="E">e</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_R" data-shifted="R">r</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_T" data-shifted="T">t</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_Y" data-shifted="Y">y</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_U" data-shifted="U">u</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_I" data-shifted="I">i</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_O" data-shifted="O">o</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_P" data-shifted="P">p</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_LBRACKET" data-shifted="{">{<br>[</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_RBRACKET" data-shifted="}">}<br>]</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_BSLASH" data-shifted="|">|<br>\</div>
+    </div>
+
+    <!-- Home Row -->
+    <div class="kb-row">
+      <div class="key kb-key large" data-bind="keymask" data-key="KC_CAPSLOCK">Caps<br>Lock</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_A" data-shifted="A">a</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_S" data-shifted="S">s</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_D" data-shifted="D">d</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_F" data-shifted="F">f</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_G" data-shifted="G">g</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_H" data-shifted="H">h</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_J" data-shifted="J">j</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_K" data-shifted="K">k</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_L" data-shifted="L">l</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_SCOLON" data-shifted=":">:<br>;</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_QUOTE" data-shifted="&quot;">"<br>'</div>
+      <div class="key kb-key large" data-bind="keymask" data-key="KC_ENTER">Enter</div>
+    </div>
+
+    <!-- Bottom Row -->
+    <div class="kb-row">
+      <div class="key kb-key extra-large" data-bind="keymask" data-key="KC_LSHIFT">Shift</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_Z" data-shifted="Z">z</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_X" data-shifted="X">x</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_C" data-shifted="C">c</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_V" data-shifted="V">v</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_B" data-shifted="B">b</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_N" data-shifted="N">n</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_M" data-shifted="M">m</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_COMMA" data-shifted="<">&lt;<br>,</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_DOT" data-shifted=">">&gt;<br>.</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_SLASH" data-shifted="?">?<br>/</div>
+      <div class="key kb-key extra-large" data-bind="keymask" data-key="KC_RSHIFT">Shift</div>
+    </div>
+
+    <!-- Control Row -->
+    <div class="kb-row">
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_LCTRL">Ctrl</div>
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_LGUI">Win</div>
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_LALT">Alt</div>
+      <div class="key kb-key spacebar" data-bind="keymask" data-key="KC_SPACE">Space</div>
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_RALT">Alt</div>
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_RGUI">Win</div>
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_APPLICATION">App</div>
+      <div class="key kb-key medium" data-bind="keymask" data-key="KC_RCTRL">Ctrl</div>
+    </div>
+
+    <!-- International -->
+    <div class="kb-row">
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_NONUS_HASH"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_NONUS_BSLASH"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_RO"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_KP_COMMA"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_TILD"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_AT"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_CIRC"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_AMPR"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_ASTR"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_LPRN"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_RPRN"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_UNDS"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_PLUS"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_LCBR"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_RCBR"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_LT"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_GT"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_COLN"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_QUES"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_DQUO"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_PIPE"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_DLR"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_EXLM"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_HASH"></div>
+      <div class="key kb-intl kb-key" data-intl="yes" data-bind="keymask" data-key="KC_PERC"></div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="key kb-key" data-bind="keymask" data-key="KC_PSCREEN">Print<br>Screen</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_SCROLLLOCK">Scroll<br>Lock</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_PAUSE">Pause</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_INSERT">Ins</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_HOME">Home</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_PGUP">Pgup</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_DELETE">Del</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_END">End</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_PGDOWN">Pgdn</div>
+    </div>
+    <div class="kb-row">
+      <div class="kb-blank">&nbsp;</div>
+    </div>
+    <div class="kb-row">
+      <div class="kb-blank">&nbsp;</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_UP">↑</div>
+      <div class="kb-blank">&nbsp;</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_LEFT">←</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_DOWN">↓</div>
+      <div class="key kb-key small" data-bind="keymask" data-key="KC_RIGHT">→</div>
+    </div>
+    <div class="kb-row">
+      <div class="kb-blank">&nbsp;</div>
+    </div>
+    <div class="kb-row">
+      <div class="kb-blank">&nbsp;</div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <!-- Arrow Keys and Numpad -->
+    <div class="kb-row">
+      <div class="key kb-key" data-bind="keymask" data-key="KC_NUMLOCK">Num<br>Lock</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_SLASH">/</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_ASTERISK">*</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_MINUS">-</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_7">7</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_8">8</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_9">9</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_PLUS">+</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_4">4</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_5">5</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_6">6</div>
+      <div class="key kb-key large num-enter" data-bind="keymask" data-key="KC_KP_ENTER">Enter</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_1">1</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_2">2</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_3">3</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key extra-large" data-bind="keymask" data-key="KC_KP_0">0</div>
+      <div class="key kb-key" data-bind="keymask" data-key="KC_KP_DOT">.</div>
+    </div>
+    <div class="kb-row">
+      <div class="kb-blank">&nbsp;</div>
+    </div>
+    <div class="kb-row">
+      <div class="kb-blank">&nbsp;</div>
+    </div>
+  </div>
+</div>
+</div>
+  <!-- Special keys -->
+  <div class="board-map" data-board="media"><div class="kb-board">
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kb-desc">All Function Keys</div>
+    </div>
+    <div class="kb-spam">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F1" data-title="KC_F1: F1">F1</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F2" data-title="KC_F2: F2">F2</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F3" data-title="KC_F3: F3">F3</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F4" data-title="KC_F4: F4">F4</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F5" data-title="KC_F5: F5">F5</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F6" data-title="KC_F6: F6">F6</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F7" data-title="KC_F7: F7">F7</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F8" data-title="KC_F8: F8">F8</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F9" data-title="KC_F9: F9">F9</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F10" data-title="KC_F10: F10">F10</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F11" data-title="KC_F11: F11">F11</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F12" data-title="KC_F12: F12">F12</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F13" data-title="KC_F13: F13">F13</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F14" data-title="KC_F14: F14">F14</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F15" data-title="KC_F15: F15">F15</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F16" data-title="KC_F16: F16">F16</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F17" data-title="KC_F17: F17">F17</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F18" data-title="KC_F18: F18">F18</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F19" data-title="KC_F19: F19">F19</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F20" data-title="KC_F20: F20">F20</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F21" data-title="KC_F21: F21">F21</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F22" data-title="KC_F22: F22">F22</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F23" data-title="KC_F23: F23">F23</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_F24" data-title="KC_F24: F24">F24</div>
+      <div class="kb-blank"></div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kb-desc">Media Keys</div>
+    </div>
+    <div class="kb-spam">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_PWR" data-title="System Power Down">Power</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_SLEP" data-title="System Sleep">Sleep</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WAKE" data-title="System Wake">Wake</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_EXEC" data-title="Execute">Exec</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_HELP" data-title="KC_HELP: Help">Help</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_SLCT" data-title="KC_SLCT: Select">Select</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_STOP" data-title="KC_STOP: Stop">Stop</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_AGIN" data-title="KC_AGIN: Again">Again</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_UNDO" data-title="KC_UNDO: Undo">Undo</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_CUT" data-title="KC_CUT: Cut">Cut</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_COPY" data-title="KC_COPY: Copy">Copy</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_PSTE" data-title="KC_PSTE: Paste">Paste</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_FIND" data-title="KC_FIND: Find">Find</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_CALC" data-title="Launch Calculator (Windows)">Calc</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MAIL" data-title="Launch Mail (Windows)">Mail</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MSEL" data-title="Launch Media Player (Windows)">Media Player</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MYCM" data-title="Launch My Computer (Windows)">My PC</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WSCH" data-title="Browser Search (Windows)">Browser Search</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WHOM" data-title="Browser Home (Windows)">Browser Home</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WBAK" data-title="Browser Back (Windows)">Browser Back</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WFWD" data-title="Browser Forward (Windows)">Browser Forward</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WSTP" data-title="Browser Stop (Windows)">Browser Stop</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WREF" data-title="Browser Refresh (Windows)">Browser Refresh</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WFAV" data-title="Browser Favorites (Windows)">Browser Fav.</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_BRIU" data-title="Increase the brightness of screen (Laptop)">Bright.  Up</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_BRID" data-title="Decrease the brightness of screen (Laptop)">Bright.  Down</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MPRV" data-title="Previous Track">Media Prev</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MNXT" data-title="Next Track">Media Next</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MUTE" data-title="Mute Audio">Mute</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_VOLD" data-title="Volume Down">Vol -</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_VOLU" data-title="Volume Up">Vol +</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MSTP" data-title="KC_MSTP: Media Stop">Media Stop</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MPLY" data-title="Play/Pause">Media Play</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MRWD" data-title="Previous Track / Rewind (macOS)">Prev Track (macOS)</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MFFD" data-title="Next Track / Fast Forward (macOS)">Next Track (macOS)</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_EJCT" data-title="Eject (macOS)">Eject</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_LCAP" data-title="Locking Caps Lock">Locking Caps</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_LNUM" data-title="Locking Num Lock">Locking Num</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_LSCR" data-title="Locking Scroll Lock">Locking Scroll</div>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="audio"><div class="kb-board">
+  <div class="kb-spam">
+    <div class="key kb-key kb-norender" data-bind="key" data-key="AU_ON" data-title="Audio mode on">Audio ON</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="AU_OFF" data-title="Audio mode off">Audio OFF</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="AU_TOG" data-title="Toggles Audio mode">Audio Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="CLICKY_TOGGLE" data-title="Toggles Audio clicky mode">Clicky Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="CLICKY_UP" data-title="Increases frequency of the clicks">Clicky Up</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="CLICKY_DOWN" data-title="Decreases frequency of the clicks">Clicky Down</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="CLICKY_RESET" data-title="Resets frequency to default">Clicky Reset</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MU_ON" data-title="Turns on Music Mode">Music On</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MU_OFF" data-title="Turns off Music Mode">Music Off</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MU_TOG" data-title="Toggles Music Mode">Music Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MU_MOD" data-title="Cycles through the music modes">Music Cycle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_ON" data-title="Turn haptic feedback on">Haptic On</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_OFF" data-title="Turn haptic feedback off">Haptic Off</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_TOG" data-title="Toggle haptic feedback on/off">Haptic Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_RST" data-title="Reset haptic feedback config to default">Haptic Reset</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_FBK" data-title="Toggle feedback to occur on keypress, release or both">Haptic Feed back</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_BUZ" data-title="Toggle solenoid buzz on/off">Haptic Buzz</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_MODI" data-title="Go to next DRV2605L waveform">Haptic Next</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_MODD" data-title="Go to previous DRV2605L waveform">Haptic Prev</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_CONT" data-title="Toggle continuous haptic mode on/off">Haptic Cont.</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_CONI" data-title="Increase DRV2605L continous haptic strength">Haptic +</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_COND" data-title="Decrease DRV2605L continous haptic strength">Haptic -</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_DWLI" data-title="Increase Solenoid dwell time">Haptic Dwell+</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="HPT_DWLD" data-title="Decrease Solenoid dwell time">Haptic Dwell-</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ASDN" data-title="Lower the Auto Shift timeout variable (down)">Auto- shift Down</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ASUP" data-title="Raise the Auto Shift timeout variable (up)">Auto- shift Up</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ASRP" data-title="Report your current Auto Shift timeout value">Auto- shift Report</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ASON" data-title="Turns on the Auto Shift Function">Auto- shift On</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ASOFF" data-title="Turns off the Auto Shift Function">Auto- shift Off</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ASTG" data-title="Toggles the state of the Auto Shift feature">Auto- shift Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="CMB_ON" data-title="Turns on Combo feature">Combo On</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="CMB_OFF" data-title="Turns off Combo feature">Combo Off</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="CMB_TOG" data-title="Toggles Combo feature on and off">Combo Toggle</div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="backlights"><div class="kb-board">
+  <div class="kb-spam">
+    <div class="key kb-key kb-norender" data-bind="key" data-key="BL_TOGG" data-title="Turn the backlight on or off">BL Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="BL_STEP" data-title="Cycle through backlight levels">BL Cycle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="BL_BRTG" data-title="Toggle backlight breathing">BL Breath</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="BL_ON" data-title="Set the backlight to max brightness">BL On</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="BL_OFF" data-title="Turn the backlight off">BL Off</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="BL_INC" data-title="Increase the backlight level">BL +</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="BL_DEC" data-title="Decrease the backlight level">BL - </div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_TOG" data-title="Toggle RGB lighting on or off">RGB Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_MOD" data-title="Next RGB mode">RGB Mode +</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_RMOD" data-title="Previous RGB mode">RGB Mode -</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_HUI" data-title="Increase hue">Hue +</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_HUD" data-title="Decrease hue">Hue -</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_SAI" data-title="Increase saturation">Sat +</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_SAD" data-title="Decrease saturation">Sat -</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_VAI" data-title="Increase value">Bright +</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_VAD" data-title="Decrease value">Bright -</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_SPI" data-title="Increase RGB effect speed">Effect +</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_SPD" data-title="Decrease RGB effect speed">Effect -</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_P" data-title="RGB Mode: Plain">RGB Mode P</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_B" data-title="RGB Mode: Breathe">RGB Mode B</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_R" data-title="RGB Mode: Rainbow">RGB Mode R</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_SW" data-title="RGB Mode: Swirl">RGB Mode SW</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_SN" data-title="RGB Mode: Snake">RGB Mode SN</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_K" data-title="RGB Mode: Knight Rider">RGB Mode K</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_X" data-title="RGB Mode: Christmas">RGB Mode X</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_G" data-title="RGB Mode: Gradient">RGB Mode G</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="RGB_M_T" data-title="RGB Mode: Test">RGB Mode T</div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="international"><div class="kb-row"><div class="kb-board-mods">
+  <div class="kb-group">
+    <div class="kb-row kb-mods kb-modifiers" data-title="All selected Mods will be applied to keys assigned.">
+      <div class="kbdesc extra-large">Mods to apply:</div>
+      <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
+      <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
+      <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
+      <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row kb-mods">
+      <div class="kbdesc large">Special:</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
+      <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="kb-board">
+  <div class="kb-spam">
+    <div class="key kb-key" data-bind="keymask" data-key="KC_NONUS_HASH"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_NONUS_BSLASH"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_RO"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_KP_COMMA"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_TILD"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_AT"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_CIRC"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_AMPR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_ASTR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_LPRN"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_RPRN"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_UNDS"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_PLUS"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_LCBR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_RCBR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_LT"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_GT"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_COLN"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_QUES"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_DQUO"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_PIPE"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_DLR"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_EXLM"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_HASH"></div>
+    <div class="key kb-key" data-bind="keymask" data-key="KC_PERC"></div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_NONUS_HASH" data-title="Non-US # and ~">~ #</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_NONUS_BSLASH" data-title="Non-US \ and |">| \</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_RO" data-title="JIS \ and _">_ \</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_KANA" data-title="JIS Katakana/Hiragana">カタカナ ひらがな</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_JYEN" data-title="KC_JYEN: | ¥">| ¥</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_HENK" data-title="JIS Henkan">変換</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_MHEN" data-title="JIS Muhenkan">無変換</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_LANG1" data-title="Korean Han/Yeong / JP Mac Kana">한영 かな</div>
+      <div class="key kb-key kb-norender" data-bind="keymask" data-key="KC_LANG2" data-title="Korean Hanja / JP Mac Eisu">漢字 英数</div>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="magic"><div class="kb-board">
+  <div class="kb-spam">
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_CONTROL_CAPSLOCK" data-title="Swap Caps Lock and Left Control">Swap Ctrl Caps</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_CONTROL_CAPSLOCK" data-title="Unswap Caps Lock and Left Control">Unswap Ctrl Caps</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_CAPSLOCK_TO_CONTROL" data-title="Treat Caps Lock as Control">Caps to Ctrl</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNCAPSLOCK_TO_CONTROL" data-title="Stop treating Caps Lock as Control">Caps not to Ctrl</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_LCTL_LGUI" data-title="Swap Left Control and GUI">Swap LCtl LGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_LCTL_LGUI" data-title="Unswap Left Control and GUI">Unswap LCtl LGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_RCTL_RGUI" data-title="Swap Right Control and GUI">Swap RCtl RGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_RCTL_RGUI" data-title="Unswap Right Control and GUI">Unswap RCtl RGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_CTL_GUI" data-title="Swap Control and GUI on both sides">Swap Ctl Gui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_CTL_GUI" data-title="Unswap Control and GUI on both sides">Unswap Ctl Gui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_TOGGLE_CTL_GUI" data-title="Toggle Control and GUI swap on both sides">Toggle Ctl Gui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_LALT_LGUI" data-title="Swap Left Alt and GUI">Swap LAlt LGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_LALT_LGUI" data-title="Unswap Left Alt and GUI">Unswap LAlt LGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_RALT_RGUI" data-title="Swap Right Alt and GUI">Swap RAlt RGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_RALT_RGUI" data-title="Unswap Right Alt and GUI">Unswap RAlt RGui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_ALT_GUI" data-title="Swap Alt and GUI on both sides">Swap Alt Gui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_ALT_GUI" data-title="Unswap Alt and GUI on both sides">Unswap Alt Gui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_TOGGLE_ALT_GUI" data-title="Toggle Alt and GUI swap on both sides">Toggle Alt Gui</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_NO_GUI" data-title="Disable the GUI keys">GUI Off</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNNO_GUI" data-title="Enable the GUI keys">GUI On</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_GRAVE_ESC" data-title="Swap ` and Escape">Swap ` Esc</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_GRAVE_ESC" data-title="Unswap ` and Escape">Unswap ` Esc</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_SWAP_BACKSLASH_BACKSPACE" data-title="Swap \ and Backspace">Swap \ BS</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNSWAP_BACKSLASH_BACKSPACE" data-title="Unswap \ and Backspace">Unswap \ BS</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_HOST_NKRO" data-title="Enable N-key rollover">NKRO On</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_UNHOST_NKRO" data-title="Disable N-key rollover">NKRO Off</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_TOGGLE_NKRO" data-title="Toggle N-key rollover">NKRO Toggle</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_EE_HANDS_LEFT" data-title="Set the master half of a split keyboard as the left hand (for EE_HANDS)">EEH Left</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MAGIC_EE_HANDS_RIGHT" data-title="Set the master half of a split keyboard as the right hand (for EE_HANDS)">EEH Right</div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="midi"><div class="kb-board">
+  <div class="kb-spam">
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_C" data-title="Midi send note C">ᴹᴵᴰᴵ C</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Cs" data-title="Midi send note C#/Dᵇ">ᴹᴵᴰᴵ C#/Dᵇ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_D" data-title="Midi send note D">ᴹᴵᴰᴵ D</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Ds" data-title="Midi send note D#/Eᵇ">ᴹᴵᴰᴵ D#/Eᵇ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_E" data-title="Midi send note E">ᴹᴵᴰᴵ E</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_F" data-title="Midi send note F">ᴹᴵᴰᴵ F</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Fs" data-title="Midi send note F#/Gᵇ">ᴹᴵᴰᴵ F#/Gᵇ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_G" data-title="Midi send note G">ᴹᴵᴰᴵ G</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Gs" data-title="Midi send note G#/Aᵇ">ᴹᴵᴰᴵ G#/Aᵇ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_A" data-title="Midi send note A">ᴹᴵᴰᴵ A</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_As" data-title="Midi send note A#/Bᵇ">ᴹᴵᴰᴵ A#/Bᵇ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_B" data-title="Midi send note B">ᴹᴵᴰᴵ B</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_C_1" data-title="Midi send note C₁">ᴹᴵᴰᴵ C₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Cs_1" data-title="Midi send note C#₁/Dᵇ₁">ᴹᴵᴰᴵ C#₁/Dᵇ₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_D_1" data-title="Midi send note D₁">ᴹᴵᴰᴵ D₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Ds_1" data-title="Midi send note D#₁/Eᵇ₁">ᴹᴵᴰᴵ D#₁/Eᵇ₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_E_1" data-title="Midi send note E₁">ᴹᴵᴰᴵ E₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_F_1" data-title="Midi send note F₁">ᴹᴵᴰᴵ F₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Fs_1" data-title="Midi send note F#₁/Gᵇ₁">ᴹᴵᴰᴵ F#₁/Gᵇ₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_G_1" data-title="Midi send note G₁">ᴹᴵᴰᴵ G₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Gs_1" data-title="Midi send note G#₁/Aᵇ₁">ᴹᴵᴰᴵ G#₁/Aᵇ₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_A_1" data-title="Midi send note A₁">ᴹᴵᴰᴵ A₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_As_1" data-title="Midi send note A#₁/Bᵇ₁">ᴹᴵᴰᴵ A#₁/Bᵇ₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_B_1" data-title="Midi send note B₁">ᴹᴵᴰᴵ B₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_C_2" data-title="Midi send note C₂">ᴹᴵᴰᴵ C₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Cs_2" data-title="Midi send note C#₂/Dᵇ₂">ᴹᴵᴰᴵ C#₂/Dᵇ₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_D_2" data-title="Midi send note D₂">ᴹᴵᴰᴵ D₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Ds_2" data-title="Midi send note D#₂/Eᵇ₂">ᴹᴵᴰᴵ D#₂/Eᵇ₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_E_2" data-title="Midi send note E₂">ᴹᴵᴰᴵ E₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_F_2" data-title="Midi send note F₂">ᴹᴵᴰᴵ F₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Fs_2" data-title="Midi send note F#₂/Gᵇ₂">ᴹᴵᴰᴵ F#₂/Gᵇ₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_G_2" data-title="Midi send note G₂">ᴹᴵᴰᴵ G₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Gs_2" data-title="Midi send note G#₂/Aᵇ₂">ᴹᴵᴰᴵ G#₂/Aᵇ₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_A_2" data-title="Midi send note A₂">ᴹᴵᴰᴵ A₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_As_2" data-title="Midi send note A#₂/Bᵇ₂">ᴹᴵᴰᴵ A#₂/Bᵇ₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_B_2" data-title="Midi send note B₂">ᴹᴵᴰᴵ B₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_C_3" data-title="Midi send note C₃">ᴹᴵᴰᴵ C₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Cs_3" data-title="Midi send note C#₃/Dᵇ₃">ᴹᴵᴰᴵ C#₃/Dᵇ₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_D_3" data-title="Midi send note D₃">ᴹᴵᴰᴵ D₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Ds_3" data-title="Midi send note D#₃/Eᵇ₃">ᴹᴵᴰᴵ D#₃/Eᵇ₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_E_3" data-title="Midi send note E₃">ᴹᴵᴰᴵ E₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_F_3" data-title="Midi send note F₃">ᴹᴵᴰᴵ F₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Fs_3" data-title="Midi send note F#₃/Gᵇ₃">ᴹᴵᴰᴵ F#₃/Gᵇ₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_G_3" data-title="Midi send note G₃">ᴹᴵᴰᴵ G₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Gs_3" data-title="Midi send note G#₃/Aᵇ₃">ᴹᴵᴰᴵ G#₃/Aᵇ₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_A_3" data-title="Midi send note A₃">ᴹᴵᴰᴵ A₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_As_3" data-title="Midi send note A#₃/Bᵇ₃">ᴹᴵᴰᴵ A#₃/Bᵇ₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_B_3" data-title="Midi send note B₃">ᴹᴵᴰᴵ B₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_C_4" data-title="Midi send note C₄">ᴹᴵᴰᴵ C₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Cs_4" data-title="Midi send note C#₄/Dᵇ₄">ᴹᴵᴰᴵ C#₄/Dᵇ₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_D_4" data-title="Midi send note D₄">ᴹᴵᴰᴵ D₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Ds_4" data-title="Midi send note D#₄/Eᵇ₄">ᴹᴵᴰᴵ D#₄/Eᵇ₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_E_4" data-title="Midi send note E₄">ᴹᴵᴰᴵ E₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_F_4" data-title="Midi send note F₄">ᴹᴵᴰᴵ F₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Fs_4" data-title="Midi send note F#₄/Gᵇ₄">ᴹᴵᴰᴵ F#₄/Gᵇ₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_G_4" data-title="Midi send note G₄">ᴹᴵᴰᴵ G₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Gs_4" data-title="Midi send note G#₄/Aᵇ₄">ᴹᴵᴰᴵ G#₄/Aᵇ₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_A_4" data-title="Midi send note A₄">ᴹᴵᴰᴵ A₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_As_4" data-title="Midi send note A#₄/Bᵇ₄">ᴹᴵᴰᴵ A#₄/Bᵇ₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_B_4" data-title="Midi send note B₄">ᴹᴵᴰᴵ B₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_C_5" data-title="Midi send note C₅">ᴹᴵᴰᴵ C₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Cs_5" data-title="Midi send note C#₅/Dᵇ₅">ᴹᴵᴰᴵ C#₅/Dᵇ₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_D_5" data-title="Midi send note D₅">ᴹᴵᴰᴵ D₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Ds_5" data-title="Midi send note D#₅/Eᵇ₅">ᴹᴵᴰᴵ D#₅/Eᵇ₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_E_5" data-title="Midi send note E₅">ᴹᴵᴰᴵ E₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_F_5" data-title="Midi send note F₅">ᴹᴵᴰᴵ F₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Fs_5" data-title="Midi send note F#₅/Gᵇ₅">ᴹᴵᴰᴵ F#₅/Gᵇ₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_G_5" data-title="Midi send note G₅">ᴹᴵᴰᴵ G₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_Gs_5" data-title="Midi send note G#₅/Aᵇ₅">ᴹᴵᴰᴵ G#₅/Aᵇ₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_A_5" data-title="Midi send note A₅">ᴹᴵᴰᴵ A₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_As_5" data-title="Midi send note A#₅/Bᵇ₅">ᴹᴵᴰᴵ A#₅/Bᵇ₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_B_5" data-title="Midi send note B₅">ᴹᴵᴰᴵ B₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_ALLOFF" data-title="Midi send all notes OFF">ᴹᴵᴰᴵ Notesᵒᶠᶠ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_N2" data-title="Midi set octave to -2">ᴹᴵᴰᴵ Oct₋₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_N1" data-title="Midi set octave to -1">ᴹᴵᴰᴵ Oct₋₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_0" data-title="Midi set octave to 0">ᴹᴵᴰᴵ Oct₀</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_1" data-title="Midi set octave to 1">ᴹᴵᴰᴵ Oct₊₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_2" data-title="Midi set octave to 2">ᴹᴵᴰᴵ Oct₊₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_3" data-title="Midi set octave to 3">ᴹᴵᴰᴵ Oct₊₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_4" data-title="Midi set octave to 4">ᴹᴵᴰᴵ Oct₊₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_5" data-title="Midi set octave to 5">ᴹᴵᴰᴵ Oct₊₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_6" data-title="Midi set octave to 6">ᴹᴵᴰᴵ Oct₊₆</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCT_7" data-title="Midi set octave to 7">ᴹᴵᴰᴵ Oct₊₇</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCTD" data-title="Midi move down an octave">ᴹᴵᴰᴵ Octᴰᴺ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_OCTU" data-title="Midi move up an octave">ᴹᴵᴰᴵ Octᵁᴾ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_N6" data-title="Midi set transposition to -4 semitones">ᴹᴵᴰᴵ Trans₋₆</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_N5" data-title="Midi set transposition to -5 semitones">ᴹᴵᴰᴵ Trans₋₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_N4" data-title="Midi set transposition to -4 semitones">ᴹᴵᴰᴵ Trans₋₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_N3" data-title="Midi set transposition to -3 semitones">ᴹᴵᴰᴵ Trans₋₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_N2" data-title="Midi set transposition to -2 semitones">ᴹᴵᴰᴵ Trans₋₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_N1" data-title="Midi set transposition to -1 semitones">ᴹᴵᴰᴵ Trans₋₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_0" data-title="Midi set no transposition">ᴹᴵᴰᴵ Trans₀</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_1" data-title="Midi set transposition to +1 semitones">ᴹᴵᴰᴵ Trans₊₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_2" data-title="Midi set transposition to +2 semitones">ᴹᴵᴰᴵ Trans₊₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_3" data-title="Midi set transposition to +3 semitones">ᴹᴵᴰᴵ Trans₊₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_4" data-title="Midi set transposition to +4 semitones">ᴹᴵᴰᴵ Trans₊₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_5" data-title="Midi set transposition to +5 semitones">ᴹᴵᴰᴵ Trans₊₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNS_6" data-title="Midi set transposition to +6 semitones">ᴹᴵᴰᴵ Trans₊₆</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNSD" data-title="Midi decrease transposition">ᴹᴵᴰᴵ Transᴰᴺ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_TRNSU" data-title="Midi increase transposition">ᴹᴵᴰᴵ Transᵁᴾ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_1" data-title="Midi set velocity to 0">ᴹᴵᴰᴵ Vel₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_2" data-title="Midi set velocity to 25">ᴹᴵᴰᴵ Vel₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_3" data-title="Midi set velocity to 38">ᴹᴵᴰᴵ Vel₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_4" data-title="Midi set velocity to 51">ᴹᴵᴰᴵ Vel₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_5" data-title="Midi set velocity to 64">ᴹᴵᴰᴵ Vel₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_6" data-title="Midi set velocity to 76">ᴹᴵᴰᴵ Vel₆</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_7" data-title="Midi set velocity to 89">ᴹᴵᴰᴵ Vel₇</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_8" data-title="Midi set velocity to 102">ᴹᴵᴰᴵ Vel₈</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_9" data-title="Midi set velocity to 114">ᴹᴵᴰᴵ Vel₉</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VEL_10" data-title="Midi set velocity to 127">ᴹᴵᴰᴵ Vel₁₀</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VELD" data-title="Midi decrease velocity">ᴹᴵᴰᴵ Velᴰᴺ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_VELU" data-title="Midi increase velocity">ᴹᴵᴰᴵ Velᵁᴾ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH1" data-title="Midi set channel to 1">ᴹᴵᴰᴵ CH₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH2" data-title="Midi set channel to 2">ᴹᴵᴰᴵ CH₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH3" data-title="Midi set channel to 3">ᴹᴵᴰᴵ CH₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH4" data-title="Midi set channel to 4">ᴹᴵᴰᴵ CH₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH5" data-title="Midi set channel to 5">ᴹᴵᴰᴵ CH₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH6" data-title="Midi set channel to 6">ᴹᴵᴰᴵ CH₆</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH7" data-title="Midi set channel to 7">ᴹᴵᴰᴵ CH₇</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH8" data-title="Midi set channel to 8">ᴹᴵᴰᴵ CH₈</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH9" data-title="Midi set channel to 9">ᴹᴵᴰᴵ CH₉</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH10" data-title="Midi set channel to 10">ᴹᴵᴰᴵ CH₁₀</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH11" data-title="Midi set channel to 11">ᴹᴵᴰᴵ CH₁₁</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH12" data-title="Midi set channel to 12">ᴹᴵᴰᴵ CH₁₂</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH13" data-title="Midi set channel to 13">ᴹᴵᴰᴵ CH₁₃</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH14" data-title="Midi set channel to 14">ᴹᴵᴰᴵ CH₁₄</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH15" data-title="Midi set channel to 15">ᴹᴵᴰᴵ CH₁₅</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CH16" data-title="Midi set channel to 16">ᴹᴵᴰᴵ CH₁₆</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CHD" data-title="Midi decrease channel">ᴹᴵᴰᴵ CHᴰᴺ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_CHU" data-title="Midi increase channel">ᴹᴵᴰᴵ CHᵁᴾ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_SUS" data-title="Midi Sustain">ᴹᴵᴰᴵ Sust</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_PORT" data-title="Midi Portmento">ᴹᴵᴰᴵ Port</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_SOST" data-title="Midi Sostenuto">ᴹᴵᴰᴵ Sost</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_SOFT" data-title="Midi Soft Pedal">ᴹᴵᴰᴵ SPedal</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_LEG" data-title="Midi Legato">ᴹᴵᴰᴵ Legat</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_MOD" data-title="Midi Modulation">ᴹᴵᴰᴵ Modul</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_MODSD" data-title="Midi decrease modulation speed">ᴹᴵᴰᴵ Modulᴰᴺ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_MODSU" data-title="Midi increase modulation speed">ᴹᴵᴰᴵ Modulᵁᴾ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_BENDD" data-title="Midi bend pitch down">ᴹᴵᴰᴵ Bendᴰᴺ</div>
+    <div class="key kb-key kb-norender" data-bind="key" data-key="MI_BENDU" data-title="Midi bend pitch up">ᴹᴵᴰᴵ Bendᵁᴾ</div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="modtaps"><div class="kb-board">
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc" style="width: 400px; max-width: 400px;">Hold for mod(s), tap for key.</div>
+    </div>
+    <div class="kb-row">
+      <div class="kbdesc" data-title="Left hand side mods">LHS</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCTL_T(kc)" data-title="Lctrl when held, kc when tapped">LCTL_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSFT_T(kc)" data-title="LShift when held, kc when tapped">LSFT_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="C_S_T(kc)" data-title="LShift + LCtrl when held, kc when tapped">C_S_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LALT_T(kc)" data-title="LAlt when held, kc when tapped">LALT_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCA_T(kc)" data-title="LCtrl + LAlt when held, kc when tapped">LCA_T (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSA_T(kc)" data-title="LShift + LAlt when held, kc when tapped">LSA_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="MEH_T(kc)" data-title="LShift + LCtrl + LAlt when held, kc when tapped">MEH_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LGUI_T(kc)" data-title="LGUI when held, kc when tapped">LGUI_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCG_T(kc)" data-title="LCtrl + LGUI when held, kc when tapped">LCG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="SGUI_T(kc)" data-title="LShift + LGUI when held, kc when tapped">SGUI_T (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSCG_T(kc)" data-title="LShift + LCtrl + LGUI when held, kc when tapped">LSCG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LAG_T(kc)" data-title="LAlt + LGUI when held, kc when tapped">LAG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCAG_T(kc)" data-title="LCtrl + LAlt + LGUI when held, kc when tapped">LCAG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSAG_T(kc)" data-title="LShift + LAlt + LGUI when held, kc when tapped">LSAG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="ALL_T(kc)" data-title="Shift + LCtrl + LAlt + LGUI when held, kc when tapped">ALL_T (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="kbdesc" data-title="Right hand side mods">RHS</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCTL_T(kc)" data-title="RCtrl when held, kc when tapped">RCTL_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSFT_T(kc)" data-title="RShift when held, kc when tapped">RSFT_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSC_T(kc)" data-title="RShift + RCtrl when held, kc when tapped">RSC_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RALT_T(kc)" data-title="RAlt when held, kc when tapped">RALT_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCA_T(kc)" data-title="RCtrl + RAlt when held, kc when tapped">RCA_T (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSA_T(kc)" data-title="RShift + RAlt when held, kc when tapped">RSA_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSCA_T(kc)" data-title="RShift + RCtrl + RAlt when held, kc when tapped">RSCA_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RGUI_T(kc)" data-title="RGUI when held, kc when tapped">RGUI_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCG_T(kc)" data-title="RCtrl + RGUI when held, kc when tapped">RCG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSG_T(kc)" data-title="RShift + RGUI when held, kc when tapped">RSG_T (kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSCG_T(kc)" data-title="RShift + RCtrl + RGUI when held, kc when tapped">RSCG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RAG_T(kc)" data-title="RAlt + RGUI when held, kc when tapped">RAG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCAG_T(kc)" data-title="RCtrl + RAlt + RGUI when held, kc when tapped">RCAG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSAG_T(kc)" data-title="RShift + RAlt + RGUI when held, kc when tapped">RSAG_T (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSCAG_T(kc)" data-title="RShift + RCtrl + RAlt + RGUI when held, kc when tapped">RSCAG_T (kc)</div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc" style="width: 400px; max-width: 400px;">Hold for layer, tap for key.</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT0(kc)" data-layer="0" data-title="LT0 - Hold for layer 0, tap for (kc)">LT0(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT1(kc)" data-layer="1" data-title="LT1 - Hold for layer 1, tap for (kc)">LT1(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT2(kc)" data-layer="2" data-title="LT2 - Hold for layer 2, tap for (kc)">LT2(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT3(kc)" data-layer="3" data-title="LT3 - Hold for layer 3, tap for (kc)">LT3(kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT4(kc)" data-layer="4" data-title="LT4 - Hold for layer 4, tap for (kc)">LT4(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT5(kc)" data-layer="5" data-title="LT5 - Hold for layer 5, tap for (kc)">LT5(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT6(kc)" data-layer="6" data-title="LT6 - Hold for layer 6, tap for (kc)">LT6(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT7(kc)" data-layer="7" data-title="LT7 - Hold for layer 7, tap for (kc)">LT7(kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT8(kc)" data-layer="8" data-title="LT8 - Hold for layer 8, tap for (kc)">LT8(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT9(kc)" data-layer="9" data-title="LT9 - Hold for layer 9, tap for (kc)">LT9(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT10(kc)" data-layer="10" data-title="LT10 - Hold for layer 10, tap for (kc)">LT10(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT11(kc)" data-layer="11" data-title="LT11 - Hold for layer 11, tap for (kc)">LT11(kc)</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT12(kc)" data-layer="12" data-title="LT12 - Hold for layer 12, tap for (kc)">LT12(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT13(kc)" data-layer="13" data-title="LT13 - Hold for layer 13, tap for (kc)">LT13(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT14(kc)" data-layer="14" data-title="LT14 - Hold for layer 14, tap for (kc)">LT14(kc)</div>
+      <div class="key kb-key kb-norender extra-large" data-bind="key-mod" data-key="LT15(kc)" data-layer="15" data-title="LT15 - Hold for layer 15, tap for (kc)">LT15(kc)</div>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="quantum"><div class="kb-board">
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc" data-title="Left hand side mods">One-Shot LHS</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LSFT)" data-title="Enable Left Shift for one keypress">OSM LSft</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LCTL)" data-title="Enable Left Control for one keypress">OSM LCtl</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LALT)" data-title="Enable Left Alt for one keypress">OSM LAlt</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LGUI)" data-title="Enable Left GUI for one keypress">OSM LGUI</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LCTL|MOD_LSFT)" data-title="Enable Left Control and Shift for one keypress">OSM CS</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LCTL|MOD_LALT)" data-title="Enable Left Control and Alt for one keypress">OSM CA</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LCTL|MOD_LGUI)" data-title="Enable Left Control and GUI for one keypress">OSM CG</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LSFT|MOD_LALT)" data-title="Enable Left Shift and Alt for one keypress">OSM SA</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LSFT|MOD_LGUI)" data-title="Enable Left Shift and GUI for one keypress">OSM SG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LALT|MOD_LGUI)" data-title="Enable Left Alt and GUI for one keypress">OSM AG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LCTL|MOD_LSFT|MOD_LGUI)" data-title="Enable Left Control, Shift, and GUI for one keypress">OSM CSG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LCTL|MOD_LALT|MOD_LGUI)" data-title="Enable Left Control, Alt, and GUI for one keypress">OSM CAG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_LSFT|MOD_LALT|MOD_LGUI)" data-title="Enable Left Shift, Alt, and GUI for one keypress">OSM SAG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_MEH)" data-title="Enable Left Control, Shift, and Alt for one keypress">OSM Meh</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_HYPR)" data-title="Enable Left Control, Shift, Alt, and GUI for one keypress">OSM Hyper</div>
+    </div>
+    <div class="kb-row">
+      <div class="kbdesc" data-title="Right hand side mods">One-Shot RHS</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RSFT)" data-title="Enable Right Shift for one keypress">OSM RSft</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL)" data-title="Enable Right Control for one keypress">OSM RCtl</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RALT)" data-title="Enable Right Alt for one keypress">OSM RAlt</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RGUI)" data-title="Enable Right GUI for one keypress">OSM RGUI</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL|MOD_RSFT)" data-title="Enable Right Control and Shift for one keypress">OSM RCS</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL|MOD_RALT)" data-title="Enable Right Control and Alt for one keypress">OSM RCA</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL|MOD_RGUI)" data-title="Enable Right Control and GUI for one keypress">OSM RCG</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RSFT|MOD_RALT)" data-title="Enable Right Shift and Alt for one keypress">OSM RSA</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RSFT|MOD_RGUI)" data-title="Enable Right Shift and GUI for one keypress">OSM RSG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RALT|MOD_RGUI)" data-title="Enable Right Alt and GUI for one keypress">OSM RAG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL|MOD_RSFT|MOD_RGUI)" data-title="Enable Right Control, Shift, and GUI for one keypress">OSM RCSG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL|MOD_RALT|MOD_RGUI)" data-title="Enable Right Control, Alt, and GUI for one keypress">OSM RCAG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RSFT|MOD_RALT|MOD_RGUI)" data-title="Enable Right Shift, Alt, and GUI for one keypress">OSM RSAG</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL|MOD_RSFT|MOD_RALT)" data-title="Enable Right Control, Shift, and Alt for one keypress">OSM RMeh</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="OSM(MOD_RCTL|MOD_RSFT|MOD_RALT|MOD_RGUI)" data-title="Enable Right Control, Shift, Alt, and GUI for one keypress">OSM RHyp</div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc" data-title="Left hand side mods">LHS ModMasks</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCTL(kc)" data-title="LCtrl + (kc)">LCTL (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSFT(kc)" data-title="LShift + (kc)">LSFT (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="C_S(kc)" data-title="LCtrl + (kc)">C_S (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LALT(kc)" data-title="LAlt + (kc)">LALT (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCA(kc)" data-title="LCtrl + LAlt + (kc)">LCA (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSA(kc)" data-title="LShift + LAlt + (kc)">LSA (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="MEH(kc)" data-title="LShift + LCtrl + LAlt + (kc)">MEH (kc)</div>
+      <div class="kb-blank"></div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LGUI(kc)" data-title="LGUI + (kc)">LGUI (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCG(kc)" data-title="LCtrl + LGUI + (kc)">LCG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="SGUI(kc)" data-title="LShift + LGUI + (kc)">SGUI (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSCG(kc)" data-title="LShift + LCtrl + LGUI + (kc)">LSCG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LAG(kc)" data-title="LAlt + LGUI + (kc)">LAG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LCAG(kc)" data-title="LCtrl + LAlt + LGUI + (kc)">LCAG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="LSAG(kc)" data-title="LShift + LAlt + LGUI + (kc)">LSAG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="HYPR(kc)" data-title="LShift + LCtrl + LAlt + LGUI + (kc)">HYPR (kc)</div>
+    </div>
+
+    <div class="kb-row">
+      <div class="kbdesc" data-title="Right hand side mods">RHS ModMasks</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCTL(kc)" data-title="RCtrl + (kc)">RCTL (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSFT(kc)" data-title="RShift + (kc)">RSFT (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSC(kc)" data-title="RShift + RCtrl + (kc)">RSC (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RALT(kc)" data-title="RAlt + (kc)">RALT (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCA(kc)" data-title="RCtrl + RAlt + (kc)">RCA (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSA(kc)" data-title="RShift + RAlt + (kc)">RSA (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSCA(kc)" data-title="RShift + RCtrl + RAlt + (kc)">RSCA (kc)</div>
+      <div class="kb-blank"></div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RGUI(kc)" data-title="RGUI + (kc)">RGUI (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCG(kc)" data-title="RCtrl + RGUI + (kc)">RCG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSG(kc)" data-title="RShift + RGUI + (kc)">RSG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSCG(kc)" data-title="RShift + RCtrl + RGUI + (kc)">RSCG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RAG(kc)" data-title="RAlt + RGUI + (kc)">RAG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RCAG(kc)" data-title="RCtrl + RAlt + RGUI + (kc)">RCAG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSAG(kc)" data-title="RShift + RAlt + RGUI + (kc)">RSAG (kc)</div>
+      <div class="key kb-key kb-norender" data-bind="key-mod" data-key="RSCAG(kc)" data-title="RShift + RCtrl + RAlt + RGUI + (kc)">RSCAG (kc)</div>
+    </div>
+  </div>
+</div>
+</div>
+  <!-- Dynamically generated from kbinfo -->
+  <div class="board-map" data-board="custom"><div class="kb-board">
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc">Mouse events</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_BTN1" data-title="Mouse Button 1">Mouse 1</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_BTN2" data-title="Mouse Button 2">Mouse 2</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_BTN3" data-title="Mouse Button 3">Mouse 3</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_BTN4" data-title="Mouse Button 4">Mouse 4</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_BTN5" data-title="Mouse Button 5">Mouse 5</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WH_U" data-title="KC_WH_U: Mouse Scroll Wheel Up">Scroll Up</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WH_D" data-title="KC_WH_D: Mouse Scroll Wheel Down">Scroll Down</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WH_L" data-title="KC_WH_L: Mouse Scroll Wheel Left">Scroll Left</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_WH_R" data-title="KC_WH_R: Mouse Scroll Wheel Right">Scroll Right</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MS_U" data-title="Mouse Cursor Up">Mouse Up</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MS_D" data-title="Mouse Cursor Down">Mouse Down</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MS_L" data-title="Mouse Cursor Left">Mouse Left</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_MS_R" data-title="Mouse Cursor Right">Mouse Right</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ACL0" data-title="Set mouse acceleration to 0">Mouse Accel 0</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ACL1" data-title="Set mouse acceleration to 1">Mouse Accel 1</div>
+      <div class="key kb-key kb-norender" data-bind="key" data-key="KC_ACL2" data-title="Set mouse acceleration to 2">Mouse Accel 2</div>
+    </div>
+  </div>
+  <div class="kb-group" id="kb-custom" style="width: 400px;">
+    <div class="kb-row" style="width: 100%;">
+      <div class="kbdesc" style="justify-content: left; width: 400px; max-width: 400px; position: relative; left: 0px;">Keyboard's custom keys</div>
+    </div>
+  </div>
+  <div class="kb-group">
+    <div class="kb-row">
+      <div class="kbdesc" style="justify-content: left; width: 200px; position: relative; left: 0px;">Special keys that don't fit elsewhere.</div>
+    </div>
+    <div class="kb-row">
+      <div class="key kb-key kb-norender" data-bind="key" data-key="QK_REPEAT_KEY" data-title="Repeat last keypress">Repeat</div>
+    </div>
+  </div>
+</div>
+</div>
+  <div class="board-map" data-board="layer">
+  </div>
+  <!-- More complex boards. -->
+  <div class="board-map" data-board="macro" id="macro-board">
+  </div>
+  <div class="board-map" data-board="tapdance" id="tapdance-board">
+  </div>
+</div>
+<div id="board-selection" class="on-connect" style="z-index: 200;">
+  <div class="board-sel" data-board="qwerty">QWERTY</div>
+  <div class="board-sel" data-board="international">International</div>
+  <div class="board-sel" data-board="custom">Mouse and Special Keys</div>
+  <div class="board-sel" data-board="layer">Layers</div>
+  <div class="board-sel" data-board="macro">Macros</div>
+  <div class="board-sel" data-board="tapdance">Tap dances</div>
+  <div class="board-sel" data-board="modtaps">Mod Hold, Tap Keys</div>
+  <div class="board-sel" data-board="quantum">QMK Keys</div>
+  <div class="dropdown board-sel-unusual" id="menu-top">
+    <div> &uarr; Unusual boards &uarr; </div>
+    <div class="dropdown-content dropup" style="right: 0px;">
+      <label class="board-sel" data-board="media">App, Media</label>
+      <label class="board-sel" data-board="audio">Audio and Haptics</label>
+      <label class="board-sel" data-board="backlights">Backlights</label>
+      <label class="board-sel" data-board="magic">'Magic' keys</label>
+      <label class="board-sel" data-board="midi">MIDI</label>
+    </div>
+  </div>
+  <div class="board-sel-end"></div>
+</div>
+
+    <div id="floats" data-search="block">
+  <!-- Anything inside floats prevents elementsFromPoint from
+       propagating down. -->
+  
+  
+  <div id="float-qmksettings" class="floater closeable">
+  <div class="topright">
+    <button class="close" data-action="close">Close</button>
+  </div>
+  <div id="qmk-tabs"></div>
+</div>
+
+  <div id="float-upload" class="floater closeable" style="width: 300px;">
+  <div class="topright">
+    <button class="close">Close</button>
+  </div>
+  Upload a .vil or .kbi file:<br>
+  <input type="file" style="width: 100%;" id="upload-file" accept=".kbi,.vil">
+</div>
+
+  <div id="float-matrix-tester" class="floater closeable">
+  <div>
+    <button class="matrix-start" data-action="matrix-poll" data-title="Start poll. Polling ends when mouse leaves this button.">Begin Poll</button>
+    <button class="close" data-action="close">Close</button>
+  </div>
+  <div class="small-mainboard" id="matrixboard">
+  </div>
+</div>
+
+  <div id="float-manual-key" class="floater closeable" style="width: 300px;">
+  <div class="topright">
+    <button class="close">Close</button>
+  </div>
+  Enter key by code or hex:
+  <br>
+  <input type="text" style="width: 100%;" id="manual-key">
+  <span id="manual-output"></span>
+  <br>
+  Press Enter to save.
+</div>
+
+  <div id="about" class="floater closeable" style="display: none; height: 60%;">
+  KeyBard, the Svalboard Keymap Editor
+  <div class="topright">
+    <button class="close" data-action="close">Close</button>
+  </div>
+  <p>
+    TODO: populate this with more help.
+  </p>
+  <p>
+    Developing for html/css - Make it super fast to reload the page so you
+    can see changes w/o reconnecting your keyboard each time.
+    <ol>
+      <li>Enable 'Record' in menu.</li>
+      <li>Launch, and select your keyboard. </li>
+      <li>Enable 'Playback' in menu.</li>
+      <li>Reload page - It should now be near instant.</li>
+      <li>(Note: Keyboard changes will not be performed at this point.)</li>
+    </ol>
+  </p>
+</div>
+
+  <div id="float-tips" class="floater closeable" style="min-width: 300px;">
+    <div class="tiptop">
+      <button data-tip="prev">Previous Tip</button>
+      <button data-tip="hide">Close</button>
+      <button data-tip="next">Next Tip</button>
+    </div>
+    <div id="tiptip">
+      <div class="tip">
+  <h3>Quick actions for keys</h3>
+  <p>
+    Did you know: R-Clicking a key in your keyboard map will show you some easy
+    shortcuts! If this doesn't work, be aware that the most common cause is a
+    browser extension intended to prevent websites from hijacking context menus
+  </p>
+  <p>
+    You can assign and edit an unused macro or tapdance instantly, enter a
+    key code by its raw QMK value, clear or disable it, or revert the change
+    before committing it!
+  </p>
+  <p>
+    This also works for most keys you can bind in combos, key overrides, macros,
+    and tap dance!
+  </p>
+  <img src="images/tip-contextmenu.png"/ style="width: 300px;">
+</div>
+<div class="tip">
+  <h3>Layer names</h3>
+  <p>
+    Did you know: You can assign cosmetic names to your layers in Keybard!
+    These are in-memory, and saved in your .kbi file on download, so other apps
+    such as vial will not recognize or show layer names.
+  </p>
+  <p>
+    To rename a layer, r-click its number in the layer selection tab, and
+    enter its name! To clear, just submit an empty string at the prompt.
+  </p>
+  <img src="images/tip-layername.png"/ style="width: 400px;">
+</div>
+<div class="tip">
+  <h3>TypeBind</h3>
+  <p>
+    Did you know: While normally you click a key in your keyboard, then a key
+    in the example boards to bind it to - you can use your keyboard to bind
+    it to a key! Enable "Typing binds a key" in the menu, then click a key
+    to assign to, then just type the key on your keyboard!
+  </p>
+  <p>
+    Bonus: works exceptionally well with Serial Assignment!
+  </p>
+  <img src="images/tip-typebind.png"/ style="width: 300px;">
+</div>
+<div class="tip">
+  <h3>Serial Assignment</h3>
+  <p>
+    Did you know: You don't have to click each key one by one to assign to
+    them. Select a serial assignment method under MENU-&gt; Serial Assignment,
+    and select a key. When it's bound to a new key, the active key to select
+    jumps to the next in its series.
+  </p>
+  <img src="images/tip-serial.png"/ style="width: 60vw; height: 30vh;">
+</div>
+<div class="tip">
+  <h3>Printing layer maps</h3>
+  <p>
+    Did you know: While the default UI is annoying to print, Keybard has a
+    "print" option in the menu that opens a new window with all your
+    non-empty layers. You can remove them at will, and print out an easy
+    reference sheet!
+  </p>
+  <img src="images/tip-print.png"/ style="width: 500px;">
+</div>
+
+    </div>
+  </div>
+</div>
+
+    <div id="float-macro" class="floater closeable" style="width: 80vw; min-height: 120px;">
+  <div class="button-row">
+    <div id="float-macro-name">M?</div>
+    <div class="fill"></div>
+    <button class="macro-edit-button" data-macro-add="text" data-value="">Text</button>
+    <button class="macro-edit-button" data-macro-add="tap" data-value="KC_LSHIFT">Tap</button>
+    <button class="macro-edit-button" data-macro-add="down" data-value="KC_LSHIFT">Keydown</button>
+    <button class="macro-edit-button" data-macro-add="up" data-value="KC_LSHIFT">Keyup</button>
+    <button class="macro-edit-button" data-macro-add="delay" data-value="300">Delay</button>
+    <div class="fill"></div>
+    <div class="topright">
+      <button id="save-macro">Save</button>
+      <button class="close">Close</button>
+    </div>
+  </div>
+  <div id="float-macro-render" class="kb-row kb-row-wrap">
+  </div>
+  <div class="fill"></div>
+</div>
+
+    <div id="float-tapdance" class="floater closeable">
+  <div class="button-row">
+    <div id="float-tapdance-name">TD(?)</div>
+    <div class="topright">
+      <button id="float-tapdance-save">Save</button>
+      <button class="close" data-action="close">Close</button>
+    </div>
+  </div>
+  <div class="float-tapdance-row kb-row">
+    <div class="kbdesc">Tap:</div>
+    <div id="float-tapdance-tap">
+    </div>
+  </div>
+  <div class="float-tapdance-row kb-row">
+    <div class="kbdesc">Hold:</div>
+    <div id="float-tapdance-hold">
+    </div>
+  </div>
+  <div class="float-tapdance-row kb-row">
+    <div class="kbdesc">Double-tap:</div>
+    <div id="float-tapdance-doubletap">
+    </div>
+  </div>
+  <div class="float-tapdance-row kb-row">
+    <div class="kbdesc">Tap-hold:</div>
+    <div id="float-tapdance-taphold">
+    </div>
+  </div>
+  <div class="float-tapdance-row kb-row">
+    <div class="kbdesc">Tap MS</div>
+    <div id="float-tapdance-tapms">
+    </div>
+  </div>
+</div>
+
+    <div id="allmenus"></div>
+    <div id="panecontainer"></div>
+    <div id="launch">
+  LAUNCH KEYBARD
+</div>
+
+    <div id="nosupport" style="display: none;">
+  Your browser does not support WEBHID.<br>
+  Try the latest versions of Chrome (or Chromium), and MS Edge.
+</div>
+
+
+    <!-- MUST BE LAST -->
+    <script type="text/javascript">
+      (function() {
+        startKeyBard();
+      })();
+    </script>
+  </body>
+</html>
