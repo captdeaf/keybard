@@ -28,45 +28,6 @@ function recordPlayback(cmdargs, ret) {
 
 const MSG_LEN = 32;
 
-function endianFrom(num, bytes, little) {
-  const ab = new ArrayBuffer(bytes);
-  const dv = new DataView(ab);
-
-  switch (bytes) {
-    case 2: dv.setInt16(0, num, little); break;
-    case 4: dv.setInt32(0, num, little); break;
-  }
-  return Array.from(new Uint8Array(ab));
-}
-
-function convArrayEndian(ary, size) {
-  if (size === 2) {
-    return ary.map((num) => (((num >> 8) & 0xFF) | ((num << 8) & 0xFF00)));
-  } else {
-    return ary.map((num) => (
-      ((num << 24) & 0xFF000000) |
-      ((num << 8) & 0xFF0000) |
-      ((num >> 8) & 0xFF00) |
-      ((num >> 24) & 0xFF)));
-  }
-}
-
-function LE32(num) {
-  return endianFrom(num, 4, true);
-}
-
-function LE16(num) {
-  return endianFrom(num, 2, true);
-}
-
-function BE32(num) {
-  return endianFrom(num, 4, false);
-}
-
-function BE16(num) {
-  return endianFrom(num, 2, false);
-}
-
 const USB = {
   // This will be set to the opened device.
   device: undefined,
@@ -151,7 +112,7 @@ const USB = {
 
     if (SETTINGS.playback) {
       const data = playback(cmdargs);
-      const ret = USB.formatResponse(data, flags);
+      const ret = formatUSBResponse(data, flags);
       const respromise = new Promise((res, rej) => {
         res(ret);
       });
@@ -164,7 +125,7 @@ const USB = {
         if (SETTINGS.record && !SETTINGS.playback) {
           recordPlayback(cmdargs, data);
         }
-        const ret = USB.formatResponse(data, flags);
+        const ret = formatUSBResponse(data, flags);
         res(ret);
       };
     });

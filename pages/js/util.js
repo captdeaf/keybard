@@ -4,59 +4,11 @@
 //
 // Utility functions
 //
-// Limited to DOM manipulation, QoL, Storage, Templates, etc.
+// Limited to QoL, Storage, Templates, etc.
 //
 // Ideally this should be transferrable between projects without a change.
 //
 /////////////////////////////////////
-
-// QoL: This function creates a constant container / enum that will throw an
-// error if anything is requested that is undefined. For example: STATE.open vs
-// STATE.okay - the latter will error instead of returning undefined.
-
-// QoL: find(selector, parent=document) - wrapper around querySelector.
-//      It ALSO lets parent match itself, unlike querySelector.
-function find(selector, par) {
-  if (!par) {
-    par = document;
-  } else if (selector === 'document') {
-    return document;
-  } else {
-    if (par.matches && par.matches(selector)) return par;
-  }
-  return par.querySelector(selector);
-}
-
-// QoL: wrapper around find that throws an error if it finds nothing. In other
-//      words, if this find fails, it's a bug.
-function get(selector, par) {
-  const ret = find(selector, par);
-  if (!ret) {
-    console.log('get() Selector not found:', selector, par);
-    throw('Selector "' + selector + '" not found');
-  }
-  return ret;
-}
-
-// Find multiple.
-function findAll(selector, par) {
-  if (!par) par = document;
-  const ret = [...par.querySelectorAll(selector)];
-  if (par.matches && par.matches(selector)) {
-    ret.unshift(par);
-  }
-  return ret;
-}
-
-// Again, throw an error if they're not found.
-function getAll(selector, par) {
-  const ret = findAll(selector, par);
-  if (!ret || ret.length === 0) {
-    console.log('getAll() Selector not found:', selector, par);
-    throw('Selector "' + selector + '" not found');
-  }
-  return ret;
-}
 
 // Storage: getSaved and setSaved: For local storage. Good for remembering UI
 //          toggles and the like.
@@ -81,79 +33,6 @@ function setSaved(name, val) {
   return val;
 }
 
-// DOM/QoL: Add attributes quickly.
-function addAttrs(el, attrs) {
-  for (const [k, v] of Object.entries(attrs)) {
-    el.setAttribute(k, v);
-  }
-  return el;
-}
-
-// DOM: Make elements. EL('div', EL('span', "Text here"));
-function EL(name, attrs, ...children) {
-  const ret = document.createElement(name);
-  if (attrs) {
-    if (attrs.style) {
-      Object.assign(ret.style, attrs.style);
-      delete attrs.style;
-    }
-    if (typeof(attrs) === 'string' || 'append' in attrs) {
-      children.unshift(attrs);
-    } else {
-      addAttrs(ret, attrs);
-    }
-  }
-  if (children && children.length > 0) {
-    appendChildren(ret, children.flat());
-  }
-  return ret;
-}
-
-// DOM: Populate an element w/ children, but accepting more types of 'children'
-function appendChildren(el, ...children) {
-  if (!children) return;
-  let allChildren = [...children].flat();
-  for (const child of allChildren) {
-    if (typeof(child) === 'string') {
-      el.innerHTML += child;
-    } else if (child) {
-      el.appendChild(child);
-    }
-  }
-  return el;
-}
-
-// DOM/QoL: cloneElement is a deep clone that also calls enableTriggers.
-function cloneElement(el) {
-  const ret = el.cloneNode(true);
-  return ret;
-}
-
-// DOM/QoL: Remove an element from its parent.
-function removeElement(el) {
-  el.replaceWith('');
-}
-
-// DOM: traverse upwards the parent tree from an element until you get an element
-//      matching a selector. If element matches it, it will be returned.
-function findParent(el, sel) {
-  while (el && el.matches) {
-    if (el.matches(sel)) return el;
-    el = el.parentElement;
-  }
-  return undefined;
-}
-
-// Like find, but throws an error if not found.
-function getParent(el, sel) {
-  const par = findParent(el, sel);
-  if (par === undefined) {
-    console.log('Cannot find parent sel "' + sel + '"', el);
-    throw 'Invalid selector "' + sel + '"';
-  }
-  return par;
-}
-
 // QoL: is an object iterable? (for all the different collection types that we care about.)
 function isSafeIterable(obj) {
   if ((obj == undefined) ||
@@ -166,7 +45,7 @@ function isSafeIterable(obj) {
     return false;
   }
 
-  if (obj instanceof HTMLElement) return false;
+  if (typeof HTMLElement !== 'undefined' && obj instanceof HTMLElement) return false;
 
   if (typeof(obj) === 'object') return true;
 
@@ -217,6 +96,45 @@ function decompress(buffer) {
   const xrs = new xzwasm.XzReadableStream(blob.stream());
   const resp = new Response(xrs);
   return resp.text();
+}
+
+function endianFrom(num, bytes, little) {
+  const ab = new ArrayBuffer(bytes);
+  const dv = new DataView(ab);
+
+  switch (bytes) {
+    case 2: dv.setInt16(0, num, little); break;
+    case 4: dv.setInt32(0, num, little); break;
+  }
+  return Array.from(new Uint8Array(ab));
+}
+
+function convArrayEndian(ary, size) {
+  if (size === 2) {
+    return ary.map((num) => (((num >> 8) & 0xFF) | ((num << 8) & 0xFF00)));
+  } else {
+    return ary.map((num) => (
+      ((num << 24) & 0xFF000000) |
+      ((num << 8) & 0xFF0000) |
+      ((num >> 8) & 0xFF00) |
+      ((num >> 24) & 0xFF)));
+  }
+}
+
+function LE32(num) {
+  return endianFrom(num, 4, true);
+}
+
+function LE16(num) {
+  return endianFrom(num, 2, true);
+}
+
+function BE32(num) {
+  return endianFrom(num, 4, false);
+}
+
+function BE16(num) {
+  return endianFrom(num, 2, false);
 }
 
 ////////////////////////////////////
@@ -284,6 +202,46 @@ function unpack(buffer, str) {
   return ret;
 }
 
+function formatUSBResponse(data, flags) {
+  if (!flags) flags = {};
+  if (flags.unpack) {
+    data = unpack(data, flags.unpack);
+  } else {
+    let cls = Uint8Array;
+    let bytes = 1;
+    // Which bytes?
+    if (flags.int8) { cls = Int8Array; }
+    if (flags.int16) { cls = Int16Array; bytes = 2; }
+    if (flags.uint16) { cls = Uint16Array; bytes = 2; }
+    if (flags.int32) { cls = Int32Array; bytes = 4; }
+    if (flags.uint32) { cls = Uint32Array; bytes = 4; }
+    data = new cls(data);
+    if (flags.bigendian) {
+      data = convArrayEndian(data, bytes);
+    }
+  }
+
+  if (flags.index !== undefined) {
+    data = data[flags.index];
+  } else if (flags.slice) {
+    if (flags.slice.length) {
+      data = data.slice(...flags.slice);
+    } else {
+      data = data.slice(flags.slice);
+    }
+  }
+
+  if (flags.string) {
+    data = new TextDecoder().decode(data);
+  }
+
+  if (flags.map) {
+    data = data.map((d) => flags.map(d));
+  }
+
+  return data;
+}
+
 function range(num) {
   const ret = [];
   for (let i = 0; i < num; i++) {
@@ -309,7 +267,7 @@ const INITIALIZERS = {
 
 function addInitializer(type, func, order) {
   if (order === undefined) order = 100 + INITIALIZERS[type].length;
-  INITIALIZERS[type].push({name: name, order: order, func: func});
+  INITIALIZERS[type].push({order: order, func: func});
 }
 
 function runInitializers(type, ...args) {
