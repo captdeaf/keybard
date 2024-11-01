@@ -45,7 +45,7 @@ addInitializer('load', () => {
   addInitializer('connected', () => {
 
     ACTION.onclick('#download-vil', () => {
-      const vil = kbinfoToVIL(structuredClone(KBINFO), true);
+      const vil = FILE.generateVIL(structuredClone(KBINFO), true);
       downloadTEXT(vil, {
         suggestedName: 'keyboard.vil',
         types: [{
@@ -59,7 +59,7 @@ addInitializer('load', () => {
     });
 
     ACTION.onclick('#download-vil-nomacro', () => {
-      const vil = kbinfoToVIL(structuredClone(KBINFO), false);
+      const vil = FILE.generateVIL(structuredClone(KBINFO), false);
       downloadTEXT(vil, {
         suggestedName: 'keyboard-nomacro.vil',
         types: [{
@@ -129,7 +129,7 @@ addInitializer('load', () => {
           if (js.kbid) {
             kbinfo = js;
           } else if (js.uid) {
-            kbinfo = vilToKBINFO(js);
+            kbinfo = FILE.parseVIL(js);
           } else {
             alert('Unknown json type');
             return;
@@ -163,7 +163,7 @@ addInitializer('load', () => {
   ////////////////////////////////////
   addInitializer('connected', () => {
     ACTION.onclick('#download-keymap-h', () => {
-      downloadTEXT(generateKeymapAll(KBINFO), {
+      downloadTEXT(FILE.generateKeymapC(KBINFO), {
         suggestedName: 'keymap_all.h',
         types: [{
           description: 'C files',

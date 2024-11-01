@@ -12,4 +12,5 @@ addInitializer('connected', () => {
       el.innerText = el.dataset.kmid;
     });
   };
+  TOOLS.generateKeymapC = () => FILE.generateKeymapC(KBINFO);
 });

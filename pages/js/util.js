@@ -242,6 +242,14 @@ function formatUSBResponse(data, flags) {
   return data;
 }
 
+function repeat(what, count) {
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push(what);
+  }
+  return result;
+}
+
 function range(num) {
   const ret = [];
   for (let i = 0; i < num; i++) {
