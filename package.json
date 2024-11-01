@@ -1,0 +1,16 @@
+{
+  "name": "keybard",
+  "version": "1.0.0",
+  "description": "Pure javascript version of vial-gui, started for Svalboard.",
+  "main": "cli/cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "captdeaf",
+  "dependencies": {
+    "commander": "^12.1.0",
+    "inquirer": "^12.0.1",
+    "node-hid": "^3.1.2",
+    "xz-decompress": "^0.2.2"
+  }
+}
