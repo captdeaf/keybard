@@ -1,6 +1,10 @@
 {
   "lockfile_version": "1",
   "packages": {
+    "libusb": {
+      "resolved": "github:NixOS/nixpkgs/75a52265bda7fd25e06e3a67dee3f0354e73243c#libusb",
+      "source": "nixpkg"
+    },
     "nodejs@22": {
       "last_modified": "2024-10-13T23:44:06Z",
       "plugin_version": "0.0.2",
@@ -122,6 +126,10 @@
           "store_path": "/nix/store/py8lnnsvcp014n58xpjh9b82r3cp1k9i-python3-3.13.0"
         }
       }
+    },
+    "udev": {
+      "resolved": "github:NixOS/nixpkgs/75a52265bda7fd25e06e3a67dee3f0354e73243c#udev",
+      "source": "nixpkg"
     }
   }
 }

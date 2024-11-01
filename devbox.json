@@ -1,12 +1,19 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.10.7/.schema/devbox.schema.json",
   "packages": [
+    "libusb",
     "nodejs@22",
-    "python@3.13"
+    "python@3.13",
+    "udev"
   ],
   "shell": {
     "init_hook": [
-      "echo 'Welcome to the KeyBard devbox!' > /dev/null"
+      "LIBUSB_PATH=$(nix-store -q --outputs $(nix-instantiate '<nixpkgs>' -A libusb) | grep -v '\\-dev' | grep -v '\\-doc')",
+      "UDEV_PATH=$(nix-store -q --outputs $(nix-instantiate '<nixpkgs>' -A udev) | grep -v '\\-dev' | grep -v '\\-doc')",
+      "export LIBRARY_PATH=${UDEV_PATH}/lib:${LIBUSB_PATH}/lib",
+      "export LD_LIBRARY_PATH=${UDEV_PATH}/lib:${LIBUSB_PATH}/lib",
+      "echo \"LIBRARY_PATH set to: ${LIBRARY_PATH}\"",
+      "echo \"LD_LIBRARY_PATH set to: ${LD_LIBRARY_PATH}\""
     ],
     "scripts": {
       "test": [
