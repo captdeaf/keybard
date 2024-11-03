@@ -136,8 +136,8 @@ addInitializer('load', () => {
       const ret = structuredClone(KEYMAP[keystr]);
       if (kmap && keystr in kmap) {
         ret.str = kmap[keystr];
+        return ret;
       }
-      return ret;
     }
     if (keystr in KEYMAP) {
       return KEYMAP[keystr];
