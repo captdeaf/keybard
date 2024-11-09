@@ -219,6 +219,7 @@ const CODEMAP = {
   0x00e5: "KC_RSHIFT",
   0x00e6: "KC_RALT",
   0x00e7: "KC_RGUI",
+  0x00ff: "QK_BASIC_MAX",
   0x0100: "LCTL(kc)",
   0x0200: "LSFT(kc)",
   0x021e: "KC_EXLM",
@@ -271,6 +272,8 @@ const CODEMAP = {
   0x1d00: "RCAG(kc)",
   0x1e00: "RSAG(kc)",
   0x1f00: "RSCAG(kc)",
+  0x1fff: "QK_MODS_MAX",
+  0x2000: "QK_MOD_TAP",
   0x2100: "LCTL_T(kc)",
   0x2200: "LSFT_T(kc)",
   0x2300: "C_S_T(kc)",
@@ -302,6 +305,7 @@ const CODEMAP = {
   0x3d00: "RCAG_T(kc)",
   0x3e00: "RSAG_T(kc)",
   0x3f00: "RSCAG_T(kc)",
+  0x3fff: "QK_MOD_TAP_MAX",
   0x4000: "LT0(kc)",
   0x4100: "LT1(kc)",
   0x4200: "LT2(kc)",
@@ -318,6 +322,9 @@ const CODEMAP = {
   0x4d00: "LT13(kc)",
   0x4e00: "LT14(kc)",
   0x4f00: "LT15(kc)",
+  0x4fff: "QK_LAYER_TAP_MAX",
+  0x5000: "QK_LAYER_MOD",
+  0x51ff: "QK_LAYER_MOD_MAX",
   0x5200: "TO(0)",
   0x5201: "TO(1)",
   0x5202: "TO(2)",
@@ -478,6 +485,7 @@ const CODEMAP = {
   0x529d: "OSL(29)",
   0x529e: "OSL(30)",
   0x529f: "OSL(31)",
+  0x52a0: "QK_ONE_SHOT_MOD",
   0x52a1: "OSM(MOD_LCTL)",
   0x52a2: "OSM(MOD_LSFT)",
   0x52a3: "OSM(MOD_LCTL|MOD_LSFT)",
@@ -540,6 +548,7 @@ const CODEMAP = {
   0x52dd: "TT(29)",
   0x52de: "TT(30)",
   0x52df: "TT(31)",
+  0x5600: "QK_SWAP_HANDS",
   0x56f0: "QK_SWAP_HANDS_TOGGLE",
   0x56f1: "QK_SWAP_HANDS_TAP_TOGGLE",
   0x56f2: "QK_SWAP_HANDS_MOMENTARY_ON",
@@ -547,6 +556,7 @@ const CODEMAP = {
   0x56f4: "QK_SWAP_HANDS_OFF",
   0x56f5: "QK_SWAP_HANDS_ON",
   0x56f6: "QK_SWAP_HANDS_ONE_SHOT",
+  0x56ff: "QK_SWAP_HANDS_MAX",
   0x5700: "TD(0)",
   0x5701: "TD(1)",
   0x5702: "TD(2)",
@@ -838,7 +848,8 @@ const CODEMAP = {
   0x7020: "QK_MAGIC_SWAP_ESCAPE_CAPS_LOCK",
   0x7021: "QK_MAGIC_UNSWAP_ESCAPE_CAPS_LOCK",
   0x7022: "QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK",
-  0x7100: "QK_MIDI_ON",
+  0x70ff: "QK_MAGIC_MAX",
+  0x7100: "QK_MIDI",
   0x7101: "QK_MIDI_OFF",
   0x7102: "QK_MIDI_TOGGLE",
   0x7103: "MI_C",
@@ -982,7 +993,8 @@ const CODEMAP = {
   0x718d: "MI_MODSU",
   0x718e: "MI_BENDD",
   0x718f: "MI_BENDU",
-  0x7200: "QK_SEQUENCER_ON",
+  0x71ff: "QK_MIDI_MAX",
+  0x7200: "QK_SEQUENCER",
   0x7201: "QK_SEQUENCER_OFF",
   0x7202: "QK_SEQUENCER_TOGGLE",
   0x7203: "QK_SEQUENCER_TEMPO_DOWN",
@@ -991,7 +1003,8 @@ const CODEMAP = {
   0x7206: "QK_SEQUENCER_RESOLUTION_UP",
   0x7207: "QK_SEQUENCER_STEPS_ALL",
   0x7208: "QK_SEQUENCER_STEPS_CLEAR",
-  0x7400: "QK_JOYSTICK_BUTTON_0",
+  0x73ff: "QK_SEQUENCER_MAX",
+  0x7400: "QK_JOYSTICK",
   0x7401: "QK_JOYSTICK_BUTTON_1",
   0x7402: "QK_JOYSTICK_BUTTON_2",
   0x7403: "QK_JOYSTICK_BUTTON_3",
@@ -1023,7 +1036,8 @@ const CODEMAP = {
   0x741d: "QK_JOYSTICK_BUTTON_29",
   0x741e: "QK_JOYSTICK_BUTTON_30",
   0x741f: "QK_JOYSTICK_BUTTON_31",
-  0x7440: "QK_PROGRAMMABLE_BUTTON_1",
+  0x743f: "QK_JOYSTICK_MAX",
+  0x7440: "QK_PROGRAMMABLE_BUTTON",
   0x7441: "QK_PROGRAMMABLE_BUTTON_2",
   0x7442: "QK_PROGRAMMABLE_BUTTON_3",
   0x7443: "QK_PROGRAMMABLE_BUTTON_4",
@@ -1055,6 +1069,7 @@ const CODEMAP = {
   0x745d: "QK_PROGRAMMABLE_BUTTON_30",
   0x745e: "QK_PROGRAMMABLE_BUTTON_31",
   0x745f: "QK_PROGRAMMABLE_BUTTON_32",
+  0x747f: "QK_PROGRAMMABLE_BUTTON_MAX",
   0x7480: "AU_ON",
   0x7481: "AU_OFF",
   0x7482: "AU_TOG",
@@ -1070,10 +1085,63 @@ const CODEMAP = {
   0x7493: "MU_MOD",
   0x7494: "QK_AUDIO_VOICE_NEXT",
   0x7495: "QK_AUDIO_VOICE_PREVIOUS",
+  0x74bf: "QK_AUDIO_MAX",
+  0x74c0: "QK_STENO",
+  0x74c1: "STN_NUM",
+  0x74c2: "STN_N2",
+  0x74c3: "STN_N3",
+  0x74c4: "STN_N4",
+  0x74c5: "STN_N5",
+  0x74c6: "STN_N6",
+  0x74c7: "STN_SL",
+  0x74c8: "STN_S2",
+  0x74c9: "STN_TL",
+  0x74ca: "STN_KL",
+  0x74cb: "STN_PL",
+  0x74cc: "STN_WL",
+  0x74cd: "STN_HL",
+  0x74ce: "STN_RL",
+  0x74cf: "STN_A",
+  0x74d0: "STN_O",
+  0x74d1: "STN_STR",
+  0x74d2: "STN_ST2",
+  0x74d3: "STN_RES1",
+  0x74d4: "STN_RES2",
+  0x74d5: "STN_PWR",
+  0x74d6: "STN_ST3",
+  0x74d7: "STN_ST4",
+  0x74d8: "STN_E",
+  0x74d9: "STN_U",
+  0x74da: "STN_FR",
+  0x74db: "STN_RR",
+  0x74dc: "STN_PR",
+  0x74dd: "STN_BR",
+  0x74de: "STN_LR",
+  0x74df: "STN_GR",
+  0x74e0: "STN_TR",
+  0x74e1: "STN_SR",
+  0x74e2: "STN_DR",
+  0x74e3: "STN_N7",
+  0x74e4: "STN_N8",
+  0x74e5: "STN_N9",
+  0x74e6: "STN_NA",
+  0x74e7: "STN_NB",
+  0x74e8: "STN_NC",
+  0x74e9: "STN_ZR",
   0x74f0: "QK_STENO_BOLT",
   0x74f1: "QK_STENO_GEMINI",
   0x74f2: "QK_STENO_COMB",
+  0x74f3: "STN_TKL",
+  0x74f4: "STN_PWL",
+  0x74f5: "STN_HRL",
+  0x74f6: "STN_FRR",
+  0x74f7: "STN_PBR",
+  0x74f8: "STN_LGR",
+  0x74f9: "STN_TSR",
+  0x74fa: "STN_DZR",
+  0x74fb: "STN_AO",
   0x74fc: "QK_STENO_COMB_MAX",
+  0x74ff: "QK_STENO_MAX",
   0x7700: "M0",
   0x7701: "M1",
   0x7702: "M2",
@@ -1380,6 +1448,7 @@ const CODEMAP = {
   0x784a: "QK_RGB_MATRIX_VALUE_DOWN",
   0x784b: "QK_RGB_MATRIX_SPEED_UP",
   0x784c: "QK_RGB_MATRIX_SPEED_DOWN",
+  0x78ff: "QK_LIGHTING_MAX",
   0x7c00: "RESET",
   0x7c01: "QK_REBOOT",
   0x7c02: "QK_DEBUG_TOGGLE",
@@ -1455,6 +1524,7 @@ const CODEMAP = {
   0x7c78: "FN_MO23",
   0x7c79: "QK_REPEAT_KEY",
   0x7c7a: "QK_ALT_REPEAT_KEY",
+  0x7dff: "QK_QUANTUM_MAX",
   0x7e00: "USER00",
   0x7e01: "USER01",
   0x7e02: "USER02",
@@ -1519,7 +1589,7 @@ const CODEMAP = {
   0x7e3d: "USER61",
   0x7e3e: "USER62",
   0x7e3f: "USER63",
-  0x7e40: "QK_USER_0",
+  0x7e40: "QK_USER",
   0x7e41: "QK_USER_1",
   0x7e42: "QK_USER_2",
   0x7e43: "QK_USER_3",
@@ -1550,7 +1620,12 @@ const CODEMAP = {
   0x7e5c: "QK_USER_28",
   0x7e5d: "QK_USER_29",
   0x7e5e: "QK_USER_30",
-  0x7e5f: "QK_USER_31"
+  0x7e5f: "QK_USER_31",
+  0x7fff: "QK_USER_MAX",
+  0x8000: "QK_UNICODEMAP",
+  0xbfff: "QK_UNICODEMAP_MAX",
+  0xc000: "QK_UNICODEMAP_PAIR",
+  0xffff: "QK_UNICODE_MAX"
 };
 
 const KEYMAP = {
@@ -2874,6 +2949,12 @@ const KEYMAP = {
     "str": "RGui",
     "title": "KC_RGUI"
   },
+  "QK_BASIC_MAX": {
+    "code": 0x00ff,
+    "qmkid": "QK_BASIC_MAX",
+    "str": "QK_BASIC_MAX",
+    "title": "QK_BASIC_MAX"
+  },
   "LCTL(kc)": {
     "code": 0x0100,
     "qmkid": "LCTL(kc)",
@@ -3186,6 +3267,18 @@ const KEYMAP = {
     "title": "RShift + RCtrl + RAlt + RGUI",
     "str": "RSCAG\n(kc)"
   },
+  "QK_MODS_MAX": {
+    "code": 0x1fff,
+    "qmkid": "QK_MODS_MAX",
+    "str": "QK_MODS_MAX",
+    "title": "QK_MODS_MAX"
+  },
+  "QK_MOD_TAP": {
+    "code": 0x2000,
+    "qmkid": "QK_MOD_TAP",
+    "str": "QK_MOD_TAP",
+    "title": "QK_MOD_TAP"
+  },
   "LCTL_T(kc)": {
     "code": 0x2100,
     "qmkid": "LCTL_T(kc)",
@@ -3372,6 +3465,12 @@ const KEYMAP = {
     "title": "RShift + RCtrl + RAlt + RGUI when held, kc when tapped",
     "str": "RSCAG\nT\n(kc)"
   },
+  "QK_MOD_TAP_MAX": {
+    "code": 0x3fff,
+    "qmkid": "QK_MOD_TAP_MAX",
+    "str": "QK_MOD_TAP_MAX",
+    "title": "QK_MOD_TAP_MAX"
+  },
   "LT0(kc)": {
     "code": 0x4000,
     "qmkid": "LT0(kc)",
@@ -3467,6 +3566,24 @@ const KEYMAP = {
     "qmkid": "LT15(kc)",
     "str": "LT15(kc)",
     "title": "LT15(kc)"
+  },
+  "QK_LAYER_TAP_MAX": {
+    "code": 0x4fff,
+    "qmkid": "QK_LAYER_TAP_MAX",
+    "str": "QK_LAYER_TAP_MAX",
+    "title": "QK_LAYER_TAP_MAX"
+  },
+  "QK_LAYER_MOD": {
+    "code": 0x5000,
+    "qmkid": "QK_LAYER_MOD",
+    "str": "QK_LAYER_MOD",
+    "title": "QK_LAYER_MOD"
+  },
+  "QK_LAYER_MOD_MAX": {
+    "code": 0x51ff,
+    "qmkid": "QK_LAYER_MOD_MAX",
+    "str": "QK_LAYER_MOD_MAX",
+    "title": "QK_LAYER_MOD_MAX"
   },
   "TO(0)": {
     "code": 0x5200,
@@ -4428,6 +4545,12 @@ const KEYMAP = {
     "str": "OSL(31)",
     "title": "OSL(31)"
   },
+  "QK_ONE_SHOT_MOD": {
+    "code": 0x52a0,
+    "qmkid": "QK_ONE_SHOT_MOD",
+    "str": "QK_ONE_SHOT_MOD",
+    "title": "QK_ONE_SHOT_MOD"
+  },
   "OSM(MOD_LCTL)": {
     "code": 0x52a1,
     "qmkid": "OSM(MOD_LCTL)",
@@ -4800,6 +4923,12 @@ const KEYMAP = {
     "str": "TT(31)",
     "title": "TT(31)"
   },
+  "QK_SWAP_HANDS": {
+    "code": 0x5600,
+    "qmkid": "QK_SWAP_HANDS",
+    "str": "QK_SWAP_HANDS",
+    "title": "QK_SWAP_HANDS"
+  },
   "QK_SWAP_HANDS_TOGGLE": {
     "code": 0x56f0,
     "qmkid": "QK_SWAP_HANDS_TOGGLE",
@@ -4841,6 +4970,12 @@ const KEYMAP = {
     "qmkid": "QK_SWAP_HANDS_ONE_SHOT",
     "str": "QK_SWAP_HANDS_ONE_SHOT",
     "title": "QK_SWAP_HANDS_ONE_SHOT"
+  },
+  "QK_SWAP_HANDS_MAX": {
+    "code": 0x56ff,
+    "qmkid": "QK_SWAP_HANDS_MAX",
+    "str": "QK_SWAP_HANDS_MAX",
+    "title": "QK_SWAP_HANDS_MAX"
   },
   "TD(0)": {
     "code": 0x5700,
@@ -6588,11 +6723,17 @@ const KEYMAP = {
     "str": "QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK",
     "title": "QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK"
   },
-  "QK_MIDI_ON": {
+  "QK_MAGIC_MAX": {
+    "code": 0x70ff,
+    "qmkid": "QK_MAGIC_MAX",
+    "str": "QK_MAGIC_MAX",
+    "title": "QK_MAGIC_MAX"
+  },
+  "QK_MIDI": {
     "code": 0x7100,
-    "qmkid": "QK_MIDI_ON",
-    "str": "QK_MIDI_ON",
-    "title": "QK_MIDI_ON"
+    "qmkid": "QK_MIDI",
+    "str": "QK_MIDI",
+    "title": "QK_MIDI"
   },
   "QK_MIDI_OFF": {
     "code": 0x7101,
@@ -7452,11 +7593,17 @@ const KEYMAP = {
     "str": "\u1d39\u1d35\u1d30\u1d35\nBend\u1d41\u1d3e",
     "title": "Midi bend pitch up"
   },
-  "QK_SEQUENCER_ON": {
+  "QK_MIDI_MAX": {
+    "code": 0x71ff,
+    "qmkid": "QK_MIDI_MAX",
+    "str": "QK_MIDI_MAX",
+    "title": "QK_MIDI_MAX"
+  },
+  "QK_SEQUENCER": {
     "code": 0x7200,
-    "qmkid": "QK_SEQUENCER_ON",
-    "str": "QK_SEQUENCER_ON",
-    "title": "QK_SEQUENCER_ON"
+    "qmkid": "QK_SEQUENCER",
+    "str": "QK_SEQUENCER",
+    "title": "QK_SEQUENCER"
   },
   "QK_SEQUENCER_OFF": {
     "code": 0x7201,
@@ -7506,11 +7653,17 @@ const KEYMAP = {
     "str": "QK_SEQUENCER_STEPS_CLEAR",
     "title": "QK_SEQUENCER_STEPS_CLEAR"
   },
-  "QK_JOYSTICK_BUTTON_0": {
+  "QK_SEQUENCER_MAX": {
+    "code": 0x73ff,
+    "qmkid": "QK_SEQUENCER_MAX",
+    "str": "QK_SEQUENCER_MAX",
+    "title": "QK_SEQUENCER_MAX"
+  },
+  "QK_JOYSTICK": {
     "code": 0x7400,
-    "qmkid": "QK_JOYSTICK_BUTTON_0",
-    "str": "QK_JOYSTICK_BUTTON_0",
-    "title": "QK_JOYSTICK_BUTTON_0"
+    "qmkid": "QK_JOYSTICK",
+    "str": "QK_JOYSTICK",
+    "title": "QK_JOYSTICK"
   },
   "QK_JOYSTICK_BUTTON_1": {
     "code": 0x7401,
@@ -7698,11 +7851,17 @@ const KEYMAP = {
     "str": "QK_JOYSTICK_BUTTON_31",
     "title": "QK_JOYSTICK_BUTTON_31"
   },
-  "QK_PROGRAMMABLE_BUTTON_1": {
+  "QK_JOYSTICK_MAX": {
+    "code": 0x743f,
+    "qmkid": "QK_JOYSTICK_MAX",
+    "str": "QK_JOYSTICK_MAX",
+    "title": "QK_JOYSTICK_MAX"
+  },
+  "QK_PROGRAMMABLE_BUTTON": {
     "code": 0x7440,
-    "qmkid": "QK_PROGRAMMABLE_BUTTON_1",
-    "str": "QK_PROGRAMMABLE_BUTTON_1",
-    "title": "QK_PROGRAMMABLE_BUTTON_1"
+    "qmkid": "QK_PROGRAMMABLE_BUTTON",
+    "str": "QK_PROGRAMMABLE_BUTTON",
+    "title": "QK_PROGRAMMABLE_BUTTON"
   },
   "QK_PROGRAMMABLE_BUTTON_2": {
     "code": 0x7441,
@@ -7890,6 +8049,12 @@ const KEYMAP = {
     "str": "QK_PROGRAMMABLE_BUTTON_32",
     "title": "QK_PROGRAMMABLE_BUTTON_32"
   },
+  "QK_PROGRAMMABLE_BUTTON_MAX": {
+    "code": 0x747f,
+    "qmkid": "QK_PROGRAMMABLE_BUTTON_MAX",
+    "str": "QK_PROGRAMMABLE_BUTTON_MAX",
+    "title": "QK_PROGRAMMABLE_BUTTON_MAX"
+  },
   "AU_ON": {
     "code": 0x7480,
     "qmkid": "AU_ON",
@@ -7980,6 +8145,264 @@ const KEYMAP = {
     "str": "QK_AUDIO_VOICE_PREVIOUS",
     "title": "QK_AUDIO_VOICE_PREVIOUS"
   },
+  "QK_AUDIO_MAX": {
+    "code": 0x74bf,
+    "qmkid": "QK_AUDIO_MAX",
+    "str": "QK_AUDIO_MAX",
+    "title": "QK_AUDIO_MAX"
+  },
+  "QK_STENO": {
+    "code": 0x74c0,
+    "qmkid": "QK_STENO",
+    "str": "QK_STENO",
+    "title": "QK_STENO"
+  },
+  "STN_NUM": {
+    "code": 0x74c1,
+    "qmkid": "STN_NUM",
+    "str": "#\u2081",
+    "title": "Steno number bar (1)"
+  },
+  "STN_N2": {
+    "code": 0x74c2,
+    "qmkid": "STN_N2",
+    "str": "#\u2082",
+    "title": "Steno number bar (2)"
+  },
+  "STN_N3": {
+    "code": 0x74c3,
+    "qmkid": "STN_N3",
+    "str": "#\u2083",
+    "title": "Steno number bar (3)"
+  },
+  "STN_N4": {
+    "code": 0x74c4,
+    "qmkid": "STN_N4",
+    "str": "#\u2084",
+    "title": "Steno number bar (4)"
+  },
+  "STN_N5": {
+    "code": 0x74c5,
+    "qmkid": "STN_N5",
+    "str": "#\u2085",
+    "title": "Steno number bar (5)"
+  },
+  "STN_N6": {
+    "code": 0x74c6,
+    "qmkid": "STN_N6",
+    "str": "#\u2086",
+    "title": "Steno number bar (6)"
+  },
+  "STN_SL": {
+    "code": 0x74c7,
+    "qmkid": "STN_SL",
+    "str": "S\u2013\u2081",
+    "title": "Steno initial S (upper)"
+  },
+  "STN_S2": {
+    "code": 0x74c8,
+    "qmkid": "STN_S2",
+    "str": "S\u2013\u2082",
+    "title": "Steno initial S (lower)"
+  },
+  "STN_TL": {
+    "code": 0x74c9,
+    "qmkid": "STN_TL",
+    "str": "T\u2013",
+    "title": "Steno initial T"
+  },
+  "STN_KL": {
+    "code": 0x74ca,
+    "qmkid": "STN_KL",
+    "str": "K\u2013",
+    "title": "Steno initial K"
+  },
+  "STN_PL": {
+    "code": 0x74cb,
+    "qmkid": "STN_PL",
+    "str": "P\u2013",
+    "title": "Steno initial P"
+  },
+  "STN_WL": {
+    "code": 0x74cc,
+    "qmkid": "STN_WL",
+    "str": "W\u2013",
+    "title": "Steno initial W"
+  },
+  "STN_HL": {
+    "code": 0x74cd,
+    "qmkid": "STN_HL",
+    "str": "H\u2013",
+    "title": "Steno initial H"
+  },
+  "STN_RL": {
+    "code": 0x74ce,
+    "qmkid": "STN_RL",
+    "str": "R\u2013",
+    "title": "Steno initial R"
+  },
+  "STN_A": {
+    "code": 0x74cf,
+    "qmkid": "STN_A",
+    "str": "\u2013A\u2013",
+    "title": "Steno vowel A"
+  },
+  "STN_O": {
+    "code": 0x74d0,
+    "qmkid": "STN_O",
+    "str": "\u2013O\u2013",
+    "title": "Steno vowel O"
+  },
+  "STN_STR": {
+    "code": 0x74d1,
+    "qmkid": "STN_STR",
+    "str": "*\u2081",
+    "title": "Steno star (upper left)"
+  },
+  "STN_ST2": {
+    "code": 0x74d2,
+    "qmkid": "STN_ST2",
+    "str": "*\u2082",
+    "title": "Steno star (lower left)"
+  },
+  "STN_RES1": {
+    "code": 0x74d3,
+    "qmkid": "STN_RES1",
+    "str": "STN_RES1",
+    "title": "STN_RES1"
+  },
+  "STN_RES2": {
+    "code": 0x74d4,
+    "qmkid": "STN_RES2",
+    "str": "STN_RES2",
+    "title": "STN_RES2"
+  },
+  "STN_PWR": {
+    "code": 0x74d5,
+    "qmkid": "STN_PWR",
+    "str": "STN_PWR",
+    "title": "STN_PWR"
+  },
+  "STN_ST3": {
+    "code": 0x74d6,
+    "qmkid": "STN_ST3",
+    "str": "*\u2083",
+    "title": "Steno star (upper right)"
+  },
+  "STN_ST4": {
+    "code": 0x74d7,
+    "qmkid": "STN_ST4",
+    "str": "*\u2084",
+    "title": "Steno star (lower right)"
+  },
+  "STN_E": {
+    "code": 0x74d8,
+    "qmkid": "STN_E",
+    "str": "\u2013E\u2013",
+    "title": "Steno vowel E"
+  },
+  "STN_U": {
+    "code": 0x74d9,
+    "qmkid": "STN_U",
+    "str": "\u2013U\u2013",
+    "title": "Steno vowel U"
+  },
+  "STN_FR": {
+    "code": 0x74da,
+    "qmkid": "STN_FR",
+    "str": "\u2013F",
+    "title": "Steno final F"
+  },
+  "STN_RR": {
+    "code": 0x74db,
+    "qmkid": "STN_RR",
+    "str": "\u2013R",
+    "title": "Steno final R"
+  },
+  "STN_PR": {
+    "code": 0x74dc,
+    "qmkid": "STN_PR",
+    "str": "\u2013P",
+    "title": "Steno final P"
+  },
+  "STN_BR": {
+    "code": 0x74dd,
+    "qmkid": "STN_BR",
+    "str": "\u2013B",
+    "title": "Steno final B"
+  },
+  "STN_LR": {
+    "code": 0x74de,
+    "qmkid": "STN_LR",
+    "str": "\u2013L",
+    "title": "Steno final L"
+  },
+  "STN_GR": {
+    "code": 0x74df,
+    "qmkid": "STN_GR",
+    "str": "\u2013G",
+    "title": "Steno final G"
+  },
+  "STN_TR": {
+    "code": 0x74e0,
+    "qmkid": "STN_TR",
+    "str": "\u2013T",
+    "title": "Steno final T"
+  },
+  "STN_SR": {
+    "code": 0x74e1,
+    "qmkid": "STN_SR",
+    "str": "\u2013S",
+    "title": "Steno final S"
+  },
+  "STN_DR": {
+    "code": 0x74e2,
+    "qmkid": "STN_DR",
+    "str": "\u2013D",
+    "title": "Steno final D"
+  },
+  "STN_N7": {
+    "code": 0x74e3,
+    "qmkid": "STN_N7",
+    "str": "#\u2087",
+    "title": "Steno number bar (7)"
+  },
+  "STN_N8": {
+    "code": 0x74e4,
+    "qmkid": "STN_N8",
+    "str": "#\u2088",
+    "title": "Steno number bar (8)"
+  },
+  "STN_N9": {
+    "code": 0x74e5,
+    "qmkid": "STN_N9",
+    "str": "#\u2089",
+    "title": "Steno number bar (9)"
+  },
+  "STN_NA": {
+    "code": 0x74e6,
+    "qmkid": "STN_NA",
+    "str": "#\u2081\u2080",
+    "title": "Steno number bar (10)"
+  },
+  "STN_NB": {
+    "code": 0x74e7,
+    "qmkid": "STN_NB",
+    "str": "#\u2081\u2081",
+    "title": "Steno number bar (11)"
+  },
+  "STN_NC": {
+    "code": 0x74e8,
+    "qmkid": "STN_NC",
+    "str": "#\u2081\u2082",
+    "title": "Steno number bar (12)"
+  },
+  "STN_ZR": {
+    "code": 0x74e9,
+    "qmkid": "STN_ZR",
+    "str": "\u2013Z",
+    "title": "Steno final Z"
+  },
   "QK_STENO_BOLT": {
     "code": 0x74f0,
     "qmkid": "QK_STENO_BOLT",
@@ -7995,14 +8418,74 @@ const KEYMAP = {
   "QK_STENO_COMB": {
     "code": 0x74f2,
     "qmkid": "QK_STENO_COMB",
-    "str": "QK_STENO_COMB",
-    "title": "QK_STENO_COMB"
+    "str": "SS\u2013",
+    "title": "Steno combined initial SS"
+  },
+  "STN_TKL": {
+    "code": 0x74f3,
+    "qmkid": "STN_TKL",
+    "str": "TK\u2013",
+    "title": "Steno combined initial TK"
+  },
+  "STN_PWL": {
+    "code": 0x74f4,
+    "qmkid": "STN_PWL",
+    "str": "PW\u2013",
+    "title": "Steno combined initial PW"
+  },
+  "STN_HRL": {
+    "code": 0x74f5,
+    "qmkid": "STN_HRL",
+    "str": "HR\u2013",
+    "title": "Steno combined initial HR"
+  },
+  "STN_FRR": {
+    "code": 0x74f6,
+    "qmkid": "STN_FRR",
+    "str": "\u2013FR",
+    "title": "Steno combined final FR"
+  },
+  "STN_PBR": {
+    "code": 0x74f7,
+    "qmkid": "STN_PBR",
+    "str": "\u2013PB",
+    "title": "Steno combined final PB"
+  },
+  "STN_LGR": {
+    "code": 0x74f8,
+    "qmkid": "STN_LGR",
+    "str": "\u2013LG",
+    "title": "Steno combined final LG"
+  },
+  "STN_TSR": {
+    "code": 0x74f9,
+    "qmkid": "STN_TSR",
+    "str": "\u2013TS",
+    "title": "Steno combined final TS"
+  },
+  "STN_DZR": {
+    "code": 0x74fa,
+    "qmkid": "STN_DZR",
+    "str": "\u2013DZ",
+    "title": "Steno combined final DZ"
+  },
+  "STN_AO": {
+    "code": 0x74fb,
+    "qmkid": "STN_AO",
+    "str": "\u2013AO\u2013",
+    "title": "Steno combined vowel AO"
   },
   "QK_STENO_COMB_MAX": {
     "code": 0x74fc,
     "qmkid": "QK_STENO_COMB_MAX",
-    "str": "QK_STENO_COMB_MAX",
-    "title": "QK_STENO_COMB_MAX"
+    "str": "\u2013EU\u2013",
+    "title": "Steno combined vowel EU"
+  },
+  "QK_STENO_MAX": {
+    "code": 0x74ff,
+    "qmkid": "QK_STENO_MAX",
+    "str": "QK_STENO_MAX",
+    "title": "QK_STENO_MAX"
   },
   "M0": {
     "code": 0x7700,
@@ -9840,6 +10323,12 @@ const KEYMAP = {
     "str": "QK_RGB_MATRIX_SPEED_DOWN",
     "title": "QK_RGB_MATRIX_SPEED_DOWN"
   },
+  "QK_LIGHTING_MAX": {
+    "code": 0x78ff,
+    "qmkid": "QK_LIGHTING_MAX",
+    "str": "QK_LIGHTING_MAX",
+    "title": "QK_LIGHTING_MAX"
+  },
   "RESET": {
     "code": 0x7c00,
     "qmkid": "RESET",
@@ -10290,6 +10779,12 @@ const KEYMAP = {
     "str": "AltRep",
     "title": "QK_ALT_REPEAT_KEY"
   },
+  "QK_QUANTUM_MAX": {
+    "code": 0x7dff,
+    "qmkid": "QK_QUANTUM_MAX",
+    "str": "QK_QUANTUM_MAX",
+    "title": "QK_QUANTUM_MAX"
+  },
   "USER00": {
     "code": 0x7e00,
     "qmkid": "USER00",
@@ -10674,11 +11169,11 @@ const KEYMAP = {
     "str": "USER63",
     "title": "USER63"
   },
-  "QK_USER_0": {
+  "QK_USER": {
     "code": 0x7e40,
-    "qmkid": "QK_USER_0",
-    "str": "QK_USER_0",
-    "title": "QK_USER_0"
+    "qmkid": "QK_USER",
+    "str": "QK_USER",
+    "title": "QK_USER"
   },
   "QK_USER_1": {
     "code": 0x7e41,
@@ -10865,6 +11360,36 @@ const KEYMAP = {
     "qmkid": "QK_USER_31",
     "str": "QK_USER_31",
     "title": "QK_USER_31"
+  },
+  "QK_USER_MAX": {
+    "code": 0x7fff,
+    "qmkid": "QK_USER_MAX",
+    "str": "QK_USER_MAX",
+    "title": "QK_USER_MAX"
+  },
+  "QK_UNICODEMAP": {
+    "code": 0x8000,
+    "qmkid": "QK_UNICODEMAP",
+    "str": "QK_UNICODEMAP",
+    "title": "QK_UNICODEMAP"
+  },
+  "QK_UNICODEMAP_MAX": {
+    "code": 0xbfff,
+    "qmkid": "QK_UNICODEMAP_MAX",
+    "str": "QK_UNICODEMAP_MAX",
+    "title": "QK_UNICODEMAP_MAX"
+  },
+  "QK_UNICODEMAP_PAIR": {
+    "code": 0xc000,
+    "qmkid": "QK_UNICODEMAP_PAIR",
+    "str": "QK_UNICODEMAP_PAIR",
+    "title": "QK_UNICODEMAP_PAIR"
+  },
+  "QK_UNICODE_MAX": {
+    "code": 0xffff,
+    "qmkid": "QK_UNICODE_MAX",
+    "str": "QK_UNICODE_MAX",
+    "title": "QK_UNICODE_MAX"
   }
 };
 
@@ -12171,6 +12696,64 @@ const KEYALIASES = {
   "USER61": "USER61",
   "USER62": "USER62",
   "USER63": "USER63",
+  "QK_BASIC": "KC_NO",
+  "QK_BASIC_MAX": "QK_BASIC_MAX",
+  "QK_MODS": "LCTL(kc)",
+  "QK_MODS_MAX": "QK_MODS_MAX",
+  "QK_MOD_TAP": "QK_MOD_TAP",
+  "QK_MOD_TAP_MAX": "QK_MOD_TAP_MAX",
+  "QK_LAYER_TAP": "LT0(kc)",
+  "QK_LAYER_TAP_MAX": "QK_LAYER_TAP_MAX",
+  "QK_LAYER_MOD": "QK_LAYER_MOD",
+  "QK_LAYER_MOD_MAX": "QK_LAYER_MOD_MAX",
+  "QK_TO": "TO(0)",
+  "QK_TO_MAX": "TO(31)",
+  "QK_MOMENTARY": "MO(0)",
+  "QK_MOMENTARY_MAX": "MO(31)",
+  "QK_DEF_LAYER": "DF(0)",
+  "QK_DEF_LAYER_MAX": "DF(31)",
+  "QK_TOGGLE_LAYER": "TG(0)",
+  "QK_TOGGLE_LAYER_MAX": "TG(31)",
+  "QK_ONE_SHOT_LAYER": "OSL(0)",
+  "QK_ONE_SHOT_LAYER_MAX": "OSL(31)",
+  "QK_ONE_SHOT_MOD": "QK_ONE_SHOT_MOD",
+  "QK_ONE_SHOT_MOD_MAX": "OSM(MOD_RCTL|MOD_RSFT|MOD_RALT|MOD_RGUI)",
+  "QK_LAYER_TAP_TOGGLE": "TT(0)",
+  "QK_LAYER_TAP_TOGGLE_MAX": "TT(31)",
+  "QK_SWAP_HANDS": "QK_SWAP_HANDS",
+  "QK_SWAP_HANDS_MAX": "QK_SWAP_HANDS_MAX",
+  "QK_TAP_DANCE": "TD(0)",
+  "QK_TAP_DANCE_MAX": "TD(255)",
+  "QK_MAGIC": "MAGIC_SWAP_CONTROL_CAPSLOCK",
+  "QK_MAGIC_MAX": "QK_MAGIC_MAX",
+  "QK_MIDI": "QK_MIDI",
+  "QK_MIDI_MAX": "QK_MIDI_MAX",
+  "QK_SEQUENCER": "QK_SEQUENCER",
+  "QK_SEQUENCER_MAX": "QK_SEQUENCER_MAX",
+  "QK_JOYSTICK": "QK_JOYSTICK",
+  "QK_JOYSTICK_MAX": "QK_JOYSTICK_MAX",
+  "QK_PROGRAMMABLE_BUTTON": "QK_PROGRAMMABLE_BUTTON",
+  "QK_PROGRAMMABLE_BUTTON_MAX": "QK_PROGRAMMABLE_BUTTON_MAX",
+  "QK_AUDIO": "AU_ON",
+  "QK_AUDIO_MAX": "QK_AUDIO_MAX",
+  "QK_STENO": "QK_STENO",
+  "QK_STENO_MAX": "QK_STENO_MAX",
+  "QK_MACRO": "M0",
+  "QK_MACRO_MAX": "M127",
+  "QK_LIGHTING": "BL_ON",
+  "QK_LIGHTING_MAX": "QK_LIGHTING_MAX",
+  "QK_QUANTUM": "RESET",
+  "QK_QUANTUM_MAX": "QK_QUANTUM_MAX",
+  "QK_KB": "USER00",
+  "QK_KB_MAX": "USER63",
+  "QK_USER": "QK_USER",
+  "QK_USER_MAX": "QK_USER_MAX",
+  "QK_UNICODEMAP": "QK_UNICODEMAP",
+  "QK_UNICODEMAP_MAX": "QK_UNICODEMAP_MAX",
+  "QK_UNICODE": "QK_UNICODEMAP",
+  "QK_UNICODE_MAX": "QK_UNICODE_MAX",
+  "QK_UNICODEMAP_PAIR": "QK_UNICODEMAP_PAIR",
+  "QK_UNICODEMAP_PAIR_MAX": "QK_UNICODE_MAX",
   "KC_TRANSPARENT": "KC_TRNS",
   "KC_BACKSPACE": "KC_BSPACE",
   "KC_LEFT_BRACKET": "KC_LBRACKET",
@@ -12188,6 +12771,7 @@ const KEYALIASES = {
   "KC_EXECUTE": "KC_EXEC",
   "KC_MENU": "KC_MENU",
   "KC_SELECT": "KC_SLCT",
+  "KC_AGAIN": "KC_REDO",
   "KC_PASTE": "KC_PSTE",
   "KC_KB_MUTE": "KC_KB_MUTE",
   "KC_KB_VOLUME_UP": "KC_VOLUP",
@@ -12324,7 +12908,7 @@ const KEYALIASES = {
   "QK_MAGIC_SWAP_ESCAPE_CAPS_LOCK": "QK_MAGIC_SWAP_ESCAPE_CAPS_LOCK",
   "QK_MAGIC_UNSWAP_ESCAPE_CAPS_LOCK": "QK_MAGIC_UNSWAP_ESCAPE_CAPS_LOCK",
   "QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK": "QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK",
-  "QK_MIDI_ON": "QK_MIDI_ON",
+  "QK_MIDI_ON": "QK_MIDI",
   "QK_MIDI_OFF": "QK_MIDI_OFF",
   "QK_MIDI_TOGGLE": "QK_MIDI_TOGGLE",
   "QK_MIDI_NOTE_C_0": "MI_C",
@@ -12468,7 +13052,7 @@ const KEYALIASES = {
   "QK_MIDI_MODULATION_SPEED_UP": "MI_MODSU",
   "QK_MIDI_PITCH_BEND_DOWN": "MI_BENDD",
   "QK_MIDI_PITCH_BEND_UP": "MI_BENDU",
-  "QK_SEQUENCER_ON": "QK_SEQUENCER_ON",
+  "QK_SEQUENCER_ON": "QK_SEQUENCER",
   "QK_SEQUENCER_OFF": "QK_SEQUENCER_OFF",
   "QK_SEQUENCER_TOGGLE": "QK_SEQUENCER_TOGGLE",
   "QK_SEQUENCER_TEMPO_DOWN": "QK_SEQUENCER_TEMPO_DOWN",
@@ -12477,7 +13061,7 @@ const KEYALIASES = {
   "QK_SEQUENCER_RESOLUTION_UP": "QK_SEQUENCER_RESOLUTION_UP",
   "QK_SEQUENCER_STEPS_ALL": "QK_SEQUENCER_STEPS_ALL",
   "QK_SEQUENCER_STEPS_CLEAR": "QK_SEQUENCER_STEPS_CLEAR",
-  "QK_JOYSTICK_BUTTON_0": "QK_JOYSTICK_BUTTON_0",
+  "QK_JOYSTICK_BUTTON_0": "QK_JOYSTICK",
   "QK_JOYSTICK_BUTTON_1": "QK_JOYSTICK_BUTTON_1",
   "QK_JOYSTICK_BUTTON_2": "QK_JOYSTICK_BUTTON_2",
   "QK_JOYSTICK_BUTTON_3": "QK_JOYSTICK_BUTTON_3",
@@ -12509,7 +13093,7 @@ const KEYALIASES = {
   "QK_JOYSTICK_BUTTON_29": "QK_JOYSTICK_BUTTON_29",
   "QK_JOYSTICK_BUTTON_30": "QK_JOYSTICK_BUTTON_30",
   "QK_JOYSTICK_BUTTON_31": "QK_JOYSTICK_BUTTON_31",
-  "QK_PROGRAMMABLE_BUTTON_1": "QK_PROGRAMMABLE_BUTTON_1",
+  "QK_PROGRAMMABLE_BUTTON_1": "QK_PROGRAMMABLE_BUTTON",
   "QK_PROGRAMMABLE_BUTTON_2": "QK_PROGRAMMABLE_BUTTON_2",
   "QK_PROGRAMMABLE_BUTTON_3": "QK_PROGRAMMABLE_BUTTON_3",
   "QK_PROGRAMMABLE_BUTTON_4": "QK_PROGRAMMABLE_BUTTON_4",
@@ -12748,7 +13332,7 @@ const KEYALIASES = {
   "QK_KB_29": "USER29",
   "QK_KB_30": "USER30",
   "QK_KB_31": "USER31",
-  "QK_USER_0": "QK_USER_0",
+  "QK_USER_0": "QK_USER",
   "QK_USER_1": "QK_USER_1",
   "QK_USER_2": "QK_USER_2",
   "QK_USER_3": "QK_USER_3",
@@ -12828,6 +13412,7 @@ const KEYALIASES = {
   "KC_NUBS": "KC_NONUS_BSLASH",
   "KC_APP": "KC_APPLICATION",
   "KC_PEQL": "KC_KP_EQUAL",
+  "KC_AGIN": "KC_REDO",
   "KC_PCMM": "KC_KP_COMMA",
   "KC_INT1": "KC_RO",
   "KC_INT2": "KC_KANA",
@@ -12917,7 +13502,7 @@ const KEYALIASES = {
   "EC_SWAP": "QK_MAGIC_SWAP_ESCAPE_CAPS_LOCK",
   "EC_NORM": "QK_MAGIC_UNSWAP_ESCAPE_CAPS_LOCK",
   "EC_TOGG": "QK_MAGIC_TOGGLE_ESCAPE_CAPS_LOCK",
-  "MI_ON": "QK_MIDI_ON",
+  "MI_ON": "QK_MIDI",
   "MI_OFF": "QK_MIDI_OFF",
   "MI_TOGG": "QK_MIDI_TOGGLE",
   "MI_Db": "MI_Cs",
@@ -13054,7 +13639,7 @@ const KEYALIASES = {
   "MI_MODU": "MI_MODSU",
   "MI_BNDD": "MI_BENDD",
   "MI_BNDU": "MI_BENDU",
-  "SQ_ON": "QK_SEQUENCER_ON",
+  "SQ_ON": "QK_SEQUENCER",
   "SQ_OFF": "QK_SEQUENCER_OFF",
   "SQ_TOGG": "QK_SEQUENCER_TOGGLE",
   "SQ_TMPD": "QK_SEQUENCER_TEMPO_DOWN",
@@ -13063,7 +13648,7 @@ const KEYALIASES = {
   "SQ_RESU": "QK_SEQUENCER_RESOLUTION_UP",
   "SQ_SALL": "QK_SEQUENCER_STEPS_ALL",
   "SQ_SCLR": "QK_SEQUENCER_STEPS_CLEAR",
-  "JS_0": "QK_JOYSTICK_BUTTON_0",
+  "JS_0": "QK_JOYSTICK",
   "JS_1": "QK_JOYSTICK_BUTTON_1",
   "JS_2": "QK_JOYSTICK_BUTTON_2",
   "JS_3": "QK_JOYSTICK_BUTTON_3",
@@ -13095,7 +13680,7 @@ const KEYALIASES = {
   "JS_29": "QK_JOYSTICK_BUTTON_29",
   "JS_30": "QK_JOYSTICK_BUTTON_30",
   "JS_31": "QK_JOYSTICK_BUTTON_31",
-  "PB_1": "QK_PROGRAMMABLE_BUTTON_1",
+  "PB_1": "QK_PROGRAMMABLE_BUTTON",
   "PB_2": "QK_PROGRAMMABLE_BUTTON_2",
   "PB_3": "QK_PROGRAMMABLE_BUTTON_3",
   "PB_4": "QK_PROGRAMMABLE_BUTTON_4",
@@ -13279,6 +13864,67 @@ const KEYALIASES = {
   "TL_UPPR": "FN_MO23",
   "QK_REP": "QK_REPEAT_KEY",
   "QK_AREP": "QK_ALT_REPEAT_KEY",
+  "STN__MIN": "QK_STENO",
+  "STN_FN": "QK_STENO",
+  "STN_NUM": "STN_NUM",
+  "STN_N1": "STN_NUM",
+  "STN_N2": "STN_N2",
+  "STN_N3": "STN_N3",
+  "STN_N4": "STN_N4",
+  "STN_N5": "STN_N5",
+  "STN_N6": "STN_N6",
+  "STN_SL": "STN_SL",
+  "STN_S1": "STN_SL",
+  "STN_S2": "STN_S2",
+  "STN_TL": "STN_TL",
+  "STN_KL": "STN_KL",
+  "STN_PL": "STN_PL",
+  "STN_WL": "STN_WL",
+  "STN_HL": "STN_HL",
+  "STN_RL": "STN_RL",
+  "STN_A": "STN_A",
+  "STN_O": "STN_O",
+  "STN_STR": "STN_STR",
+  "STN_ST1": "STN_STR",
+  "STN_ST2": "STN_ST2",
+  "STN_RES1": "STN_RES1",
+  "STN_RE1": "STN_RES1",
+  "STN_RES2": "STN_RES2",
+  "STN_RE2": "STN_RES2",
+  "STN_PWR": "STN_PWR",
+  "STN_ST3": "STN_ST3",
+  "STN_ST4": "STN_ST4",
+  "STN_E": "STN_E",
+  "STN_U": "STN_U",
+  "STN_FR": "STN_FR",
+  "STN_RR": "STN_RR",
+  "STN_PR": "STN_PR",
+  "STN_BR": "STN_BR",
+  "STN_LR": "STN_LR",
+  "STN_GR": "STN_GR",
+  "STN_TR": "STN_TR",
+  "STN_SR": "STN_SR",
+  "STN_DR": "STN_DR",
+  "STN_N7": "STN_N7",
+  "STN_N8": "STN_N8",
+  "STN_N9": "STN_N9",
+  "STN_NA": "STN_NA",
+  "STN_NB": "STN_NB",
+  "STN_NC": "STN_NC",
+  "STN_ZR": "STN_ZR",
+  "STN__MAX": "STN_ZR",
+  "STN_S3": "QK_STENO_COMB",
+  "STN_TKL": "STN_TKL",
+  "STN_PWL": "STN_PWL",
+  "STN_HRL": "STN_HRL",
+  "STN_FRR": "STN_FRR",
+  "STN_PBR": "STN_PBR",
+  "STN_LGR": "STN_LGR",
+  "STN_TSR": "STN_TSR",
+  "STN_DZR": "STN_DZR",
+  "STN_AO": "STN_AO",
+  "STN_EU": "QK_STENO_COMB_MAX",
+  "STN_COMB_MAX": "QK_STENO_COMB_MAX",
   "KC_NLCK": "KC_NUMLOCK",
   "KC_SLCK": "KC_SCROLLLOCK",
   "KC_ZKHK": "KC_GRAVE",
@@ -13299,8 +13945,6 @@ const KEYALIASES = {
   "RAG_NRM": "MAGIC_UNSWAP_RALT_RGUI",
   "GUI_OFF": "MAGIC_NO_GUI",
   "GUI_ON": "MAGIC_UNNO_GUI",
-  "KC_AGAIN": "KC_REDO",
-  "KC_AGIN": "KC_REDO",
   "KC_LOCKING_CAPS": "KC_LCAP",
   "KC_LOCKING_NUM": "KC_LNUM",
   "KC_LOCKING_SCROLL": "KC_LSCR",
