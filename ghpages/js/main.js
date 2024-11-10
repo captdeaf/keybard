@@ -17,12 +17,26 @@ function startKeyBard() {
     return;
   }
 
+  const sp = new URL(window.location.href).searchParams;
+  const kbiuri = sp.get('kbi');
+
   if (SETTINGS.playback) {
     setTimeout(() => { doStuff(); }, 100);
   } else {
     get('#launch').onclick = () => {
       doStuff();
     }
+  }
+  if (kbiuri) {
+    tryFetchKBI(kbiuri);
+  }
+}
+
+async function tryFetchKBI(kbiuri) {
+  const resp = await fetch(kbiuri);
+  const kbinfo = await resp.json();
+  if (kbinfo && kbinfo.payload) {
+    doStuff(kbinfo);
   }
 }
 
