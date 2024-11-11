@@ -103,12 +103,12 @@ addInitializer('load', () => {
           class: 'kbdesc layer-list-head',
         }, text);
       }
-      appendBoard('[data-board="layer"]', layers.map((i) => 'MO(' + i + ')'), 16, label('MO'));
-      appendBoard('[data-board="layer"]', layers.map((i) => 'DF(' + i + ')'), 16, label('DF'));
-      appendBoard('[data-board="layer"]', layers.map((i) => 'TG(' + i + ')'), 16, label('TG'));
-      appendBoard('[data-board="layer"]', layers.map((i) => 'TT(' + i + ')'), 16, label('TT'));
-      appendBoard('[data-board="layer"]', layers.map((i) => 'OSL(' + i + ')'), 16, label('OSL'));
-      appendBoard('[data-board="layer"]', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
+      appendBoard('.board-map[data-board="layer"]', layers.map((i) => 'MO(' + i + ')'), 16, label('MO'));
+      appendBoard('.board-map[data-board="layer"]', layers.map((i) => 'DF(' + i + ')'), 16, label('DF'));
+      appendBoard('.board-map[data-board="layer"]', layers.map((i) => 'TG(' + i + ')'), 16, label('TG'));
+      appendBoard('.board-map[data-board="layer"]', layers.map((i) => 'TT(' + i + ')'), 16, label('TT'));
+      appendBoard('.board-map[data-board="layer"]', layers.map((i) => 'OSL(' + i + ')'), 16, label('OSL'));
+      appendBoard('.board-map[data-board="layer"]', layers.map((i) => 'TO(' + i + ')'), 16, label('TO'));
     }
 
     // modtaps lists layers for layer on hold, key on tap.
