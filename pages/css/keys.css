@@ -302,6 +302,7 @@
   border: 1px solid black;
   border-radius: 3px;
   background-color: #fff;
+  z-index: 1000;
 }
 
 .keypane .panetitle {
