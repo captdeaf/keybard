@@ -356,7 +356,7 @@
    "cosmetic" : {
       "layer" : {
          "0" : "Default",
-         "14" : "Macros",
+         "14" : "Macro",
          "15" : "Mouse",
          "2" : "Nav",
          "4" : "NAS",
