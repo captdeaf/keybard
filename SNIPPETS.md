@@ -26,6 +26,11 @@ And HTML show as disabled until connected:
 <label class="connect-enable">...</div>
 ```
 
+And HTML hide until connected:
+```html
+<div class="on-connect">...</div>
+```
+
 Note this won't prevent clicks - I recommend putting the ACTION.onclick()
 handler inside a `addInitializer('connected', () => {});` if you don't want
 to be clickable until a device is connected, or .kbi/.vil is uploaded.
