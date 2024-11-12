@@ -81,7 +81,7 @@
   min-width: 60px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.6);
   padding: 12px 16px;
-  z-index: 100;
+  z-index: 2000;
 }
 
 .dropdown:hover > .dropdown-content {
