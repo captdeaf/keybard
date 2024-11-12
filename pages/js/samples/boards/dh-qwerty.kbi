@@ -1,7 +1,4 @@
-if (!('Svalboard' in SAMPLE_KBIS)) {
-  SAMPLE_KBIS.Svalboard = {};
-}
-SAMPLE_KBIS.Svalboard['Svalboard QWERTY'] = {
+{
    "cols" : 6,
    "combo_count" : 50,
    "combos" : [
@@ -7938,4 +7935,4 @@ SAMPLE_KBIS.Svalboard['Svalboard QWERTY'] = {
    ],
    "via_proto" : 9,
    "vial_proto" : 6
-};
+}

@@ -13,9 +13,6 @@
 //
 ////////////////////////////////////
 
-const SAMPLE_LAYERS = {};
-const SAMPLE_KBIS = {};
-
 addInitializer('load', () => {
 
   ////////////////////////////////////
@@ -119,80 +116,5 @@ addInitializer('load', () => {
         get('[data-layer="' + i + '"]').style['display'] = 'none';
       }
     }
-  });
-
-
-  ////////////////////////////////////
-  //
-  //  Sample layers. This populates the dropup menu with our sample boards.
-  //
-  ////////////////////////////////////
-  const layermenu = get('#sample-layers');
-  for (const [kbname, layers] of Object.entries(SAMPLE_LAYERS)) {
-    const els = [];
-    for (const [layername, map] of Object.entries(layers)) {
-      els.push(EL('label', {
-        'data-sample-kb': kbname,
-        'data-sample-layer': layername,
-      }, layername));
-    }
-    appendChildren(layermenu, els);
-  }
-
-  ACTION.onclick('[data-sample-kb]', (target) => {
-    const which = target.dataset.sampleKb;
-    if (which === 'fill') {
-      const km = KBINFO.keymap[MAINBOARD.selectedLayer];
-      const key = target.dataset.sampleKey;
-      KBINFO.keymap[MAINBOARD.selectedLayer] = km.map(() => key);
-    } else if (which === 'fillEmpty') {
-      const km = KBINFO.keymap[MAINBOARD.selectedLayer];
-      const key = target.dataset.sampleKey;
-      for (let kmid = 0; kmid < km.length; kmid++) {
-        if (km[kmid] === 'KC_NO') {
-          km[kmid] = key;
-        }
-      }
-    } else {
-      const kmap = SAMPLE_LAYERS[which][target.dataset.sampleLayer];
-      KBINFO.keymap[MAINBOARD.selectedLayer] = structuredClone(kmap);
-    }
-    updateAllChanges();
-    ACTION.menuClose();
-  });
-
-  ////////////////////////////////////
-  //
-  //  Sample kbinfos - replace the entire kbinfo. Kinda like uploading,
-  //  but we have them for examples.
-  //
-  ////////////////////////////////////
-
-  const kbimenu = get('#sample-kbis');
-  for (const [kbname, kbis] of Object.entries(SAMPLE_KBIS)) {
-    const els = [];
-    for (const [kbiname, map] of Object.entries(kbis)) {
-      els.push(EL('label', {
-        'data-sample-kbi': kbname,
-        'data-sample-kbid': kbiname,
-      }, kbiname));
-    }
-    const content = EL('div', {
-      class: 'dropdown-content',
-    }, els);
-    appendChildren(kbimenu, EL('label', {
-      class: 'menuitem dropdown'
-    }, kbname, content));
-  }
-
-  ACTION.onclick('[data-sample-kbi]', (target) => {
-    const kbi = SAMPLE_KBIS[target.dataset.sampleKbi][target.dataset.sampleKbid];
-    if (CONNECTED) {
-      setActiveKBINFO(kbi);
-      updateAllChanges();
-    } else {
-      doStuff(kbi);
-    }
-    ACTION.menuClose();
   });
 });
