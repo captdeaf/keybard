@@ -7,6 +7,7 @@ on:
     branches-ignore:
       - allpages
       - prod
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -35,11 +36,7 @@ jobs:
         # Copy pages to temppages, so we can 'install' it into allpages.
         cp -r pages temppages
         git fetch
-        echo "git remote"
-        git remote
-        echo "git branch"
-        git branch
-        git switch allpages
+        git switch -f allpages
         if [[ "${{ github.ref_name }}" == "master" ]]; then
           echo "Copying from master location to pages branch"
           cd temppages
