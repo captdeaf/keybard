@@ -7,8 +7,8 @@
 //
 ////////////////////////////////////
 
+// SAMPLE_LAYERS is populated elsewhere, before load.
 const SAMPLE_LAYERS = {};
-const SAMPLE_KBIS = {};
 
 addInitializer('load', () => {
   ////////////////////////////////////
@@ -30,12 +30,24 @@ addInitializer('load', () => {
     appendChildren(layermenu, EL('label', {class: 'dropdown'}, kbname, kbmenu));
   }
 
-  ACTION.onclick('[data-sample-kb]', (target) => {
+  ////////////////////////////////////
+  //
+  //  Layer actions
+  //
+  ////////////////////////////////////
+  ACTION.onclick('[data-sample-kb]', async (target) => {
     const which = target.dataset.sampleKb;
     if (which === 'fill') {
       const km = KBINFO.keymap[MAINBOARD.selectedLayer];
       const key = target.dataset.sampleKey;
       KBINFO.keymap[MAINBOARD.selectedLayer] = km.map(() => key);
+    } else if (which === 'copy-layer') {
+      const clipjs = KBINFO.keymap[MAINBOARD.selectedLayer];
+      navigator.clipboard.writeText(JSON.stringify(clipjs));
+    } else if (which === 'paste-layer') {
+      const clip = await navigator.clipboard.readText();
+      const clipjs = JSON.parse(clip);
+      KBINFO.keymap[MAINBOARD.selectedLayer] = clipjs;
     } else if (which === 'fillEmpty') {
       const km = KBINFO.keymap[MAINBOARD.selectedLayer];
       const key = target.dataset.sampleKey;
@@ -44,9 +56,11 @@ addInitializer('load', () => {
           km[kmid] = key;
         }
       }
-    } else {
+    } else if (which in SAMPLE_LAYERS) {
       const kmap = SAMPLE_LAYERS[which][target.dataset.sampleLayer];
       KBINFO.keymap[MAINBOARD.selectedLayer] = structuredClone(kmap);
+    } else {
+      console.log("Unknown data-sample-kb op:", which);
     }
     updateAllChanges();
     ACTION.menuClose();
