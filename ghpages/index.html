@@ -45,6 +45,7 @@
 <script type="text/javascript" src="js/kbui/mainboard.js"></script>
 <script type="text/javascript" src="js/kbui/qmk.js"></script>
 <script type="text/javascript" src="js/kbui/sampleboards.js"></script>
+<script type="text/javascript" src="js/kbui/examples.js"></script>
 <script type="text/javascript" src="js/kbui/updateall.js"></script>
 <script type="text/javascript" src="js/kbui/matrixtester.js"></script>
 <script type="text/javascript" src="js/kbui/keypane.js"></script>
@@ -71,9 +72,6 @@
 
 <!-- Sample layers and kbinfos-->
 <script type="text/javascript" src="js/samples/svalboard.js"></script>
-<script type="text/javascript" src="js/samples/svalboard-qwerty.kbi.js"></script>
-<script type="text/javascript" src="js/samples/svalboard-dvorak.kbi.js"></script>
-<script type="text/javascript" src="js/samples/svalboard-colemak.kbi.js"></script>
 
 <!-- Upload and download files -->
 <script type="text/javascript" src="js/ckeymap.js"></script>
@@ -1269,22 +1267,24 @@
     </div>
     <div id="tiptip">
       <div class="tip">
-  <h3>Quick actions for keys</h3>
+  <h3>Serial Assignment</h3>
   <p>
-    Did you know: R-Clicking a key in your keyboard map will show you some easy
-    shortcuts! If this doesn't work, be aware that the most common cause is a
-    browser extension intended to prevent websites from hijacking context menus
+    Did you know: You don't have to click each key one by one to assign to
+    them. Select a serial assignment method under MENU-&gt; Serial Assignment,
+    and select a key. When it's bound to a new key, the active key to select
+    jumps to the next in its series.
   </p>
+  <img src="images/tip-serial.png"/ style="width: 60vw; height: 30vh;">
+</div>
+<div class="tip">
+  <h3>Printing layer maps</h3>
   <p>
-    You can assign and edit an unused macro or tapdance instantly, enter a
-    key code by its raw QMK value, clear or disable it, or revert the change
-    before committing it!
+    Did you know: While the default UI is annoying to print, Keybard has a
+    "print" option in the menu that opens a new window with all your
+    non-empty layers. You can remove them at will, and print out an easy
+    reference sheet!
   </p>
-  <p>
-    This also works for most keys you can bind in combos, key overrides, macros,
-    and tap dance!
-  </p>
-  <img src="images/tip-contextmenu.png"/ style="width: 300px;">
+  <img src="images/tip-print.png"/ style="width: 500px;">
 </div>
 <div class="tip">
   <h3>Layer names</h3>
@@ -1313,24 +1313,22 @@
   <img src="images/tip-typebind.png"/ style="width: 300px;">
 </div>
 <div class="tip">
-  <h3>Serial Assignment</h3>
+  <h3>Quick actions for keys</h3>
   <p>
-    Did you know: You don't have to click each key one by one to assign to
-    them. Select a serial assignment method under MENU-&gt; Serial Assignment,
-    and select a key. When it's bound to a new key, the active key to select
-    jumps to the next in its series.
+    Did you know: R-Clicking a key in your keyboard map will show you some easy
+    shortcuts! If this doesn't work, be aware that the most common cause is a
+    browser extension intended to prevent websites from hijacking context menus
   </p>
-  <img src="images/tip-serial.png"/ style="width: 60vw; height: 30vh;">
-</div>
-<div class="tip">
-  <h3>Printing layer maps</h3>
   <p>
-    Did you know: While the default UI is annoying to print, Keybard has a
-    "print" option in the menu that opens a new window with all your
-    non-empty layers. You can remove them at will, and print out an easy
-    reference sheet!
+    You can assign and edit an unused macro or tapdance instantly, enter a
+    key code by its raw QMK value, clear or disable it, or revert the change
+    before committing it!
   </p>
-  <img src="images/tip-print.png"/ style="width: 500px;">
+  <p>
+    This also works for most keys you can bind in combos, key overrides, macros,
+    and tap dance!
+  </p>
+  <img src="images/tip-contextmenu.png"/ style="width: 300px;">
 </div>
 
     </div>
