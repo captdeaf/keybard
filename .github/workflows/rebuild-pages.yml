@@ -7,6 +7,7 @@ on:
     branches-ignore:
       - allpages
       - prod
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -30,14 +31,12 @@ jobs:
     # Commit and push changes to 'pages' branch
     - name: Copy changes to allpages branch
       run: |
+        # Rebuild index.html and sample boards' index.json
+        python3 rebuild_templates.py
+        # Copy pages to temppages, so we can 'install' it into allpages.
         cp -r pages temppages
         git fetch
-        echo "git remote"
-        git remote
-        echo "git branch"
-        git branch
-        #git checkout origin/allpages
-        git switch allpages
+        git switch -f allpages
         if [[ "${{ github.ref_name }}" == "master" ]]; then
           echo "Copying from master location to pages branch"
           cd temppages

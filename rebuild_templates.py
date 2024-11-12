@@ -2,8 +2,19 @@
 
 import re
 from glob import glob
+import json
+import os
 
 TEMPLATE_RE = re.compile(r'\{\{([*\w\./]+)\}\}')
+
+def build_board_index():
+    kbis = glob("pages/samples/boards/*.kbi")
+    ret = []
+    for kbi in kbis:
+        fn = os.path.basename(kbi)
+        ret.append(dict(name=fn))
+    with open('pages/samples/boards/index.json', 'w', encoding='utf-8') as fout:
+        fout.write(json.dumps(ret))
 
 def optimize(content):
     return content
@@ -27,6 +38,7 @@ def rebuild():
     body = build_template('html', 'index')
     with open('pages/index.html', 'w', encoding='utf-8') as fout:
         fout.write(body)
+    build_board_index()
     return body
 
 if __name__ == "__main__":
