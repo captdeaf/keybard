@@ -61,18 +61,16 @@ addInitializer('load', () => {
   const sampleKBIs = {};
   async function fetchAll() {
     // Fetch the listing, then individual items.
-    const resp = await fetch("js/samples/boards/index.json");
+    const resp = await fetch("samples/boards/index.json");
     // const resp = await fetch("https://api.github.com/repos/captdeaf/keybard/contents/pages/js/samples/boards?ref=master");
     const jslisting = await resp.json();
-    console.log('jsl', jslisting);
     if (jslisting) {
       for (const item of jslisting) {
-        const itemresp = await fetch(`js/samples/boards/${item.name}`);
+        const itemresp = await fetch(`samples/boards/${item.name}`);
         const itemjs = await itemresp.json();
         sampleKBIs[item.name] = itemjs;
       }
     }
-    console.log('ski', sampleKBIs);
     const kbimenu = get('#sample-kbis');
     const els = [];
     for (const [name, entry] of Object.entries(sampleKBIs)) {
