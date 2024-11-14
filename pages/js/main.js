@@ -8,6 +8,8 @@
 
 let CONNECTED = false;
 
+const PARAMS = new URL(window.location.href).searchParams;
+
 function startKeyBard() {
   runInitializers('load');
 
@@ -17,8 +19,7 @@ function startKeyBard() {
     return;
   }
 
-  const sp = new URL(window.location.href).searchParams;
-  const kbiuri = sp.get('kbi');
+  const kbiuri = PARAMS.get('kbi');
 
   if (SETTINGS.playback) {
     setTimeout(() => { doStuff(); }, 100);
@@ -89,6 +90,14 @@ async function doStuff(kbinfo) {
   runInitializers('connected');
 
   KEYUI.refreshAllKeys();
+
+  const launch = PARAMS.get('launch');
+  if (launch === 'matrixtester') {
+    get('[data-open="#float-matrix-tester"]').click();
+    setTimeout(() => {
+      get('[data-action="matrix-poll"]').click();
+    }, 100);
+  }
 }
 
 async function initUploadedKBINFO() {
