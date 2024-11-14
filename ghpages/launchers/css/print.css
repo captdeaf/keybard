@@ -1,0 +1,29 @@
+.printable-mainboard {
+  position: relative;
+  break-inside: avoid;
+  margin-bottom: 60px;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
+
+.no-print {
+  position: relative;
+  display: block;
+  margin-left: 50%;
+  width: 200px;
+  left: -100px;
+}
+
+p.printable-title {
+  position: absolute;
+  top: -20px;
+  width: 300px;
+  left: -150px;
+  text-align: center;
+  margin-left: 50%;
+}
+

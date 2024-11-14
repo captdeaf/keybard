@@ -1,0 +1,319 @@
+/* keys.css, styles for boards and keys. */
+
+.kbdesc {
+  min-width: 70px;
+  max-width: 120px;
+  height: 3.50px;
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  align-items: center;
+  margin: 2px;
+  cursor: pointer;
+  font-weight: bold;
+  text-align: left;
+  line-height: normal;
+  white-space: pre;
+}
+
+.keycap {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+.key {
+  --key-border-radius: 4px;
+  position: relative;
+  background-color: #fff;
+  border: 1px solid black;
+  border-radius: var(--key-border-radius);
+  min-height: 40px;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  cursor: pointer;
+  text-align: center;
+  line-height: normal;
+  white-space: pre;
+}
+
+.key-attop {
+  color: #0a0;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 14px;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: var(--key-border-radius);
+  border-top-right-radius: var(--key-border-radius);
+}
+
+.key-top {
+  background-color: #888;
+  color: #fff;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 14px;
+  top: 0px;
+  left: 0px;
+  border-top-left-radius: var(--key-border-radius);
+  border-top-right-radius: var(--key-border-radius);
+}
+
+.key-midb,.key-midt {
+  position: absolute;
+  display: block;
+  vertical-align: top;
+  width: 100%;
+  left: 0px;
+  top: 0px;
+}
+
+.key-midt {
+  padding-bottom: 16px;
+}
+
+.key-midb {
+  padding-top: 16px;
+}
+
+.key-bottom {
+  height: 14px;
+  background-color: #8c8;
+  color: #fff;
+  position: absolute;
+  display: block;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  border-bottom-left-radius: var(--key-border-radius);
+  border-bottom-right-radius: var(--key-border-radius);
+}
+
+.key:hover {
+  background-color: #ffd;
+}
+
+.key.active,.key.active .key-midt,.key.active .key-midb {
+  background-color: #fdd !important;
+}
+
+/* kb-mods: the modifier keys. Instead of clicking ctrl in the keyboard to have
+ * ctrl+tab be a key, then enable Ctrl modifier and click tab, to get LCTR(KC_TAB)
+ */
+.kb-mods {
+  border: 2px solid black;
+  border-radius: 4px;
+  background-color: white;
+}
+
+.key-mod {
+  background-color: #dff;
+  white-space: normal;
+}
+
+.key-mod.selected {
+  background-color: tan;
+}
+
+/* Macro keys for editor */
+.key-macro {
+  width: 60px;
+  overflow-x: hidden;
+  text-justify: left;
+}
+
+.macro-action {
+  position: relative;
+  min-width: 70px;
+  height: 62px;
+  text-align: middle;
+  display: flex;
+  flex-flow: column;
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 6px;
+}
+
+.macro-buttons {
+  font-size: 12px;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  font-weight: bold;
+}
+
+.macro-buttons div {
+  margin-right: 6px;
+}
+
+.remove-macro {
+  color: red;
+}
+
+.key-down { background-color: #fdd; }
+.key-tap { background-color: #ddf; }
+.key-up { background-color: #dfd; }
+
+/* Styles for individual types of keys, for better visual separation.
+ * e.g: a key that triggers a layer has a span.key-layer.
+ */
+
+.key-type {
+  width: 100%;
+  inset: 0;
+  height: 100%;
+  border-radius: var(--key-border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.key-layer {
+  background-position: top center;
+  background-image: url("../images/layer-bg.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  font-weight: bold;
+}
+
+.key-modtap,.key-tapdance {
+  background-color: #e1ebFF;
+}
+
+.key-macro {
+  background-position: top center;
+  background-image: url("../images/ellipsis.png");
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  font-weight: bold;
+}
+
+.changed,.changed .key-midt,.changed .key-midb {
+  background-color: #ffd !important;
+}
+
+/* A 'keyboard' rendering consists of:
+ *
+ * A kb-board: a row of kb-groups.
+ * Each group is a different section.
+ * Each group has many kb-rows
+ * Each kb-row has many kb-keys.
+ *
+ * e.g: qwerty has three .kb-group:
+ *
+ * 1) Keyboard with the letter keys.
+ * 2) Special keys: arrow keys, printscreen, ins/home/etc
+ * 3) Numpad keys.
+ */
+.kb-board {
+  height: 100%;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+}
+
+.kb-spam {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+}
+
+.kb-group {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.kb-row {
+  min-height: 3.50px;
+  display: flex;
+  flex-flow: row;
+  flex: 1 1 auto;
+}
+
+.kb-row-wrap {
+  flex-wrap: wrap;
+}
+
+.kb-key {
+  flex: 1 1 auto;
+  margin: 1px;
+  min-width: 30px;
+  max-width: 120px;
+  width: 40px;
+}
+
+.kb-intl {
+  background-color: #ffebe1;
+  max-width: 40px;
+}
+
+.kb-blank {
+  flex: 1 1 auto;
+  min-width: 60px;
+  max-width: 120px;
+}
+
+.kb-desc {
+  width: 70px;
+}
+
+/* These are for relative key sizes. e.g: spacebar is the width of 8 normal
+ * keys. */
+.extra-large {
+  width: 120px;
+  flex: 3 3 auto;
+}
+
+.spacebar {
+  width: 320px;
+  flex: 8 8 auto;
+}
+
+.large {
+  width: 80px;
+  flex: 2 2 auto;
+}
+
+.medium {
+  width: 60px;
+  flex: 1.5 1.5 auto;
+}
+
+.small {
+  width: 30px;
+  flex: 0.75 0.75 auto;
+}
+
+#macro-board {
+  width: 100%;
+}
+
+/* Key pane */
+
+.keypane {
+  min-width: 100px;
+  min-height: 80px;
+  border: 1px solid black;
+  border-radius: 3px;
+  background-color: #fff;
+  z-index: 1000;
+}
+
+.keypane .panetitle {
+  padding: 6px;
+  background-color: #e1ebff;
+  border-bottom: 0px solid black;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.keypane .panebody {
+  padding: 6px;
+  font-size: 20px;
+}

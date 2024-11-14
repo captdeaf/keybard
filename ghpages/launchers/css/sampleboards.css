@@ -1,0 +1,81 @@
+/* The sample boards at the bottom. */
+
+/* Keyboard display for keymap bindings. */
+#key-selection {
+  flex: 0 0 content;
+  background-color: #fff;
+}
+
+#allboards {
+  display: block;
+  flex: 1 1 content;
+  min-height: 350px;
+  background-color: #fff;
+  width: 100%;
+  overflow: auto;
+}
+
+.board-map {
+  min-width: 800px;
+  position: relative;
+  padding: 4px;
+  margin-bottom: 4.50px;
+}
+
+.kb-board-mods {
+  position: relative;
+  display: flex;
+  flex-flow: row;
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+#board-selection {
+  flex: 0 0 content;
+  height: 40px;
+  margin-left: 1em;
+  display: flex;
+  flex-flow: row;
+  padding: 4px;
+  width: 100%;
+}
+
+.board-sel {
+  cursor: pointer;
+  flex: 4 0 content;
+  padding: 5px;
+  border: 2px solid #bbb;
+  border-radius: 3px;
+  margin-left: 4px;
+  background-color: #ddd;
+  color: black;
+  font-size: 8pt;
+}
+
+.board-sel-unusual {
+  cursor: pointer;
+  flex: 4 0 content;
+  padding: 5px;
+  border: 2px solid #bbb;
+  border-radius: 3px;
+  margin-left: 4px;
+  background-color: #bbb;
+  color: black;
+  font-size: 8pt;
+}
+
+.board-sel:hover {
+  background-color: #ffd;
+}
+
+.board-sel.active {
+  background-color: #ddf;
+}
+
+.board-sel-end {
+  flex: 1 1 auto;
+}
+
+.layer-list-head {
+  display: inline-block;
+}
