@@ -41,9 +41,9 @@ addInitializer('connected', () => {
 
     return keyimage;
   }
+  const matrixboard = get('#matrixboard');
 
   function renderMatrix() {
-    const board = get('#matrixboard');
     // allkeys is [row][col]
     const allkeys = {};
     for (let row = 0; row < KBINFO.rows; row++) {
@@ -56,12 +56,13 @@ addInitializer('connected', () => {
       els.push(mat);
     }
 
-    appendChildren(board, els);
+    appendChildren(matrixboard, els);
 
     return allkeys;
   }
 
   const matrixKeys = renderMatrix();
+  const pollButton = get('[data-action="matrix-poll"]');
 
   let keepPolling = false;
 
@@ -70,6 +71,10 @@ addInitializer('connected', () => {
   //  The actual polling of the keyboard matrix.
   //
   ////////////////////////////////////
+  function clearPoll() {
+    keepPolling = false;
+    pollButton.innerText = "Begin Poll";
+  }
   MATRIX.poll = async () => {
     const data = await Vial.pollMatrix(KBINFO);
     for (let row = 0; row < KBINFO.rows; row++) {
@@ -85,26 +90,30 @@ addInitializer('connected', () => {
         }
       }
     }
+    if (matrixboard.getBoundingClientRect().width < 10) {
+      clearPoll();
+    }
+    console.log("poll");
     if (keepPolling) {
       setTimeout(MATRIX.poll, 10);
     }
   }
 
   ACTION.onclick('[data-action="matrix-poll"]', (target) => {
+    target.focus();
     if (!keepPolling) {
-      target.onmouseleave = () => {
-        keepPolling = false;
-        target.onmouseleave = null;
-      };
       target.onkeydown = (evt) => {
         evt.preventDefault();
         evt.stopPropagation();
         return false;
       };
       setTimeout(() => {
+        pollButton.innerText = "End Poll";
         keepPolling = true;
         MATRIX.poll();
       }, 10);
+    } else {
+      clearPoll();
     }
   });
 });
