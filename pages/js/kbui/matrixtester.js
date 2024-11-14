@@ -93,7 +93,6 @@ addInitializer('connected', () => {
     if (matrixboard.getBoundingClientRect().width < 10) {
       clearPoll();
     }
-    console.log("poll");
     if (keepPolling) {
       setTimeout(MATRIX.poll, 10);
     }
