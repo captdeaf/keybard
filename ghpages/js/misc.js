@@ -23,7 +23,7 @@ function getEditableName(type, index, def, skipidx) {
   if (KBINFO.cosmetic[type][index]) {
     return prefix + KBINFO.cosmetic[type][index];
   } else if (type in local && index in local[type]) {
-    return prefix + local[type];
+    return prefix + local[type][index];
   } else {
     return index;
   }
