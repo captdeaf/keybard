@@ -12,20 +12,37 @@ const LAYER_COLORS = {
 }
 
 addInitializer('connected', () => {
-  LAYER_COLORS.getLayerColor = async (layer) => {
-    const hsv = await USB.send(0xEE, [0x10, layer], {unpack: 'BBB'});
-    return hsv;
+  const pickerFloat = get('#colorpicker');
+  let layer = 0;
+
+  // From google ai overview
+  function hslToHsv(h, s, l) {
+    s /= 100;
+    l /= 100;
+
+    const v = l + s * Math.min(l, 1 - l);
+    const newS = v === 0 ? 0 : 2 * (1 - l / v);
+
+    return [h, newS * 100, v * 100];
+  }
+
+  const led = get('#color-light');
+
+  const slider = get('#color-slider');
+  slider.oninput = () => {
+    led.style['background-color'] = `hsl(${Math.floor(slider.value)}, 100%, 50%)`;
+  };
+  slider.onchange = () => {
+    const hsv = hslToHsv(Math.floor(slider.value), 100, 50);
+    Vial.sval.setLayerColor(KBINFO, layer, Math.floor((hsv[0]/360)*255), 255, 255);
   };
 
-  LAYER_COLORS.setLayerColor = async (layer, h, s, v) => {
-    await USB.send(0xEE, [0x11, layer, h, s, v]);
+  LAYER_COLORS.setLayerColor = async (l) => {
+    layer = l;
+    ACTION.showFloat(pickerFloat);
   };
-
-  LAYER_COLORS.setLayerColor2 = async (layer, h, s, v) => {
-    h = Math.floor((h/360) * 256) % 256;
-    s = Math.floor(s * 255);
-    v = Math.floor(v * 255);
-    await USB.send(0xEE, [0x11, layer, h, s, v]);
-  };
-
 });
+
+// addInitializer('connected', () => {
+  // LAYER_COLORS.setLayerColor(15);
+// }, 10000);

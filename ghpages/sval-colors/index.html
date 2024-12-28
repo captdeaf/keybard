@@ -13,6 +13,7 @@
     <link rel="stylesheet" type="text/css" href="css/keys.css" />
     <link rel="stylesheet" type="text/css" href="css/mainboard.css" />
     <link rel="stylesheet" type="text/css" href="css/sampleboards.css" />
+    <link rel="stylesheet" type="text/css" href="css/colorpicker.css" />
 
     <!-- Basic libraries -->
 <script type="text/javascript" src="js/util.js"></script>
@@ -68,6 +69,7 @@
 <script type="text/javascript" src="js/vial/tapdance.js"></script>
 <script type="text/javascript" src="js/vial/keyoverride.js"></script>
 <script type="text/javascript" src="js/vial/qmk.js"></script>
+<script type="text/javascript" src="js/vial/sval.js"></script>
 <script type="text/javascript" src="js/vial/api.js"></script>
 
 <!-- Sample layers and kbinfos-->
@@ -77,6 +79,9 @@
 
 <!-- Upload and download files -->
 <script type="text/javascript" src="js/files.js"></script>
+
+<!-- Handy tools -->
+<script type="text/javascript" src="js/tools.js"></script>
 
 <!-- Main to tie it all together. -->
 <script type="text/javascript" src="js/main.js"></script>
@@ -90,7 +95,7 @@
   MENU
   <div class="dropdown-content">
   <label>
-    <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="false" data-toggle="instant" data-extra="hideCommit"/>
+    <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="true" data-toggle="instant" data-extra="hideCommit"/>
     Instant pushes (akin to Vial)
   </label>
   <label>
@@ -165,8 +170,8 @@
         <input type="checkbox" class="check" data-toggle-name="do-record" data-default="false" data-toggle="record"/>
         Record for playback. (requires playback off)
       </label>
-      <label id="download-keymap-c" class="connect-enable">
-        &darr; Download keymap_all.c
+      <label id="download-keymap-h" class="connect-enable">
+        &darr; Download keymap_all.h
       </label>
     </div>
   </label>
@@ -1179,6 +1184,17 @@
       <li>(Note: Keyboard changes will not be performed at this point.)</li>
     </ol>
   </p>
+</div>
+
+  <div id="colorpicker" class="floater closeable" style="display: none; height: 60%;">
+  Layer Color Picker
+  <div class="topright">
+    <button class="close" data-action="close">Close</button>
+  </div>
+  <div id="color-slider-bg">
+    <input id="color-slider" type="range" min="0" max="360" value="180">
+  </div>
+  <div id="color-light">&nbsp;</div>
 </div>
 
   <div id="float-tips" class="floater closeable" style="min-width: 300px;">
