@@ -1,14 +1,14 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.10.7/.schema/devbox.schema.json",
   "packages": [
-    "libusb",
+    "libusb1",
     "nodejs@22",
     "python@3.13",
     "udev"
   ],
   "shell": {
     "init_hook": [
-      "LIBUSB_PATH=$(nix-store -q --outputs $(nix-instantiate '<nixpkgs>' -A libusb) | grep -v '\\-dev' | grep -v '\\-doc')",
+      "LIBUSB_PATH=$(nix-store -q --outputs $(nix-instantiate '<nixpkgs>' -A libusb1) | grep -v '\\-dev' | grep -v '\\-doc')",
       "UDEV_PATH=$(nix-store -q --outputs $(nix-instantiate '<nixpkgs>' -A udev) | grep -v '\\-dev' | grep -v '\\-doc')",
       "export LIBRARY_PATH=${UDEV_PATH}/lib:${LIBUSB_PATH}/lib",
       "export LD_LIBRARY_PATH=${UDEV_PATH}/lib:${LIBUSB_PATH}/lib",
