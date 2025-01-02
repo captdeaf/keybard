@@ -3,11 +3,12 @@
 KeyBard is a companion software to the Svalboard (https://svalboard.com)
 
 With KeyBard, you can:
-  - Manipulate your Svalboard's keymaps
-  - Add, edit, and remove macros, tapdances, combos
-  - Change your QMK settings.
-  - Apply sample keymaps: QWERTY, Dvorak, HRM (Home Row Mod) examples.
-  - 
+
+-   Manipulate your Svalboard's keymaps
+-   Add, edit, and remove macros, tapdances, combos
+-   Change your QMK settings.
+-   Apply sample keymaps: QWERTY, Dvorak, HRM (Home Row Mod) examples.
+-
 
 This started as a pure javascript version of vial-gui, at
 https://get.vial.today
@@ -18,48 +19,54 @@ project, we welcome PRs, and suggestions =).
 
 # Current features:
 
- - Pull information from keyboard:
+-   Pull information from keyboard:
 
- - Both instant and queued changes.
-   - Vial only allows for instant - the second you select a new key, your
-     keyboard now has that key in its keymap. With KeyBard, you can choose
-     between that, or queueing up all changes to be committed at once.
+-   Both instant and queued changes.
 
- - View and modify keymap for all available layers.
+    -   Vial only allows for instant - the second you select a new key, your
+        keyboard now has that key in its keymap. With KeyBard, you can choose
+        between that, or queueing up all changes to be committed at once.
 
- - Sample keyboards
-   - A rendering of a QWERTY keyboard. This will be expanded.
-   - Select modifier keys, to bind a key to, e.g: SHIFT+key
-     or CTRL+key without using macros.
+-   View and modify keymap for all available layers.
 
- - Macros and Tap Dances
-   - View and edit.
-   - See a 'description' in the sample board.
+-   Sample keyboards
 
- - Combos and Key Overrides
-   - View and edit as a big list, they're not bound to keys.
+    -   A rendering of a QWERTY keyboard. This will be expanded.
+    -   Select modifier keys, to bind a key to, e.g: SHIFT+key
+        or CTRL+key without using macros.
 
- - QMK Settings (under MENU) - Change somewhat obscure QMK values.
+-   Macros and Tap Dances
 
- - .vil and .svl support.
-   - .svl is KeyBard's native keyboard info JSON. It contains all
-     the information KeyBard is able to determine about the board,
-     as well as user's cosmetic changes (only useful in KeyBard)
-   - .vil is from Vial - it doesn't contain enough information to
-     properly render, so it currently imports from defaults. (At
-     time of writing, only Svalboard).
-   - Both can be uploaded and applied to a connected keyboard.
-   - Both can be uploaded without a connected keyboard, and modified
-     to be re-downloaded.
+    -   View and edit.
+    -   See a 'description' in the sample board.
 
- - Sample keyboards: For selecting your keys.
-   - QWERTY, etc.
-   - App/media/mouse
-   - backlight/quantum
-   - Keyboard Custom keys.
- 
- - Sample layers you can apply.
-   - Broke your sval layout? Apply QWERTY!
+-   Combos and Key Overrides
+
+    -   View and edit as a big list, they're not bound to keys.
+
+-   QMK Settings (under MENU) - Change somewhat obscure QMK values.
+
+-   .vil and .svl support.
+
+    -   .svl is KeyBard's native keyboard info JSON. It contains all
+        the information KeyBard is able to determine about the board,
+        as well as user's cosmetic changes (only useful in KeyBard)
+    -   .vil is from Vial - it doesn't contain enough information to
+        properly render, so it currently imports from defaults. (At
+        time of writing, only Svalboard).
+    -   Both can be uploaded and applied to a connected keyboard.
+    -   Both can be uploaded without a connected keyboard, and modified
+        to be re-downloaded.
+
+-   Sample keyboards: For selecting your keys.
+
+    -   QWERTY, etc.
+    -   App/media/mouse
+    -   backlight/quantum
+    -   Keyboard Custom keys.
+
+-   Sample layers you can apply.
+    -   Broke your sval layout? Apply QWERTY!
 
 # Development
 
@@ -70,13 +77,13 @@ Below is for anyone interested in contributing to KeyBard.
 Vial and QMK overload various terms. I'm trying to keep them separate for this
 project.
 
-- Keymap: Physical keys to key strings.
+-   Keymap: Physical keys to key strings.
 
-- KeyLayout: How to render the board's keys - this lays out the Svalboard
-  clusters and thumb keys in the correct location and size.
+-   KeyLayout: How to render the board's keys - this lays out the Svalboard
+    clusters and thumb keys in the correct location and size.
 
-- kbinfo: The JS object containing all information I have about a given
-  keyboard. For more information, look at pages/js/kbinfo.js
+-   kbinfo: The JS object containing all information I have about a given
+    keyboard. For more information, look at pages/js/kbinfo.js
 
 # KBINFO and BASE_KBINFO
 
@@ -103,10 +110,10 @@ A 'sample board' is one that goes along the bottom half. e.g: "QWERTY",
 
 To add a new sample board:
 
-1) Add the board as html/kcs/(name).html (You probably want to use another
+1. Add the board as html/kcs/(name).html (You probably want to use another
    board as a template.)
 
-2) Add the container and tab to html/allboards.html
+2. Add the container and tab to html/allboards.html
 
 # JS Notes.
 
@@ -131,10 +138,10 @@ called: on load, and on connect. They can optionally choose an order to be
 loaded in. addInitializer(type, callback, order). For more information, see
 util.js
 
- - `addInitializer('load', () => {})` will call when page is fully loaded.
+-   `addInitializer('load', () => {})` will call when page is fully loaded.
 
- - `addInitializer('connected', () => {})` will call when a device is connected,
-   or a .kbinfo or .vil is uploaded for editing.
+-   `addInitializer('connected', () => {})` will call when a device is connected,
+    or a .kbinfo or .vil is uploaded for editing.
 
 Majority of UI code is wrapped in either initializer.
 
@@ -159,9 +166,9 @@ Instead, document.onclick() checks its target and its parents (working up the
 tree) until an element matching a selector is found. This lets us have hundreds
 of keys with only a few callbacks, depending on type of key.
 
-`ACTION.onclick('selector', callback) will call `callback` with the element
+`ACTION.onclick('selector', callback) will call `callback`with the element
 matching 'selector'. There is no need to add individual onclick callbacks to
-every single element that matches `selector`.
+every single element that matches`selector`.
 
 `ACTION.on(name, cb(...args))` and `ACTION.trigger(name, ...args)`
 work together. Only one callback may be registered per name.
