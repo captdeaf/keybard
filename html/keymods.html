@@ -1,18 +1,18 @@
 <div class="kb-board-mods">
-  <div class="kb-group">
-    <div class="kb-row kb-mods kb-modifiers" data-title="All selected Mods will be applied to keys assigned.">
-      <div class="kbdesc extra-large">Mods to apply:</div>
-      <div class="key key-mod kb-key medium" data-modifier="SHIFT">Shift</div>
-      <div class="key key-mod kb-key medium" data-modifier="CTRL">Ctrl</div>
-      <div class="key key-mod kb-key medium" data-modifier="GUI">GUI</div>
-      <div class="key key-mod kb-key medium" data-modifier="ALT">Alt</div>
+    <div class="kb-group modifiers">
+        <div class="kbdesc extra-large left" style="text-align: left">Modifier</div>
+        <div class="key key-mod kb-key medium modifier" data-modifier="SHIFT">Shift</div>
+        <div class="key key-mod kb-key medium modifier" data-modifier="CTRL">Ctrl</div>
+        <div class="key key-mod kb-key medium modifier" data-modifier="GUI">GUI</div>
+        <div class="key key-mod kb-key medium modifier" data-modifier="ALT">Alt</div>
     </div>
-  </div>
-  <div class="kb-group">
-    <div class="kb-row kb-mods">
-      <div class="kbdesc large">Special:</div>
-      <div class="key kb-key" data-bind="key" data-key="KC_NO">&nbsp;</div>
-      <div class="key kb-key" data-bind="key" data-key="KC_TRNS">▽</div>
+    <div class="kb-group modifiers">
+        <div class="kb-row kb-mods">
+            <div class="kbdesc extra-large left">Special</div>
+            <div style="display: flex; flex-grow: 1; flex-direction: row; justify-content: flex-end">
+                <div class="key kb-key medium modifier" data-bind="key" data-key="KC_NO"></div>
+                <div class="key kb-key medium modifier" data-bind="key" data-key="KC_TRNS">▽</div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

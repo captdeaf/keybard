@@ -1,38 +1,27 @@
 <div class="main-container" id="mainboard-container">
-  <div id="layer-selection"></div>
-  <div id="mainboard-box">
-    <div class="top-left">
-      <div class="dropdown board-sel">
-        <div>Layer operations</div>
-        <label class="dropdown-content" style="width: 200px;">
-          <label class="dropdown">
-            Apply a sample layer
-            <div id="sample-layers" class="dropdown-content">
+    <div id="layer-selection"></div>
+    <div id="layer-header">
+        <h3 id="layer-header-title">Title</h3>
+        <div class="top-left" id="layer-operations">
+            <div class="dropdown board-sel">
+                <div id="title-layer-operations">Layer operations</div>
+                <label class="dropdown-content" style="width: 200px; right: 0px; z-index: 3">
+                    <label class="dropdown">
+                        Apply a sample layer
+                        <div id="sample-layers" class="dropdown-content" style="right: 0px"></div>
+                    </label>
+                    <label data-sample-kb="copy-layer"> Copy layer to clipboard. </label>
+                    <label data-sample-kb="paste-layer"> Paste layer from clipboard. </label>
+                    <label data-sample-kb="fill" data-sample-key="KC_NO"> Wipe and disable all keys. </label>
+                    <label data-sample-kb="fill" data-sample-key="KC_TRNS"> Wipe and change all keys to transparent. </label>
+                    <label data-sample-kb="fillEmpty" data-sample-key="KC_TRNS"> Change disabled keys to transparent. </label>
+                </label>
             </div>
-          </label>
-          <label data-sample-kb="copy-layer">
-            Copy layer to clipboard.
-          </label>
-          <label data-sample-kb="paste-layer">
-            Paste layer from clipboard.
-          </label>
-          <label data-sample-kb="fill" data-sample-key="KC_NO">
-            Wipe and disable all keys.
-          </label>
-          <label data-sample-kb="fill" data-sample-key="KC_TRNS">
-            Wipe and change all keys to transparent.
-          </label>
-          <label data-sample-kb="fillEmpty" data-sample-key="KC_TRNS">
-            Change disabled keys to transparent.
-          </label>
-        </label>
-      </div>
+        </div>
     </div>
-    <div id="mainboard"></div>
-  </div>
+    <div id="mainboard-box">
+        <div id="mainboard"></div>
+    </div>
 </div>
-<div class="main-container" id="combo-container">
-</div>
-<div class="main-container" id="keyoverride-container">
-  {{keyoverrides.html}}
-</div>
+<div class="main-container" id="combo-container"></div>
+<div class="main-container" id="keyoverride-container">{{keyoverrides.html}}</div>
