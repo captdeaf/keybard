@@ -37,7 +37,7 @@ function makeEditableName(editable, type, index) {
 
     let name = getEditableName(type, index, "" + index);
 
-    editable.innerText = index;
+    editable.innerText = name;
     editable.setAttribute("title", type + " " + name + " (r-click to change name)");
 
     editable.oncontextmenu = (ev) => {
@@ -65,7 +65,7 @@ function makeEditableName(editable, type, index) {
         }
         setSaved("names", local);
         name = getEditableName(type, index);
-        editable.innerText = index;
+        editable.innerText = name;
         editable.setAttribute("title", type + " " + name + " (r-click to change name)");
         editable.setAttribute("layerName", name);
         return false;
