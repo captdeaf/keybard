@@ -112,6 +112,38 @@ addInitializer('connected', () => {
 
   ////////////////////////////////////
   //
+  //  Adding MO/DT/TG/TT/etc layers.
+  //
+  ////////////////////////////////////
+  let layerKey = 'MO';
+  const allLayerKeys = {};
+  for (const i of getAll('[data-layer-modifier]')) {
+    allLayerKeys[i.dataset.layerModifier] = i;
+  }
+  function selectLayerKey(modifier) {
+    layerKey = modifier;
+    for (const i of Object.values(allLayerKeys)) {
+      if (i.dataset.layerModifier === modifier) {
+        i.classList.add('selected');
+      } else {
+        i.classList.remove('selected');
+      }
+    }
+  }
+
+  ACTION.onclick('[data-layer-modifier]', (target) => {
+    selectLayerKey(target.dataset.layerModifier);
+  });
+  selectLayerKey('MO');
+
+  ACTION.onclick('[data-layer-modifier-select]', (target) => {
+    console.log(target);
+    const keystr = `${layerKey}(${target.dataset.layerModifierSelect})`;
+    ACTION.trigger('bind', keystr);
+  });
+
+  ////////////////////////////////////
+  //
   //  Context menu for all bindable keys.
   //
   ////////////////////////////////////

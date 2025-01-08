@@ -128,51 +128,27 @@ addInitializer("load", () => {
         if (KBINFO.layers) {
             const layers = range(KBINFO.layers);
 
-            // Layers: MO (Momentarily)
-            function label(text) {
-                return EL(
-                    "div",
-                    {
-                        class: "kbdesc layer-list-head",
-                    },
-                    text
-                );
+            const list = get('#layer-modifier-selection');
+            console.log(list);
+            function layerLabel(layerid) {
+              const editable = makeEditableName(EL('div'), 'layer', layerid);
+              return EL('div',
+                        {
+                          class: 'layer-modifier-select',
+                          style: {
+                            width: '100%',
+                            padding: '5px',
+                            'background-color': '#ffffff',
+                            'border-bottom': '1px solid black',
+                          },
+                          'data-layer-modifier-select': layerid,
+                        },
+                        editable);
             }
-            appendBoard(
-                '.board-map[data-board="layer"]',
-                layers.map((i) => "MO(" + i + ")"),
-                16,
-                label("MO")
-            );
-            appendBoard(
-                '.board-map[data-board="layer"]',
-                layers.map((i) => "DF(" + i + ")"),
-                16,
-                label("DF")
-            );
-            appendBoard(
-                '.board-map[data-board="layer"]',
-                layers.map((i) => "TG(" + i + ")"),
-                16,
-                label("TG")
-            );
-            appendBoard(
-                '.board-map[data-board="layer"]',
-                layers.map((i) => "TT(" + i + ")"),
-                16,
-                label("TT")
-            );
-            appendBoard(
-                '.board-map[data-board="layer"]',
-                layers.map((i) => "OSL(" + i + ")"),
-                16,
-                label("OSL")
-            );
-            appendBoard(
-                '.board-map[data-board="layer"]',
-                layers.map((i) => "TO(" + i + ")"),
-                16,
-                label("TO")
+
+            appendChildren(
+                list,
+                layers.map((i) => layerLabel(i))
             );
         }
 
