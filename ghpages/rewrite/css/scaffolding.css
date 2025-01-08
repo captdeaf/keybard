@@ -1,0 +1,114 @@
+/* Scaffolding - the large sections of the page. */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 110%;
+}
+
+/* Basic UI elements */
+body {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -ms-touch-callout: none;
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    font-family: Lato, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    background-color: #f2f2f1;
+    overflow: hidden;
+}
+
+/* The header - title, menu choices, etc. */
+#head {
+    flex: 0 0 content;
+    display: flex;
+    flex-flow: column;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e5e5e5;
+    z-index: 2;
+}
+
+#topbar-container {
+    padding: 10px;
+}
+
+#topbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+#topbar #title {
+    cursor: pointer;
+    font-weight: bold;
+    height: 100%;
+}
+
+#topbar #title #qmark {
+    font-weight: bold;
+    bottom: 0.5em;
+    right: 1em;
+    font-size: 50%;
+}
+
+#topbar .link {
+    position: relative;
+    flex: 0 0 content;
+    display: inline-block;
+    height: 100%;
+    font-size: 88%;
+    bottom: 0px;
+}
+
+#topbar button {
+    background-color: transparent;
+    border: none;
+    font-size: 0.6rem;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Launch dialog. */
+
+#launch {
+    position: fixed;
+    top: 40%;
+    left: 30%;
+    padding: 3em 6em 3em 6em;
+    background-color: #f3f3f3;
+    border: 2px solid black;
+    font-size: 100%;
+    font-weight: bold;
+}
+
+#nosupport {
+    position: fixed;
+    top: 30%;
+    left: 20%;
+    padding: 3em 6em 3em 6em;
+    background-color: #f3f3f3;
+    border: 2px solid black;
+    font-size: 100%;
+    font-weight: bold;
+    color: red;
+}
+
+.topright {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+/* Content container. */
+
+div.fill {
+    flex: 1 1 auto;
+}

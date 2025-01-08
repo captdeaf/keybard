@@ -1,0 +1,528 @@
+/* keys.css, styles for boards and keys. */
+
+:root {
+    --base-key-size: 40px;
+    --key-border-radius: 4px;
+    --key-margin: 1px;
+    --key-font-size: 20px;
+}
+
+.kbdesc {
+    min-width: 70px;
+    max-width: 120px;
+    height: 3.5px;
+    display: flex;
+    justify-content: center;
+    padding: 15px;
+    align-items: center;
+    margin: 2px;
+    cursor: pointer;
+    font-weight: bold;
+    text-align: start;
+    line-height: normal;
+    white-space: pre;
+}
+
+.keycap {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.qwerty-tab-container {
+    align-items: stretch;
+    align-self: stretch;
+    flex-grow: 1;
+    align-content: center;
+    display: none;
+    gap: 10px !important;
+    overflow: auto;
+}
+
+#qwerty-numpad,
+#qwerty-international,
+#qwerty-mouse,
+#qwerty-special {
+    justify-content: center;
+}
+
+.key {
+    position: relative;
+    background-color: #fff;
+    border-radius: var(--key-border-radius);
+    border: 1px solid black;
+    min-height: var(--base-key-size);
+    min-width: var(--base-key-size);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: var(--key-font-size);
+    cursor: pointer;
+    text-align: center;
+    line-height: normal;
+    white-space: pre;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0);
+    transition: 0.2s;
+    box-sizing: border-box;
+}
+
+.green {
+    background-color: #0bb58e !important;
+    border: none;
+    color: white !important;
+}
+
+.green:hover {
+    box-shadow: 0 0 10px 0 rgba(255, 0, 0, 0.2) !important;
+}
+
+.key-attop {
+    color: #0a0;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 14px;
+    top: 0px;
+    left: 0px;
+    border-top-left-radius: var(--key-border-radius);
+    border-top-right-radius: var(--key-border-radius);
+}
+
+.key-top {
+    background-color: #888;
+    color: #fff;
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 14px;
+    top: 0px;
+    left: 0px;
+    border-top-left-radius: var(--key-border-radius);
+    border-top-right-radius: var(--key-border-radius);
+}
+
+.key-midb,
+.key-midt {
+    position: absolute;
+    display: block;
+    vertical-align: top;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+}
+
+.key-midt {
+    padding-bottom: 16px;
+}
+
+.key-midb {
+    padding-top: 16px;
+}
+
+.key-bottom {
+    height: 14px;
+    background-color: #057066;
+    color: #fff;
+    position: absolute;
+    display: block;
+    width: 100%;
+    bottom: 0px;
+    left: 0px;
+    border-bottom-left-radius: var(--key-border-radius);
+    border-bottom-right-radius: var(--key-border-radius);
+}
+
+.key:hover {
+    background-color: #ffd;
+    border: 3px solid #f95053 !important;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+}
+
+.key.active,
+.key.active .key-midt,
+.key.active .key-midb {
+    background-color: #f95053 !important;
+    color: white !important;
+    border-color: #f95053 !important;
+}
+
+.green.active {
+    box-shadow: 0 0 10px 0 rgba(255, 0, 0, 0.2) !important;
+}
+
+.kb-mods {
+    border-radius: 4px;
+    width: 100%;
+}
+
+.key-mod {
+    background-color: #dff;
+    white-space: normal;
+}
+
+.key-mod.selected {
+    background-color: #f95053;
+    color: white;
+}
+
+.key-macro {
+    width: 60px;
+    overflow-x: hidden;
+    text-justify: left;
+    flex-grow: 0;
+}
+
+.macro-action {
+    position: relative;
+    min-width: 70px;
+    height: 62px;
+    text-align: middle;
+    display: flex;
+    flex-flow: column;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 6px;
+}
+
+.macro-buttons {
+    font-size: 12px;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    font-weight: bold;
+}
+
+.macro-buttons div {
+    margin-right: 6px;
+}
+
+.remove-macro {
+    color: red;
+}
+
+.key-down {
+    background-color: #fdd;
+}
+.key-tap {
+    background-color: #ddf;
+}
+.key-up {
+    background-color: #dfd;
+}
+
+.key-type {
+    width: 100%;
+    inset: 0;
+    height: 100%;
+    border-radius: var(--key-border-radius);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.key-layer {
+    background-position: top center;
+    background-image: url("../images/layer-bg.png");
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    font-weight: bold;
+}
+
+.key-modtap,
+.key-tapdance {
+    background-color: #e1ebff;
+}
+
+.key-macro {
+    background-position: top center;
+    background-image: url("../images/ellipsis.png");
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    font-weight: bold;
+}
+
+.macro-container {
+    display: flex;
+    flex-flow: row;
+    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 5px auto;
+    padding-right: 10px;
+}
+
+.macro-container .key {
+    border-radius: 5px;
+}
+
+.macro-container:hover .edit-macro,
+.macro-container:hover .drag-macro {
+    opacity: 1 !important;
+}
+
+.edit-macro {
+    opacity: 0;
+    transition: 0.1s;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.drag-macro: {
+    cursor: pointer;
+    transition: 0.1s;
+    padding-top: auto;
+    padding-bottom: auto;
+    margin: 0;
+}
+
+.drag-macro:hover {
+    cursor: grab;
+}
+
+.edit-macro:hover {
+    background-color: #f2f2f1;
+    border-radius: 5px;
+}
+
+.macro-number {
+    text-align: end;
+    font-weight: 500;
+    width: 20px;
+    line-height: 30px;
+}
+
+.key-container {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    width: 100px;
+}
+
+.edit-macro {
+    color: #f95053;
+}
+
+.dotted-line {
+    border-bottom: 1px dashed darkgrey;
+    flex-grow: 1;
+    height: 30px;
+    margin: 0 15px;
+}
+
+.changed,
+.changed .key-midt,
+.changed .key-midb {
+    background-color: black !important;
+    color: white !important;
+}
+
+/* Keyboard Layout */
+.kb-board {
+    height: 100%;
+    display: flex;
+    flex-flow: row;
+    object-fit: contain;
+    float: left;
+    gap: 5px;
+}
+
+.small-board-container {
+    overflow: auto;
+    width: 100%;
+    height: auto; /* Allow height to adjust with content */
+    box-sizing: border-box;
+}
+
+.small-board .key {
+    font-size: 50px !important;
+}
+
+.kb-spam {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+}
+
+.kb-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.kb-row {
+    min-height: 3.5px;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    object-fit: contain;
+}
+
+.kb-row-wrap {
+    flex-wrap: wrap;
+}
+
+.kb-key {
+    flex: 1 1 auto;
+    margin: var(--key-margin);
+    min-width: calc(var(--base-key-size) * 0.75);
+    max-width: calc(var(--base-key-size) * 3);
+    width: var(--base-key-size);
+}
+
+.kb-intl {
+    background-color: #ffebe1;
+    max-width: var(--base-key-size);
+}
+
+.kb-blank {
+    flex: 1 1 auto;
+    min-width: calc(var(--base-key-size) * 1.5);
+    max-width: calc(var(--base-key-size) * 3);
+}
+
+.kb-desc {
+    width: calc(var(--base-key-size) * 1.75);
+}
+
+/* Key size modifiers */
+.extra-large {
+    width: calc(var(--base-key-size) * 3);
+    flex: 3 3 auto;
+}
+
+.spacebar {
+    width: calc(var(--base-key-size) * 8);
+    flex: 8 8 auto;
+}
+
+.large {
+    width: calc(var(--base-key-size) * 2);
+    flex: 2 2 auto;
+}
+
+.medium {
+    width: calc(var(--base-key-size) * 1.5);
+    flex: 1.5 1.5 auto;
+}
+
+.small {
+    width: calc(var(--base-key-size) * 0.75);
+    flex: 0.75 0.75 auto;
+}
+
+.xs {
+    flex: 0.5 0.5 auto !important;
+    margin: var(--key-margin);
+    min-width: calc(var(--base-key-size) * 0.5) !important;
+    max-width: calc(var(--base-key-size) * 2) !important;
+    font-size: calc(var(--key-font-size) * 0.6) !important;
+    width: calc(var(--base-key-size) * 0.5) !important;
+}
+
+.modifiers {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+#macro-board {
+    width: 100%;
+}
+
+/* Key pane */
+.keypane {
+    min-width: 100px;
+    min-height: 80px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadein 0.2s;
+}
+
+@keyframes fadein {
+    from {
+        display: none;
+        opacity: 0;
+    }
+    to {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        display: block;
+        opacity: 1;
+    }
+    to {
+        display: none;
+        opacity: 0;
+    }
+}
+
+.keypane .panetitle {
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-bottom: 0px solid black;
+    font-size: 16px;
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.keypane .panebody {
+    padding: 15px;
+    font-size: 16px;
+}
+
+.modifier {
+    background-color: #f2f2f1;
+    color: black;
+    border-radius: 25px;
+    border: none;
+    font-size: 10px;
+    height: 10px;
+    line-height: 10px;
+    font-weight: bold;
+    color: darkslategray;
+    margin: 0 2px;
+    padding: 0 !important;
+    max-width: 100px;
+}
+
+.modifiers .kbdesc {
+    margin-left: 0;
+    font-size: 12px;
+    color: darkslategray;
+    justify-content: flex-start;
+    padding-left: 0;
+}
+
+.modifier:hover {
+    background-color: #f95053;
+    color: white;
+}
+
+.elastic {
+    background-color: black;
+    color: white;
+    box-sizing: border-box;
+    border: 3px solid transparent !important;
+    font-weight: semibold;
+}
+
+.elastic:hover {
+    background-color: black !important;
+    color: white;
+    border-color: #f95053 !important;
+}
+
+#topboard {
+    height: auto !important; /* Override any inline styles */
+    min-height: 0 !important; /* Override any inline styles */
+}

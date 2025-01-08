@@ -1,0 +1,286 @@
+/* About app - and help.  */
+
+#floats {
+    display: none;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    z-index: 900;
+}
+
+#floats > div {
+    display: none;
+}
+
+#about {
+    position: absolute;
+    top: 5em;
+    left: 5em;
+    width: 80%;
+    max-width: 40em;
+    text-wrap: auto;
+    display: inline-block;
+    padding: 0.5em 1em 1em 1em;
+    border: 5px solid #363;
+    background-color: #eee;
+    overflow-y: scroll;
+}
+
+#about .toggle-about {
+    cursor: pointer;
+    position: absolute;
+    font-weight: bold;
+    top: 0.5em;
+    right: 1em;
+    color: blue;
+}
+
+#about section {
+    margin-left: 1em;
+    background-color: #ddd;
+    padding: 0.7em 1em 1em 1em;
+}
+
+#about section p {
+    text-indent: 2em;
+}
+
+#about section .toggler {
+    display: inline-block;
+    float: right;
+    color: blue;
+    cursor: pointer;
+}
+
+#about p code {
+    background-color: #bbb;
+    color: #33f;
+    padding: 3px;
+}
+
+#about label {
+    color: #ff8c00;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Menu */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    color: #000;
+    min-width: 60px;
+    box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.4);
+    padding: 10px;
+    border-radius: 10px;
+    z-index: 8000;
+    animation: fadein 0.2s;
+}
+
+@keyframes fadein {
+    from {
+        display: none;
+        opacity: 0;
+    }
+    to {
+        display: block;
+        opacity: 1;
+    }
+}
+
+.dropdown:hover > .dropdown-content {
+    display: block;
+}
+
+.dropdown-content > label {
+    padding: 10px;
+    cursor: pointer;
+    display: block;
+    min-width: 100px;
+    border-radius: 10px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.menu-top .dropdown-content > label {
+    min-width: 300px;
+}
+
+.menu-top.close > * {
+    position: fixed;
+    top: 100vh;
+    left: 100vw;
+}
+
+.dropdown-content > label.selected {
+    background-color: black;
+    color: white;
+}
+
+.dropdown-content > label:hover {
+    background-color: black;
+    color: white;
+}
+
+.dropdown-content .dropdown-content {
+    position: absolute;
+    margin-left: 60px;
+}
+
+.dropup {
+    position: absolute;
+    bottom: 20px;
+}
+
+.connect-enable {
+    color: #ccc;
+}
+
+/* Context menu */
+.context-menu {
+    display: none;
+    position: fixed;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #fff;
+    z-index: 1000;
+}
+
+.context-menu.show {
+    display: block;
+}
+
+.context-menu:hover {
+    display: block;
+}
+
+.context-menu > label {
+    padding: 5px;
+    cursor: pointer;
+    display: block;
+    min-width: 100px;
+}
+
+.context-menu > label:hover {
+    background-color: #dfd;
+}
+
+/* Floaters that go over everything else. */
+
+.floater {
+    background-color: #f3f3f3;
+    border: 2px solid black;
+    padding: 10px;
+    display: none;
+    position: fixed;
+    top: 4em;
+    left: 4em;
+    max-width: 80%;
+    flex-shrink: 1;
+    min-height: 5vh;
+    max-height: 80vh;
+    overflow-y: auto;
+    z-index: 950;
+    flex-flow: column;
+}
+
+#float-tapdance {
+    height: 280px;
+}
+
+#float-macro-render {
+    margin-top: 18px;
+}
+
+#float-matrix-tester {
+    min-width: 90%;
+    min-height: 70%;
+}
+
+/* Floater buttons */
+.button-row {
+    flex: 0 0 content;
+    display: flex;
+    height: 26px;
+    width: 100%;
+}
+
+.button-row button {
+    flex: 0 0 content;
+    padding: 3px;
+    margin-right: 0.5em;
+}
+
+div.fill {
+    flex: 1 1 auto;
+}
+
+/* QMK Settings and tabs */
+#float-qmksettings {
+    width: 80vw;
+    height: 80vh;
+    overflow: auto;
+}
+
+.qmk-head {
+    display: flex;
+    flex-flow: row;
+}
+
+.qmk-tab {
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.qmk-tab.selected {
+    background-color: #ddf;
+}
+
+.qmk-body {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.qmk-tab-contents {
+    display: none;
+}
+
+.qmk-field {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: 100%;
+    padding: 5px;
+}
+
+.qmk-field.changed {
+    background-color: #dfd !important;
+}
+
+.qmk-field:nth-child(odd) {
+    background-color: #ddd;
+}
+
+.qmk-field-name {
+    flex: 2 2 auto;
+    width: 420px;
+    text-align: left;
+}
+
+.qmk-field-option {
+    flex: 1 1 content;
+    margin-left: 20px;
+    width: 100px;
+    text-align: left;
+}
