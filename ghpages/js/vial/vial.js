@@ -17,6 +17,8 @@ const Vial = {
     // Load combos, macros, etc.
     await Vial.kb.getFeatures(kbinfo);
 
+    await Vial.sval.check(kbinfo);
+
     // Regenerate keycodes for macros and features.
     await KEY.generateAllKeycodes(kbinfo);
 
@@ -30,7 +32,8 @@ const Vial = {
     await Vial.tapdance.get(kbinfo);
     await Vial.qmk.get(kbinfo);
 
-    // await Vial.getKeyBuffers(kbinfo);
+    // Sval information: Layer colors, etc.
+    await Vial.sval.pull(kbinfo);
 
     // Visual layout.
     await Vial.kb.getKeyLayout(kbinfo);
