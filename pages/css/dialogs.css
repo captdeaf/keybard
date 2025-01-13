@@ -192,12 +192,67 @@
     flex-flow: column;
 }
 
-#float-tapdance {
-    height: 280px;
+.new-floater {
+    background-color: #eaeae9;
+    display: none;
+    position: fixed;
+    top: 4em;
+    left: 4em;
+    flex-shrink: 1;
+    overflow-y: auto;
+    z-index: 950;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    padding: 20px;
+    width: 300px;
+    flex-flow: row;
 }
 
 #float-macro-render {
     margin-top: 18px;
+}
+
+.float-tapdance-row {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.float-tapdance-row .kbdesc {
+    min-width: 70px;
+    max-width: 120px;
+    flex-grow: 1;
+    height: 3.5px;
+    display: flex;
+    justify-content: start;
+    padding: 15px;
+    align-items: center;
+    margin: 2px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: start;
+    line-height: normal;
+    white-space: pre;
+}
+
+.close-float {
+    border: none !important;
+    background: none !important;
+}
+
+#float-tapdance-save {
+    background-color: black;
+    color: white;
+    border-radius: 5px;
+    align-self: right;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: none;
+    text-transform: uppercase;
 }
 
 #float-matrix-tester {
@@ -209,6 +264,7 @@
 .button-row {
     flex: 0 0 content;
     display: flex;
+    justify-content: space-between;
     height: 26px;
     width: 100%;
 }

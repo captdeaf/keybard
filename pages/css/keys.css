@@ -72,6 +72,12 @@
     color: white !important;
 }
 
+.white {
+    background-color: #fff !important;
+    border: 2px solid #a7a9ac;
+    color: black !important;
+}
+
 .green:hover {
     box-shadow: 0 0 10px 0 rgba(255, 0, 0, 0.2) !important;
 }
