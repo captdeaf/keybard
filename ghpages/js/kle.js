@@ -663,11 +663,13 @@ const KLE = {
     for (let i = 0; i < dkeys.length; i++) {
       const key = dkeys[i];
       let [row, col] = key.labels[0].split(',');
-      row = parseInt(row);
-      col = parseInt(col);
-      key.row = row;
-      key.col = col;
-      keylayout[row * kbinfo.cols + col] = Object.assign({}, meta, key);
+      if (row && col) {
+        row = parseInt(row);
+        col = parseInt(col);
+        key.row = row;
+        key.col = col;
+        keylayout[row * kbinfo.cols + col] = Object.assign({}, meta, key);
+      }
     }
     return keylayout;
   };
