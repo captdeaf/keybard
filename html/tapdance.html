@@ -1,6 +1,10 @@
 <div id="float-tapdance" class="new-floater closeable">
     <div class="button-row">
-        <div id="float-tapdance-name">TD(?)</div>
+        <div class="tapdance-key" id="float-tapdance-key">
+            <div>{{icons/tapdance_white.html}}</div>
+            <div id="float-tapdance-name">TD(?)</div>
+        </div>
+        <div class="float-title">Tapdance key</div>
         <button class="close close-float" data-action="close">{{icons/close.html}}</button>
     </div>
     <div class="float-tapdance-row">
@@ -19,9 +23,11 @@
         <div id="float-tapdance-taphold"></div>
         <div class="kbdesc">Tap-hold</div>
     </div>
-    <div class="float-tapdance-row">
+    <div class="float-tapdance-row" id="tapdance-milliseconds">
         <div class="kbdesc">Milliseconds</div>
         <div id="float-tapdance-tapms"></div>
     </div>
-    <button id="float-tapdance-save">Save</button>
+    <div class="float-tapdance-row">
+        <button id="float-tapdance-save">Save</button>
+    </div>
 </div>

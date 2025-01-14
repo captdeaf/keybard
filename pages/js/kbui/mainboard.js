@@ -60,7 +60,7 @@ addInitializer("connected", () => {
         if (boardParent.classList.contains("small-board-container")) {
             const container = board.closest(".small-board-container");
             const scale = calculateKeyboardScale(board, container);
-            board.style.zoom = scale;
+            // board.style.zoom = scale;
         }
     }
 

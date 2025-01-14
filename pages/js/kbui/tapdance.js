@@ -60,7 +60,7 @@ addInitializer("load", () => {
     //
     ////////////////////////////////////
     function renderTapdanceFloat(tapdance) {
-        floatname.innerText = "TD(" + tapdance.tdid + ")";
+        floatname.innerText = "" + tapdance.tdid;
 
         for (const [type, el] of Object.entries(tdtypemap)) {
             el.innerHTML = "";

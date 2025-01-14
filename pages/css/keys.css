@@ -140,7 +140,6 @@
 }
 
 .key:hover {
-    background-color: #ffd;
     border: 3px solid #f95053 !important;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
@@ -237,7 +236,8 @@
 
 .key-modtap,
 .key-tapdance {
-    background-color: #e1ebff;
+    background-color: black;
+    color: white;
 }
 
 .key-macro {
@@ -516,6 +516,29 @@
 }
 
 .elastic {
+    background-color: black;
+    color: white;
+    box-sizing: border-box;
+    border: 3px solid transparent !important;
+    font-weight: semibold;
+}
+
+.tapdance-key {
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    flex-grow: 0;
+    border-radius: 5px;
+    padding: 5px;
+    width: 42px;
+    height: 42px;
+}
+
+.qwerty-elastic {
     background-color: black;
     color: white;
     box-sizing: border-box;
