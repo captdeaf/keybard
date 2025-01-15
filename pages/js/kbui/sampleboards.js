@@ -14,7 +14,7 @@
 ////////////////////////////////////
 
 const BOARD_NAMES = {
-    qwerty: "QWERTY",
+    qwerty: "Keyboard Keys",
     international: "International",
     custom: "Mouse and Special Keys",
     layer: "Layers",
@@ -52,13 +52,6 @@ addInitializer("load", () => {
     const allContainers = getAll(".main-container");
 
     function selectTab(target) {
-        // for (const tab of allTabs) {
-        //     if (tab.dataset.target === target) {
-        //         tab.classList.add("active");
-        //     } else {
-        //         tab.classList.remove("active");
-        //     }
-        // }
         for (const container of allContainers) {
             if (container.id === target) {
                 container.style.display = "flex";
@@ -68,11 +61,6 @@ addInitializer("load", () => {
         }
         setSaved("main-container", target);
     }
-    // ACTION.onclick("[data-mainboard]", (target) => {
-    //     ACTION.selectKey();
-    //     console.log("selectTab", target.dataset.mainboard);
-    //     selectTab(target.dataset.mainboard);
-    // });
 
     selectTab(getSaved("main-container", "mainboard-container"));
 
@@ -89,10 +77,10 @@ addInitializer("load", () => {
 
     ACTION.onclick(".close-button", () => {
         closeBoard();
-        ACTION.menuClose();
     });
 
     function displayBoard(name) {
+        console.log("displayBoard", name);
         setSaved("boardsel", name);
         if (name === "keyoverride-container") return;
         allboardsContainer.style["display"] = "block";
@@ -113,8 +101,10 @@ addInitializer("load", () => {
         console.log("closeBoard");
     }
 
-    const startingBoard = getSaved("boardsel", "qwerty");
-    displayBoard(startingBoard);
+    if (CONNECTED) {
+        const startingBoard = getSaved("boardsel", "qwerty");
+        displayBoard(startingBoard);
+    }
 
     ////////////////////////////////////
     //

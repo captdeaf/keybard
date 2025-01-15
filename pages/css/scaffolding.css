@@ -11,13 +11,13 @@ html {
 
 #commit {
     position: absolute;
-    top: 0;
-    right: 0;
+    bottom: 10px;
+    right: 10px;
     z-index: 1000;
 }
 
 .svalboard-icon {
-    width: 50px;
+    width: 42px;
     height: 50px;
     display: flex;
     justify-content: center;
@@ -97,12 +97,22 @@ body {
 #launch {
     position: fixed;
     top: 40%;
-    left: 30%;
-    padding: 3em 6em 3em 6em;
-    background-color: #f3f3f3;
-    border: 2px solid black;
+    left: calc(50% - 10em);
+    width: 20em;
+    padding: 3em;
+    text-align: center;
+    background-color: white;
+    border: 2px solid #ddd;
+    border-radius: 10px;
     font-size: 100%;
     font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+#launch:hover {
+    box-shadow: 0 2px 5px 0 #ddd;
+    top: 39.5%;
 }
 
 #nosupport {

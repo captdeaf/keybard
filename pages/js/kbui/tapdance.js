@@ -181,8 +181,7 @@ addInitializer("load", () => {
             appendChildren(tdContainer, keyContainer);
             rows.push(tdContainer);
         }
-        const header = EL("div", { class: "board-help" }, "To edit tapdances, R-click one.");
-        appendChildren(tapdanceBoard, EL("div", { class: "kb-group" }, header, ...rows));
+        appendChildren(tapdanceBoard, EL("div", { class: "kb-group" }, ...rows));
     });
 
     ////////////////////////////////////
