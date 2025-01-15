@@ -22,6 +22,9 @@ const BOARD_NAMES = {
     tapdance: "Tap Dances",
     modtaps: "Mod Hold, Tap Keys",
     quantum: "QMK Keys",
+    "combo-container": "Combos",
+    keyOverrides: "Key Overrides",
+    mouse: "Mouse Keys",
 };
 
 addInitializer("load", () => {
@@ -45,6 +48,32 @@ addInitializer("load", () => {
         allboards[container.dataset.board].container = container;
     }
 
+    const allTabs = getAll(".main-select");
+    const allContainers = getAll(".main-container");
+
+    function selectTab(target) {
+        for (const tab of allTabs) {
+            if (tab.dataset.target === target) {
+                tab.classList.add("active");
+            } else {
+                tab.classList.remove("active");
+            }
+        }
+        for (const container of allContainers) {
+            if (container.id === target) {
+                container.style.display = "flex";
+            } else {
+                container.style.display = "none";
+            }
+        }
+        setSaved("main-container", target);
+    }
+    // ACTION.onclick("[data-mainboard]", (target) => {
+    //     ACTION.selectKey();
+    //     console.log("selectTab", target.dataset.mainboard);
+    //     selectTab(target.dataset.mainboard);
+    // });
+
     ACTION.onclick(".board-sel", (target) => {
         displayBoard(target.dataset.board);
         ACTION.menuClose();
@@ -56,6 +85,7 @@ addInitializer("load", () => {
     });
 
     function displayBoard(name) {
+        console.log("displayBoard", name);
         setSaved("boardsel", name);
         allboardsContainer.style["display"] = "block";
         sidebarSelector.classList.add("active");
