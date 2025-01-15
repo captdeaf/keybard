@@ -161,6 +161,10 @@
     transition: 0.5s;
 }
 
+.close-button svg {
+    transition: 0.5s;
+}
+
 .board-header h4 {
     margin: 0;
     padding: 0;

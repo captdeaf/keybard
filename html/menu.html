@@ -1,95 +1,67 @@
 <div class="dropdown menu menu-top">
-  MENU
-  <div class="dropdown-content">
-  <label>
-    <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="true" data-toggle="instant" data-extra="hideCommit"/>
-    Instant pushes (akin to Vial)
-  </label>
-  <label>
-    <input type="checkbox" class="check" data-toggle-name="do-typebind" data-default="false" data-toggle="typebind"/>
-    Typing binds a key.
-  </label>
-  <label class="menuitem dropdown">
-    &gt; Serial Assignment
+    <div class="svalboard-icon">{{icons/svalboard.html}}</div>
     <div class="dropdown-content">
-      <label data-serial="colfirst">
-        Down columns then rows (Sval: By cluster)
-      </label>
-      <label data-serial="rowfirst">
-        Across rows then down columns.
-      </label>
-      <label data-serial="svalbykey">
-        Svalboard by key direction.<br>
-        Won't work w/ other boards.
-      </label>
+        <label>
+            <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="true" data-toggle="instant" data-extra="hideCommit" />
+            Instant pushes (akin to Vial)
+        </label>
+        <label>
+            <input type="checkbox" class="check" data-toggle-name="do-typebind" data-default="false" data-toggle="typebind" />
+            Typing binds a key.
+        </label>
+        <label class="menuitem dropdown">
+            &gt; Serial Assignment
+            <div class="dropdown-content">
+                <label data-serial="colfirst"> Down columns then rows (Sval: By cluster) </label>
+                <label data-serial="rowfirst"> Across rows then down columns. </label>
+                <label data-serial="svalbykey">
+                    Svalboard by key direction.<br />
+                    Won't work w/ other boards.
+                </label>
+            </div>
+        </label>
+        <label class="menuitem dropdown">
+            &gt; International keyboards
+            <div id="menu-international" class="dropdown-content"></div>
+        </label>
+        <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable"> QMK Settings </label>
+        <label data-open="#float-matrix-tester" class="connect-enable"> Open Matrix Tester </label>
+        <hr />
+        <label class="menuitem dropdown">
+            &gt; Sample .kbis - replace entire board functionality.
+            <div class="dropdown-content" id="sample-kbis"></div>
+        </label>
+        <label class="menuitem dropdown">
+            &gt; Upload and Download
+            <div class="dropdown-content">
+                <label id="download-kbi" class="connect-enable"> &darr; Download .kbi file. </label>
+                <label id="download-kbi-nomacro" class="connect-enable"> &darr; Download macro-less .kbi file. </label>
+                <label id="download-vil" class="connect-enable"> &darr; Download .vil file. </label>
+                <label id="download-vil-nomacro" class="connect-enable"> &darr; Download macro-less .vil file. </label>
+                <label id="upload-file-float"> &uarr; Upload .kbi or .vil file. </label>
+            </div>
+        </label>
+        <hr />
+        <label class="menuitem dropdown" for="">
+            &gt; Dev options
+            <div class="dropdown-content">
+                <label>
+                    <input type="checkbox" class="check" data-toggle-name="do-disable-rclicks" data-default="false" data-toggle="disableRightClicks" />
+                    Disable context menus (enable 'inspect'/etc)
+                </label>
+                <label>
+                    <input type="checkbox" class="check" data-toggle-name="do-playback" data-default="false" data-toggle="playback" />
+                    Playback a recording. (Overrides record)
+                </label>
+                <label>
+                    <input type="checkbox" class="check" data-toggle-name="do-record" data-default="false" data-toggle="record" />
+                    Record for playback. (requires playback off)
+                </label>
+                <label id="download-keymap-h" class="connect-enable"> &darr; Download keymap_all.h </label>
+            </div>
+        </label>
+        <label id="print-layers" class="connect-enable"> Print layer maps. </label>
+        <label data-tip="show" id="open-tips"> Keybard Tips. </label>
+        <label data-open="#about" id="open-about"> About KeyBard </label>
     </div>
-  </label>
-  <label class="menuitem dropdown">
-    &gt; International keyboards
-    <div id="menu-international" class="dropdown-content">
-    </div>
-  </label>
-  <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable">
-    QMK Settings
-  </label>
-  <label data-open="#float-matrix-tester" class="connect-enable">
-    Open Matrix Tester
-  </label>
-  <hr>
-  <label class="menuitem dropdown">
-    &gt; Sample .kbis - replace entire board functionality.
-    <div class="dropdown-content" id="sample-kbis">
-    </div>
-  </label>
-  <label class="menuitem dropdown">
-    &gt; Upload and Download
-    <div class="dropdown-content">
-      <label id="download-kbi" class="connect-enable">
-        &darr; Download .kbi file.
-      </label>
-      <label id="download-kbi-nomacro" class="connect-enable">
-        &darr; Download macro-less .kbi file.
-      </label>
-      <label id="download-vil" class="connect-enable">
-        &darr; Download .vil file.
-      </label>
-      <label id="download-vil-nomacro" class="connect-enable">
-        &darr; Download macro-less .vil file.
-      </label>
-      <label id="upload-file-float">
-        &uarr; Upload .kbi or .vil file.
-      </label>
-    </div>
-  </label>
-  <hr>
-  <label class="menuitem dropdown" for="">
-    &gt; Dev options
-    <div class="dropdown-content">
-      <label>
-        <input type="checkbox" class="check" data-toggle-name="do-disable-rclicks" data-default="false" data-toggle="disableRightClicks"/>
-        Disable context menus (enable 'inspect'/etc)
-      </label>
-      <label>
-        <input type="checkbox" class="check" data-toggle-name="do-playback" data-default="false" data-toggle="playback"/>
-        Playback a recording. (Overrides record)
-      </label>
-      <label>
-        <input type="checkbox" class="check" data-toggle-name="do-record" data-default="false" data-toggle="record"/>
-        Record for playback. (requires playback off)
-      </label>
-      <label id="download-keymap-h" class="connect-enable">
-        &darr; Download keymap_all.h
-      </label>
-    </div>
-  </label>
-  <label id="print-layers" class="connect-enable">
-    Print layer maps.
-  </label>
-  <label data-tip="show" id="open-tips">
-    Keybard Tips.
-  </label>
-  <label data-open="#about" id="open-about">
-    About KeyBard
-  </label>
-  </div>
 </div>

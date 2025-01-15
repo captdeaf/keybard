@@ -119,35 +119,6 @@ addInitializer("load", () => {
         ACTION.closeFloats();
     });
 
-    // Main container selection: mainboard, combos, key overrides.
-    const allTabs = getAll(".main-select");
-    const allContainers = getAll(".main-container");
-
-    function selectTab(target) {
-        for (const tab of allTabs) {
-            if (tab.dataset.target === target) {
-                tab.classList.add("active");
-            } else {
-                tab.classList.remove("active");
-            }
-        }
-        for (const container of allContainers) {
-            if (container.id === target) {
-                container.style.display = "flex";
-            } else {
-                container.style.display = "none";
-            }
-        }
-        setSaved("main-container", target);
-    }
-    ACTION.onclick("[data-mainboard]", (target) => {
-        ACTION.selectKey();
-        console.log("selectTab", target.dataset.mainboard);
-        selectTab(target.dataset.mainboard);
-    });
-
-    selectTab(getSaved("main-container", "mainboard-container"));
-
     // Toggle a float between visible and not.
     const openFloats = {};
     ACTION.onclick("[data-open]", (target) => {

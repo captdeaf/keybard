@@ -92,117 +92,12 @@
 
     </head>
     <body>
-        <div id="head">
-            <div id="topbar-container">
-                <div id="topbar">
-                    <div class="dropdown menu menu-top">
-  MENU
-  <div class="dropdown-content">
-  <label>
-    <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="true" data-toggle="instant" data-extra="hideCommit"/>
-    Instant pushes (akin to Vial)
-  </label>
-  <label>
-    <input type="checkbox" class="check" data-toggle-name="do-typebind" data-default="false" data-toggle="typebind"/>
-    Typing binds a key.
-  </label>
-  <label class="menuitem dropdown">
-    &gt; Serial Assignment
-    <div class="dropdown-content">
-      <label data-serial="colfirst">
-        Down columns then rows (Sval: By cluster)
-      </label>
-      <label data-serial="rowfirst">
-        Across rows then down columns.
-      </label>
-      <label data-serial="svalbykey">
-        Svalboard by key direction.<br>
-        Won't work w/ other boards.
-      </label>
-    </div>
-  </label>
-  <label class="menuitem dropdown">
-    &gt; International keyboards
-    <div id="menu-international" class="dropdown-content">
-    </div>
-  </label>
-  <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable">
-    QMK Settings
-  </label>
-  <label data-open="#float-matrix-tester" class="connect-enable">
-    Open Matrix Tester
-  </label>
-  <hr>
-  <label class="menuitem dropdown">
-    &gt; Sample .kbis - replace entire board functionality.
-    <div class="dropdown-content" id="sample-kbis">
-    </div>
-  </label>
-  <label class="menuitem dropdown">
-    &gt; Upload and Download
-    <div class="dropdown-content">
-      <label id="download-kbi" class="connect-enable">
-        &darr; Download .kbi file.
-      </label>
-      <label id="download-kbi-nomacro" class="connect-enable">
-        &darr; Download macro-less .kbi file.
-      </label>
-      <label id="download-vil" class="connect-enable">
-        &darr; Download .vil file.
-      </label>
-      <label id="download-vil-nomacro" class="connect-enable">
-        &darr; Download macro-less .vil file.
-      </label>
-      <label id="upload-file-float">
-        &uarr; Upload .kbi or .vil file.
-      </label>
-    </div>
-  </label>
-  <hr>
-  <label class="menuitem dropdown" for="">
-    &gt; Dev options
-    <div class="dropdown-content">
-      <label>
-        <input type="checkbox" class="check" data-toggle-name="do-disable-rclicks" data-default="false" data-toggle="disableRightClicks"/>
-        Disable context menus (enable 'inspect'/etc)
-      </label>
-      <label>
-        <input type="checkbox" class="check" data-toggle-name="do-playback" data-default="false" data-toggle="playback"/>
-        Playback a recording. (Overrides record)
-      </label>
-      <label>
-        <input type="checkbox" class="check" data-toggle-name="do-record" data-default="false" data-toggle="record"/>
-        Record for playback. (requires playback off)
-      </label>
-      <label id="download-keymap-h" class="connect-enable">
-        &darr; Download keymap_all.h
-      </label>
-    </div>
-  </label>
-  <label id="print-layers" class="connect-enable">
-    Print layer maps.
-  </label>
-  <label data-tip="show" id="open-tips">
-    Keybard Tips.
-  </label>
-  <label data-open="#about" id="open-about">
-    About KeyBard
-  </label>
-  </div>
-</div>
-
-                    <div id="main-selection" class="on-connect">
-                        <div class="main-select" data-mainboard="mainboard-container" id="select-mainboard">Keyboard Map</div>
-                        <div class="main-select" data-mainboard="keyoverride-container" id="select-keyoverride">Key Overrides</div>
-                    </div>
-                    <div><button class="on-connect" id="commit">COMMIT CHANGES</button></div>
-                </div>
-            </div>
-        </div>
+        <div><button class="on-connect" id="commit">COMMIT CHANGES</button></div>
         <div id="boards-container">
     <div id="sidebar" class="on-connect">
         <div id="board-selection" class="on-connect" style="z-index: 200">
-            <div class="svalboard-logo">
+            <div id="topbar"><div class="dropdown menu menu-top">
+    <div class="svalboard-icon"><div class="svalboard-logo">
     <svg width="25" height="25" viewBox="0 0 29 29" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path
             d="M5.7998 0.884241V3.46595C5.7998 3.95425 6.1146 4.3501 6.50293 4.3501L22.4967 4.3501C22.885 4.3501 23.1998 3.95425 23.1998 3.46595V0.884241C23.1998 0.395941 22.885 9.58443e-05 22.4967 9.58443e-05L6.50293 9.58443e-05C6.1146 9.58443e-05 5.7998 0.395941 5.7998 0.884241Z"
@@ -226,7 +121,73 @@
         />
     </svg>
 </div>
-
+</div>
+    <div class="dropdown-content">
+        <label>
+            <input type="checkbox" class="check" data-toggle-name="do-instant" data-default="true" data-toggle="instant" data-extra="hideCommit" />
+            Instant pushes (akin to Vial)
+        </label>
+        <label>
+            <input type="checkbox" class="check" data-toggle-name="do-typebind" data-default="false" data-toggle="typebind" />
+            Typing binds a key.
+        </label>
+        <label class="menuitem dropdown">
+            &gt; Serial Assignment
+            <div class="dropdown-content">
+                <label data-serial="colfirst"> Down columns then rows (Sval: By cluster) </label>
+                <label data-serial="rowfirst"> Across rows then down columns. </label>
+                <label data-serial="svalbykey">
+                    Svalboard by key direction.<br />
+                    Won't work w/ other boards.
+                </label>
+            </div>
+        </label>
+        <label class="menuitem dropdown">
+            &gt; International keyboards
+            <div id="menu-international" class="dropdown-content"></div>
+        </label>
+        <label data-open="#float-qmksettings" id="open-qmk" class="connect-enable"> QMK Settings </label>
+        <label data-open="#float-matrix-tester" class="connect-enable"> Open Matrix Tester </label>
+        <hr />
+        <label class="menuitem dropdown">
+            &gt; Sample .kbis - replace entire board functionality.
+            <div class="dropdown-content" id="sample-kbis"></div>
+        </label>
+        <label class="menuitem dropdown">
+            &gt; Upload and Download
+            <div class="dropdown-content">
+                <label id="download-kbi" class="connect-enable"> &darr; Download .kbi file. </label>
+                <label id="download-kbi-nomacro" class="connect-enable"> &darr; Download macro-less .kbi file. </label>
+                <label id="download-vil" class="connect-enable"> &darr; Download .vil file. </label>
+                <label id="download-vil-nomacro" class="connect-enable"> &darr; Download macro-less .vil file. </label>
+                <label id="upload-file-float"> &uarr; Upload .kbi or .vil file. </label>
+            </div>
+        </label>
+        <hr />
+        <label class="menuitem dropdown" for="">
+            &gt; Dev options
+            <div class="dropdown-content">
+                <label>
+                    <input type="checkbox" class="check" data-toggle-name="do-disable-rclicks" data-default="false" data-toggle="disableRightClicks" />
+                    Disable context menus (enable 'inspect'/etc)
+                </label>
+                <label>
+                    <input type="checkbox" class="check" data-toggle-name="do-playback" data-default="false" data-toggle="playback" />
+                    Playback a recording. (Overrides record)
+                </label>
+                <label>
+                    <input type="checkbox" class="check" data-toggle-name="do-record" data-default="false" data-toggle="record" />
+                    Record for playback. (requires playback off)
+                </label>
+                <label id="download-keymap-h" class="connect-enable"> &darr; Download keymap_all.h </label>
+            </div>
+        </label>
+        <label id="print-layers" class="connect-enable"> Print layer maps. </label>
+        <label data-tip="show" id="open-tips"> Keybard Tips. </label>
+        <label data-open="#about" id="open-about"> About KeyBard </label>
+    </div>
+</div>
+</div>
             <div id="board-selection-items">
                 <div class="board-sel" data-board="layer"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
@@ -268,10 +229,18 @@
     />
 </svg>
 </div>
-                <div class="board-sel" data-board="combo-container" data-type="main"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div class="board-sel" data-board="combo-container"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
         opacity="0.3"
         d="M6.96875 22.7969C6.57812 22.4062 6.28385 21.974 6.08594 21.5C5.89323 21.026 5.79688 20.5391 5.79688 20.0391C5.79688 19.5391 5.89323 19.0521 6.08594 18.5781C6.28385 18.1042 6.57812 17.6719 6.96875 17.2812L16.3438 7.89844C16.7344 7.51302 17.1667 7.22396 17.6406 7.03125C18.1146 6.83854 18.6016 6.74219 19.1016 6.74219C19.6016 6.74219 20.0885 6.84115 20.5625 7.03906C21.0365 7.23177 21.4688 7.52083 21.8594 7.90625C22.25 8.29688 22.5417 8.72917 22.7344 9.20312C22.9323 9.67708 23.0312 10.1641 23.0312 10.6641C23.0312 11.1641 22.9323 11.6536 22.7344 12.1328C22.5417 12.6068 22.25 13.0391 21.8594 13.4297L12.4609 22.8281C12.0755 23.2135 11.6458 23.5 11.1719 23.6875C10.6979 23.8802 10.2109 23.974 9.71094 23.9688C9.21615 23.9688 8.73177 23.8698 8.25781 23.6719C7.78385 23.4792 7.35417 23.1875 6.96875 22.7969ZM7.85938 21.9062C8.20312 22.2552 8.59896 22.487 9.04688 22.6016C9.49479 22.7214 9.9401 22.724 10.3828 22.6094C10.8307 22.5 11.2266 22.2734 11.5703 21.9297L20.9688 12.5391C21.3177 12.1849 21.5495 11.7839 21.6641 11.3359C21.7839 10.888 21.7839 10.4401 21.6641 9.99219C21.5495 9.54427 21.3177 9.14583 20.9688 8.79688C20.6198 8.44792 20.2214 8.21615 19.7734 8.10156C19.3255 7.98177 18.8776 7.97917 18.4297 8.09375C17.9818 8.20833 17.5833 8.4401 17.2344 8.78906L7.85938 18.1641C7.51042 18.5182 7.27604 18.9193 7.15625 19.3672C7.04167 19.8151 7.04167 20.263 7.15625 20.7109C7.27604 21.1589 7.51042 21.5573 7.85938 21.9062ZM13.6953 9.32031C13.5547 9.17448 13.4844 9.00781 13.4844 8.82031C13.4844 8.6276 13.5547 8.45833 13.6953 8.3125L14.9922 7.02344C15.138 6.8776 15.3047 6.80469 15.4922 6.80469C15.6849 6.80469 15.8516 6.875 15.9922 7.01562L16.2188 7.24219C16.3646 7.38802 16.4375 7.55729 16.4375 7.75C16.4375 7.9375 16.3646 8.10417 16.2188 8.25L14.9219 9.53906C14.7812 9.6849 14.6146 9.75781 14.4219 9.75781C14.2292 9.75781 14.0625 9.6849 13.9219 9.53906L13.6953 9.32031ZM20.2188 15.8438C20.0781 15.6979 20.0052 15.5312 20 15.3438C20 15.151 20.0729 14.9818 20.2188 14.8359L21.5234 13.5391C21.6641 13.3984 21.8281 13.3281 22.0156 13.3281C22.2083 13.3281 22.3776 13.3984 22.5234 13.5391L22.7422 13.7656C22.888 13.9115 22.9609 14.0807 22.9609 14.2734C22.9609 14.4609 22.888 14.625 22.7422 14.7656L21.4453 16.0625C21.2995 16.2031 21.1328 16.2734 20.9453 16.2734C20.7578 16.2734 20.5885 16.2031 20.4375 16.0625L20.2188 15.8438ZM6.15625 16.8594C6.01042 16.7188 5.9375 16.5521 5.9375 16.3594C5.94271 16.1667 6.01562 15.9974 6.15625 15.8516L7.45312 14.5703C7.59375 14.4245 7.76042 14.3516 7.95312 14.3516C8.14583 14.3516 8.3125 14.4245 8.45312 14.5703L8.67969 14.7812C8.82031 14.9271 8.89062 15.0964 8.89062 15.2891C8.89062 15.4766 8.82031 15.6432 8.67969 15.7891L7.38281 17.0859C7.23698 17.2266 7.07031 17.2969 6.88281 17.2969C6.69531 17.2969 6.52865 17.2266 6.38281 17.0859L6.15625 16.8594ZM12.6719 23.3906C12.5312 23.25 12.4609 23.0833 12.4609 22.8906C12.4609 22.6979 12.5312 22.5286 12.6719 22.3828L13.9688 21.0859C14.1146 20.9401 14.2839 20.8672 14.4766 20.8672C14.6693 20.8672 14.8359 20.9401 14.9766 21.0859L15.1953 21.3125C15.3411 21.4531 15.4141 21.6172 15.4141 21.8047C15.4141 21.9974 15.3411 22.1693 15.1953 22.3203L13.8984 23.6172C13.7578 23.7578 13.5911 23.8281 13.3984 23.8281C13.2109 23.8281 13.0443 23.7552 12.8984 23.6094L12.6719 23.3906ZM17.8125 10.5859C17.7031 10.4766 17.6484 10.3438 17.6484 10.1875C17.6484 10.0312 17.7031 9.89844 17.8125 9.78906C17.9219 9.67448 18.0547 9.61719 18.2109 9.61719C18.3724 9.61719 18.5078 9.67448 18.6172 9.78906C18.7318 9.89844 18.7891 10.0312 18.7891 10.1875C18.7891 10.3438 18.7318 10.4766 18.6172 10.5859C18.5078 10.7005 18.3724 10.7578 18.2109 10.7578C18.0547 10.7578 17.9219 10.7005 17.8125 10.5859ZM19.1719 11.9453C19.0625 11.8359 19.0078 11.7031 19.0078 11.5469C19.0078 11.3854 19.0625 11.25 19.1719 11.1406C19.2812 11.0312 19.4141 10.9766 19.5703 10.9766C19.7266 10.9766 19.862 11.0312 19.9766 11.1406C20.0859 11.25 20.1406 11.3854 20.1406 11.5469C20.1406 11.7031 20.0859 11.8359 19.9766 11.9453C19.862 12.0599 19.7266 12.1172 19.5703 12.1172C19.4141 12.1172 19.2812 12.0599 19.1719 11.9453ZM16.4609 11.9453C16.3516 11.8359 16.2969 11.7031 16.2969 11.5469C16.2969 11.3854 16.3542 11.2474 16.4688 11.1328C16.5781 11.0234 16.7109 10.9688 16.8672 10.9688C17.0234 10.9688 17.1562 11.0234 17.2656 11.1328C17.375 11.2474 17.4297 11.3854 17.4297 11.5469C17.4297 11.7031 17.375 11.8359 17.2656 11.9453C17.1562 12.0547 17.0234 12.1094 16.8672 12.1094C16.7109 12.1094 16.5755 12.0547 16.4609 11.9453ZM17.8125 13.2969C17.7031 13.1875 17.6484 13.0547 17.6484 12.8984C17.6484 12.737 17.7031 12.6016 17.8125 12.4922C17.9271 12.3776 18.0625 12.3203 18.2188 12.3203C18.3802 12.3203 18.5156 12.3776 18.625 12.4922C18.7344 12.6016 18.7891 12.737 18.7891 12.8984C18.7891 13.0547 18.7344 13.1875 18.625 13.2969C18.5156 13.4062 18.3802 13.4609 18.2188 13.4609C18.0625 13.4609 17.9271 13.4062 17.8125 13.2969ZM10.2734 18.1328C10.1641 18.0234 10.1094 17.8906 10.1094 17.7344C10.1094 17.5729 10.1641 17.4375 10.2734 17.3281C10.3828 17.2188 10.5156 17.1641 10.6719 17.1641C10.8281 17.1641 10.9609 17.2188 11.0703 17.3281C11.1849 17.4375 11.2422 17.5729 11.2422 17.7344C11.2422 17.8906 11.1849 18.0234 11.0703 18.1328C10.9609 18.2474 10.8281 18.3047 10.6719 18.3047C10.5156 18.3047 10.3828 18.2474 10.2734 18.1328ZM11.625 19.4922C11.5156 19.3776 11.4609 19.2422 11.4609 19.0859C11.4609 18.9297 11.5156 18.7943 11.625 18.6797C11.7344 18.5703 11.8672 18.5156 12.0234 18.5156C12.1849 18.5156 12.3203 18.5703 12.4297 18.6797C12.5443 18.7943 12.6016 18.9297 12.6016 19.0859C12.6016 19.2422 12.5443 19.3776 12.4297 19.4922C12.3203 19.6016 12.1849 19.6562 12.0234 19.6562C11.8672 19.6562 11.7344 19.6016 11.625 19.4922ZM8.91406 19.4844C8.80469 19.375 8.75 19.2422 8.75 19.0859C8.75 18.9297 8.80469 18.7943 8.91406 18.6797C9.02344 18.5651 9.15885 18.5078 9.32031 18.5078C9.48177 18.5078 9.61719 18.5651 9.72656 18.6797C9.83594 18.7943 9.89062 18.9297 9.89062 19.0859C9.89062 19.2422 9.83594 19.375 9.72656 19.4844C9.61719 19.5938 9.48177 19.6484 9.32031 19.6484C9.15885 19.6484 9.02344 19.5938 8.91406 19.4844ZM10.2734 20.8438C10.1641 20.7344 10.1094 20.6016 10.1094 20.4453C10.1094 20.2839 10.1641 20.1484 10.2734 20.0391C10.3828 19.9245 10.5156 19.8672 10.6719 19.8672C10.8333 19.8672 10.9688 19.9245 11.0781 20.0391C11.1875 20.1484 11.2422 20.2839 11.2422 20.4453C11.2422 20.6016 11.1875 20.7344 11.0781 20.8438C10.9688 20.9531 10.8333 21.0078 10.6719 21.0078C10.5156 21.0078 10.3828 20.9531 10.2734 20.8438Z"
+        fill="black"
+    />
+</svg>
+</div>
+                <div class="board-sel" data-board="keyoverride-container" data-type="main"><svg width="32" height="30" viewBox="0 0 32 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+        opacity="0.3"
+        d="M8.71875 9.3125C8.625 9.46875 8.51042 9.5651 8.375 9.60156C8.24479 9.63281 8.11719 9.61198 7.99219 9.53906C7.8724 9.46615 7.78646 9.35156 7.73438 9.19531L6.88281 6.79688C6.82031 6.63021 6.82292 6.48698 6.89062 6.36719C6.96354 6.24219 7.08594 6.16406 7.25781 6.13281L9.77344 5.67188C9.9349 5.64062 10.0755 5.65885 10.1953 5.72656C10.3203 5.79427 10.401 5.89583 10.4375 6.03125C10.4792 6.16146 10.4557 6.30729 10.3672 6.46875L8.71875 9.3125ZM6.07812 12.3984C6.16146 12.2526 6.28646 12.1589 6.45312 12.1172C6.625 12.0703 6.78125 12.0885 6.92188 12.1719L27.1953 23.875C27.3359 23.9583 27.4271 24.0833 27.4688 24.25C27.5156 24.4219 27.4948 24.5859 27.4062 24.7422C27.3229 24.888 27.1979 24.9818 27.0312 25.0234C26.8646 25.0703 26.7083 25.0521 26.5625 24.9688L6.29688 13.2578C6.15104 13.1745 6.05469 13.0495 6.00781 12.8828C5.96615 12.7109 5.98958 12.5495 6.07812 12.3984ZM11.5078 11.9922C10.9141 11.6484 10.5599 11.25 10.4453 10.7969C10.3307 10.3385 10.4531 9.79688 10.8125 9.17188L11.2188 8.47656C11.5938 7.83073 12.1224 7.41406 12.8047 7.22656C13.487 7.03385 14.2344 7.11198 15.0469 7.46094L17.6484 8.5625L20.6719 8.45312C21.1302 8.43229 21.5521 8.44271 21.9375 8.48438C22.3229 8.52083 22.7057 8.59896 23.0859 8.71875C23.4661 8.83333 23.875 8.99479 24.3125 9.20312C24.75 9.41146 25.25 9.67708 25.8125 10L26.6406 10.4766C27.3281 10.8724 27.8958 11.3411 28.3438 11.8828C28.7917 12.4193 29.1562 12.9792 29.4375 13.5625C29.724 14.1458 29.9609 14.7005 30.1484 15.2266L30.8516 16.0156C31.2734 16.4844 31.5156 16.9557 31.5781 17.4297C31.6406 17.8984 31.526 18.388 31.2344 18.8984L30.3594 20.4141C29.9896 21.0495 29.5781 21.4349 29.125 21.5703C28.6771 21.7057 28.1536 21.599 27.5547 21.25L27.2031 21.0469C27.2708 20.974 27.3333 20.8984 27.3906 20.8203C27.4531 20.7422 27.5078 20.6589 27.5547 20.5703C27.7995 20.1432 27.9193 19.7005 27.9141 19.2422C27.9141 18.7786 27.7995 18.3464 27.5703 17.9453C27.3411 17.5391 27.013 17.2135 26.5859 16.9688C26.1589 16.7188 25.7135 16.5964 25.25 16.6016C24.7917 16.6068 24.3594 16.724 23.9531 16.9531C23.5521 17.1771 23.2292 17.5026 22.9844 17.9297C22.9323 18.0182 22.8854 18.1094 22.8438 18.2031C22.8073 18.2917 22.7734 18.3828 22.7422 18.4766L16.3125 14.7656C16.3802 14.6927 16.4427 14.6172 16.5 14.5391C16.5625 14.4557 16.6198 14.3698 16.6719 14.2812C16.9167 13.8594 17.0365 13.4167 17.0312 12.9531C17.0312 12.4896 16.9167 12.0573 16.6875 11.6562C16.4583 11.2552 16.1302 10.9297 15.7031 10.6797C15.276 10.4349 14.8307 10.3151 14.3672 10.3203C13.9036 10.3203 13.4714 10.4349 13.0703 10.6641C12.6693 10.8932 12.3464 11.2188 12.1016 11.6406C12.0495 11.7292 12.0026 11.8203 11.9609 11.9141C11.9245 12.0026 11.8906 12.0938 11.8594 12.1875L11.5078 11.9922ZM13.4375 14.6094C13.1302 14.4323 12.8932 14.2005 12.7266 13.9141C12.5599 13.6224 12.474 13.3099 12.4688 12.9766C12.4688 12.6432 12.5599 12.3229 12.7422 12.0156C12.9193 11.7083 13.151 11.474 13.4375 11.3125C13.7292 11.1458 14.0417 11.0625 14.375 11.0625C14.7083 11.0573 15.0286 11.1432 15.3359 11.3203C15.6432 11.4974 15.8776 11.7318 16.0391 12.0234C16.2057 12.3151 16.2891 12.6276 16.2891 12.9609C16.2943 13.2891 16.2083 13.6068 16.0312 13.9141C15.8542 14.2214 15.6198 14.4583 15.3281 14.625C15.0417 14.7865 14.7318 14.8698 14.3984 14.875C14.0651 14.875 13.7448 14.7865 13.4375 14.6094ZM24.3203 20.8984C24.013 20.7161 23.776 20.4818 23.6094 20.1953C23.4479 19.9036 23.3646 19.5911 23.3594 19.2578C23.3594 18.9245 23.4479 18.6042 23.625 18.2969C23.8021 17.9896 24.0339 17.7552 24.3203 17.5938C24.612 17.4271 24.9245 17.3438 25.2578 17.3438C25.5911 17.3385 25.9115 17.4271 26.2188 17.6094C26.526 17.7865 26.7604 18.0208 26.9219 18.3125C27.0885 18.599 27.1745 18.9089 27.1797 19.2422C27.1849 19.5755 27.099 19.8932 26.9219 20.1953C26.7396 20.5078 26.5026 20.7474 26.2109 20.9141C25.9245 21.0755 25.6146 21.1562 25.2812 21.1562C24.9479 21.1615 24.6276 21.0755 24.3203 20.8984Z"
         fill="black"
     />
 </svg>
@@ -1379,6 +1348,7 @@
                 <!-- More complex boards. -->
                 <div class="board-map" data-board="macro" id="macro-board"></div>
                 <div class="board-map" data-board="combo-container" id="combo-container"></div>
+                <div class="board-map" data-board="keyoverride-container" id="keyoverride-container"></div>
                 <div class="board-map" data-board="tapdance" id="tapdance-board"></div>
             </div>
         </div>
@@ -1408,7 +1378,6 @@
         <div id="mainboard"></div>
     </div>
 </div>
-
 <div class="main-container" id="keyoverride-container"><table id="keyoverride-table" cellspacing="0" cellpadding="2">
 <thead>
  <tr>

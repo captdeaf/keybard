@@ -48,17 +48,17 @@ addInitializer("load", () => {
         allboards[container.dataset.board].container = container;
     }
 
-    const allTabs = getAll(".main-select");
+    // const allTabs = getAll(".main-select");
     const allContainers = getAll(".main-container");
 
     function selectTab(target) {
-        for (const tab of allTabs) {
-            if (tab.dataset.target === target) {
-                tab.classList.add("active");
-            } else {
-                tab.classList.remove("active");
-            }
-        }
+        // for (const tab of allTabs) {
+        //     if (tab.dataset.target === target) {
+        //         tab.classList.add("active");
+        //     } else {
+        //         tab.classList.remove("active");
+        //     }
+        // }
         for (const container of allContainers) {
             if (container.id === target) {
                 container.style.display = "flex";
@@ -74,19 +74,27 @@ addInitializer("load", () => {
     //     selectTab(target.dataset.mainboard);
     // });
 
+    selectTab(getSaved("main-container", "mainboard-container"));
+
     ACTION.onclick(".board-sel", (target) => {
+        if (target.dataset.board === "keyoverride-container") {
+            closeBoard();
+            selectTab("keyoverride-container");
+        } else {
+            selectTab("mainboard-container");
+        }
         displayBoard(target.dataset.board);
-        ACTION.menuClose();
+        // ACTION.menuClose();
     });
 
-    ACTION.onclick("#close-boards", () => {
+    ACTION.onclick(".close-button", () => {
         closeBoard();
         ACTION.menuClose();
     });
 
     function displayBoard(name) {
-        console.log("displayBoard", name);
         setSaved("boardsel", name);
+        if (name === "keyoverride-container") return;
         allboardsContainer.style["display"] = "block";
         sidebarSelector.classList.add("active");
         for (const board of Object.values(allboards)) {
@@ -102,6 +110,7 @@ addInitializer("load", () => {
     function closeBoard() {
         sidebarSelector.classList.remove("active");
         allboardsContainer.style["display"] = "none";
+        console.log("closeBoard");
     }
 
     const startingBoard = getSaved("boardsel", "qwerty");
