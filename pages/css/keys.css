@@ -243,8 +243,9 @@
 
 .key-macro {
   background-position: top center;
-  background-image: url('../images/ellipsis.png');
-  background-size: 20px 20px;
+  background-image: url('../images/macro_white.svg');
+  background-origin: padding-box;
+  background-size: 15px 15px;
   background-repeat: no-repeat;
   font-weight: bold;
 }
@@ -530,6 +531,11 @@
   box-sizing: border-box;
   border: 3px solid transparent !important;
   font-weight: semibold;
+}
+
+.elastic-macro {
+  background-color: black;
+  color: white;
 }
 
 .tapdance-key {
