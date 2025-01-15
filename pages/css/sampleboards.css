@@ -210,20 +210,22 @@
 
 .board-sel {
   cursor: pointer;
-  padding: 5px;
   color: black;
   font-size: 8pt;
-  padding-left: auto;
-  padding-right: auto;
   width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 5px;
 }
 
 .board-sel-unusual {
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  display: flex;
   padding: 5px;
-  border: 2px solid #bbb;
   border-radius: 50px;
-  background-color: #bbb;
   color: black;
   font-size: 8pt;
 }
@@ -234,7 +236,12 @@
 }
 
 .board-sel:hover svg {
-  background-color: #ffd;
+  background-color: #ddd;
+  border-radius: 50px;
+}
+
+.board-sel svg {
+  transition: 0.3s;
 }
 
 .board-sel.active {
