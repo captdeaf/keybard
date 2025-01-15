@@ -270,15 +270,23 @@
 }
 
 .edit-macro {
-    opacity: 0;
-    transition: 0.1s;
     cursor: pointer;
     padding: 5px;
 }
 
+.control-container {
+    opacity: 0;
+    display: flex;
+    flex-flow: row;
+    transition: opacity 0.2s;
+}
+
+.control-container:hover {
+    opacity: 1;
+}
+
 .drag-macro: {
     cursor: pointer;
-    transition: 0.1s;
     padding-top: auto;
     padding-bottom: auto;
     margin: 0;
