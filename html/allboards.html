@@ -1,14 +1,16 @@
 <div id="boards-container">
-    <div id="sidebar" class="on-connect">
-        <div id="board-selection" class="on-connect" style="z-index: 200">
-            {{icons/svalboard.html}}
-            <div id="board-selection-items">
+    <div id="sidebar">
+        <div id="board-selection" style="z-index: 200">
+            <div id="topbar">{{menu.html}}</div>
+            <div id="board-selection-items" class="on-connect">
                 <div class="board-sel" data-board="layer">{{icons/layers.html}}</div>
                 <div class="board-sel" data-board="qwerty">{{icons/keyboard.html}}</div>
                 <div class="board-sel" data-board="custom" style="display: none">{{icons/mouse.html}}</div>
                 <div class="board-sel" data-board="international" style="display: none">{{icons/keyboard.html}}</div>
-                <div class="board-sel" data-board="macro">{{icons/macros.html}}</div>
                 <div class="board-sel" data-board="tapdance">{{icons/tapdance.html}}</div>
+                <div class="board-sel" data-board="combo-container">{{icons/combos.html}}</div>
+                <div class="board-sel" data-board="keyoverride-container" data-type="main">{{icons/keyoverrides.html}}</div>
+                <div class="board-sel" data-board="macro">{{icons/macros.html}}</div>
                 <div class="board-sel" data-board="modtaps">{{icons/keyboard.html}}</div>
                 <div class="board-sel" data-board="quantum">{{icons/keyboard.html}}</div>
                 <div class="dropdown board-sel-unusual" id="menu-top">
@@ -23,7 +25,10 @@
                     </div>
                 </div>
             </div>
-            <div class="svalboard-logo"></div>
+            <div class="lower-icons">
+                <div class="lower-icon">{{icons/help.html}}</div>
+                <div class="lower-icon">{{icons/settings.html}}</div>
+            </div>
         </div>
         <div id="allboards" class="on-connect">
             <div class="board-header" id="close-boards">
@@ -47,6 +52,8 @@
                 <div class="board-map" data-board="layer">{{kcs/layerkeys.html}}</div>
                 <!-- More complex boards. -->
                 <div class="board-map" data-board="macro" id="macro-board"></div>
+                <div class="board-map" data-board="combo-container" id="combo-container"></div>
+                <div class="board-map" data-board="keyoverride-container" id="keyoverride-container"></div>
                 <div class="board-map" data-board="tapdance" id="tapdance-board"></div>
             </div>
         </div>

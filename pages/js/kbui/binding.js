@@ -7,7 +7,6 @@
 ////////////////////////////////////
 
 addInitializer('connected', () => {
-
   ////////////////////////////////////
   //
   //  Modifier keys in keyboard: SHIFT, CTRL, etc.
@@ -39,7 +38,9 @@ addInitializer('connected', () => {
   function getMask() {
     let mask = 0;
     for (const [name, enabled] of Object.entries(mods)) {
-      if (enabled) { mask = mask | masks[name]; }
+      if (enabled) {
+        mask = mask | masks[name];
+      }
     }
     return mask;
   }
@@ -69,7 +70,7 @@ addInitializer('connected', () => {
   //  2) A key on sample boards is selected (ID'd by [data-bind]) is clicked.
   //     ACTION.on('bind', ...) routes it to 'bind-' + selectedKey.dataset.bound
   //     - The onclick also supports a keymask for all non-special keys, so
-  //       they can be LCTRL(kc)'d, etc, 
+  //       they can be LCTRL(kc)'d, etc,
   //
   //  3) Call ACTION.trigger('bind', keystr) with the resulting
   //     KC_?? or LCTRL(KC_??).
@@ -89,13 +90,25 @@ addInitializer('connected', () => {
         try {
           keystr = KEY.stringify(keyid + getMask());
         } catch (err) {
-          keystr = "0x" + (keyid + getMask()).toString(16);
+          keystr = '0x' + (keyid + getMask()).toString(16);
         }
       }
       if (target.dataset.bind === 'key-mod') {
         const cur = KEY.parse(ACTION.selectedKey.dataset.key);
-        const curstr = KEY.stringify(cur & 0xFF);
+        const curstr = KEY.stringify(cur & 0xff);
         keystr = target.dataset.key.replace('(kc)', `(${curstr})`);
+      }
+      if (ACTION.selectedKey.dataset.bound === 'tapdance') {
+        if (ACTION.selectedKey.dataset.key === 'KC_NO' && keystr !== 'KC_NO') {
+          ACTION.selectedKey.classList.remove('white');
+          ACTION.selectedKey.classList.add('green');
+        } else if (
+          ACTION.selectedKey.dataset.key !== 'KC_NO' &&
+          keystr === 'KC_NO'
+        ) {
+          ACTION.selectedKey.classList.remove('green');
+          ACTION.selectedKey.classList.add('white');
+        }
       }
 
       ACTION.trigger('bind', keystr);
@@ -147,7 +160,7 @@ addInitializer('connected', () => {
   //  Context menu for all bindable keys.
   //
   ////////////////////////////////////
-  
+
   // Main board
   ACTION.addContextMenu('[data-bound="main"]', [
     { name: 'Clear / Disable', trigger: 'key-assign-kcno' },
@@ -321,5 +334,5 @@ addInitializer('connected', () => {
       ACTION.closeFloats();
     }
     return false;
-  }
+  };
 });
