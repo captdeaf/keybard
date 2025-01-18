@@ -39,7 +39,13 @@ function makeEditableName(editable, type, index) {
 
     editable.setAttribute("title", type + " " + name + " (r-click to change name)");
 
-    const editableContent = EL('div', {}, '' + name);
+    const editableContent = EL(
+        'div',
+        {
+            'data-editable': `${type}.${index}`,
+        },
+        '' + name
+    );
 
     editable.style['position'] = 'relative';
 
@@ -79,9 +85,9 @@ function makeEditableName(editable, type, index) {
         }
         setSaved("names", local);
         name = getEditableName(type, index);
-        editableContent.innerText = name;
-        editable.setAttribute("title", type + " " + name + " (r-click to change name)");
-        editable.setAttribute("layerName", name);
+        for (const editable of findAll(`[data-editable="${type}.${index}"]`)) {
+            editable.innerText = name;
+        }
         return false;
     };
     return editable;
