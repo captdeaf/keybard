@@ -101,18 +101,40 @@ addInitializer("connected", () => {
             "border-width": `${sizes.strokeWidth}px`,
             "border-radius": `${sizes.roundOuter}px`,
         };
+
+        const keyboxstyle = {
+            width: `60px`,
+            height: `60px`,
+            "border-width": `${sizes.strokeWidth}px`,
+            "border-radius": `${sizes.roundOuter}px`,
+            position: 'absolute',
+        };
+
+        var float_left = {};
+        var float_right = {};
+        if (KBINFO.payload.author === 'Morgan Venable') {
+            // Cheap hack for "Is this a svalboard?"
+            float_left = {0: true, 1: true, 33: true, 34: true};
+            float_right = {3: true, 4: true, 31: true, 30: true};
+        }
+        if (float_right[kmid]) {
+            keyboxstyle.right = '0px';
+        } else if (float_left[kmid]) {
+            keyboxstyle.left = '0px';
+        }
+        const keybox = EL("div", {
+            class: 'key green',
+            "data-kmid": kmid,
+            style: keyboxstyle,
+        }, `${kmid}`);
         const keyimage = EL(
             "div",
             {
-                class: "key green",
-                "data-kmid": kmid,
+                class: "key keybg",
                 style: keystyle,
             },
-            `${kmid}`
+            keybox,
         );
-
-        const children = [];
-        children.push(keyimage);
 
         const keycap = EL(
             "div",
@@ -120,12 +142,12 @@ addInitializer("connected", () => {
                 class: outerClasses,
                 style: outerStyle,
             },
-            children
+            keyimage
         );
 
         const keydata = {
             cap: keycap,
-            image: keyimage,
+            image: keybox,
             id: kmid,
             ...opts,
         };
