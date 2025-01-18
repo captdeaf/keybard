@@ -21,21 +21,41 @@ addInitializer('connected', () => {
 
   for (let cmbid = 0; cmbid < KBINFO.combo_count; cmbid++) {
     // The 5 keys (4 combos + output)
-    const combo = KBINFO.combos[cmbid]
-    let keys = combo.map((key, idx) => EL('div',
-      {
-        class: 'key',
-        'data-key': key,
-        'data-idx': idx,
-        'data-cmbid': cmbid,
-        'data-bound': 'combo',
-      },
-      key));
+    const combo = KBINFO.combos[cmbid];
+    let keys = combo.map((key, idx) =>
+      EL(
+        'div',
+        {
+          class: 'key',
+          'data-key': key,
+          'data-idx': idx,
+          'data-cmbid': cmbid,
+          'data-bound': 'combo',
+        },
+        key
+      )
+    );
 
-    let container = EL('div', {
-      class: 'combo-group',
-      'data-cmbid': cmbid,
-    }, ...keys.slice(0, 4), '=', keys[4]);
+    let container = EL(
+      'div',
+      {
+        class: 'combo-group',
+        'data-cmbid': cmbid,
+      },
+      ...keys.slice(0, 4),
+      '=',
+      keys[4]
+    );
+
+    container.prepend(
+      EL(
+        'div',
+        {
+          class: 'combo-label',
+        },
+        '' + cmbid
+      )
+    );
 
     allCombos.push(container);
   }
@@ -57,15 +77,17 @@ addInitializer('connected', () => {
         }
       }
       if (changed) {
-        for (const combokey of getAll('[data-cmbid="' + cmbid + '"][data-idx]')) {
+        for (const combokey of getAll(
+          '[data-cmbid="' + cmbid + '"][data-idx]'
+        )) {
           const newkey = KBINFO.combos[cmbid][combokey.dataset.idx];
           combokey.dataset.key = newkey;
           KEYUI.refreshKey(combokey);
-          combokey.classList.add('changed');
+          //   if (combokey.classList.includes('key')) {
+          //     combokey.classList.add('changed');
+          //   }
         }
-        CHANGES.queue('combo' + cmbid, () => (
-          KBAPI.updateCombo(cmbid)
-        ));
+        CHANGES.queue('combo' + cmbid, () => KBAPI.updateCombo(cmbid));
       }
     }
   };
@@ -85,12 +107,12 @@ addInitializer('connected', () => {
     combo[idx] = keystr;
 
     // Trigger the change in the keyboard.
-    for (const combokey of getAll('[data-cmbid="' + cmbid + '"]')) {
-      combokey.classList.add('changed');
-    }
-    CHANGES.queue('combo' + cmbid, () => (
-      KBAPI.updateCombo(cmbid)
-    ));
+    // for (const combokey of getAll('[data-cmbid="' + cmbid + '"]').filter((el) =>
+    //   el.classList.includes('key')
+    // )) {
+    //   combokey.classList.add('changed');
+    // }
+    CHANGES.queue('combo' + cmbid, () => KBAPI.updateCombo(cmbid));
 
     // Set combo key.
     target.dataset.key = keystr;

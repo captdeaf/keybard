@@ -28,16 +28,16 @@ addInitializer('connected', () => {
       contents = all.join('<br>');
     }
     if (keystr === 'KC_NO') {
-      contents = "Disabled key";
+      contents = 'Disabled key';
     } else if (keystr === 'KC_TRNS') {
-      contents = "Transparent key (fall-through to next active layer)";
+      contents = 'Transparent key (fall-through to next active layer)';
     }
-    showPane(keyimage, keystr, contents);
+    // showPane(keyimage, keystr, contents);
   }
 
   function showPane(el, title, contents) {
     const bounds = el.getBoundingClientRect();
-    let x = bounds.x + (bounds.width / 2) - 50;
+    let x = bounds.x + bounds.width / 2 - 50;
     let y = bounds.y - 100;
 
     const winbounds = document.documentElement.getBoundingClientRect();
@@ -49,7 +49,7 @@ addInitializer('connected', () => {
 
     let titlediv = undefined;
     if (title) {
-      titlediv = EL('div', {class: 'panetitle'}, title);
+      titlediv = EL('div', { class: 'panetitle' }, title);
     }
 
     const pane = EL(
@@ -61,19 +61,19 @@ addInitializer('connected', () => {
           top: y + 'px',
           left: x + 'px',
           visibility: 'hidden',
-        }
+        },
       },
       titlediv
     );
 
     if (contents) {
-      appendChildren(pane, EL('div', {class: 'panebody'}, contents));
+      appendChildren(pane, EL('div', { class: 'panebody' }, contents));
     }
 
     setTimeout(() => {
       const panebounds = pane.getBoundingClientRect();
-      if ((panebounds.y + panebounds.height) > bounds.y) {
-        pane.style['top'] = (bounds.y + bounds.height + 10) + 'px';
+      if (panebounds.y + panebounds.height > bounds.y) {
+        pane.style['top'] = bounds.y + bounds.height + 10 + 'px';
       }
       pane.style['visibility'] = 'visible';
     }, 20);
@@ -122,7 +122,7 @@ addInitializer('connected', () => {
         } else if (match.dataset.title) {
           showPane(match, '', match.dataset.title);
           return;
-        } 
+        }
       }
       hidePane();
     }
