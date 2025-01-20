@@ -14,20 +14,20 @@
 ////////////////////////////////////
 
 const BOARD_NAMES = {
-    qwerty: "Keyboard Keys",
-    international: "International",
-    custom: "Mouse and Special Keys",
-    layer: "Layers",
-    macro: "Macros",
-    tapdance: "Tap Dances",
-    modtaps: "Mod Hold, Tap Keys",
-    quantum: "QMK Keys",
-    "combo-container": "Combos",
-    keyOverrides: "Key Overrides",
-    mouse: "Mouse Keys",
+    qwerty: 'Keyboard Keys',
+    international: 'International',
+    custom: 'Mouse and Special Keys',
+    layer: 'Layers',
+    macro: 'Macros',
+    tapdance: 'Tap Dances',
+    modtaps: 'Mod Hold, Tap Keys',
+    quantum: 'QMK Keys',
+    'combo-container': 'Combos',
+    keyOverrides: 'Key Overrides',
+    mouse: 'Mouse Keys',
 };
 
-addInitializer("load", () => {
+addInitializer('load', () => {
     ////////////////////////////////////
     //
     // Events to display the different boards: QWERTY, AZERTY,
@@ -35,74 +35,74 @@ addInitializer("load", () => {
     //
     ////////////////////////////////////
     const allboards = {};
-    const allboardsContainer = get("#allboards");
-    const sidebarSelector = get("#sidebar");
+    const allboardsContainer = get('#allboards');
+    const sidebarSelector = get('#sidebar');
 
-    for (const sel of getAll(".board-sel[data-board]")) {
+    for (const sel of getAll('.board-sel[data-board]')) {
         allboards[sel.dataset.board] = {
             selector: sel,
         };
     }
 
-    for (const container of getAll("div.board-map[data-board]")) {
+    for (const container of getAll('div.board-map[data-board]')) {
         allboards[container.dataset.board].container = container;
     }
 
     // const allTabs = getAll(".main-select");
-    const allContainers = getAll(".main-container");
+    const allContainers = getAll('.main-container');
 
     function selectTab(target) {
         for (const container of allContainers) {
             if (container.id === target) {
-                container.style.display = "flex";
+                container.style.display = 'flex';
             } else {
-                container.style.display = "none";
+                container.style.display = 'none';
             }
         }
-        setSaved("main-container", target);
+        setSaved('main-container', target);
     }
 
-    selectTab(getSaved("main-container", "mainboard-container"));
+    selectTab(getSaved('main-container', 'mainboard-container'));
 
-    ACTION.onclick(".board-sel", (target) => {
-        if (target.dataset.board === "keyoverride-container") {
+    ACTION.onclick('.board-sel', (target) => {
+        if (target.dataset.board === 'keyoverride-container') {
             closeBoard();
-            selectTab("keyoverride-container");
+            selectTab('keyoverride-container');
         } else {
-            selectTab("mainboard-container");
+            selectTab('mainboard-container');
         }
         displayBoard(target.dataset.board);
         // ACTION.menuClose();
     });
 
-    ACTION.onclick(".close-button", () => {
+    ACTION.onclick('.close-button', () => {
         closeBoard();
     });
 
     function displayBoard(name) {
-        console.log("displayBoard", name);
-        setSaved("boardsel", name);
-        if (name === "keyoverride-container") return;
-        allboardsContainer.style["display"] = "block";
-        sidebarSelector.classList.add("active");
+        console.log('displayBoard', name);
+        setSaved('boardsel', name);
+        if (name === 'keyoverride-container') return;
+        allboardsContainer.style['display'] = 'block';
+        sidebarSelector.classList.add('active');
         for (const board of Object.values(allboards)) {
-            board.selector.classList.remove("active");
-            board.container.style["display"] = "none";
+            board.selector.classList.remove('active');
+            board.container.style['display'] = 'none';
         }
-        allboards[name].selector.classList.add("active");
-        allboards[name].container.style["display"] = "block";
-        const boardTitle = get("#board-title");
+        allboards[name].selector.classList.add('active');
+        allboards[name].container.style['display'] = 'block';
+        const boardTitle = get('#board-title');
         boardTitle.innerText = BOARD_NAMES[name];
     }
 
     function closeBoard() {
-        sidebarSelector.classList.remove("active");
-        allboardsContainer.style["display"] = "none";
-        console.log("closeBoard");
+        sidebarSelector.classList.remove('active');
+        allboardsContainer.style['display'] = 'none';
+        console.log('closeBoard');
     }
 
     if (CONNECTED) {
-        const startingBoard = getSaved("boardsel", "qwerty");
+        const startingBoard = getSaved('boardsel', 'qwerty');
         displayBoard(startingBoard);
     }
 
@@ -120,7 +120,7 @@ addInitializer("load", () => {
             let row = null;
             for (const i of range(keys.length)) {
                 if (i % length === 0) {
-                    row = EL("div", { class: "kb-row" });
+                    row = EL('div', { class: 'kb-row' });
                     appendChildren(board, row);
                     if (extra) {
                         appendChildren(row, extra);
@@ -129,11 +129,13 @@ addInitializer("load", () => {
                 appendChildren(
                     row,
                     EL(
-                        "div",
+                        'div',
                         {
-                            class: `key kb-key ${name === "#kb-custom" ? "elastic" : ""}`,
-                            "data-bind": "key",
-                            "data-key": keys[i],
+                            class: `key kb-key ${
+                                name === '#kb-custom' ? 'elastic' : ''
+                            }`,
+                            'data-bind': 'key',
+                            'data-key': keys[i],
                             title: keys[i],
                         },
                         keys[i]
@@ -143,11 +145,11 @@ addInitializer("load", () => {
         }
     }
 
-    addInitializer("connected", () => {
+    addInitializer('connected', () => {
         // Custom keycode labels.
         if (KBINFO.custom_keycodes) {
             appendBoard(
-                "#kb-custom",
+                '#kb-custom',
                 KBINFO.custom_keycodes.map((x) => x.name),
                 5
             );
@@ -160,19 +162,21 @@ addInitializer("load", () => {
             const list = get('#layer-modifier-selection');
             console.log(list);
             function layerLabel(layerid) {
-              const editable = makeEditableName(EL('div'), 'layer', layerid);
-              return EL('div',
-                        {
-                          class: 'layer-modifier-select',
-                          style: {
+                const editable = makeEditableName(EL('div'), 'layer', layerid);
+                return EL(
+                    'div',
+                    {
+                        class: 'layer-modifier-select',
+                        style: {
                             width: '100%',
                             padding: '5px',
                             'background-color': '#ffffff',
                             'border-bottom': '1px solid black',
-                          },
-                          'data-layer-modifier-select': layerid,
                         },
-                        editable);
+                        'data-layer-modifier-select': layerid,
+                    },
+                    editable
+                );
             }
 
             appendChildren(
@@ -186,7 +190,7 @@ addInitializer("load", () => {
         // There are only 16 LT*(kc) keys, so don't go over.
         for (let i = 0; i < 16; i++) {
             if (KBINFO.layers <= i) {
-                get('[data-layer="' + i + '"]').style["display"] = "none";
+                get('[data-layer="' + i + '"]').style['display'] = 'none';
             }
         }
     });

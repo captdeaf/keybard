@@ -21,8 +21,7 @@
 
 .special-tabs .tab {
   color: darkgrey;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 14px;
   padding: 5px 15px;
   border-radius: 50px;
   transition: 0.2s;
@@ -31,7 +30,6 @@
 .special-tabs .tab.active {
   background-color: black;
   color: white;
-  font-weight: bold;
 }
 
 .special-tabs .tab:hover {

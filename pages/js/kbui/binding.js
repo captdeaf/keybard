@@ -145,6 +145,11 @@ addInitializer('connected', () => {
   }
 
   ACTION.onclick('[data-layer-modifier]', (target) => {
+    const all = getAll('[data-layer-modifier]');
+    for (const i of all) {
+      i.classList.remove('active');
+    }
+    target.classList.add('active');
     selectLayerKey(target.dataset.layerModifier);
   });
   selectLayerKey('MO');
