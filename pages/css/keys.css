@@ -67,6 +67,11 @@
   text-transform: uppercase;
 }
 
+.keybg {
+  border: none;
+  background-color: #ddd;
+}
+
 .green {
   background-color: #0bb58e !important;
   border: none;
