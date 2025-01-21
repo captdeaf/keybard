@@ -159,7 +159,7 @@ Instead, document.onclick() checks its target and its parents (working up the
 tree) until an element matching a selector is found. This lets us have hundreds
 of keys with only a few callbacks, depending on type of key.
 
-`ACTION.onclick('selector', callback) will call `callback` with the element
+`ACTION.onclick('selector', callback)` will call `callback` with the element
 matching 'selector'. There is no need to add individual onclick callbacks to
 every single element that matches `selector`.
 
