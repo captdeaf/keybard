@@ -27,9 +27,11 @@
   margin-top: 25px;
   margin-bottom: 10px;
   padding-left: 20px;
+  align-content: center;
   padding-bottom: 10px;
   max-width: 100%;
   overflow-x: auto;
+  width: 100%;
   height: 30px;
   z-index: 600;
   overflow-y: hidden;
@@ -46,15 +48,37 @@
 #layer-selection .layer {
   white-space: nowrap;
   border-radius: 50px;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 14px;
   color: darkgray;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px 26px;
+  padding: 8px 15px;
   cursor: pointer;
   transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.layer-modifier {
+  color: darkgrey;
+  font-size: 16px;
+  padding: 5px 25px;
+  border-radius: 50px;
+  transition: 0.2s;
+}
+
+.layer-modifier.active {
+  background-color: black;
+  color: white;
+}
+
+.layer-modifier:hover {
+  background-color: #f2f2f1;
+  color: black;
+}
+
+.layer-modifier.active:hover {
+  background-color: black;
+  color: white;
 }
 
 #layer-selection .layer.selected {
@@ -64,7 +88,8 @@
 }
 
 #layer-selection .layer.selected:hover {
-  background-color: #333;
+  color: #fff !important;
+  background-color: black !important;
 }
 
 #layer-selection .fill {
@@ -73,6 +98,7 @@
 
 #layer-selection .layer:hover {
   background-color: #ddd;
+  color: black;
 }
 
 #mainbody {
