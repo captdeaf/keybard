@@ -254,6 +254,27 @@
     font-weight: bold;
 }
 
+.key-layer {
+    background-position: top center;
+    background-image: url('../images/layers_white.svg');
+    background-origin: padding-box;
+    background-size: 15px 15px;
+    background-repeat: no-repeat;
+    font-weight: bold;
+}
+
+.layer-key {
+    border: 3px solid transparent;
+    width: 50px;
+    height: 50px;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.layer-key:hover {
+    border: 3px solid #f95053 !important;
+}
+
 .macro-container {
     display: flex;
     flex-flow: row;

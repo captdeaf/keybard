@@ -76,6 +76,10 @@ function onClickEditIcon(editIcon, type, index) {
                 }
                 KBINFO.cosmetic[type][index] = newname;
                 local[type][index] = newname;
+                const layerLabel = find(`#layer-label-${index}`);
+                if (layerLabel) {
+                    layerLabel.innerText = newname;
+                }
             } else {
                 delete KBINFO.cosmetic[type][index];
                 delete local[type][index];
@@ -85,7 +89,6 @@ function onClickEditIcon(editIcon, type, index) {
         name = getEditableName(type, index);
         setSaved('names', local);
         for (const editable of findAll(`[data-editable="${type}.${index}"]`)) {
-            console.log('editable', editable);
             editable.innerText = name;
         }
         return false;
