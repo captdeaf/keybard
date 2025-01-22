@@ -173,13 +173,24 @@ addInitializer('load', () => {
                             padding: '5px',
                             marginLeft: '30px',
                             marginRight: '30px',
+                            minHeight: '20px',
                             borderBottom: '1px dotted #ccc',
                             fontWeight: '500',
+                            cursor: 'pointer',
                         },
                         'data-layer-modifier-select': layerid,
                     },
                     name
                 );
+
+                label.setAttribute(
+                    'title',
+                    'Layer' +
+                        ' ' +
+                        (name || layerid) +
+                        ' (click to change name)'
+                );
+                onClickEditIcon(label, 'layer', layerid);
                 const layerContainer = EL('div', {
                     class: 'layer-modifier-container',
                     'data-layer': layerid,

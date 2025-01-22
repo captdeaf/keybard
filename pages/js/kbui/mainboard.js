@@ -458,17 +458,16 @@ addInitializer('connected', () => {
     appendChildren(layerSelection, ...children);
 
     // Handle scroll gradients for layer modifier selection
-    const layerModifierSelection = get('#layer-modifier-selection');
-    if (layerModifierSelection) {
+    const verticalScrollableDivs = findAll('.scroll-effects-vertical');
+    for (const scrollableDiv of verticalScrollableDivs) {
         function updateScrollGradients() {
-            const { scrollTop, scrollHeight, clientHeight } =
-                layerModifierSelection;
+            const { scrollTop, scrollHeight, clientHeight } = scrollableDiv;
             const isScrollable = scrollHeight > clientHeight;
             const isAtTop = scrollTop <= 0;
             const isAtBottom =
                 Math.ceil(scrollTop + clientHeight) >= scrollHeight;
 
-            layerModifierSelection.classList.remove(
+            scrollableDiv.classList.remove(
                 'scroll-both',
                 'scroll-top',
                 'scroll-bottom'
@@ -476,21 +475,47 @@ addInitializer('connected', () => {
 
             if (isScrollable) {
                 if (!isAtTop && !isAtBottom) {
-                    layerModifierSelection.classList.add('scroll-both');
+                    scrollableDiv.classList.add('scroll-both');
                 } else if (!isAtTop) {
-                    layerModifierSelection.classList.add('scroll-bottom');
+                    scrollableDiv.classList.add('scroll-bottom');
                 } else if (!isAtBottom) {
-                    layerModifierSelection.classList.add('scroll-top');
+                    scrollableDiv.classList.add('scroll-top');
                 }
             }
         }
+        scrollableDiv.addEventListener('scroll', updateScrollGradients);
+        setTimeout(updateScrollGradients, 100);
+        window.addEventListener('resize', updateScrollGradients);
+    }
 
-        layerModifierSelection.addEventListener(
-            'scroll',
-            updateScrollGradients
-        );
-        // Initial check
-        updateScrollGradients();
+    // Handle scroll gradients for horizontal scrollable divs
+    const horizontalScrollableDivs = findAll('.scroll-effects-horizontal');
+    for (const scrollableDiv of horizontalScrollableDivs) {
+        function updateScrollGradients() {
+            const { scrollLeft, scrollWidth, clientWidth } = scrollableDiv;
+            const isScrollable = scrollWidth > clientWidth;
+            const isAtStart = scrollLeft <= 0;
+            const isAtEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth;
+
+            scrollableDiv.classList.remove(
+                'scroll-both',
+                'scroll-start',
+                'scroll-end'
+            );
+
+            if (isScrollable) {
+                if (!isAtStart && !isAtEnd) {
+                    scrollableDiv.classList.add('scroll-both');
+                } else if (!isAtStart) {
+                    scrollableDiv.classList.add('scroll-end');
+                } else if (!isAtEnd) {
+                    scrollableDiv.classList.add('scroll-start');
+                }
+            }
+        }
+        scrollableDiv.addEventListener('scroll', updateScrollGradients);
+        setTimeout(updateScrollGradients, 100);
+        window.addEventListener('resize', updateScrollGradients);
     }
 
     ACTION.onclick('[data-layerid]', (target) => {

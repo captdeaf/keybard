@@ -37,11 +37,6 @@ function makeEditableName(editable, type, index) {
 
     let name = getEditableName(type, index, '' + index);
 
-    editable.setAttribute(
-        'title',
-        type + ' ' + name + ' (r-click to change name)'
-    );
-
     const editableContent = EL(
         'div',
         {
