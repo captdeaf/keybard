@@ -107,7 +107,7 @@
     flex-direction: column;
     align-content: stretch;
     align-items: stretch;
-    overflow: auto;
+    overflow: hidden;
     height: 100%;
     box-sizing: border-box;
 }
@@ -119,7 +119,7 @@
     max-width: 100%;
     flex-grow: 1;
     flex-shrink: 0;
-    overflow: auto;
+    overflow: hidden;
     box-sizing: border-box;
 }
 
