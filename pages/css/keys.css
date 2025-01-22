@@ -245,11 +245,11 @@
     position: relative;
 }
 
-#tapdance-board {
+#tapdance-board,
+#macro-board {
     overflow: auto;
-    max-height: calc(100vh - 100px);
+    max-height: calc(100vh - 200px);
     position: relative;
-    margin-right: 3px;
 }
 
 .scroll-both {
