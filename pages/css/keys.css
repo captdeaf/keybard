@@ -246,7 +246,8 @@
 }
 
 #tapdance-board,
-#macro-board {
+#macro-board,
+#combo-container {
     overflow: auto;
     max-height: calc(100vh - 200px);
     position: relative;
@@ -286,6 +287,43 @@
         transparent,
         black 10%,
         black
+    );
+}
+
+.scroll-start {
+    mask-image: linear-gradient(to right, transparent, black 10%, black);
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%
+    );
+}
+
+.scroll-end {
+    mask-image: linear-gradient(to right, black, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(
+        to right,
+        black,
+        black 90%,
+        transparent
+    );
+}
+
+.scroll-both-horizontal {
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
     );
 }
 

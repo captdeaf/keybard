@@ -498,18 +498,18 @@ addInitializer('connected', () => {
             const isAtEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth;
 
             scrollableDiv.classList.remove(
-                'scroll-both',
+                'scroll-both-horizontal',
                 'scroll-start',
                 'scroll-end'
             );
 
             if (isScrollable) {
                 if (!isAtStart && !isAtEnd) {
-                    scrollableDiv.classList.add('scroll-both');
+                    scrollableDiv.classList.add('scroll-both-horizontal');
                 } else if (!isAtStart) {
-                    scrollableDiv.classList.add('scroll-end');
-                } else if (!isAtEnd) {
                     scrollableDiv.classList.add('scroll-start');
+                } else if (!isAtEnd) {
+                    scrollableDiv.classList.add('scroll-end');
                 }
             }
         }

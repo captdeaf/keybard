@@ -29,15 +29,15 @@
                 <div class="board-sel" data-board="combo-container">
                     {{icons/combos.html}}
                 </div>
+                <div class="board-sel" data-board="macro">
+                    {{icons/macros.html}}
+                </div>
                 <div
                     class="board-sel"
                     data-board="keyoverride-container"
                     data-type="main"
                 >
                     {{icons/keyoverrides.html}}
-                </div>
-                <div class="board-sel" data-board="macro">
-                    {{icons/macros.html}}
                 </div>
                 <div class="board-sel" data-board="modtaps">
                     {{icons/keyboard.html}}
@@ -142,8 +142,30 @@
                 <div
                     class="board-map"
                     data-board="combo-container"
-                    id="combo-container"
-                ></div>
+                    id="combo-board"
+                >
+                    <div
+                        class="layer-modifiers special-tabs"
+                        style="display: flex; flex-flow: row"
+                    >
+                        <div
+                            class="layer-modifier active"
+                            data-tapdance-page="1"
+                        >
+                            0-19
+                        </div>
+                        <div class="layer-modifier" data-tapdance-page="2">
+                            20-39
+                        </div>
+                        <div class="layer-modifier" data-tapdance-page="3">
+                            40-49
+                        </div>
+                    </div>
+                    <div
+                        id="combo-container"
+                        class="scroll-effects-vertical"
+                    ></div>
+                </div>
                 <div
                     class="board-map"
                     data-board="keyoverride-container"
