@@ -472,17 +472,6 @@
     gap: 5px;
 }
 
-.small-board-container {
-    overflow: auto;
-    width: 100%;
-    height: auto; /* Allow height to adjust with content */
-    box-sizing: border-box;
-}
-
-.small-board .key {
-    font-size: 50px !important;
-}
-
 .kb-spam {
     display: flex;
     flex-flow: row;
@@ -688,9 +677,9 @@
     border: 3px solid transparent !important;
     font-weight: semibold;
     min-width: 32px !important;
-    min-height: 32px !important;
+    min-height: 30px !important;
     width: 32px !important;
-    height: 32px !important;
+    height: 30px !important;
 }
 
 .elastic:hover {
@@ -702,4 +691,16 @@
 #topboard {
     height: auto !important; /* Override any inline styles */
     min-height: 0 !important; /* Override any inline styles */
+}
+
+.small-board-container {
+    overflow: auto;
+    width: 100%;
+    height: auto; /* Allow height to adjust with content */
+    box-sizing: border-box;
+    font-size: 10px !important;
+}
+
+.small-board-container span {
+    font-size: 10px !important;
 }

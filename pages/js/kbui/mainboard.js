@@ -129,7 +129,7 @@ addInitializer('connected', () => {
 
         var float_left = {};
         var float_right = {};
-        if (KBINFO.payload.author === 'Morgan Venable') {
+        if (KBINFO.payload?.author === 'Morgan Venable') {
             // Cheap hack for "Is this a svalboard?"
             float_left = { 0: true, 1: true, 33: true, 34: true };
             float_right = { 3: true, 4: true, 31: true, 30: true };
@@ -301,7 +301,7 @@ addInitializer('connected', () => {
             );
             const layerHeaderTitle = get('#layer-header-title');
             const names = getSaved('names', {});
-            const displayName = names.layer[layerIndex] || layerIndex;
+            const displayName = names?.layer?.[layerIndex] || layerIndex;
             layerHeaderTitle.textContent = `${displayName}`;
             console.log('layerIndex', layerIndex);
             selectedLayer.classList.add('selected');

@@ -163,7 +163,7 @@ addInitializer('load', () => {
             console.log(list);
             function layerLabel(layerid) {
                 const editable = makeEditableName(EL('div'), 'layer', layerid);
-                const name = getSaved('names').layer[layerid];
+                const name = getSaved('names')?.layer?.[layerid];
                 const label = EL(
                     'div',
                     {
