@@ -245,6 +245,13 @@
     position: relative;
 }
 
+#tapdance-board {
+    overflow: auto;
+    max-height: calc(100vh - 100px);
+    position: relative;
+    margin-right: 3px;
+}
+
 .scroll-both {
     mask-image: linear-gradient(
         to bottom,
@@ -308,8 +315,8 @@
 
 .layer-key {
     border: 3px solid transparent;
-    width: 45px;
-    height: 45px;
+    width: 45px !important;
+    height: 45px !important;
     transition: 0.2s;
     cursor: pointer;
 }
@@ -324,7 +331,7 @@
     gap: 5px;
     align-items: center;
     justify-content: space-between;
-    width: 80%;
+    width: 90%;
     margin: 5px auto;
     padding-right: 10px;
 }
@@ -381,7 +388,6 @@
     display: flex;
     flex-flow: row;
     align-items: center;
-    width: 100px;
 }
 .bigkey {
     position: relative;
@@ -405,7 +411,7 @@
 }
 
 .dotted-line {
-    border-bottom: 1px dashed darkgrey;
+    border-bottom: 1px dotted #ccc;
     flex-grow: 1;
     height: 30px;
     margin: 0 15px;
