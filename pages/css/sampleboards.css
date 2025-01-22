@@ -14,7 +14,10 @@
     align-items: center;
     padding-right: 1em;
     border: none;
-    margin: 20px auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0;
+    margin-bottom: 20px;
     cursor: pointer;
     transition: 0.2s;
 }
