@@ -239,8 +239,47 @@
     font-weight: bold;
 }
 
-.layer-modifier-selection {
+#layer-modifier-selection {
     overflow: auto;
+    max-height: calc(100vh - 200px);
+    position: relative;
+}
+
+.scroll-both {
+    mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+}
+
+.scroll-top {
+    mask-image: linear-gradient(to bottom, black, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        black,
+        black 90%,
+        transparent
+    );
+}
+
+.scroll-bottom {
+    mask-image: linear-gradient(to bottom, transparent, black 10%, black);
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 10%,
+        black
+    );
 }
 
 .key-modtap,

@@ -457,6 +457,42 @@ addInitializer('connected', () => {
     }
     appendChildren(layerSelection, ...children);
 
+    // Handle scroll gradients for layer modifier selection
+    const layerModifierSelection = get('#layer-modifier-selection');
+    if (layerModifierSelection) {
+        function updateScrollGradients() {
+            const { scrollTop, scrollHeight, clientHeight } =
+                layerModifierSelection;
+            const isScrollable = scrollHeight > clientHeight;
+            const isAtTop = scrollTop <= 0;
+            const isAtBottom =
+                Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
+            layerModifierSelection.classList.remove(
+                'scroll-both',
+                'scroll-top',
+                'scroll-bottom'
+            );
+
+            if (isScrollable) {
+                if (!isAtTop && !isAtBottom) {
+                    layerModifierSelection.classList.add('scroll-both');
+                } else if (!isAtTop) {
+                    layerModifierSelection.classList.add('scroll-bottom');
+                } else if (!isAtBottom) {
+                    layerModifierSelection.classList.add('scroll-top');
+                }
+            }
+        }
+
+        layerModifierSelection.addEventListener(
+            'scroll',
+            updateScrollGradients
+        );
+        // Initial check
+        updateScrollGradients();
+    }
+
     ACTION.onclick('[data-layerid]', (target) => {
         setSaved('layerid', target.dataset.layerid);
         drawLayer(target.dataset.layerid);
