@@ -457,6 +457,18 @@ addInitializer('connected', () => {
     }
     appendChildren(layerSelection, ...children);
 
+    // Trigger initial scroll button states after populating layers
+    setTimeout(() => {
+        const container = layerSelection.closest('.layer-selection-container');
+        if (container) {
+            const scrollableDiv = container.querySelector(
+                '.scroll-effects-horizontal'
+            );
+            const event = new Event('scroll');
+            scrollableDiv.dispatchEvent(event);
+        }
+    }, 0);
+
     // Handle scroll gradients for layer modifier selection
     const verticalScrollableDivs = findAll('.scroll-effects-vertical');
     for (const scrollableDiv of verticalScrollableDivs) {
@@ -488,15 +500,28 @@ addInitializer('connected', () => {
         window.addEventListener('resize', updateScrollGradients);
     }
 
-    // Handle scroll gradients for horizontal scrollable divs
     const horizontalScrollableDivs = findAll('.scroll-effects-horizontal');
     for (const scrollableDiv of horizontalScrollableDivs) {
-        function updateScrollGradients() {
+        const container = scrollableDiv.closest('.layer-selection-container');
+        if (!container) continue;
+
+        const leftButton = container.querySelector('#scroll-left');
+        const rightButton = container.querySelector('#scroll-right');
+
+        function updateScrollButtons() {
+            scrollableDiv.style.display = 'none';
+            scrollableDiv.offsetHeight;
+            scrollableDiv.style.display = '';
             const { scrollLeft, scrollWidth, clientWidth } = scrollableDiv;
             const isScrollable = scrollWidth > clientWidth;
             const isAtStart = scrollLeft <= 0;
             const isAtEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth;
 
+            // Update button visibility using active class
+            leftButton.classList.toggle('active', isScrollable && !isAtStart);
+            leftButton.style.opacity = isScrollable ? 1 : 0;
+            rightButton.classList.toggle('active', isScrollable && !isAtEnd);
+            rightButton.style.opacity = isScrollable ? 1 : 0;
             scrollableDiv.classList.remove(
                 'scroll-both-horizontal',
                 'scroll-start',
@@ -513,9 +538,35 @@ addInitializer('connected', () => {
                 }
             }
         }
-        scrollableDiv.addEventListener('scroll', updateScrollGradients);
-        setTimeout(updateScrollGradients, 100);
-        window.addEventListener('resize', updateScrollGradients);
+
+        // Scroll amount for each button click (quarter of the container width for smoother scrolling)
+        const getScrollAmount = () => scrollableDiv.clientWidth / 2;
+
+        // Add click handlers for scroll buttons
+        leftButton.addEventListener('click', () => {
+            scrollableDiv.scrollBy({
+                left: -getScrollAmount(),
+                behavior: 'smooth',
+            });
+        });
+
+        rightButton.addEventListener('click', () => {
+            scrollableDiv.scrollBy({
+                left: getScrollAmount(),
+                behavior: 'smooth',
+            });
+        });
+
+        // Update button states on scroll, resize, and container size changes
+        scrollableDiv.addEventListener('scroll', updateScrollButtons);
+        setTimeout(updateScrollButtons, 100);
+        window.addEventListener('resize', updateScrollButtons);
+
+        // Use ResizeObserver to detect container size changes
+        const resizeObserver = new ResizeObserver(() => {
+            updateScrollButtons();
+        });
+        resizeObserver.observe(container);
     }
 
     ACTION.onclick('[data-layerid]', (target) => {

@@ -1,5 +1,9 @@
 <div class="main-container" id="mainboard-container">
-    <div id="layer-selection" class="scroll-effects-horizontal"></div>
+    <div class="layer-selection-container">
+        <button id="scroll-left" class="scroll-button">‹</button>
+        <div id="layer-selection" class="scroll-effects-horizontal"></div>
+        <button id="scroll-right" class="scroll-button">›</button>
+    </div>
     <div id="layer-header">
         <div class="color-dot" id="layer-color-dot"></div>
         <h3 id="layer-header-title">Title</h3>
@@ -40,6 +44,10 @@
     <div id="mainboard-box">
         <div id="mainboard"></div>
     </div>
+</div>
+<div class="main-container" id="keyoverride-container">
+    {{keyoverrides.html}}
+</div>
 </div>
 <div class="main-container" id="keyoverride-container">
     {{keyoverrides.html}}

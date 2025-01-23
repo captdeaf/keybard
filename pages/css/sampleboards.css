@@ -94,6 +94,10 @@
     animation: slidein 0.5s;
 }
 
+#sidebar.active {
+    padding-right: 15px;
+}
+
 #allboards-container {
     display: block;
     background-color: #fafafa;

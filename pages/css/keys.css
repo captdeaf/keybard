@@ -620,7 +620,7 @@
     border-radius: 25px;
     border: none;
     font-size: 10px;
-    height: 10px;
+    height: 5px !important;
     line-height: 10px;
     font-weight: bold;
     color: darkslategray;
