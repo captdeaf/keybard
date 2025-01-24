@@ -33,7 +33,7 @@
     flex: 0 0 30px;
     height: 30px;
     border: none;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0);
     color: #666;
     border-radius: 50%;
     cursor: pointer;
@@ -41,7 +41,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.4s;
     z-index: 601;
 }
 
@@ -59,6 +59,7 @@
 .scroll-button.active {
     opacity: 1;
     pointer-events: auto;
+    transition: all 0.4s;
 }
 
 .scroll-button.active:hover {

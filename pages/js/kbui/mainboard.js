@@ -519,6 +519,7 @@ addInitializer('connected', () => {
 
             // Update button visibility using active class
             leftButton.classList.toggle('active', isScrollable && !isAtStart);
+            leftButton.style.display = isScrollable ? 'flex' : 'none';
             leftButton.style.opacity = isScrollable ? 1 : 0;
             rightButton.classList.toggle('active', isScrollable && !isAtEnd);
             rightButton.style.opacity = isScrollable ? 1 : 0;
