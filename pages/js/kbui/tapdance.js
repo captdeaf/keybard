@@ -98,12 +98,73 @@ addInitializer('load', () => {
     const sidebar = get('#sidebar');
     const rect = sidebar.getBoundingClientRect();
     floater.style['left'] = rect.x + rect.width + 'px';
+
+    // Create and position the menu element
+    const menuEl = document.createElement('div');
+    menuEl.className = 'tapdance-menu';
+    menuEl.style.cssText = `
+      position: absolute;
+      left: 120px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #fafafa;
+      border: 1px solid #dadce0;
+      border-left: none;
+      border-bottom-right-radius: 15px;
+      border-top-right-radius: 15px;
+      padding-left: 4px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+
+    tapdanceMacroMenuItems.forEach((item) => {
+      const menuItem = document.createElement('div');
+      menuItem.className = 'tapdance-menu-item';
+      menuItem.style.cssText = `
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-bottom-left-radius: 4px;
+        transition: background-color 0.2s;
+      `;
+      menuItem.innerHTML = item.icon;
+      menuItem.title = item.label;
+      menuItem.onmouseover = () => (menuItem.style.backgroundColor = '#f1f3f4');
+      menuItem.onmouseout = () =>
+        (menuItem.style.backgroundColor = 'transparent');
+      menuItem.onclick = () => {
+        // get current board
+        console.log(item.label);
+        if (item.label === 'Macros') {
+          displayBoard('macro', true, 'Add macros to tapdance');
+        } else if (item.label === 'Layers') {
+          displayBoard('layer', true, 'Add layers to tapdance');
+        } else if (item.label === 'Keyboard') {
+          displayBoard('qwerty', true, 'Add keyboard keys to tapdance');
+        }
+      };
+      menuEl.appendChild(menuItem);
+    });
+
+    floater.appendChild(menuEl);
+    // put menu in the left side of floater
+    menuEl.style.left = 0;
     // vertical centering
     floater.style['top'] =
       Math.max(
         0,
         (window.innerHeight - floater.getBoundingClientRect().height) / 2
       ) + 'px';
+    displayBoard('layer', true, 'Add layers to tapdance');
   }
 
   ////////////////////////////////////
@@ -121,6 +182,16 @@ addInitializer('load', () => {
     CHANGES.queue('TD' + editID, () => KBAPI.updateTapdance(editID));
     KEYUI.refreshAllKeys();
     floater.style['display'] = 'none';
+    const existingMenu = floater.querySelector('.tapdance-menu');
+    if (existingMenu) {
+      existingMenu.remove();
+    }
+    const closebutton = get('.close-button');
+    closebutton.style['display'] = 'block';
+    const currentBoard = getSaved('boardsel');
+    if (currentBoard) {
+      displayBoard(currentBoard);
+    }
   });
 
   addInitializer('connected', () => {
