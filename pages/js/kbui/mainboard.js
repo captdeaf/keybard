@@ -169,7 +169,6 @@ addInitializer('connected', () => {
       isBigKey: isBigKey,
       ...opts,
     };
-    console.log('keydata', keydata);
     return keydata;
   }
 
@@ -512,6 +511,7 @@ addInitializer('connected', () => {
 
       // Update button visibility using active class
       leftButton.classList.toggle('active', isScrollable && !isAtStart);
+      leftButton.style.display = isScrollable ? 'flex' : 'none';
       leftButton.style.opacity = isScrollable ? 1 : 0;
       rightButton.classList.toggle('active', isScrollable && !isAtEnd);
       rightButton.style.opacity = isScrollable ? 1 : 0;
@@ -550,17 +550,6 @@ addInitializer('connected', () => {
       });
     });
 
-    // Update button visibility using active class
-    leftButton.classList.toggle('active', isScrollable && !isAtStart);
-    leftButton.style.display = isScrollable ? 'flex' : 'none';
-    leftButton.style.opacity = isScrollable ? 1 : 0;
-    rightButton.classList.toggle('active', isScrollable && !isAtEnd);
-    rightButton.style.opacity = isScrollable ? 1 : 0;
-    scrollableDiv.classList.remove(
-      'scroll-both-horizontal',
-      'scroll-start',
-      'scroll-end'
-    );
     // Update button states on scroll, resize, and container size changes
     scrollableDiv.addEventListener('scroll', updateScrollButtons);
     setTimeout(updateScrollButtons, 100);
