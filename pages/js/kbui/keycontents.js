@@ -17,12 +17,16 @@ const KEYUI = {
 
 addInitializer('load', () => {
   const LAYERKEYS = {
-    MO:  ['Hold', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
-    DF:  ['Def', 'Make default layer: ', 'key-layer key-layer-df'],
-    TG:  ['Toggle', 'Toggle to layer: ', 'key-layer key-layer-tg'],
-    TT:  ['Switch', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
-    OSL: ['OneShot', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
-    TO:  ['MkDef', 'Make layer default: ', 'key-layer key-layer-to'],
+    MO: ['Hold', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
+    DF: ['Def', 'Make default layer: ', 'key-layer key-layer-df'],
+    TG: ['Toggle', 'Toggle to layer: ', 'key-layer key-layer-tg'],
+    TT: ['Switch', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
+    OSL: [
+      'OneShot',
+      'Toggle to layer for one key: ',
+      'key-layer key-layer-osl',
+    ],
+    TO: ['MkDef', 'Make layer default: ', 'key-layer key-layer-to'],
   };
 
   ////////////////////////////////////
@@ -58,10 +62,10 @@ addInitializer('load', () => {
       return {
         str: '??Invld??',
         title: 'Invalid key string',
-      }
+      };
     }
 
-    if (keystr.startsWith('KC_') && ((keyid & 0xFF00) === 0)) {
+    if (keystr.startsWith('KC_') && (keyid & 0xff00) === 0) {
       return KEY.define(keystr);
     }
 
@@ -144,12 +148,12 @@ addInitializer('load', () => {
 
     m = keystr.match(/^(\w+_T)\((.*)\)$/);
     if (m) {
-      let modmask = keyid & 0xFF00;
-      let kcmask = keyid & 0x00FF;
+      let modmask = keyid & 0xff00;
+      let kcmask = keyid & 0x00ff;
       if (modmask in CODEMAP && kcmask in CODEMAP) {
         const modkey = KEY.define(modmask);
         const kckey = KEY.define(kcmask);
-        const modstr = modkey.str.replace('(kc)', '').replace('\n',' ').trim();
+        const modstr = modkey.str.replace('(kc)', '').replace('\n', ' ').trim();
         let kctitle = kckey.title;
         if (kctitle === 'KC_NO') {
           kctitle = 'Selected Key';
@@ -161,18 +165,18 @@ addInitializer('load', () => {
           top: modstr,
           str: kckey.str,
           title: modkey.title,
-        }
+        };
       }
     }
 
     m = keystr.match(/^(\w+)\((.*)\)$/);
     if (m) {
-      let modmask = keyid & 0xFF00;
-      let kcmask = keyid & 0x00FF;
+      let modmask = keyid & 0xff00;
+      let kcmask = keyid & 0x00ff;
       if (modmask in CODEMAP && kcmask in CODEMAP) {
         const modkey = KEY.define(modmask);
         const kckey = KEY.define(kcmask);
-        const modstr = modkey.str.replace('(kc)', '').replace('\n',' ').trim();
+        const modstr = modkey.str.replace('(kc)', '').replace('\n', ' ').trim();
         let kctitle = kckey.title;
         if (kctitle === 'KC_NO') {
           kctitle = 'Selected Key';
@@ -184,7 +188,7 @@ addInitializer('load', () => {
           top: modstr,
           str: kckey.str,
           title: modkey.title + ' + ' + kctitle,
-        }
+        };
       }
     }
 
@@ -194,7 +198,7 @@ addInitializer('load', () => {
     return {
       str: keystr,
       title: 'Unknown: ' + keystr,
-    }
+    };
   }
 
   KEYUI.getKeyContents = getKeyContents;
@@ -207,7 +211,10 @@ addInitializer('load', () => {
   // Resize an element's contents depending on its parents' width.
 
   function sizedElement(tag, opts, content, width) {
-    content = content.split('\n').map((i) => i.slice(0,8)).join('\n');
+    content = content
+      .split('\n')
+      .map((i) => i.slice(0, 8))
+      .join('\n');
     const el = EL(tag, opts, content);
     if (width === 0) {
       el.style['font-size'] = '12px';
@@ -228,6 +235,25 @@ addInitializer('load', () => {
       el.style['font-size'] = '20px';
     }
     return el;
+  }
+
+  function sizedIcon(icon, width) {
+    switch (icon) {
+      case 'tapdance':
+        return cloneElement(tapdanceIcon(width >= 60 ? 10 : 0));
+      default:
+        return EL('span', {}, icon);
+    }
+  }
+
+  function sizedSpan(text, width) {
+    if (width === 0) {
+      return EL('span', {}, `${text}`);
+    } else if (width >= 60) {
+      return EL('span', { style: { 'font-size': '18px' } }, `${text}`);
+    } else {
+      return EL('span', { style: { 'font-size': '12px' } }, `${text}`);
+    }
   }
 
   const masks = {
@@ -263,13 +289,31 @@ addInitializer('load', () => {
       let content = desc.str;
       const children = [];
       if (desc.type === 'layer') {
-        children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
+        children.push(
+          sizedElement(
+            'span',
+            { class: 'key-midb key-type key-layer' },
+            desc.str,
+            width
+          )
+        );
         if (desc.layertext !== 'Hold') {
-          children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
+          children.push(
+            sizedElement('span', { class: 'key-top' }, desc.layertext, 0)
+          );
         }
       } else if (desc.type === 'layerhold') {
-        children.push(sizedElement('span', {class: 'key-midb key-type key-layer'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, desc.layertext, 0));
+        children.push(
+          sizedElement(
+            'span',
+            { class: 'key-midb key-type key-layer' },
+            desc.str,
+            width
+          )
+        );
+        children.push(
+          sizedElement('span', { class: 'key-top' }, desc.layertext, 0)
+        );
       } else if (desc.type === 'modmask') {
         const show = showModMask(desc.modids);
         const keys = desc.str.split('\n');
@@ -277,22 +321,89 @@ addInitializer('load', () => {
           keys.push(keys[0]);
         }
         if (show.includes('S')) {
-          children.push(sizedElement('span', {class: 'key-midt key-type key-modmask'}, keys[0], width));
+          children.push(
+            sizedElement(
+              'span',
+              { class: 'key-midt key-type key-modmask' },
+              keys[0],
+              width
+            )
+          );
         } else {
-          children.push(sizedElement('span', {class: 'key-midt key-type key-modmask'}, keys[1], width));
+          children.push(
+            sizedElement(
+              'span',
+              { class: 'key-midt key-type key-modmask' },
+              keys[1],
+              width
+            )
+          );
         }
-        children.push(sizedElement('span', {class: 'key-bottom'}, show, width));
+        children.push(
+          sizedElement('span', { class: 'key-bottom' }, show, width)
+        );
       } else if (desc.type === 'modtap') {
-        children.push(sizedElement('span', {class: 'key-midb key-type key-modtap'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, showModMask(desc.modids), width));
+        children.push(
+          sizedElement(
+            'span',
+            { class: 'key-midb key-type key-modtap' },
+            desc.str,
+            width
+          )
+        );
+        children.push(
+          sizedElement(
+            'span',
+            { class: 'key-top' },
+            showModMask(desc.modids),
+            width
+          )
+        );
       } else if (desc.type === 'macro') {
-        children.push(sizedElement('span', {class: 'key-midb key-type key-macro'}, desc.str, width));
+        children.push(
+          sizedElement(
+            'span',
+            { class: 'key-midb key-type key-macro' },
+            desc.str,
+            width
+          )
+        );
       } else if (desc.type === 'tapdance') {
-        children.push(sizedElement('span', {class: 'key-type key-tapdance'}, desc.str, width));
-        children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
+        console.log('tapdance', desc);
+        children.push(
+          sizedElement(
+            'span',
+            { class: 'key-type key-tapdance', style: { display: 'none' } },
+            desc.str,
+            width
+          )
+        );
+        children.push(
+          sizedElement(
+            'span',
+            { class: 'key-top', style: { display: 'none' } },
+            desc.top,
+            width
+          )
+        );
+        console.log(sizedIcon('tapdance', width));
+        const tdContent = EL(
+          'div',
+          {
+            style: {
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            },
+          },
+          [sizedIcon('tapdance', width), sizedSpan(desc.tdid, width)]
+        );
+        children.push(tdContent);
       } else {
         if (desc.top) {
-          children.push(sizedElement('span', {class: 'key-top'}, desc.top, width));
+          children.push(
+            sizedElement('span', { class: 'key-top' }, desc.top, width)
+          );
         }
         children.push(sizedElement('span', {}, desc.str, width));
       }

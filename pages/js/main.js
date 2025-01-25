@@ -12,7 +12,6 @@ const PARAMS = new URL(window.location.href).searchParams;
 
 function startKeyBard() {
   runInitializers('load');
-
   if (!navigator.hid) {
     get('#launch').style['display'] = 'none';
     get('#nosupport').style['display'] = 'block';
@@ -22,11 +21,13 @@ function startKeyBard() {
   const kbiuri = PARAMS.get('kbi');
 
   if (SETTINGS.playback) {
-    setTimeout(() => { doStuff(); }, 100);
+    setTimeout(() => {
+      doStuff();
+    }, 100);
   } else {
     get('#launch').onclick = () => {
       doStuff();
-    }
+    };
   }
   if (kbiuri) {
     tryFetchKBI(kbiuri);
@@ -58,11 +59,13 @@ addInitializer('load', () => {
 });
 
 async function tryConnect() {
-  const opened = await USB.open([{
-    // Filter for QMK/Vial kbs
-    usagePage: 0xFF60,
-    usage: 0x61,
-  }]);
+  const opened = await USB.open([
+    {
+      // Filter for QMK/Vial kbs
+      usagePage: 0xff60,
+      usage: 0x61,
+    },
+  ]);
   return opened;
 }
 
@@ -71,7 +74,7 @@ async function doStuff(kbinfo) {
     setActiveKBINFO(kbinfo);
     await initUploadedKBINFO();
   } else {
-    if (!await tryConnect()) {
+    if (!(await tryConnect())) {
       return false;
     }
     const kbinfo = {};
@@ -100,8 +103,7 @@ async function doStuff(kbinfo) {
   }
 }
 
-async function initUploadedKBINFO() {
-}
+async function initUploadedKBINFO() {}
 
 async function initVial(kbinfo) {
   await Vial.init(kbinfo);
