@@ -218,6 +218,12 @@
 
 #float-macro-render {
   margin-top: 18px;
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .float-tapdance-row {
@@ -395,25 +401,26 @@ div.fill {
 }
 
 #float-macro {
-  width: 400px;
-  min-height: 600px;
+  width: 500px !important;
   overflow: auto;
-  padding-left: 50px;
+  padding-left: 70px;
+  z-index: 3000;
+  align-self: center;
 }
 
 .float-macro-buttons {
   display: flex;
   flex-flow: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 5px;
 }
 
 .float-macro-buttons button {
-  margin: 5px;
+  margin: 2px;
   background-color: black;
   color: white;
-  border-radius: 15px;
-  padding: 5px;
+  border-radius: 25px;
+  padding: 2px 50px;
+  flex-grow: 0;
   border: none;
-  width: 50%;
 }

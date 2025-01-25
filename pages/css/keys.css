@@ -186,12 +186,13 @@
   position: relative;
   min-width: 70px;
   height: 62px;
-  text-align: middle;
+  text-align: start;
   display: flex;
-  flex-flow: column;
-  border: 1px solid black;
+  flex-flow: row;
+  align-items: flex-start;
   border-radius: 3px;
   padding: 6px;
+  width: 100px;
 }
 
 .macro-buttons {
@@ -639,7 +640,8 @@
   color: white;
 }
 
-.tapdance-key {
+.tapdance-key,
+.macro-key-edit {
   background-color: black;
   color: white;
   display: flex;
@@ -652,6 +654,15 @@
   padding: 5px;
   width: 42px;
   height: 42px;
+}
+
+.macro-key-edit {
+  padding-top: 5px;
+}
+
+#float-macro-name {
+  margin-top: -5px;
+  font-size: 14px;
 }
 
 .qwerty-elastic {

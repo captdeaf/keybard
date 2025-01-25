@@ -100,9 +100,9 @@ addInitializer('load', () => {
         EL('div', { class: 'swap-macro-back' }, '&lt;'),
         EL('div', { class: 'remove-macro' }, 'X'),
         EL('div', { class: 'swap-macro-forward' }, '&gt;'),
-        EL('div', { class: 'macro-type' }, desc),
       ]),
       ret.el,
+      EL('div', { class: 'kbdesc' }, desc),
     ]);
     return ret;
   }
@@ -132,7 +132,7 @@ addInitializer('load', () => {
       type,
       'div',
       {
-        class: 'key key-' + type,
+        class: 'key td-radius' + (value !== 'KC_NO' ? ' green' : ' white'),
         'data-key': value,
         'data-macro': type,
         'data-bound': 'macro',
@@ -153,13 +153,19 @@ addInitializer('load', () => {
   function renderAction(action) {
     if (action[0] === 'text') {
       return wrapAction(
-        'text',
+        '',
         'input',
         {
           'data-macro': action[0],
           type: 'text',
           value: action[1],
-          style: { width: '7em', resize: 'horizontal' },
+          style: {
+            width: '200px',
+            resize: 'horizontal',
+            borderRadius: '5px',
+            border: '1px solid #ddd',
+            padding: '10px',
+          },
           placeholder: 'text',
         },
         ''
@@ -173,7 +179,13 @@ addInitializer('load', () => {
           'data-macro': action[0],
           type: 'number',
           maxlength: 5,
-          style: { width: '5em' },
+          style: {
+            width: '100px',
+            resize: 'horizontal',
+            borderRadius: '5px',
+            border: '1px solid #ddd',
+            padding: '10px',
+          },
           value: action[1],
           placeholder: 'text',
         },
@@ -212,7 +224,7 @@ addInitializer('load', () => {
   ////////////////////////////////////
   function renderMacroFloat(macro, actions) {
     if (!actions) actions = macro.actions;
-    floatname.innerHTML = 'M' + macro.mid;
+    floatname.innerHTML = macro.mid;
 
     savebutton.dataset.mid = macro.mid;
 
@@ -221,8 +233,6 @@ addInitializer('load', () => {
     const sidebar = get('#sidebar');
     const rect = sidebar.getBoundingClientRect();
     floater.style['left'] = rect.x + rect.width + 'px';
-    floater.style['top'] =
-      rect.y + rect.height / 2 - floater.clientHeight / 2 + 'px';
 
     const menuEl = document.createElement('div');
     menuEl.className = 'tapdance-menu';
@@ -244,7 +254,6 @@ addInitializer('load', () => {
       flex-direction: column;
       justify-content: center;
       gap: 4px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     `;
 
     tapdanceMacroMenuItems.forEach((item) => {
@@ -280,6 +289,7 @@ addInitializer('load', () => {
     });
 
     floater.appendChild(menuEl);
+    menuEl.style.left = 0;
     displayBoard('layer', true, 'Add layers to macro');
   }
 

@@ -3,7 +3,16 @@
   class="new-floater closeable"
   style="width: 300px; min-height: 300px"
 >
-  <div id="float-macro-name">M?</div>
+  <div class="button-row">
+    <div class="macro-key-edit" id="float-macro-key">
+      <div>{{icons/macro_white.html}}</div>
+      <div id="float-macro-name">M?</div>
+    </div>
+    <div class="float-title">Macro key</div>
+    <button class="close close-float" data-action="close">
+      {{icons/close.html}}
+    </button>
+  </div>
   <div id="float-macro-render" class="kb-row kb-row-wrap"></div>
   <div class="float-macro-buttons">
     <div class="fill"></div>
@@ -35,10 +44,7 @@
       Delay
     </button>
     <div class="fill"></div>
-    <div class="topright">
-      <button id="save-macro">Save</button>
-      <button class="close">Close</button>
-    </div>
   </div>
   <div class="fill"></div>
+  <button id="save-macro">Save</button>
 </div>
