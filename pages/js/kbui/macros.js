@@ -221,11 +221,9 @@ addInitializer('load', () => {
     const sidebar = get('#sidebar');
     const rect = sidebar.getBoundingClientRect();
     floater.style['left'] = rect.x + rect.width + 'px';
-    // vertical center
     floater.style['top'] =
       rect.y + rect.height / 2 - floater.clientHeight / 2 + 'px';
 
-    // Create and position the menu element
     const menuEl = document.createElement('div');
     menuEl.className = 'tapdance-menu';
     menuEl.style.cssText = `

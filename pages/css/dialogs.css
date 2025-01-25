@@ -393,3 +393,27 @@ div.fill {
   width: 100px;
   text-align: left;
 }
+
+#float-macro {
+  width: 400px;
+  min-height: 600px;
+  overflow: auto;
+  padding-left: 50px;
+}
+
+.float-macro-buttons {
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.float-macro-buttons button {
+  margin: 5px;
+  background-color: black;
+  color: white;
+  border-radius: 15px;
+  padding: 5px;
+  border: none;
+  width: 50%;
+}
