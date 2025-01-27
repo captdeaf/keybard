@@ -227,6 +227,16 @@ addInitializer('load', () => {
     floatname.innerHTML = macro.mid;
 
     savebutton.dataset.mid = macro.mid;
+    const sortable = new Draggable.Sortable(floatbody, {
+      draggable: '.macro-action',
+      handle: '.drag-macro',
+    });
+
+    // TODO: update actions array to reflect the new order from drag & drop
+    sortable.on('sortable:start', (evt) => console.log('sortable:start'));
+    sortable.on('sortable:sort', (evt) => console.log('sortable:sort'));
+    sortable.on('sortable:sorted', (evt) => console.log('sortable:sorted'));
+    sortable.on('sortable:stop', (evt) => console.log('sortable:stop'));
 
     renderMacroActions(macro, actions);
     floater.style['display'] = 'block';
@@ -414,6 +424,10 @@ addInitializer('load', () => {
   ////////////////////////////////////
   addInitializer('connected', () => {
     const macroBoard = get('#macro-board');
+    const sortable = new Draggable.Sortable(macroBoard, {
+      draggable: '.draggable-key',
+      handle: '.drag-macro',
+    });
     const rows = [];
     for (let idx = 0; idx < KBINFO.macro_count; idx++) {
       const mid = idx;
@@ -485,13 +499,15 @@ addInitializer('load', () => {
       appendChildren(keyContainer, dragButton);
       appendChildren(keyContainer, editButton);
       const dottedLine = EL('div', { class: 'dotted-line' });
-      const macroContainer = EL('div', { class: 'macro-container' });
+      const macroContainer = EL('div', {
+        class: 'macro-container  draggable-key',
+      });
       appendChildren(macroContainer, macroNumber);
       appendChildren(macroContainer, dottedLine);
       appendChildren(macroContainer, keyContainer);
       rows.push(macroContainer);
     }
-    appendChildren(macroBoard, EL('div', { class: 'kb-group' }, ...rows));
+    appendChildren(macroBoard, ...rows);
   });
 
   ////////////////////////////////////
