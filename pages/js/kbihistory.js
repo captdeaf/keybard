@@ -30,18 +30,17 @@
 // e.g: On file upload, HISTORY.push('upload', kbinfo) will stop modifying the previous
 //      kbinfo.
 //
-// On loading a history or sample, we don't want to push those into history, so
-// we mark it as "viewing" until a change happens.
-//
 ////////////////////////////////////
 
 const HISTORY = {
   MAX: 20,
-  IGNORED_CAUSES: {
-    'load': true,
+  IGNORED: {
     'sample': true,
+    'load': true,
+    'uploaded': true,
   },
   viewing: false,
+  ts: new Date().getTime(),
   saved: [],
   refresh: () => {
     HISTORY.saved = getSaved('kbi_saved', []);
@@ -83,15 +82,14 @@ const HISTORY = {
     appendChildren(histmenu, els);
   },
   push: (cause, kbinfo, force) => {
-    if (!force && HISTORY.IGNORED_CAUSES[cause]) {
-      HISTORY.viewing = true;
+    if (HISTORY.IGNORED[cause]) {
       return;
     }
-    HISTORY.viewing = false;
     HISTORY.saved.unshift({
       cause: cause,
       name: kbinfo.payload.name,
       time: new Date().getTime(),
+      ts: HISTORY.ts,
       kbinfo: kbinfo,
     });
     HISTORY.save();
@@ -103,7 +101,7 @@ const HISTORY = {
   },
   update: (kbinfo) => {
     kbinfo = structuredClone(kbinfo);
-    if (HISTORY.viewing || HISTORY.saved[0].cause !== 'update') {
+    if (HISTORY.saved.length < 1 || HISTORY.saved[0].ts !== HISTORY.ts) {
       HISTORY.push('update', kbinfo);
     } else {
       HISTORY.saved[0].kbinfo = kbinfo;

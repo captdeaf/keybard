@@ -266,7 +266,7 @@ addInitializer('load', () => {
             updateAllChanges();
           } else {
             console.log('new base');
-            doStuff(kbinfo);
+            doStuff(kbinfo, 'uploaded');
           }
         } catch (err) {
           console.error(err);
