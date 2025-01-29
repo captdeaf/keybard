@@ -43,7 +43,7 @@ Object.assign(KBINFO, DEFAULT_KBINFO);
 //  This is where we update older versions if necessary.
 //
 ////////////////////////////////////
-function setActiveKBINFO(kbinfo) {
+function setActiveKBINFO(kbinfo, cause) {
   if (!('cosmetic' in kbinfo)) {
     kbinfo.cosmetic = getSaved('names', {
       layer: {
@@ -111,6 +111,7 @@ const CHANGES = {
       el.classList.remove('changed');
     }
 
+    HISTORY.update(KBINFO);
     BASE_KBINFO = structuredClone(KBINFO);
   }
 };

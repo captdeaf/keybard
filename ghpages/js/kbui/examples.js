@@ -98,10 +98,10 @@ addInitializer('load', () => {
   ACTION.onclick('[data-sample-kbi]', (target) => {
     const kbi = sampleKBIs[target.dataset.sampleKbi];
     if (CONNECTED) {
-      setActiveKBINFO(kbi);
+      setActiveKBINFO(kbi, 'sample');
       updateAllChanges();
     } else {
-      doStuff(kbi);
+      doStuff(kbi, 'sample');
     }
     ACTION.menuClose();
   });

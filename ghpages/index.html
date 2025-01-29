@@ -31,6 +31,7 @@
 <script type="text/javascript" src="js/keys.js"></script>
 <script type="text/javascript" src="js/jskeys.js"></script>
 <script type="text/javascript" src="js/kbinfo.js"></script>
+<script type="text/javascript" src="js/kbihistory.js"></script>
 
 <!-- USB proto -->
 <script type="text/javascript" src="js/usbhid.js"></script>
@@ -127,6 +128,11 @@
     Open Matrix Tester
   </label>
   <hr>
+  <label class="menuitem dropdown">
+    &gt; KB History
+    <div class="dropdown-content" id="history-kbis">
+    </div>
+  </label>
   <label class="menuitem dropdown">
     &gt; Sample .kbis - replace entire board functionality.
     <div class="dropdown-content" id="sample-kbis">
@@ -1274,19 +1280,6 @@
     </div>
     <div id="tiptip">
       <div class="tip">
-  <h3>Layer names</h3>
-  <p>
-    Did you know: You can assign cosmetic names to your layers in Keybard!
-    These are in-memory, and saved in your .kbi file on download, so other apps
-    such as vial will not recognize or show layer names.
-  </p>
-  <p>
-    To rename a layer, r-click its number in the layer selection tab, and
-    enter its name! To clear, just submit an empty string at the prompt.
-  </p>
-  <img src="images/tip-layername.png"/ style="width: 400px;">
-</div>
-<div class="tip">
   <h3>TypeBind</h3>
   <p>
     Did you know: While normally you click a key in your keyboard, then a key
@@ -1298,16 +1291,6 @@
     Bonus: works exceptionally well with Serial Assignment!
   </p>
   <img src="images/tip-typebind.png"/ style="width: 300px;">
-</div>
-<div class="tip">
-  <h3>Printing layer maps</h3>
-  <p>
-    Did you know: While the default UI is annoying to print, Keybard has a
-    "print" option in the menu that opens a new window with all your
-    non-empty layers. You can remove them at will, and print out an easy
-    reference sheet!
-  </p>
-  <img src="images/tip-print.png"/ style="width: 500px;">
 </div>
 <div class="tip">
   <h3>Quick actions for keys</h3>
@@ -1326,6 +1309,29 @@
     and tap dance!
   </p>
   <img src="images/tip-contextmenu.png"/ style="width: 300px;">
+</div>
+<div class="tip">
+  <h3>Layer names</h3>
+  <p>
+    Did you know: You can assign cosmetic names to your layers in Keybard!
+    These are in-memory, and saved in your .kbi file on download, so other apps
+    such as vial will not recognize or show layer names.
+  </p>
+  <p>
+    To rename a layer, r-click its number in the layer selection tab, and
+    enter its name! To clear, just submit an empty string at the prompt.
+  </p>
+  <img src="images/tip-layername.png"/ style="width: 400px;">
+</div>
+<div class="tip">
+  <h3>Printing layer maps</h3>
+  <p>
+    Did you know: While the default UI is annoying to print, Keybard has a
+    "print" option in the menu that opens a new window with all your
+    non-empty layers. You can remove them at will, and print out an easy
+    reference sheet!
+  </p>
+  <img src="images/tip-print.png"/ style="width: 500px;">
 </div>
 <div class="tip">
   <h3>Serial Assignment</h3>
