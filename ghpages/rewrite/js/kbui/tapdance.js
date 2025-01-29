@@ -68,7 +68,13 @@ addInitializer('load', () => {
         'data-tapdance-type': type,
         'data-bound': 'tapdance',
         'data-key': tapdance[type],
-        class: 'key' + (tapdance[type] !== 'KC_NO' ? ' green' : ' white'),
+        class:
+          'key' +
+          (tapdance[type] !== 'KC_NO' ? ' green' : ' white') +
+          ' td-radius',
+        style: {
+          borderRadius: '5px !important',
+        },
       });
       appendChildren(el, divs[type]);
     }
@@ -92,12 +98,73 @@ addInitializer('load', () => {
     const sidebar = get('#sidebar');
     const rect = sidebar.getBoundingClientRect();
     floater.style['left'] = rect.x + rect.width + 'px';
+
+    // Create and position the menu element
+    const menuEl = document.createElement('div');
+    menuEl.className = 'tapdance-menu';
+    menuEl.style.cssText = `
+      position: absolute;
+      left: 120px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #fafafa;
+      border: 1px solid #dadce0;
+      border-left: none;
+      border-bottom-right-radius: 15px;
+      border-top-right-radius: 15px;
+      padding-left: 4px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    `;
+
+    tapdanceMacroMenuItems.forEach((item) => {
+      const menuItem = document.createElement('div');
+      menuItem.className = 'tapdance-menu-item';
+      menuItem.style.cssText = `
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-bottom-left-radius: 4px;
+        transition: background-color 0.2s;
+      `;
+      menuItem.innerHTML = item.icon;
+      menuItem.title = item.label;
+      menuItem.onmouseover = () => (menuItem.style.backgroundColor = '#f1f3f4');
+      menuItem.onmouseout = () =>
+        (menuItem.style.backgroundColor = 'transparent');
+      menuItem.onclick = () => {
+        // get current board
+        console.log(item.label);
+        if (item.label === 'Macros') {
+          displayBoard('macro', true, 'Add macros to tapdance');
+        } else if (item.label === 'Layers') {
+          displayBoard('layer', true, 'Add layers to tapdance');
+        } else if (item.label === 'Keyboard') {
+          displayBoard('qwerty', true, 'Add keyboard keys to tapdance');
+        }
+      };
+      menuEl.appendChild(menuItem);
+    });
+
+    floater.appendChild(menuEl);
+    // put menu in the left side of floater
+    menuEl.style.left = 0;
     // vertical centering
     floater.style['top'] =
       Math.max(
         0,
         (window.innerHeight - floater.getBoundingClientRect().height) / 2
       ) + 'px';
+    displayBoard('layer', true, 'Add layers to tapdance');
   }
 
   ////////////////////////////////////
@@ -115,6 +182,16 @@ addInitializer('load', () => {
     CHANGES.queue('TD' + editID, () => KBAPI.updateTapdance(editID));
     KEYUI.refreshAllKeys();
     floater.style['display'] = 'none';
+    const existingMenu = floater.querySelector('.tapdance-menu');
+    if (existingMenu) {
+      existingMenu.remove();
+    }
+    const closebutton = get('.close-button');
+    closebutton.style['display'] = 'block';
+    const currentBoard = getSaved('boardsel');
+    if (currentBoard) {
+      displayBoard(currentBoard);
+    }
   });
 
   addInitializer('connected', () => {
@@ -153,10 +230,25 @@ addInitializer('load', () => {
           'data-tdid': tdid,
           'data-bind': 'key',
           'data-key': 'TD(' + tdid + ')',
-          class: 'key kb-key key-tapdance',
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignContent: 'center',
+            justifyItems: 'center',
+            backgroundColor: '#000',
+            color: '#fff',
+            paddingTop: '5px',
+            width: '45px',
+            borderRadius: '5px',
+            fontSize: '14px',
+          },
+          class: 'layer-key',
         },
         ''
       );
+      appendChildren(keytpl, tapdanceIcon(0), `${tdid}`);
       const tdNumber = EL('div', { class: 'tapdance-number' }, `${tdid}`);
       const keyContainer = EL('div', { class: 'key-container' });
       appendChildren(keyContainer, keytpl);
@@ -171,7 +263,6 @@ addInitializer('load', () => {
           class: 'edit-macro',
           style: { opacity: '0' },
           'data-tdid': tdid,
-          'data-context-trigger': 'key-macro-edit',
         },
         `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z"/></svg>`
       );

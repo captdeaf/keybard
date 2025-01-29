@@ -100,9 +100,9 @@ addInitializer('load', () => {
         EL('div', { class: 'swap-macro-back' }, '&lt;'),
         EL('div', { class: 'remove-macro' }, 'X'),
         EL('div', { class: 'swap-macro-forward' }, '&gt;'),
-        EL('div', { class: 'macro-type' }, desc),
       ]),
       ret.el,
+      EL('div', { class: 'kbdesc' }, desc),
     ]);
     return ret;
   }
@@ -132,7 +132,7 @@ addInitializer('load', () => {
       type,
       'div',
       {
-        class: 'key key-' + type,
+        class: 'key td-radius' + (value !== 'KC_NO' ? ' green' : ' white'),
         'data-key': value,
         'data-macro': type,
         'data-bound': 'macro',
@@ -153,13 +153,19 @@ addInitializer('load', () => {
   function renderAction(action) {
     if (action[0] === 'text') {
       return wrapAction(
-        'text',
+        '',
         'input',
         {
           'data-macro': action[0],
           type: 'text',
           value: action[1],
-          style: { width: '7em', resize: 'horizontal' },
+          style: {
+            width: '200px',
+            resize: 'horizontal',
+            borderRadius: '5px',
+            border: '1px solid #ddd',
+            padding: '10px',
+          },
           placeholder: 'text',
         },
         ''
@@ -173,7 +179,13 @@ addInitializer('load', () => {
           'data-macro': action[0],
           type: 'number',
           maxlength: 5,
-          style: { width: '5em' },
+          style: {
+            width: '100px',
+            resize: 'horizontal',
+            borderRadius: '5px',
+            border: '1px solid #ddd',
+            padding: '10px',
+          },
           value: action[1],
           placeholder: 'text',
         },
@@ -212,12 +224,83 @@ addInitializer('load', () => {
   ////////////////////////////////////
   function renderMacroFloat(macro, actions) {
     if (!actions) actions = macro.actions;
-    floatname.innerHTML = 'M' + macro.mid;
+    floatname.innerHTML = macro.mid;
 
     savebutton.dataset.mid = macro.mid;
+    const sortable = new Draggable.Sortable(floatbody, {
+      draggable: '.macro-action',
+      handle: '.drag-macro',
+    });
+
+    // TODO: update actions array to reflect the new order from drag & drop
+    sortable.on('sortable:start', (evt) => console.log('sortable:start'));
+    sortable.on('sortable:sort', (evt) => console.log('sortable:sort'));
+    sortable.on('sortable:sorted', (evt) => console.log('sortable:sorted'));
+    sortable.on('sortable:stop', (evt) => console.log('sortable:stop'));
 
     renderMacroActions(macro, actions);
     floater.style['display'] = 'block';
+    const sidebar = get('#sidebar');
+    const rect = sidebar.getBoundingClientRect();
+    floater.style['left'] = rect.x + rect.width + 'px';
+
+    const menuEl = document.createElement('div');
+    menuEl.className = 'tapdance-menu';
+    menuEl.style.cssText = `
+      position: absolute;
+      left: 120px;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: #fafafa;
+      border: 1px solid #dadce0;
+      border-left: none;
+      border-bottom-right-radius: 15px;
+      border-top-right-radius: 15px;
+      padding-left: 4px;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      padding-right: 6px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    `;
+
+    tapdanceMacroMenuItems.forEach((item) => {
+      const menuItem = document.createElement('div');
+      menuItem.className = 'tapdance-menu-item';
+      menuItem.style.cssText = `
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        border-bottom-left-radius: 4px;
+        transition: background-color 0.2s;
+      `;
+      menuItem.innerHTML = item.icon;
+      menuItem.title = item.label;
+      menuItem.onmouseover = () => (menuItem.style.backgroundColor = '#f1f3f4');
+      menuItem.onmouseout = () =>
+        (menuItem.style.backgroundColor = 'transparent');
+      menuItem.onclick = () => {
+        // get current board
+        console.log(item.label);
+        if (item.label === 'Macros') {
+          displayBoard('macro', true, 'Add macros to macro');
+        } else if (item.label === 'Layers') {
+          displayBoard('layer', true, 'Add layers to macro');
+        } else if (item.label === 'Keyboard') {
+          displayBoard('qwerty', true, 'Add keyboard keys to macro');
+        }
+      };
+      menuEl.appendChild(menuItem);
+    });
+
+    floater.appendChild(menuEl);
+    menuEl.style.left = 0;
+    displayBoard('layer', true, 'Add layers to macro');
   }
 
   ACTION.onclick('[data-macro-add]', (target) => {
@@ -341,6 +424,10 @@ addInitializer('load', () => {
   ////////////////////////////////////
   addInitializer('connected', () => {
     const macroBoard = get('#macro-board');
+    const sortable = new Draggable.Sortable(macroBoard, {
+      draggable: '.draggable-key',
+      handle: '.drag-macro',
+    });
     const rows = [];
     for (let idx = 0; idx < KBINFO.macro_count; idx++) {
       const mid = idx;
@@ -352,22 +439,49 @@ addInitializer('load', () => {
 
           'data-bind': 'key',
           'data-key': 'M' + mid,
-          class: 'key kb-key key-macro elastic-macro',
+          class: 'layer-key',
+          style: {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignContent: 'center',
+            justifyItems: 'center',
+            backgroundColor: '#000',
+            color: '#fff',
+            paddingTop: '5px',
+            width: '45px',
+            borderRadius: '5px',
+            fontSize: '14px',
+          },
         },
         ''
       );
+      const macroIcon = EL(
+        'div',
+        {
+          style: {
+            width: '16px',
+            height: '16px',
+            marginBottom: '5px',
+          },
+        },
+        `<svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.35156 5.88281C0.924479 5.88281 0.591146 5.76562 0.351562 5.53125C0.111979 5.29688 -0.0078125 4.97135 -0.0078125 4.55469V1.92969C-0.0078125 1.51823 0.111979 1.19531 0.351562 0.960938C0.591146 0.726562 0.924479 0.609375 1.35156 0.609375H3.90625C4.33333 0.609375 4.66667 0.726562 4.90625 0.960938C5.14583 1.19531 5.26562 1.51823 5.26562 1.92969V4.55469C5.26562 4.97135 5.14583 5.29688 4.90625 5.53125C4.66667 5.76562 4.33333 5.88281 3.90625 5.88281H1.35156ZM1.35156 14.0625C0.924479 14.0625 0.591146 13.9453 0.351562 13.7109C0.111979 13.4818 -0.0078125 13.1589 -0.0078125 12.7422V10.1172C-0.0078125 9.70052 0.111979 9.3776 0.351562 9.14844C0.591146 8.91406 0.924479 8.79688 1.35156 8.79688H3.90625C4.33333 8.79688 4.66667 8.91406 4.90625 9.14844C5.14583 9.3776 5.26562 9.70052 5.26562 10.1172V12.7422C5.26562 13.1589 5.14583 13.4818 4.90625 13.7109C4.66667 13.9453 4.33333 14.0625 3.90625 14.0625H1.35156ZM7.53125 1.78906C7.36458 1.78906 7.22396 1.73177 7.10938 1.61719C6.99479 1.5026 6.9375 1.36198 6.9375 1.19531C6.9375 1.03385 6.99479 0.895833 7.10938 0.78125C7.22396 0.666667 7.36458 0.609375 7.53125 0.609375H15.1328C15.2995 0.609375 15.4401 0.666667 15.5547 0.78125C15.6745 0.895833 15.7344 1.03385 15.7344 1.19531C15.7344 1.36198 15.6745 1.5026 15.5547 1.61719C15.4401 1.73177 15.2995 1.78906 15.1328 1.78906H7.53125ZM7.53125 5.88281C7.36458 5.88281 7.22396 5.82552 7.10938 5.71094C6.99479 5.59635 6.9375 5.45573 6.9375 5.28906C6.9375 5.1224 6.99479 4.98438 7.10938 4.875C7.22396 4.76042 7.36458 4.70312 7.53125 4.70312H15.1328C15.2995 4.70312 15.4401 4.76042 15.5547 4.875C15.6745 4.98438 15.7344 5.1224 15.7344 5.28906C15.7344 5.45573 15.6745 5.59635 15.5547 5.71094C15.4401 5.82552 15.2995 5.88281 15.1328 5.88281H7.53125ZM7.53125 9.97656C7.36458 9.97656 7.22396 9.91927 7.10938 9.80469C6.99479 9.6901 6.9375 9.54948 6.9375 9.38281C6.9375 9.21615 6.99479 9.07812 7.10938 8.96875C7.22396 8.85417 7.36458 8.79688 7.53125 8.79688H15.1328C15.2995 8.79688 15.4401 8.85417 15.5547 8.96875C15.6745 9.07812 15.7344 9.21615 15.7344 9.38281C15.7344 9.54948 15.6745 9.6901 15.5547 9.80469C15.4401 9.91927 15.2995 9.97656 15.1328 9.97656H7.53125ZM7.53125 14.0625C7.36458 14.0625 7.22396 14.0052 7.10938 13.8906C6.99479 13.7812 6.9375 13.6432 6.9375 13.4766C6.9375 13.3099 6.99479 13.1693 7.10938 13.0547C7.22396 12.9401 7.36458 12.8828 7.53125 12.8828H15.1328C15.2995 12.8828 15.4401 12.9401 15.5547 13.0547C15.6745 13.1693 15.7344 13.3099 15.7344 13.4766C15.7344 13.6432 15.6745 13.7812 15.5547 13.8906C15.4401 14.0052 15.2995 14.0625 15.1328 14.0625H7.53125Z" fill="white"/></svg>`
+      );
+      appendChildren(keytpl, macroIcon, `${mid}`);
       const macroNumber = EL('div', { class: 'macro-number' }, `${mid}`);
       const keyContainer = EL('div', { class: 'key-container' });
       appendChildren(keyContainer, keytpl);
       const dragButton = EL(
         'div',
-        { class: 'drag-macro' },
+        { class: 'drag-macro', style: { opacity: '0' } },
         `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="black"><path d="M360-160q-33 0-56.5-23.5T280-240q0-33 23.5-56.5T360-320q33 0 56.5 23.5T440-240q0 33-23.5 56.5T360-160Zm240 0q-33 0-56.5-23.5T520-240q0-33 23.5-56.5T600-320q33 0 56.5 23.5T680-240q0 33-23.5 56.5T600-160ZM360-400q-33 0-56.5-23.5T280-480q0-33 23.5-56.5T360-560q33 0 56.5 23.5T440-480q0 33-23.5 56.5T360-400Zm240 0q-33 0-56.5-23.5T520-480q0-33 23.5-56.5T600-560q33 0 56.5 23.5T680-480q0 33-23.5 56.5T600-400ZM360-640q-33 0-56.5-23.5T280-720q0-33 23.5-56.5T360-800q33 0 56.5 23.5T440-720q0 33-23.5 56.5T360-640Zm240 0q-33 0-56.5-23.5T520-720q0-33 23.5-56.5T600-800q33 0 56.5 23.5T680-720q0 33-23.5 56.5T600-640Z" /></svg>`
       );
       const editButton = EL(
         'div',
         {
           class: 'edit-macro',
+          style: { opacity: '0' },
           'data-mid': mid,
           'data-context-trigger': 'key-macro-edit',
         },
@@ -382,17 +496,18 @@ addInitializer('load', () => {
         class: 'control-container',
         style: { opacity: '0' },
       });
-      appendChildren(controlContainer, dragButton);
-      appendChildren(controlContainer, editButton);
-      appendChildren(keyContainer, controlContainer);
+      appendChildren(keyContainer, dragButton);
+      appendChildren(keyContainer, editButton);
       const dottedLine = EL('div', { class: 'dotted-line' });
-      const macroContainer = EL('div', { class: 'macro-container' });
+      const macroContainer = EL('div', {
+        class: 'macro-container  draggable-key',
+      });
       appendChildren(macroContainer, macroNumber);
       appendChildren(macroContainer, dottedLine);
       appendChildren(macroContainer, keyContainer);
       rows.push(macroContainer);
     }
-    appendChildren(macroBoard, EL('div', { class: 'kb-group' }, ...rows));
+    appendChildren(macroBoard, ...rows);
   });
 
   ////////////////////////////////////

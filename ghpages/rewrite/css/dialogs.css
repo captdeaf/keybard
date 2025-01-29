@@ -212,11 +212,18 @@
 }
 
 .new-floater .green {
-  border-radius: 8px !important;
+  border-radius: 5px !important;
+  border: none !important;
 }
 
 #float-macro-render {
   margin-top: 18px;
+  min-height: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 
 .float-tapdance-row {
@@ -267,7 +274,8 @@
 #float-tapdance-save {
   background-color: black;
   color: white;
-  border-radius: 8px;
+  border-radius: 10px;
+  font-size: 14px;
   justify-self: flex-end;
   padding-left: 20px;
   padding-right: 20px;
@@ -277,7 +285,14 @@
   margin-left: auto !important;
   border: none;
   text-transform: uppercase;
-  display: none;
+}
+
+.color-dot {
+  background-color: #ddd;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  margin-right: 15px;
 }
 
 #float-tapdance-name {
@@ -383,4 +398,29 @@ div.fill {
   margin-left: 20px;
   width: 100px;
   text-align: left;
+}
+
+#float-macro {
+  width: 500px !important;
+  overflow: auto;
+  padding-left: 70px;
+  z-index: 3000;
+  align-self: center;
+}
+
+.float-macro-buttons {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  padding: 5px;
+}
+
+.float-macro-buttons button {
+  margin: 2px;
+  background-color: black;
+  color: white;
+  border-radius: 25px;
+  padding: 2px 50px;
+  flex-grow: 0;
+  border: none;
 }

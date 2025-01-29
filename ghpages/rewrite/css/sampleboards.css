@@ -2,261 +2,268 @@
 
 /* Keyboard display for keymap bindings. */
 #key-selection {
-    flex: 0 0 content;
-    background-color: #fff;
+  flex: 0 0 content;
+  background-color: #fff;
 }
 
 .special-tabs {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 5px;
-    align-items: center;
-    padding-right: 1em;
-    border: none;
-    margin: 20px auto;
-    cursor: pointer;
-    transition: 0.2s;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5px;
+  align-items: center;
+  padding-right: 1em;
+  border: none;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
 .special-tabs .tab {
-    color: darkgrey;
-    font-size: 14px;
-    padding: 5px 15px;
-    border-radius: 50px;
-    transition: 0.2s;
+  color: darkgrey;
+  font-size: 14px;
+  padding: 5px 15px;
+  border-radius: 50px;
+  transition: 0.2s;
 }
 
 .special-tabs .tab.active {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 
 .special-tabs .tab:hover {
-    background-color: #f2f2f1;
-    color: black;
+  background-color: #f2f2f1;
+  color: black;
 }
 
 .special-tabs .tab.active:hover {
-    background-color: black;
-    color: white;
+  background-color: black;
+  color: white;
 }
 
 #boards-container {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
 }
 
 #board-title {
-    font-weight: bold;
-    color: darkslategrey !important;
+  font-weight: bold;
+  color: darkslategrey !important;
 }
 
 #sidebar {
-    display: flex;
-    background-color: #f2f2f1;
-    z-index: 2;
-    width: 80px;
-    transition: background-color 0.5s, width 0.5s;
-    animation: slideout 0.5s;
-    box-sizing: border-box;
+  display: flex;
+  background-color: #f2f2f1;
+  z-index: 2;
+  width: 80px;
+  transition: background-color 0.5s, width 0.5s;
+  animation: slideout 0.5s;
+  box-sizing: border-box;
 }
 
 @keyframes slidein {
-    from {
-        width: 80px;
-    }
-    to {
-        width: 600px;
-    }
+  from {
+    width: 80px;
+  }
+  to {
+    width: 600px;
+  }
 }
 
 @keyframes slideout {
-    from {
-        width: 600px;
-    }
-    to {
-        width: 80px;
-    }
+  from {
+    width: 600px;
+  }
+  to {
+    width: 80px;
+  }
 }
 
 #sidebar.active {
-    display: flex;
-    flex-direction: row;
-    height: 100%;
-    width: 600px;
-    background-color: #fafafa;
-    box-shadow: 14px 0px 54px -5px rgba(0, 0, 0, 0.05);
-    animation: slidein 0.5s;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  width: 600px;
+  background-color: #fafafa;
+  box-shadow: 14px 0px 54px -5px rgba(0, 0, 0, 0.05);
+  animation: slidein 0.5s;
+}
+
+#sidebar.active {
+  padding-right: 15px;
 }
 
 #allboards-container {
-    display: block;
-    background-color: #fafafa;
-    z-index: 1;
-    flex-grow: 1;
-    align-self: stretch;
-    overflow-x: scroll;
-    width: 500px;
-    box-sizing: border-box;
+  display: block;
+  background-color: #fafafa;
+  z-index: 1;
+  flex-grow: 1;
+  align-self: stretch;
+  overflow-x: scroll;
+  width: 500px;
+  box-sizing: border-box;
 }
 
 #allboards {
-    display: flex;
-    flex-direction: column;
-    align-content: stretch;
-    align-items: stretch;
-    overflow: auto;
-    height: 100%;
-    box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-content: stretch;
+  align-items: stretch;
+  overflow: hidden;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .board-map {
-    position: relative;
-    padding: 4px;
-    margin-bottom: 4.5px;
-    max-width: 100%;
-    flex-grow: 1;
-    flex-shrink: 0;
-    overflow: auto;
-    box-sizing: border-box;
+  position: relative;
+  padding: 4px;
+  margin-bottom: 4.5px;
+  max-width: 100%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .kb-board-mods {
-    position: relative;
-    overflow: auto;
-    width: 100%;
-    margin-bottom: 10px;
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .board-header {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    justify-items: center;
-    align-content: center;
-    padding: 0.5em;
-    padding-right: 1em;
-    border: none;
-    height: 5em;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  justify-items: center;
+  align-content: center;
+  padding: 0.5em;
+  padding-right: 1em;
+  border: none;
+  height: 5em;
 }
 
 .close-button svg:hover path {
-    fill: #000;
-    opacity: 1;
-    background-color: #bbb;
-    color: #fff;
-    border: 2px solid #bbb;
-    border-radius: 50px;
+  fill: #000;
+  opacity: 1;
+  background-color: #bbb;
+  color: #fff;
+  border: 2px solid #bbb;
+  border-radius: 50px;
 }
 
 .close-button {
-    cursor: pointer;
-    padding: 5px;
-    color: black;
-    font-size: 8pt;
-    transition: 0.5s;
+  cursor: pointer;
+  padding: 5px;
+  color: black;
+  font-size: 8pt;
+  transition: 0.5s;
 }
 
 .close-button svg {
-    transition: 0.5s;
+  transition: 0.5s;
 }
 
 .board-header h4 {
-    margin: 0;
-    padding: 0;
-    font-size: 1.5em;
-    line-height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+  line-height: 100%;
 }
 
 #board-selection {
-    flex: 0 0 content;
-    min-height: 95%;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-left: 1em;
-    margin-right: 1em;
-    display: flex;
-    flex-flow: column;
-    background-color: #fff;
-    padding: 4px;
-    border-radius: 50px;
-    justify-content: space-between;
-    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+  flex: 0 0 content;
+  min-height: 95%;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 1em;
+  margin-right: 1em;
+  display: flex;
+  flex-flow: column;
+  background-color: #fff;
+  padding: 4px;
+  border-radius: 50px;
+  justify-content: space-between;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 #board-selection-items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .lower-icons {
-    display: flex;
-    flex-direction: column;
-    margin-left: auto;
-    margin-right: auto;
-    gap: 5px;
-    margin-bottom: 15px;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  gap: 5px;
+  margin-bottom: 15px;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .lower-icon {
-    cursor: pointer;
-    color: black;
-    padding-left: auto;
-    padding-right: auto;
+  cursor: pointer;
+  color: black;
+  padding-left: auto;
+  padding-right: auto;
 }
 
 .board-sel {
-    cursor: pointer;
-    color: black;
-    font-size: 8pt;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    padding: 5px;
+  cursor: pointer;
+  color: black;
+  font-size: 8pt;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 5px;
 }
 
 .board-sel-unusual {
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    padding: 5px;
-    border-radius: 50px;
-    color: black;
-    font-size: 8pt;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 5px;
+  border-radius: 50px;
+  color: black;
+  font-size: 8pt;
 }
 
 .combo-gro .board-sel svg {
-    border-radius: 50%;
-    width: 100%;
+  border-radius: 50%;
+  width: 100%;
 }
 
 .board-sel:hover svg {
-    background-color: #ddd;
-    border-radius: 50px;
+  background-color: #ddd;
+  border-radius: 50px;
 }
 
 .board-sel svg {
-    transition: 0.3s;
+  transition: 0.3s;
 }
 
 .board-sel.active {
-    box-shadow: -2px 0px 0px 0px black;
-    color: #000;
+  box-shadow: -2px 0px 0px 0px black;
+  color: #000;
 }
 
 .board-sel.active svg path {
-    opacity: 1;
+  opacity: 1;
 }
 
 .layer-list-head {
-    display: inline-block;
+  display: inline-block;
 }

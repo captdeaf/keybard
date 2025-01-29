@@ -262,11 +262,11 @@ addInitializer('load', () => {
           kbinfo.keylayout = KLE.deserializeToKeylayout(kbinfo, kbinfo.payload.layouts.keymap);
           if (CONNECTED) {
             console.log('connected, updating');
-            setActiveKBINFO(kbinfo);
+            setActiveKBINFO(kbinfo, 'upload');
             updateAllChanges();
           } else {
             console.log('new base');
-            doStuff(kbinfo);
+            doStuff(kbinfo, 'uploaded');
           }
         } catch (err) {
           console.error(err);
