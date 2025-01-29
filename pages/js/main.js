@@ -21,13 +21,11 @@ function startKeyBard() {
   const kbiuri = PARAMS.get('kbi');
 
   if (SETTINGS.playback) {
-    setTimeout(() => {
-      doStuff();
-    }, 100);
+    setTimeout(() => { connectDevice('connect'); }, 100);
   } else {
     get('#launch').onclick = () => {
-      doStuff();
-    };
+      connectDevice('connect');
+    }
   }
   if (kbiuri) {
     tryFetchKBI(kbiuri);
@@ -38,7 +36,7 @@ async function tryFetchKBI(kbiuri) {
   const resp = await fetch(kbiuri);
   const kbinfo = await resp.json();
   if (kbinfo && kbinfo.payload) {
-    doStuff(kbinfo);
+    doStuff(kbinfo, 'fetched');
   }
 }
 
@@ -69,23 +67,23 @@ async function tryConnect() {
   return opened;
 }
 
-async function doStuff(kbinfo) {
-  if (kbinfo) {
-    setActiveKBINFO(kbinfo);
-    await initUploadedKBINFO();
-  } else {
-    if (!(await tryConnect())) {
-      return false;
-    }
-    const kbinfo = {};
-    await initVial(kbinfo);
-    setActiveKBINFO(kbinfo);
+async function connectDevice(cause) {
+  if (!await tryConnect()) {
+    return false;
   }
+  const kbinfo = {};
+  await initVial(kbinfo);
+  doStuff(kbinfo, cause);
+}
+
+async function doStuff(kbinfo, cause) {
+  setActiveKBINFO(kbinfo, cause);
 
   removeElement(get('#launch'));
   removeElement(get('#nosupport'));
 
   console.log('kbinfo', KBINFO);
+  HISTORY.push(cause, KBINFO);
   BASE_KBINFO = structuredClone(KBINFO);
 
   // Initialize KB UI
@@ -102,8 +100,6 @@ async function doStuff(kbinfo) {
     }, 100);
   }
 }
-
-async function initUploadedKBINFO() {}
 
 async function initVial(kbinfo) {
   await Vial.init(kbinfo);
