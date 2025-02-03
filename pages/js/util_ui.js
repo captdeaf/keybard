@@ -58,29 +58,6 @@ function getAll(selector, par) {
   return ret;
 }
 
-// Storage: getSaved and setSaved: For local storage. Good for remembering UI
-//          toggles and the like.
-function getSaved(name, otherwise) {
-  try {
-    const val = localStorage.getItem(name);
-    if (val === null) {
-      localStorage.setItem(name, JSON.stringify(otherwise));
-      return otherwise;
-    }
-    return JSON.parse(val);
-  } catch (err) {
-    return otherwise;
-  }
-}
-
-function setSaved(name, val) {
-  if (name === undefined) throw "Help";
-  try {
-    localStorage.setItem(name, JSON.stringify(val));
-  } catch (err) {}
-  return val;
-}
-
 // DOM/QoL: Add attributes quickly.
 function addAttrs(el, attrs) {
   for (const [k, v] of Object.entries(attrs)) {
