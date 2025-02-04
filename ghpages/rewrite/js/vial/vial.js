@@ -6,10 +6,11 @@
 //
 ////////////////////////////////////
 
-const Vial = {
+Object.assign(Vial, {
   init: async function(kbinfo) {
     KBAPI.wrapped = Vial.api;
   },
+
   load: async function(kbinfo) {
     // the .xz-compressed Vial information.
     await Vial.getKeyboardInfo(kbinfo);
@@ -107,4 +108,4 @@ const Vial = {
     }
     return kmpressed;
   },
-};
+});
