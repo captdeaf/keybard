@@ -6399,96 +6399,96 @@
       "actions": []
     }
   ],
-  "custom_keycodes": [
+  "custom_keycodes" : [
     {
-      "name": "SV_LEFT_DPI_INC",
       "shortName": "Left\nDPI +",
-      "title": "Increase the DPI of the left pointing device."
+      "title": "Increase the DPI of the left pointing device.",
+      "name": "SV_LEFT_DPI_INC"
     },
     {
-      "name": "SV_LEFT_DPI_DEC",
       "shortName": "Left\nDPI -",
-      "title": "Decrease the DPI of the left pointing device."
+      "title": "Decrease the DPI of the left pointing device.",
+      "name": "SV_LEFT_DPI_DEC"
     },
     {
-      "name": "SV_RIGHT_DPI_INC",
       "shortName": "Right\nDPI +",
-      "title": "Increase the DPI of the right pointing device."
+      "title": "Increase the DPI of the right pointing device.",
+      "name": "SV_RIGHT_DPI_INC"
     },
     {
-      "name": "SV_RIGHT_DPI_DEC",
       "shortName": "Right\nDPI -",
-      "title": "Decrease the DPI of the right pointing device."
+      "title": "Decrease the DPI of the right pointing device.",
+      "name": "SV_RIGHT_DPI_DEC"
     },
     {
-      "name": "SV_LEFT_SCROLL_TOGGLE",
       "shortName": "Scroll\nLeft\nToggle",
-      "title": "Toggle if the left pointer is scroll or pointer."
+      "title": "Toggle if the left pointer is scroll or pointer.",
+      "name": "SV_LEFT_SCROLL_TOGGLE"
     },
     {
-      "name": "SV_RIGHT_SCROLL_TOGGLE",
       "shortName": "Scroll\nRight\nToggle",
-      "title": "Toggle if the right pointer is scroll or pointer."
+      "title": "Toggle if the right pointer is scroll or pointer.",
+      "name": "SV_RIGHT_SCROLL_TOGGLE"
     },
     {
-      "name": "SV_RECALIBRATE_POINTER",
       "shortName": "Fix\nDrift",
-      "title": "Reset the calibration of the pointing device"
+      "title": "Reset the calibration of the pointing device",
+      "name": "SV_RECALIBRATE_POINTER"
     },
     {
-      "name": "SV_MH_CHANGE_TIMEOUTS",
       "shortName": "Mouse\nKey\nTimer",
-      "title": "Cycle between various settings of the mouse keys timer."
+      "title": "Cycle between various settings of the mouse keys timer.",
+      "name": "SV_MH_CHANGE_TIMEOUTS"
     },
     {
-      "name": "SV_CAPS_WORD",
       "shortName": "Caps\nWord\nToggle",
-      "title": "Toggle Caps Word."
+      "title": "Toggle Caps Word.",
+      "name": "SV_CAPS_WORD"
     },
     {
-      "name": "SV_TOGGLE_ACHORDION",
       "shortName": "Toggle\nACH",
-      "title": "Toggle Achordion"
+      "title": "Toggle Achordion",
+      "name": "SV_TOGGLE_ACHORDION"
     },
     {
-      "name": "SV_TOGGLE_23_67",
       "shortName": "MO 23\n(45=67)",
-      "title": "Toggle layer 2 and 3, if 4 and 5 also active toggle 6 and 7"
+      "title": "Toggle layer 2 and 3, if 4 and 5 also active toggle 6 and 7",
+      "name": "SV_TOGGLE_23_67"
     },
     {
-      "name": "SV_TOGGLE_45_67",
       "shortName": "MO 45\n(23=67)",
-      "title": "Toggle layer 4 and 5, if 2 and 3 also active toggle 6 and 7"
+      "title": "Toggle layer 4 and 5, if 2 and 3 also active toggle 6 and 7",
+      "name": "SV_TOGGLE_45_67"
     },
     {
-      "name": "SV_SNIPER_2",
       "shortName": "Sniper\n2x",
-      "title": "Slow the cursor 2x more."
+      "title": "Slow the cursor 2x more.",
+      "name": "SV_SNIPER_2"
     },
     {
-      "name": "SV_SNIPER_3",
       "shortName": "Sniper\n3x",
-      "title": "Slow the cursor 3x more."
+      "title": "Slow the cursor 3x more.",
+      "name": "SV_SNIPER_3"
     },
     {
-      "name": "SV_SNIPER_5",
       "shortName": "Sniper\n5x",
-      "title": "Slow the cursor 5x more."
+      "title": "Slow the cursor 5x more.",
+      "name": "SV_SNIPER_5"
     },
     {
-      "name": "SV_LEFT_SCROLL_HOLD",
-      "shortName": "Scroll\nLeft\nHold",
-      "title": "Hold to make the left pointing device scroll"
+      "shortName": "Scroll\nToggle\nHold",
+      "title": "Hold to toggle the pointer's scroll status.",
+      "name": "SV_SCROLL_HOLD"
     },
     {
-      "name": "SV_RIGHT_SCROLL_HOLD",
-      "shortName": "Scroll\nRight\nHold",
-      "title": "Hold to make the right pointing device scroll"
+      "shortName": "Scroll\nToggle",
+      "title": "Toggle the pointer's scroll status.",
+      "name": "SV_SCROLL_TOGGLE"
     },
     {
-      "name": "SV_OUTPUT_STATUS",
       "shortName": "Output\nStatus",
-      "title": "Output the current internal state of the keyboard."
+      "title": "Output the current internal state of the keyboard.",
+      "name": "SV_OUTPUT_STATUS"
     }
   ],
   "key_override_count": 30,
@@ -7145,6 +7145,7 @@
       "options": 7
     }
   ],
+  "macros_size": 795,
   "payload": {
     "name": "Svalboard Vial Definition",
     "author": "Morgan Venable",
@@ -7233,14 +7234,14 @@
         "name": "SV_SNIPER_5"
       },
       {
-        "shortName": "Scroll\nLeft\nHold",
-        "title": "Hold to make the left pointing device scroll",
-        "name": "SV_LEFT_SCROLL_HOLD"
+        "shortName": "Scroll\nToggle\nHold",
+        "title": "Hold to toggle the pointer's scroll status.",
+        "name": "SV_SCROLL_HOLD"
       },
       {
-        "shortName": "Scroll\nRight\nHold",
-        "title": "Hold to make the right pointing device scroll",
-        "name": "SV_RIGHT_SCROLL_HOLD"
+        "shortName": "Scroll\nToggle",
+        "title": "Toggle the pointer's scroll status.",
+        "name": "SV_SCROLL_TOGGLE"
       },
       {
         "shortName": "Output\nStatus",
@@ -7440,7 +7441,6 @@
       ]
     }
   },
-  "macros_size": 795,
   "rows": 10,
   "tapdance_count": 50,
   "tapdances": [
