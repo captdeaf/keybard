@@ -1,4 +1,4 @@
-// util_ui.js
+// browserutil.js
 //
 /////////////////////////////////////
 //
@@ -9,6 +9,29 @@
 // Ideally this should be transferrable between projects without a change.
 //
 /////////////////////////////////////
+
+// Storage: getSaved and setSaved: For local storage. Good for remembering UI
+//          toggles and the like.
+function getSaved(name, otherwise) {
+  try {
+    const val = localStorage.getItem(name);
+    if (val === null) {
+      localStorage.setItem(name, JSON.stringify(otherwise));
+      return otherwise;
+    }
+    return JSON.parse(val);
+  } catch (err) {
+    return otherwise;
+  }
+}
+
+function setSaved(name, val) {
+  if (name === undefined) throw "Help";
+  try {
+    localStorage.setItem(name, JSON.stringify(val));
+  } catch (err) {}
+  return val;
+}
 
 // QoL: This function creates a constant container / enum that will throw an
 // error if anything is requested that is undefined. For example: STATE.open vs
