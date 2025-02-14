@@ -85,6 +85,9 @@ const HISTORY = {
     if (HISTORY.IGNORED[cause]) {
       return;
     }
+    if (!kbinfo || !kbinfo.payload) {
+      return;
+    }
     HISTORY.saved.unshift({
       cause: cause,
       name: kbinfo.payload.name,
