@@ -113,11 +113,9 @@ const HISTORY = {
     HISTORY.save();
   },
 }
-var KBINFO_HISTORY = {};
 
 addInitializer('load', () => {
   HISTORY.refresh();
-  KBINFO_HISTORY = getSaved('kbinfo_history', {});
   addInitializer('connected', (kbinfo) => {
     HISTORY.refresh();
   });
