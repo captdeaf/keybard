@@ -21,6 +21,7 @@ function getSaved(name, otherwise) {
     }
     return JSON.parse(val);
   } catch (err) {
+    console.log('getSaved', name, err);
     return otherwise;
   }
 }
