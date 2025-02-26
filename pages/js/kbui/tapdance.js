@@ -27,6 +27,9 @@ addInitializer('load', () => {
     if (!tapdance) {
       tapdance = KBINFO.tapdances[tdid];
     }
+    if (!tapdance) {
+      return '';
+    }
     const ret = [];
     for (const k of ['tap', 'hold', 'doubletap', 'taphold']) {
       if (tapdance[k]) {

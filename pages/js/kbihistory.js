@@ -43,7 +43,6 @@ const HISTORY = {
   ts: new Date().getTime(),
   saved: [],
   refresh: () => {
-    console.log('saved', localStorage.getItem('kbi_saved', []));
     HISTORY.saved = getSaved('kbi_saved', []);
     HISTORY.render();
   },
