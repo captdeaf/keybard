@@ -81,6 +81,7 @@ const CHANGES = {
   async queue(desc, cb) {
     if (SETTINGS.instant) {
       await cb();
+      HISTORY.update(KBINFO);
       setTimeout(() => {
         for (const el of findAll('.changed')) {
           el.classList.remove('changed');
