@@ -81,6 +81,7 @@ const CHANGES = {
   async queue(desc, cb) {
     if (SETTINGS.instant) {
       await cb();
+      HISTORY.update(KBINFO);
       setTimeout(() => {
         for (const el of findAll('.changed')) {
           el.classList.remove('changed');
@@ -101,11 +102,14 @@ const CHANGES = {
   },
 
   async commit() {
+    let acted = false;
     for (const [desc, change] of Object.entries(CHANGES.todo)) {
       if (change && change.cb) {
         await change.cb();
+        acted = true;
       }
     }
+    if (!acted) { return; }
     CHANGES.todo = {};
     for (const el of findAll('.changed')) {
       el.classList.remove('changed');

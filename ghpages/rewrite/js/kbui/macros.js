@@ -26,6 +26,12 @@ addInitializer('load', () => {
     if (!macro) {
       macro = KBINFO.macros[mid];
     }
+    if (!macro) {
+      return {
+        str: "M" + mid,
+        title: "M" + mid,
+      };
+    }
     if (macro.actions.length > 0) {
       const all = [];
       const title = [];

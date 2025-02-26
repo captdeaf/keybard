@@ -74,6 +74,7 @@ Vial.macro = (function() {
       const actions = [];
       let offset = 0;
       let id = 0;
+      let curoffset = 0;
       while (offset < rawmacro.length) {
         const action = {};
         if (rawmacro[offset] === QMK_EXT_ID) {
@@ -112,6 +113,11 @@ Vial.macro = (function() {
             decoder.decode(dv),
           ]);
         }
+        if (curoffset === offset) {
+          actions = [];
+          break;
+        }
+        curoffset = offset;
       }
       return {
         mid: mid,
