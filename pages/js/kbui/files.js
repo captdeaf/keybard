@@ -136,7 +136,6 @@ addInitializer('load', () => {
           }
           kbinfo.keylayout = KLE.deserializeToKeylayout(kbinfo, kbinfo.payload.layouts.keymap);
           if (CONNECTED) {
-            console.log('connected, updating');
             setActiveKBINFO(kbinfo, 'upload');
             updateAllChanges();
           } else {
