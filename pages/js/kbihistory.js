@@ -81,7 +81,7 @@ const HISTORY = {
     }
     appendChildren(histmenu, els);
   },
-  push: (cause, kbinfo, force) => {
+  push: (cause, kbinfo) => {
     if (HISTORY.IGNORED[cause]) {
       return;
     }
@@ -103,14 +103,14 @@ const HISTORY = {
     HISTORY.render();
   },
   update: (kbinfo) => {
-    kbinfo = structuredClone(kbinfo);
-    if (HISTORY.saved.length < 1 || HISTORY.saved[0].ts !== HISTORY.ts) {
+    let newkbi = structuredClone(kbinfo);
+    if (HISTORY.saved.length < 1 || HISTORY.saved[0].cause !== 'update' || HISTORY.saved[0].ts !== HISTORY.ts) {
       HISTORY.push('update', kbinfo);
     } else {
       HISTORY.saved[0].kbinfo = kbinfo;
       HISTORY.saved[0].time = new Date().getTime();
+      HISTORY.save();
     }
-    HISTORY.save();
   },
 }
 
