@@ -109,7 +109,10 @@ const CHANGES = {
         acted = true;
       }
     }
-    if (!acted) { return; }
+    if (!acted) {
+      BASE_KBINFO = structuredClone(KBINFO);
+      return;
+    }
     CHANGES.todo = {};
     for (const el of findAll('.changed')) {
       el.classList.remove('changed');

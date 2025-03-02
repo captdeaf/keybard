@@ -7,17 +7,24 @@
 //
 ////////////////////////////////////
 
-function updateAllChanges() {
+async function updateAllChanges() {
   CHANGES.todo = {};
+  const docommit = SETTINGS.instant;
+  SETTINGS.instant = false;
 
-  MAINBOARD.updateAll();
-  COMBOS.updateAll();
-  KEY_OVERRIDES.updateAll();
+  await MAINBOARD.updateAll();
+  await COMBOS.updateAll();
+  await KEY_OVERRIDES.updateAll();
 
-  MACROS.updateAll();
-  TAPDANCE.updateAll();
+  await MACROS.updateAll();
+  await TAPDANCE.updateAll();
 
-  QMKSETTINGS.updateAll();
+  await QMKSETTINGS.updateAll();
 
-  KEYUI.refreshAllKeys();
+  await KEYUI.refreshAllKeys();
+
+  SETTINGS.instant = docommit;
+  if (docommit) {
+    CHANGES.commit();
+  }
 }
