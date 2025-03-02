@@ -71,13 +71,12 @@ const HISTORY = {
     const histmenu = get('#history-kbis');
     histmenu.innerHTML = '';
     const els = [];
-    let i = 0;
-    for (const hist of HISTORY.saved) {
+    for (let i = 0; i < HISTORY.saved.length; i++) {
+      const hist = HISTORY.saved[i];
       const ts = HISTORY.formatDate(new Date(hist.time));
       els.push(EL('label', {
         'data-history-id': i,
       }, `${ts}: ${hist.cause}`));
-      i++;
     }
     appendChildren(histmenu, els);
   },
@@ -130,5 +129,6 @@ addInitializer('load', () => {
     } else {
       doStuff(kbi, 'load');
     }
+    HISTORY.refresh();
   });
 });
