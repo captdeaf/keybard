@@ -17,12 +17,12 @@ const KEYUI = {
 
 addInitializer('load', () => {
   const LAYERKEYS = {
-    MO:  ['Hold', 'While pressed, switch to layer: ', 'key-layer key-layer-mo'],
-    DF:  ['Def', 'Make default layer: ', 'key-layer key-layer-df'],
-    TG:  ['Toggle', 'Toggle to layer: ', 'key-layer key-layer-tg'],
-    TT:  ['Switch', 'Switch/Toggle to layer: ', 'key-layer key-layer-tt'],
-    OSL: ['OneShot', 'Toggle to layer for one key: ', 'key-layer key-layer-osl'],
-    TO:  ['MkDef', 'Make layer default: ', 'key-layer key-layer-to'],
+    MO:  ['MO', 'While pressed, activate layer: ', 'key-layer key-layer-mo'],
+    DF:  ['DF', 'Switch default layer: ', 'key-layer key-layer-df'],
+    TG:  ['TG', 'Toggle layer: ', 'key-layer key-layer-tg'],
+    TT:  ['TT', 'Tap-Toggle: ', 'key-layer key-layer-tt'],
+    OSL: ['OSL', 'Toggle layer active for one key: ', 'key-layer key-layer-osl'],
+    TO:  ['TO', 'Toggle all off but: ', 'key-layer key-layer-to'],
   };
 
   ////////////////////////////////////
