@@ -116,7 +116,7 @@ addInitializer("load", () => {
     ////////////////////////////////////
     // Clicking a .close hides its parent that has .closeable
     ACTION.onclick(".close", (target) => {
-        ACTION.closeFloats();
+        ACTION.closeFloats(target);
     });
 
     // Toggle a float between visible and not.
