@@ -3,22 +3,22 @@
     <div id="board-selection" style="z-index: 200">
       <div id="topbar">{{menu.html}}</div>
       <div id="board-selection-items" class="on-connect">
-        <div class="board-sel" data-board="qwerty">{{icons/keyboard.html}}</div>
-        <div class="board-sel" data-board="layer">{{icons/layers.html}}</div>
+        <div data-title="Basic Keyboard" class="board-sel" data-board="qwerty">{{icons/keyboard.html}}</div>
+        <div data-title="Layer keys" class="board-sel" data-board="layer">{{icons/layers.html}}</div>
         <div class="board-sel" data-board="custom" style="display: none">
           {{icons/mouse.html}}
         </div>
         <div class="board-sel" data-board="international" style="display: none">
           {{icons/keyboard.html}}
         </div>
-        <div class="board-sel" data-board="tapdance">
+        <div data-title="Tapdances" class="board-sel" data-board="tapdance">
           {{icons/tapdance.html}}
         </div>
-        <div class="board-sel" data-board="macro">{{icons/macros.html}}</div>
-        <div class="board-sel" data-board="modtaps">
+        <div data-title="Macros" class="board-sel" data-board="macro">{{icons/macros.html}}</div>
+        <div data-title="ModTaps" class="board-sel" data-board="modtaps">
           {{icons/keyboard.html}}
         </div>
-        <div class="board-sel" data-board="quantum">
+        <div data-title="QMK keys" class="board-sel" data-board="quantum">
           {{icons/keyboard.html}}
         </div>
         <div class="dropdown board-sel-unusual" id="menu-top">

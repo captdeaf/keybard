@@ -229,6 +229,7 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   function renderMacroFloat(macro, actions) {
+    ACTION.closeFloats();
     if (!actions) actions = macro.actions;
     floatname.innerHTML = macro.mid;
 
@@ -250,63 +251,8 @@ addInitializer('load', () => {
     const rect = sidebar.getBoundingClientRect();
     floater.style['left'] = rect.x + rect.width + 'px';
 
-    const menuEl = document.createElement('div');
-    menuEl.className = 'tapdance-menu';
-    menuEl.style.cssText = `
-      position: absolute;
-      left: 120px;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: #fafafa;
-      border: 1px solid #dadce0;
-      border-left: none;
-      border-bottom-right-radius: 15px;
-      border-top-right-radius: 15px;
-      padding-left: 4px;
-      padding-top: 15px;
-      padding-bottom: 15px;
-      padding-right: 6px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 4px;
-    `;
-
-    tapdanceMacroMenuItems.forEach((item) => {
-      const menuItem = document.createElement('div');
-      menuItem.className = 'tapdance-menu-item';
-      menuItem.style.cssText = `
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border-bottom-left-radius: 4px;
-        transition: background-color 0.2s;
-      `;
-      menuItem.innerHTML = item.icon;
-      menuItem.title = item.label;
-      menuItem.onmouseover = () => (menuItem.style.backgroundColor = '#f1f3f4');
-      menuItem.onmouseout = () =>
-        (menuItem.style.backgroundColor = 'transparent');
-      menuItem.onclick = () => {
-        // get current board
-        console.log(item.label);
-        if (item.label === 'Macros') {
-          displayBoard('macro', true, 'Add macros to macro');
-        } else if (item.label === 'Layers') {
-          displayBoard('layer', true, 'Add layers to macro');
-        } else if (item.label === 'Keyboard') {
-          displayBoard('qwerty', true, 'Add keyboard keys to macro');
-        }
-      };
-      menuEl.appendChild(menuItem);
-    });
-
-    floater.appendChild(menuEl);
-    menuEl.style.left = 0;
-    displayBoard('layer', true, 'Add layers to macro');
+    SAMPLE_BOARDS.display('qwerty');
+    SAMPLE_BOARDS.editing = 'macros';
   }
 
   ACTION.onclick('[data-macro-add]', (target) => {
@@ -371,6 +317,7 @@ addInitializer('load', () => {
     floater.style['display'] = 'none';
     CHANGES.queue('macro', KBAPI.updateMacros);
     KEYUI.refreshAllKeys();
+    SAMPLE_BOARDS.display('macros');
   });
 
   ////////////////////////////////////

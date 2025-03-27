@@ -27,6 +27,13 @@ const BOARD_NAMES = {
   mouse: 'Mouse Keys',
 };
 
+const SAMPLE_BOARDS = {
+  // Display a specific board.
+  display: undefined,
+  // When editing a macro or tapdance, on close we revert to it.
+  editing: undefined,
+};
+
 addInitializer('load', () => {
   ////////////////////////////////////
   //
@@ -62,23 +69,6 @@ addInitializer('load', () => {
     setSaved('main-container', target);
   }
 
-  selectTab(getSaved('main-container', 'mainboard-container'));
-
-  ACTION.onclick('.board-sel', (target) => {
-    if (target.dataset.board === 'keyoverride-container') {
-      closeBoard();
-      selectTab('keyoverride-container');
-    } else {
-      selectTab('mainboard-container');
-    }
-    displayBoard(target.dataset.board);
-    // ACTION.menuClose();
-  });
-
-  ACTION.onclick('.close-button', () => {
-    closeBoard();
-  });
-
   function displayBoard(name) {
     console.log('displayBoard', name);
     setSaved('boardsel', name);
@@ -95,11 +85,31 @@ addInitializer('load', () => {
     boardTitle.innerText = BOARD_NAMES[name];
   }
 
+  SAMPLE_BOARDS.display = displayBoard;
+
   function closeBoard() {
+    ACTION.closeFloats();
     sidebarSelector.classList.remove('active');
     allboardsContainer.style['display'] = 'none';
-    console.log('closeBoard');
   }
+
+  selectTab(getSaved('main-container', 'mainboard-container'));
+  displayBoard('qwerty');
+
+  ACTION.onclick('.board-sel', (target) => {
+    if (target.dataset.board === 'keyoverride-container') {
+      closeBoard();
+      selectTab('keyoverride-container');
+    } else {
+      selectTab('mainboard-container');
+    }
+    displayBoard(target.dataset.board);
+    // ACTION.menuClose();
+  });
+
+  ACTION.onclick('.close-button', () => {
+    closeBoard();
+  });
 
   if (CONNECTED) {
     const startingBoard = getSaved('boardsel', 'qwerty');

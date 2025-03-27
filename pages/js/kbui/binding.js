@@ -160,7 +160,6 @@ addInitializer('connected', () => {
     selectLayerKey('MO');
 
     ACTION.onclick('[data-layer-modifier-select]', (target) => {
-        console.log(target);
         const keystr = `${layerKey}(${target.dataset.layerModifierSelect})`;
         ACTION.trigger('bind', keystr);
     });

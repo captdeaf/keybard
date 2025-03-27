@@ -63,6 +63,7 @@ addInitializer('load', () => {
   //
   ////////////////////////////////////
   function renderTapdanceFloat(tapdance) {
+    ACTION.closeFloats();
     floatname.innerText = '' + tapdance.tdid;
 
     for (const [type, el] of Object.entries(tdtypemap)) {
@@ -126,48 +127,13 @@ addInitializer('load', () => {
       box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     `;
 
-    tapdanceMacroMenuItems.forEach((item) => {
-      const menuItem = document.createElement('div');
-      menuItem.className = 'tapdance-menu-item';
-      menuItem.style.cssText = `
-        width: 36px;
-        height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        border-bottom-left-radius: 4px;
-        transition: background-color 0.2s;
-      `;
-      menuItem.innerHTML = item.icon;
-      menuItem.title = item.label;
-      menuItem.onmouseover = () => (menuItem.style.backgroundColor = '#f1f3f4');
-      menuItem.onmouseout = () =>
-        (menuItem.style.backgroundColor = 'transparent');
-      menuItem.onclick = () => {
-        // get current board
-        console.log(item.label);
-        if (item.label === 'Macros') {
-          displayBoard('macro', true, 'Add macros to tapdance');
-        } else if (item.label === 'Layers') {
-          displayBoard('layer', true, 'Add layers to tapdance');
-        } else if (item.label === 'Keyboard') {
-          displayBoard('qwerty', true, 'Add keyboard keys to tapdance');
-        }
-      };
-      menuEl.appendChild(menuItem);
-    });
-
-    floater.appendChild(menuEl);
-    // put menu in the left side of floater
-    menuEl.style.left = 0;
     // vertical centering
     floater.style['top'] =
       Math.max(
         0,
         (window.innerHeight - floater.getBoundingClientRect().height) / 2
       ) + 'px';
-    displayBoard('layer', true, 'Add layers to tapdance');
+    SAMPLE_BOARDS.display('qwerty');
   }
 
   ////////////////////////////////////
@@ -189,12 +155,7 @@ addInitializer('load', () => {
     if (existingMenu) {
       existingMenu.remove();
     }
-    const closebutton = get('.close-button');
-    closebutton.style['display'] = 'block';
-    const currentBoard = getSaved('boardsel');
-    if (currentBoard) {
-      displayBoard(currentBoard);
-    }
+    SAMPLE_BOARDS.display('tapdance');
   });
 
   addInitializer('connected', () => {

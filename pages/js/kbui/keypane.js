@@ -32,7 +32,7 @@ addInitializer('connected', () => {
     } else if (keystr === 'KC_TRNS') {
       contents = 'Transparent key (fall-through to next active layer)';
     }
-    // showPane(keyimage, keystr, contents);
+    showPane(keyimage, keystr, contents);
   }
 
   function showPane(el, title, contents) {
@@ -92,8 +92,10 @@ addInitializer('connected', () => {
   let curY = 0;
   let lastX = 0;
   let lastY = 0;
+
   const showFor = {
     KC_TRNS: true,
+    KC_NO: true,
   };
 
   function updatePane() {
@@ -116,7 +118,7 @@ addInitializer('connected', () => {
       keymatch = match;
       if (match && match.dataset) {
         const k = match.dataset.key;
-        if (k && (showFor[k] || !match.dataset.key.match(/^KC_.$/))) {
+        if (k && (showFor[k] || !k.match(/^KC_/))) {
           showPaneForKey(match);
           return;
         } else if (match.dataset.title) {

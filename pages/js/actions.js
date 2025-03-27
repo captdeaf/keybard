@@ -229,21 +229,20 @@ addInitializer(
     });
     ACTION.showFloat = (target) => {
       floatOpen = true;
-      ACTION.closeFloats();
+      ACTION.closeFloats(target);
       ACTION.menuClose();
       floatPane.style['display'] = 'block';
       target.style['display'] = 'block';
     };
 
-    ACTION.closeFloats = () => {
+    ACTION.closeFloats = (el) => {
       floatOpen = false;
       floatPane.style['display'] = 'none';
       for (const floater of allFloats) {
         floater.style['display'] = 'none';
       }
-      const currentBoard = getSaved('boardsel');
-      if (currentBoard) {
-        displayBoard(currentBoard);
+      if (el && el.dataset.closeBoard) {
+        SAMPLE_BOARDS.display(el.dataset.closeBoard);
       }
     };
 

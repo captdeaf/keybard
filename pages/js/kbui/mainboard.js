@@ -37,7 +37,6 @@ const scaleChildren = (element, scale) => {
       child.fontSize = `${
         parseInt(child.style.fontSize, 10) * scale
       }px !important`;
-      console.log(`${parseInt(child.style.fontSize, 10) * scale}px !important`);
     }
     scaleChildren(child, scale);
   }
@@ -295,7 +294,6 @@ addInitializer('connected', () => {
       const names = getSaved('names', {});
       const displayName = names?.layer?.[layerIndex] || layerIndex;
       layerHeaderTitle.textContent = `${displayName}`;
-      console.log('layerIndex', layerIndex);
       selectedLayer.classList.add('selected');
       const editIcon = EL(
         'div',
@@ -649,7 +647,6 @@ addInitializer('connected', () => {
 
   function selectTab(target) {
     for (const tab of qwertyTabs) {
-      console.log(tab.dataset);
       if (tab.dataset.qwertyTab === target) {
         tab.classList.add('active');
       } else {
