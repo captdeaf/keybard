@@ -2823,17 +2823,28 @@
     </div>
   </div>
   <div id="topboard" class="on-connect"><div class="main-container" id="mainboard-container">
-    <div class="layer-selection-container">
-        <button id="scroll-left" class="scroll-button">‹</button>
-        <div id="layer-selection" class="scroll-effects-horizontal"></div>
-        <button id="scroll-right" class="scroll-button">›</button>
+  <div class="main-header-blank" style="margin-top: 30px;"></div>
+  <div class="horizontal-selection-container">
+    <button class="scroll-left scroll-button" data-target="#main-selection">‹</button>
+    <div id="main-selection" class="horizontal-selection scroll-effects-horizontal">
+      <div class="selection main-select">Combos</div>
+      <div class="selection main-select">Key Overrides</div>
+      <div class="selection main-select">Macros</div>
+      <div class="selection main-select">Tap Dances</div>
     </div>
-    <div id="layer-header">
-        <div class="color-dot" id="layer-color-dot"></div>
-        <h3 id="layer-header-title">Title</h3>
-        <div>
-            <div class="dropdown">
-                <svg
+    <button class="scroll-right scroll-button" data-target="#main-selection">›</button>
+  </div>
+  <div class="horizontal-selection-container">
+    <button class="scroll-left scroll-button" data-target="#layer-selection">‹</button>
+    <div id="layer-selection" class="horizontal-selection scroll-effects-horizontal"></div>
+    <button class="scroll-right scroll-button" data-target="#layer-selection">›</button>
+  </div>
+  <div id="layer-header">
+    <div class="color-dot" id="layer-color-dot"></div>
+    <h3 id="layer-header-title">Title</h3>
+    <div>
+      <div class="dropdown">
+        <svg
     width="17"
     height="12"
     viewBox="0 0 17 12"
@@ -2846,43 +2857,43 @@
     />
 </svg>
 
-                <label
-                    class="dropdown-content"
-                    style="width: 200px; left: 0px; top: 10px; z-index: 3"
-                >
-                    <label class="dropdown">
-                        Apply a sample layer
-                        <div
-                            id="sample-layers"
-                            class="dropdown-content"
-                            style="right: 0px"
-                        ></div>
-                    </label>
-                    <label data-sample-kb="copy-layer">
-                        Copy layer to clipboard.
-                    </label>
-                    <label data-sample-kb="paste-layer">
-                        Paste layer from clipboard.
-                    </label>
-                    <label data-sample-kb="fill" data-sample-key="KC_NO">
-                        Wipe and disable all keys.
-                    </label>
-                    <label data-sample-kb="fill" data-sample-key="KC_TRNS">
-                        Wipe and change all keys to transparent.
-                    </label>
-                    <label data-sample-kb="fillEmpty" data-sample-key="KC_TRNS">
-                        Change disabled keys to transparent.
-                    </label>
-                </label>
-            </div>
-        </div>
+        <label
+            class="dropdown-content"
+            style="width: 200px; left: 0px; top: 10px; z-index: 3"
+            >
+            <label class="dropdown">
+              Apply a sample layer
+              <div
+                  id="sample-layers"
+                  class="dropdown-content"
+                  style="right: 0px"
+                  ></div>
+            </label>
+          <label data-sample-kb="copy-layer">
+            Copy layer to clipboard.
+          </label>
+          <label data-sample-kb="paste-layer">
+            Paste layer from clipboard.
+          </label>
+          <label data-sample-kb="fill" data-sample-key="KC_NO">
+            Wipe and disable all keys.
+          </label>
+          <label data-sample-kb="fill" data-sample-key="KC_TRNS">
+            Wipe and change all keys to transparent.
+          </label>
+          <label data-sample-kb="fillEmpty" data-sample-key="KC_TRNS">
+            Change disabled keys to transparent.
+          </label>
+        </label>
+      </div>
     </div>
-    <div id="mainboard-box">
-        <div id="mainboard"></div>
-    </div>
+  </div>
+  <div id="mainboard-box">
+    <div id="mainboard"></div>
+  </div>
 </div>
 <div class="main-container" id="keyoverride-container">
-    <table id="keyoverride-table" cellspacing="0" cellpadding="2">
+  <table id="keyoverride-table" cellspacing="0" cellpadding="2">
 <thead>
  <tr>
    <th></th>
@@ -2901,7 +2912,7 @@
 </div>
 </div>
 <div class="main-container" id="keyoverride-container">
-    <table id="keyoverride-table" cellspacing="0" cellpadding="2">
+  <table id="keyoverride-table" cellspacing="0" cellpadding="2">
 <thead>
  <tr>
    <th></th>

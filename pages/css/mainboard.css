@@ -19,19 +19,21 @@
 ::-webkit-scrollbar-thumb:window-inactive {
     background: rgba(255, 255, 255, 0.3);
 }
-.layer-selection-container {
+
+.horizontal-selection-container {
     display: flex;
     align-items: center;
     width: 100%;
     position: relative;
     padding: 0;
-    margin-top: 70px;
+    margin-top: 20px;
     margin-bottom: 10px;
 }
 
 .scroll-button {
     flex: 0 0 30px;
     height: 30px;
+    width: 30px;
     border: none;
     background: rgba(0, 0, 0, 0);
     color: #666;
@@ -51,8 +53,6 @@
 }
 
 .scroll-button {
-    opacity: 0;
-    pointer-events: none;
     transition: opacity 0.2s ease;
 }
 
@@ -67,7 +67,7 @@
     color: #333;
 }
 
-#layer-selection {
+.horizontal-selection {
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -83,8 +83,52 @@
     -ms-overflow-style: none; /* IE and Edge */
 }
 
-#layer-selection::-webkit-scrollbar {
+.horizontal-selection::-webkit-scrollbar {
     display: none; /* Chrome, Safari and Opera */
+}
+
+.horizontal-selection .selection {
+    white-space: nowrap;
+    border-radius: 50px;
+    font-size: 14px;
+    color: darkgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 15px;
+    cursor: pointer;
+    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
+}
+
+.horizontal-selection .main-select {
+    font-size: 20px;
+    color: green;
+    font-weight: bold;
+}
+
+.horizontal-selection .layer-select {
+    font-size: 14px;
+    color: darkgray;
+}
+
+.horizontal-selection .selected {
+    background-color: #333;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+    color: #e5e5e5;
+}
+
+.horizontal-selection .selected:hover {
+    color: #fff !important;
+    background-color: black !important;
+}
+
+.horizontal-selection .fill {
+    flex: 1 1 auto;
+}
+
+.horizontal-selection .selection:hover {
+    background-color: #ddd;
+    color: black;
 }
 
 #layer-header {
@@ -104,19 +148,6 @@
     margin-top: auto;
     margin-bottom: auto;
     margin-right: 5px;
-}
-
-#layer-selection .layer {
-    white-space: nowrap;
-    border-radius: 50px;
-    font-size: 14px;
-    color: darkgray;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 8px 15px;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s, color 0.2s;
 }
 
 .layer-modifier {
@@ -140,26 +171,6 @@
 .layer-modifier.active:hover {
     background-color: black;
     color: white;
-}
-
-#layer-selection .layer.selected {
-    background-color: #333;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-    color: #e5e5e5;
-}
-
-#layer-selection .layer.selected:hover {
-    color: #fff !important;
-    background-color: black !important;
-}
-
-#layer-selection .fill {
-    flex: 1 1 auto;
-}
-
-#layer-selection .layer:hover {
-    background-color: #ddd;
-    color: black;
 }
 
 #mainbody {

@@ -27,3 +27,4 @@
 - Find out how we close popover.
 - On close popover tab, show what we popped over.
 - Fix popover tab, macros overlaying tapdances.
+- Fix layer scrollable, it's fragile
