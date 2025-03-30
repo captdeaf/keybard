@@ -28,7 +28,10 @@ addInitializer('load', () => {
       tapdance = KBINFO.tapdances[tdid];
     }
     if (!tapdance) {
-      return '';
+      return {
+        str: '',
+        title: '',
+      }
     }
     const ret = [];
     for (const k of ['tap', 'hold', 'doubletap', 'taphold']) {
@@ -36,7 +39,10 @@ addInitializer('load', () => {
         ret.push(KEYUI.getKeyContents(tapdance[k]).str);
       }
     }
-    return ret.join(' ');
+    return {
+      str: ret.join(' '),
+      title: `Tap Dance ${tdid} - ${ret.join(' ')}`,
+    }
   }
   TAPDANCE.describe = describeTapdance;
 
@@ -212,34 +218,37 @@ addInitializer('load', () => {
         },
         ''
       );
-      appendChildren(keytpl, tapdanceIcon(0), `${tdid}`);
+      appendChildren(keytpl, EL(
+          'div',
+          {
+            style: {
+              width: '16px',
+              height: '16px',
+              marginBottom: '5px',
+            },
+          },
+          SVG.tapdance()
+        ), `${tdid}`);
       const tdNumber = EL('div', { class: 'tapdance-number' }, `${tdid}`);
       const keyContainer = EL('div', { class: 'key-container' });
       appendChildren(keyContainer, keytpl);
-      const dragButton = EL(
-        'div',
-        { class: 'drag-macro', style: { opacity: '0' } },
-        SVG.drag()
-      );
       const editButton = EL(
         'div',
         {
-          class: 'edit-macro',
+          class: 'edit-tapdance edit-button',
           style: { opacity: '0' },
           'data-tdid': tdid,
         },
         SVG.edit()
       );
-      editButton.onclick = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        ACTION.trigger('key-tapdance-edit', editButton);
-      };
-      appendChildren(keyContainer, dragButton);
       appendChildren(keyContainer, editButton);
       const dottedLine = EL('div', { class: 'dotted-line' });
       const tdContainer = EL('div', { class: 'macro-container' });
       appendChildren(tdContainer, tdNumber);
+      appendChildren(tdContainer, EL('div', {
+        'data-render': 'tapdance',
+        'data-id': tdid,
+      }, describeTapdance(tdid).str));
       appendChildren(tdContainer, dottedLine);
       appendChildren(tdContainer, keyContainer);
       rows.push(tdContainer);
@@ -252,37 +261,10 @@ addInitializer('load', () => {
   //  Context menu for tap dance keys in the sample board.
   //
   ////////////////////////////////////
-  ACTION.on('key-tapdance-edit', (target) => {
+  ACTION.onclick('.edit-tapdance', (target) => {
     const tdid = target.dataset.tdid;
     renderTapdanceFloat(KBINFO.tapdances[tdid]);
   });
-
-  ACTION.on('key-tapdance-clear', (target) => {
-    const tdid = target.dataset.tdid;
-    const td = KBINFO.tapdances[tdid];
-    td.tap = 'KC_NO';
-    td.hold = 'KC_NO';
-    td.taphold = 'KC_NO';
-    td.doubletap = 'KC_NO';
-    td.tapms = 200;
-    target.classList.add('changed');
-    CHANGES.queue('TD' + tdid, () => KBAPI.updateTapdance(tdid));
-    KEYUI.refreshAllKeys();
-  });
-
-  ACTION.on('key-tapdance-revert', (target) => {
-    const tdid = target.dataset.tdid;
-    target.classList.remove('changed');
-    KBINFO.tapdances[tdid] = structuredClone(BASE_KBINFO.tapdances[tdid]);
-    CHANGES.clear('TD' + tdid);
-    KEYUI.refreshAllKeys();
-  });
-
-  ACTION.addContextMenu('[data-tdid]', [
-    { name: 'Edit Tapdance', trigger: 'key-tapdance-edit' },
-    { name: 'Clear Tapdance', trigger: 'key-tapdance-clear' },
-    { name: 'Revert Tapdance', trigger: 'key-tapdance-revert' },
-  ]);
 
   ////////////////////////////////////
   //

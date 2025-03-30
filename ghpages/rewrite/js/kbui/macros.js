@@ -317,7 +317,7 @@ addInitializer('load', () => {
     floater.style['display'] = 'none';
     CHANGES.queue('macro', KBAPI.updateMacros);
     KEYUI.refreshAllKeys();
-    SAMPLE_BOARDS.display('macros');
+    SAMPLE_BOARDS.display('macro');
   });
 
   ////////////////////////////////////
@@ -377,10 +377,6 @@ addInitializer('load', () => {
   ////////////////////////////////////
   addInitializer('connected', () => {
     const macroBoard = get('#macro-board');
-    const sortable = new Draggable.Sortable(macroBoard, {
-      draggable: '.draggable-key',
-      handle: '.drag-macro',
-    });
     const rows = [];
     for (let idx = 0; idx < KBINFO.macro_count; idx++) {
       const mid = idx;
@@ -426,37 +422,29 @@ addInitializer('load', () => {
       const macroNumber = EL('div', { class: 'macro-number' }, `${mid}`);
       const keyContainer = EL('div', { class: 'key-container' });
       appendChildren(keyContainer, keytpl);
-      const dragButton = EL(
-        'div',
-        { class: 'drag-macro', style: { opacity: '0' } },
-        SVG.drag()
-      );
       const editButton = EL(
         'div',
         {
-          class: 'edit-macro',
+          class: 'edit-macro edit-button',
           style: { opacity: '0' },
           'data-mid': mid,
-          'data-context-trigger': 'key-macro-edit',
         },
         SVG.edit()
       );
-      editButton.onclick = (e) => {
-        e.stopPropagation();
-        e.preventDefault();
-        ACTION.trigger('key-macro-edit', editButton);
-      };
       const controlContainer = EL('div', {
         class: 'control-container',
         style: { opacity: '0' },
       });
-      appendChildren(keyContainer, dragButton);
       appendChildren(keyContainer, editButton);
       const dottedLine = EL('div', { class: 'dotted-line' });
       const macroContainer = EL('div', {
         class: 'macro-container  draggable-key',
       });
       appendChildren(macroContainer, macroNumber);
+      appendChildren(macroContainer, EL('div', {
+        'data-render': 'macros',
+        'data-id': mid,
+      }, describeMacro(mid).str));
       appendChildren(macroContainer, dottedLine);
       appendChildren(macroContainer, keyContainer);
       rows.push(macroContainer);
@@ -466,35 +454,10 @@ addInitializer('load', () => {
 
   ////////////////////////////////////
   //
-  //  Context menu for macro keys in the sample board.
+  //  Events
   //
   ////////////////////////////////////
-  ACTION.on('key-macro-edit', (target) => {
+  ACTION.onclick('.edit-macro', (target) => {
     renderMacroFloat(KBINFO.macros[target.dataset.mid]);
   });
-
-  ACTION.on('key-macro-clear', (target) => {
-    const macro = KBINFO.macros[target.dataset.mid];
-    if (macro.actions.length > 0) {
-      macro.actions = [];
-      target.classList.add('changed');
-      CHANGES.queue('macro', KBAPI.updateMacros);
-      KEYUI.refreshAllKeys();
-    }
-  });
-
-  ACTION.on('key-macro-revert', (target) => {
-    const macro = KBINFO.macros[target.dataset.mid];
-    macro.actions = structuredClone(
-      BASE_KBINFO.macros[target.dataset.mid].actions
-    );
-    target.classList.remove('changed');
-    KEYUI.refreshAllKeys();
-  });
-
-  ACTION.addContextMenu('[data-mid]', [
-    { name: 'Edit Macro', trigger: 'key-macro-edit' },
-    { name: 'Clear Macro', trigger: 'key-macro-clear' },
-    { name: 'Revert Macro', trigger: 'key-macro-revert' },
-  ]);
 });

@@ -13,6 +13,8 @@ const KEYUI = {
   refreshKey: null,
   // Refresh every key in the app, except those with the class kb-norender
   refreshAllKeys: null,
+  // Refresh all text indicators.
+  refreshAllTexts: null,
 };
 
 addInitializer('load', () => {
@@ -98,8 +100,8 @@ addInitializer('load', () => {
             type: 'tapdance',
             top: keystr,
             tdid: m[2],
-            str: desc,
-            title: `Tap Dance ${m[2]} - ${desc}`,
+            str: desc.str,
+            title: desc.title,
           };
         }
         return {
@@ -236,7 +238,18 @@ addInitializer('load', () => {
   function sizedIcon(icon, width) {
     switch (icon) {
       case 'tapdance':
-        return cloneElement(tapdanceIcon(width >= 60 ? 10 : 0));
+        let addSize = width >= 60 ? 10 : 0;
+        return EL(
+          'div',
+          {
+            style: {
+              width: `${16 + addSize}px`,
+              height: `${16 + addSize}px`,
+              marginBottom: '5px',
+            },
+          },
+          SVG.tapdance()
+        );
       default:
         return EL('span', {}, icon);
     }
@@ -416,11 +429,22 @@ addInitializer('load', () => {
   //  may have an impact on other existing keys (e.g: macros, tapdances).
   //
   ////////////////////////////////////
+  const TEXT_RENDERERS = {
+    macros: ((id) => MACROS.describe(id).title),
+    tapdance: ((id) => TAPDANCE.describe(id).title),
+    layer: ((id) => getEditableName('layer', id, id, true)),
+  };
+
   KEYUI.refreshAllKeys = () => {
-    // const allKeys = getAll('.key:not(.kb-norender)');
+    // Update all rendered keys.
     const allKeys = getAll('.key');
     for (const key of allKeys) {
       refreshKey(key);
+    }
+
+    // Update all <div data-render> for non-key representations.
+    for (const el of findAll('[data-render]')) {
+      el.innerText = TEXT_RENDERERS[el.dataset.render](el.dataset.id);
     }
   };
 });

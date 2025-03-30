@@ -278,7 +278,7 @@ addInitializer('connected', () => {
       }
     }
 
-    for (const layer of findAll('.layer')) {
+    for (const layer of findAll('.layer-select')) {
       layer.classList.remove('selected');
       for (const child of layer.children) {
         if (child.classList.contains('edit-icon')) {
@@ -299,6 +299,7 @@ addInitializer('connected', () => {
         'div',
         {
           class: 'edit-icon',
+          'data-edit-layer': layerIndex,
           style: {
             float: 'right',
             position: 'absolute',
@@ -440,123 +441,26 @@ addInitializer('connected', () => {
     let layerName = getEditableName('layer', i, '' + i);
     const layerSel = EL('div', {
       'data-layerid': layerid,
-      class: 'layer',
+      class: 'layer-select selection',
     });
     makeEditableName(layerSel, 'layer', i);
     children.push(layerSel);
   }
   appendChildren(layerSelection, ...children);
 
-  // Trigger initial scroll button states after populating layers
-  setTimeout(() => {
-    const container = layerSelection.closest('.layer-selection-container');
-    if (container) {
-      const scrollableDiv = container.querySelector(
-        '.scroll-effects-horizontal'
-      );
-      const event = new Event('scroll');
-      scrollableDiv.dispatchEvent(event);
-    }
-  }, 0);
-
-  // Handle scroll gradients for layer modifier selection
-  const verticalScrollableDivs = findAll('.scroll-effects-vertical');
-  for (const scrollableDiv of verticalScrollableDivs) {
-    function updateScrollGradients() {
-      const { scrollTop, scrollHeight, clientHeight } = scrollableDiv;
-      const isScrollable = scrollHeight > clientHeight;
-      const isAtTop = scrollTop <= 0;
-      const isAtBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
-
-      scrollableDiv.classList.remove(
-        'scroll-both',
-        'scroll-top',
-        'scroll-bottom'
-      );
-
-      if (isScrollable) {
-        if (!isAtTop && !isAtBottom) {
-          scrollableDiv.classList.add('scroll-both');
-        } else if (!isAtTop) {
-          scrollableDiv.classList.add('scroll-bottom');
-        } else if (!isAtBottom) {
-          scrollableDiv.classList.add('scroll-top');
+  function updateScrollButtons() {
+    for (const scrollable of getAll('.horizontal-selection-container')) {
+      const scrolled = get('.horizontal-selection', scrollable);
+      if (scrolled.scrollWidth > scrolled.clientWidth) {
+        for (const button of getAll('.scroll-button', scrollable)) {
+          button.style.visibility = 'visible';
+        }
+      } else {
+        for (const button of getAll('.scroll-button', scrollable)) {
+          button.style.visibility = 'hidden';
         }
       }
     }
-    scrollableDiv.addEventListener('scroll', updateScrollGradients);
-    setTimeout(updateScrollGradients, 100);
-    window.addEventListener('resize', updateScrollGradients);
-  }
-
-  const horizontalScrollableDivs = findAll('.scroll-effects-horizontal');
-  for (const scrollableDiv of horizontalScrollableDivs) {
-    const container = scrollableDiv.closest('.layer-selection-container');
-    if (!container) continue;
-
-    const leftButton = container.querySelector('#scroll-left');
-    const rightButton = container.querySelector('#scroll-right');
-
-    function updateScrollButtons() {
-      scrollableDiv.style.display = 'none';
-      scrollableDiv.offsetHeight;
-      scrollableDiv.style.display = '';
-      const { scrollLeft, scrollWidth, clientWidth } = scrollableDiv;
-      const isScrollable = scrollWidth > clientWidth;
-      const isAtStart = scrollLeft <= 0;
-      const isAtEnd = Math.ceil(scrollLeft + clientWidth) >= scrollWidth;
-
-      // Update button visibility using active class
-      leftButton.classList.toggle('active', isScrollable && !isAtStart);
-      leftButton.style.display = isScrollable ? 'flex' : 'none';
-      leftButton.style.opacity = isScrollable ? 1 : 0;
-      rightButton.classList.toggle('active', isScrollable && !isAtEnd);
-      rightButton.style.opacity = isScrollable ? 1 : 0;
-      scrollableDiv.classList.remove(
-        'scroll-both-horizontal',
-        'scroll-start',
-        'scroll-end'
-      );
-
-      if (isScrollable) {
-        if (!isAtStart && !isAtEnd) {
-          scrollableDiv.classList.add('scroll-both-horizontal');
-        } else if (!isAtStart) {
-          scrollableDiv.classList.add('scroll-start');
-        } else if (!isAtEnd) {
-          scrollableDiv.classList.add('scroll-end');
-        }
-      }
-    }
-
-    // Scroll amount for each button click (quarter of the container width for smoother scrolling)
-    const getScrollAmount = () => scrollableDiv.clientWidth / 2;
-
-    // Add click handlers for scroll buttons
-    leftButton.addEventListener('click', () => {
-      scrollableDiv.scrollBy({
-        left: -getScrollAmount(),
-        behavior: 'smooth',
-      });
-    });
-
-    rightButton.addEventListener('click', () => {
-      scrollableDiv.scrollBy({
-        left: getScrollAmount(),
-        behavior: 'smooth',
-      });
-    });
-
-    // Update button states on scroll, resize, and container size changes
-    scrollableDiv.addEventListener('scroll', updateScrollButtons);
-    setTimeout(updateScrollButtons, 100);
-    window.addEventListener('resize', updateScrollButtons);
-
-    // Use ResizeObserver to detect container size changes
-    const resizeObserver = new ResizeObserver(() => {
-      updateScrollButtons();
-    });
-    resizeObserver.observe(container);
   }
 
   ACTION.onclick('[data-layerid]', (target) => {
@@ -641,29 +545,4 @@ addInitializer('connected', () => {
     KBINFO.keymap[layer][kmid] = oldkey;
     CHANGES.clear('key' + layer + '.' + kmid);
   });
-
-  const qwertyTabs = getAll('.qwerty-tabs .tab');
-  const qwertyContainers = getAll('.qwerty-tab-container');
-
-  function selectTab(target) {
-    for (const tab of qwertyTabs) {
-      if (tab.dataset.qwertyTab === target) {
-        tab.classList.add('active');
-      } else {
-        tab.classList.remove('active');
-      }
-    }
-    for (const container of qwertyContainers) {
-      if (container.id === target) {
-        container.style.display = 'flex';
-      } else {
-        container.style.display = 'none';
-      }
-    }
-    setSaved('data-qwerty-tab', target);
-  }
-  ACTION.onclick('[data-qwerty-tab]', (target) => {
-    selectTab(target.dataset.qwertyTab);
-  });
-  selectTab('qwerty-numpad');
 });

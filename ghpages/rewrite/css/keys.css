@@ -34,8 +34,8 @@
   align-self: stretch;
   flex-grow: 1;
   align-content: center;
-  display: none;
   gap: 10px !important;
+  display: flex;
   overflow: auto;
 }
 
@@ -363,12 +363,12 @@
   border-radius: 5px;
 }
 
-.macro-container:hover .edit-macro,
+.macro-container:hover .edit-button,
 .macro-container:hover .drag-macro {
   opacity: 1 !important;
 }
 
-.edit-macro {
+.edit-button {
   cursor: pointer;
   padding: 5px;
 }
@@ -395,7 +395,7 @@
   cursor: grab;
 }
 
-.edit-macro:hover {
+.edit-button:hover {
   background-color: #f2f2f1;
   border-radius: 5px;
 }
@@ -429,7 +429,7 @@
   box-shadow: none;
 }
 
-.edit-macro {
+.edit-button {
   color: #f95053;
 }
 

@@ -22,9 +22,13 @@ const BOARD_NAMES = {
   tapdance: 'Tap Dances',
   modtaps: 'Mod Hold, Tap Keys',
   quantum: 'QMK Keys',
-  'combo-container': 'Combos',
-  keyOverrides: 'Key Overrides',
   mouse: 'Mouse Keys',
+  steno: 'Steno',
+  backlights: 'QMK Backlights',
+  audio: 'Audio Keys',
+  magic: 'QMK Magic Keys',
+  midi: 'MIDI Keys',
+  media: 'App and Media Keys',
 };
 
 const SAMPLE_BOARDS = {
@@ -52,7 +56,9 @@ addInitializer('load', () => {
   }
 
   for (const container of getAll('div.board-map[data-board]')) {
-    allboards[container.dataset.board].container = container;
+    if (allboards[container.dataset.board]) {
+      allboards[container.dataset.board].container = container;
+    }
   }
 
   // const allTabs = getAll(".main-select");
@@ -66,11 +72,9 @@ addInitializer('load', () => {
         container.style.display = 'none';
       }
     }
-    setSaved('main-container', target);
   }
 
   function displayBoard(name) {
-    console.log('displayBoard', name);
     setSaved('boardsel', name);
     if (name === 'keyoverride-container') return;
     allboardsContainer.style['display'] = 'block';
@@ -97,12 +101,7 @@ addInitializer('load', () => {
   displayBoard('qwerty');
 
   ACTION.onclick('.board-sel', (target) => {
-    if (target.dataset.board === 'keyoverride-container') {
-      closeBoard();
-      selectTab('keyoverride-container');
-    } else {
-      selectTab('mainboard-container');
-    }
+    selectTab('mainboard-container');
     displayBoard(target.dataset.board);
     // ACTION.menuClose();
   });
@@ -175,7 +174,8 @@ addInitializer('load', () => {
         const label = EL(
           'div',
           {
-            id: 'layer-label-' + layerid,
+            'data-render': 'layer',
+            'data-id': layerid,
             style: {
               flexGrow: 1,
               padding: '5px',
@@ -191,11 +191,6 @@ addInitializer('load', () => {
           name
         );
 
-        label.setAttribute(
-          'title',
-          'Layer' + ' ' + (name || layerid) + ' (click to change name)'
-        );
-        onClickEditIcon(label, 'layer', layerid);
         const layerContainer = EL('div', {
           class: 'layer-modifier-container',
           'data-layer': layerid,
@@ -209,18 +204,6 @@ addInitializer('load', () => {
             justifyContent: 'center',
           },
         });
-        const layerNumber = EL(
-          'div',
-          {
-            class: 'layer-modifier-number',
-            style: {
-              width: '20px',
-              textAlign: 'end',
-              fontWeight: '500',
-            },
-          },
-          `${layerid}`
-        );
         const keytpl = EL('div', {
           id: 'layer-' + layerid,
           class: 'layer-key',
@@ -261,7 +244,7 @@ addInitializer('load', () => {
           },
         });
         appendChildren(keytpl, layerIcon, `${layerid}`);
-        appendChildren(layerContainer, colorDot, layerNumber, label, keytpl);
+        appendChildren(layerContainer, colorDot, label, keytpl);
         return layerContainer;
       }
 
