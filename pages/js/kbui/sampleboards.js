@@ -22,9 +22,13 @@ const BOARD_NAMES = {
   tapdance: 'Tap Dances',
   modtaps: 'Mod Hold, Tap Keys',
   quantum: 'QMK Keys',
-  'combo-container': 'Combos',
-  keyOverrides: 'Key Overrides',
   mouse: 'Mouse Keys',
+  steno: 'Steno',
+  backlights: 'QMK Backlights',
+  audio: 'Audio Keys',
+  magic: 'QMK Magic Keys',
+  midi: 'MIDI Keys',
+  media: 'App and Media Keys',
 };
 
 const SAMPLE_BOARDS = {
@@ -52,7 +56,9 @@ addInitializer('load', () => {
   }
 
   for (const container of getAll('div.board-map[data-board]')) {
-    allboards[container.dataset.board].container = container;
+    if (allboards[container.dataset.board]) {
+      allboards[container.dataset.board].container = container;
+    }
   }
 
   // const allTabs = getAll(".main-select");
@@ -66,11 +72,9 @@ addInitializer('load', () => {
         container.style.display = 'none';
       }
     }
-    setSaved('main-container', target);
   }
 
   function displayBoard(name) {
-    console.log('displayBoard', name);
     setSaved('boardsel', name);
     if (name === 'keyoverride-container') return;
     allboardsContainer.style['display'] = 'block';
@@ -97,12 +101,7 @@ addInitializer('load', () => {
   displayBoard('qwerty');
 
   ACTION.onclick('.board-sel', (target) => {
-    if (target.dataset.board === 'keyoverride-container') {
-      closeBoard();
-      selectTab('keyoverride-container');
-    } else {
-      selectTab('mainboard-container');
-    }
+    selectTab('mainboard-container');
     displayBoard(target.dataset.board);
     // ACTION.menuClose();
   });

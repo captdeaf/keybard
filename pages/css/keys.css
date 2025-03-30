@@ -34,8 +34,8 @@
   align-self: stretch;
   flex-grow: 1;
   align-content: center;
-  display: none;
   gap: 10px !important;
+  display: flex;
   overflow: auto;
 }
 

@@ -1,18 +1,14 @@
 # TODO
 
-- Add main tabs for macros+combos+keyoverrides+tapdances.
+- Cleanup modifiers for qwerty.
 - Layer names in layers tab.
 - Macro display
 - Macro edit
 - Macro drag & drop
-- Fix combos
 - Fix printable
-- Add keyboard display tab, for combos.
-- Fix key overrides
 - Reorganize layout of key selection 'tabs'
 - Make ? help work
 - Move settings to (gear)
-- Cleanup modifiers for qwerty.
 
 # COMPLETE
 
@@ -28,3 +24,7 @@
 - On close popover tab, show what we popped over.
 - Fix popover tab, macros overlaying tapdances.
 - Fix layer scrollable, it's fragile
+- Add main tabs for macros+combos+keyoverrides+tapdances.
+- Fix combos
+- Fix key overrides
+- Add keyboard display tab, for combos.

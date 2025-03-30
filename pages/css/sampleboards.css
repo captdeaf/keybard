@@ -30,7 +30,7 @@
   transition: 0.2s;
 }
 
-.special-tabs .tab.active {
+.special-tabs .tab.selected {
   background-color: black;
   color: white;
 }
@@ -40,7 +40,7 @@
   color: black;
 }
 
-.special-tabs .tab.active:hover {
+.special-tabs .tab.selected:hover {
   background-color: black;
   color: white;
 }

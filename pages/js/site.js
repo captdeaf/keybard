@@ -137,6 +137,11 @@ addInitializer("load", () => {
     CHANGES.commit();
   };
 
+  ////////////////////////////////////
+  //
+  //  Horizontal scrollable divs that have arrows to scroll with.
+  //
+  ////////////////////////////////////
   function updateScrollButtons() {
     for (const scrollable of getAll('.horizontal-selection-container')) {
       const scrolled = get('.horizontal-selection', scrollable);
@@ -175,5 +180,31 @@ addInitializer("load", () => {
 
   for (const scrollable of getAll('.horizontal-selection')) {
     resizeObserver.observe(scrollable);
+  }
+
+  ////////////////////////////////////
+  //
+  //  Tab selections.
+  //
+  ////////////////////////////////////
+  function selectTab(el) {
+    const target = get(el.dataset.tab);
+    const alltabs = getAll(el.dataset.tabs);
+    for (const tab of alltabs) {
+      tab.style.display = 'none';
+    }
+    target.style.display = '';
+
+    const allsels = getAll(`[data-tabs="${el.dataset.tabs}"]`);
+    for (const sel of allsels) {
+      sel.classList.remove('selected');
+    }
+    el.classList.add('selected');
+  }
+  ACTION.onclick('[data-tab]', (el) => {
+    selectTab(el);
+  });
+  for (const tab of getAll('[data-tab-default]')) {
+    selectTab(tab);
   }
 });

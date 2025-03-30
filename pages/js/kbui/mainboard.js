@@ -544,29 +544,4 @@ addInitializer('connected', () => {
     KBINFO.keymap[layer][kmid] = oldkey;
     CHANGES.clear('key' + layer + '.' + kmid);
   });
-
-  const qwertyTabs = getAll('.qwerty-tabs .tab');
-  const qwertyContainers = getAll('.qwerty-tab-container');
-
-  function selectTab(target) {
-    for (const tab of qwertyTabs) {
-      if (tab.dataset.qwertyTab === target) {
-        tab.classList.add('active');
-      } else {
-        tab.classList.remove('active');
-      }
-    }
-    for (const container of qwertyContainers) {
-      if (container.id === target) {
-        container.style.display = 'flex';
-      } else {
-        container.style.display = 'none';
-      }
-    }
-    setSaved('data-qwerty-tab', target);
-  }
-  ACTION.onclick('[data-qwerty-tab]', (target) => {
-    selectTab(target.dataset.qwertyTab);
-  });
-  selectTab('qwerty-numpad');
 });
