@@ -1,7 +1,6 @@
 # TODO
 
 - Cleanup modifiers for qwerty.
-- Layer names in layers tab.
 - Macro display
 - Macro edit
 - Macro drag & drop
@@ -28,3 +27,6 @@
 - Fix combos
 - Fix key overrides
 - Add keyboard display tab, for combos.
+- Layer names in layers tab.
+- Macro and Tapdance displays
+- Remove pagination for now
