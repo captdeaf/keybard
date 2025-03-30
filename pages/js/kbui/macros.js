@@ -317,7 +317,7 @@ addInitializer('load', () => {
     floater.style['display'] = 'none';
     CHANGES.queue('macro', KBAPI.updateMacros);
     KEYUI.refreshAllKeys();
-    SAMPLE_BOARDS.display('macros');
+    SAMPLE_BOARDS.display('macro');
   });
 
   ////////////////////////////////////
@@ -377,10 +377,6 @@ addInitializer('load', () => {
   ////////////////////////////////////
   addInitializer('connected', () => {
     const macroBoard = get('#macro-board');
-    const sortable = new Draggable.Sortable(macroBoard, {
-      draggable: '.draggable-key',
-      handle: '.drag-macro',
-    });
     const rows = [];
     for (let idx = 0; idx < KBINFO.macro_count; idx++) {
       const mid = idx;
@@ -426,11 +422,6 @@ addInitializer('load', () => {
       const macroNumber = EL('div', { class: 'macro-number' }, `${mid}`);
       const keyContainer = EL('div', { class: 'key-container' });
       appendChildren(keyContainer, keytpl);
-      const dragButton = EL(
-        'div',
-        { class: 'drag-macro', style: { opacity: '0' } },
-        SVG.drag()
-      );
       const editButton = EL(
         'div',
         {
@@ -450,13 +441,16 @@ addInitializer('load', () => {
         class: 'control-container',
         style: { opacity: '0' },
       });
-      appendChildren(keyContainer, dragButton);
       appendChildren(keyContainer, editButton);
       const dottedLine = EL('div', { class: 'dotted-line' });
       const macroContainer = EL('div', {
         class: 'macro-container  draggable-key',
       });
       appendChildren(macroContainer, macroNumber);
+      appendChildren(macroContainer, EL('div', {
+        'data-render': 'macros',
+        'data-id': mid,
+      }, describeMacro(mid).str));
       appendChildren(macroContainer, dottedLine);
       appendChildren(macroContainer, keyContainer);
       rows.push(macroContainer);

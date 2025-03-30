@@ -28,7 +28,10 @@ addInitializer('load', () => {
       tapdance = KBINFO.tapdances[tdid];
     }
     if (!tapdance) {
-      return '';
+      return {
+        str: '',
+        title: '',
+      }
     }
     const ret = [];
     for (const k of ['tap', 'hold', 'doubletap', 'taphold']) {
@@ -36,7 +39,10 @@ addInitializer('load', () => {
         ret.push(KEYUI.getKeyContents(tapdance[k]).str);
       }
     }
-    return ret.join(' ');
+    return {
+      str: ret.join(' '),
+      title: `Tap Dance ${tdid} - ${ret.join(' ')}`,
+    }
   }
   TAPDANCE.describe = describeTapdance;
 
@@ -212,15 +218,20 @@ addInitializer('load', () => {
         },
         ''
       );
-      appendChildren(keytpl, tapdanceIcon(0), `${tdid}`);
+      appendChildren(keytpl, EL(
+          'div',
+          {
+            style: {
+              width: '16px',
+              height: '16px',
+              marginBottom: '5px',
+            },
+          },
+          SVG.tapdance()
+        ), `${tdid}`);
       const tdNumber = EL('div', { class: 'tapdance-number' }, `${tdid}`);
       const keyContainer = EL('div', { class: 'key-container' });
       appendChildren(keyContainer, keytpl);
-      const dragButton = EL(
-        'div',
-        { class: 'drag-macro', style: { opacity: '0' } },
-        SVG.drag()
-      );
       const editButton = EL(
         'div',
         {
@@ -235,11 +246,14 @@ addInitializer('load', () => {
         e.preventDefault();
         ACTION.trigger('key-tapdance-edit', editButton);
       };
-      appendChildren(keyContainer, dragButton);
       appendChildren(keyContainer, editButton);
       const dottedLine = EL('div', { class: 'dotted-line' });
       const tdContainer = EL('div', { class: 'macro-container' });
       appendChildren(tdContainer, tdNumber);
+      appendChildren(tdContainer, EL('div', {
+        'data-render': 'tapdance',
+        'data-id': tdid,
+      }, describeTapdance(tdid).str));
       appendChildren(tdContainer, dottedLine);
       appendChildren(tdContainer, keyContainer);
       rows.push(tdContainer);
