@@ -174,7 +174,8 @@ addInitializer('load', () => {
         const label = EL(
           'div',
           {
-            id: 'layer-label-' + layerid,
+            'data-render': 'layer',
+            'data-id': layerid,
             style: {
               flexGrow: 1,
               padding: '5px',
@@ -190,11 +191,6 @@ addInitializer('load', () => {
           name
         );
 
-        label.setAttribute(
-          'title',
-          'Layer' + ' ' + (name || layerid) + ' (click to change name)'
-        );
-        onClickEditIcon(label, 'layer', layerid);
         const layerContainer = EL('div', {
           class: 'layer-modifier-container',
           'data-layer': layerid,
@@ -208,18 +204,6 @@ addInitializer('load', () => {
             justifyContent: 'center',
           },
         });
-        const layerNumber = EL(
-          'div',
-          {
-            class: 'layer-modifier-number',
-            style: {
-              width: '20px',
-              textAlign: 'end',
-              fontWeight: '500',
-            },
-          },
-          `${layerid}`
-        );
         const keytpl = EL('div', {
           id: 'layer-' + layerid,
           class: 'layer-key',
@@ -260,7 +244,7 @@ addInitializer('load', () => {
           },
         });
         appendChildren(keytpl, layerIcon, `${layerid}`);
-        appendChildren(layerContainer, colorDot, layerNumber, label, keytpl);
+        appendChildren(layerContainer, colorDot, label, keytpl);
         return layerContainer;
       }
 

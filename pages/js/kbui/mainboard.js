@@ -299,6 +299,7 @@ addInitializer('connected', () => {
         'div',
         {
           class: 'edit-icon',
+          'data-edit-layer': layerIndex,
           style: {
             float: 'right',
             position: 'absolute',
