@@ -182,7 +182,7 @@ addInitializer('connected', () => {
   const layerSelection = get('#layer-selection');
   const board = get('#mainboard');
 
-  function renderBoardInto(par) {
+  function renderBoardInto(par, printable) {
     let mykeys = {};
     // Current settings.
     let children = [];
@@ -212,10 +212,12 @@ addInitializer('connected', () => {
     appendChildren(par, ...children);
 
     // This allows us to center the board on screen.
-    par.style['width'] = `${bounds.right + bounds.left + 40}px`;
-    par.style['height'] = `${bounds.bottom + 20}px`;
-    par.style['left'] = `20px`;
-    par.style['top'] = `0px`;
+    if (!printable) {
+      par.style['width'] = `${bounds.right + bounds.left + 40}px`;
+      par.style['height'] = `${bounds.bottom + 20}px`;
+      par.style['left'] = `20px`;
+      par.style['top'] = `0px`;
+    }
 
     // Calculate and set initial scale
     const container = par.closest('.small-board-container');
@@ -254,14 +256,13 @@ addInitializer('connected', () => {
   //  Update all the keys to show the given layer.
   //
   ////////////////////////////////////
-  function drawLayer(layerid, keys, printable) {
+  function drawLayer(layerid, keys) {
     if (layerid < 0 || layerid >= KBINFO.layers) {
       layerid = 0;
     }
     if (!keys) {
       keys = boardKeys;
     }
-    MAINBOARD.selectedLayer = layerid;
     const layerkeymap = KBINFO.keymap[layerid];
     const oldkeymap = BASE_KBINFO.keymap[layerid];
     for (const [kmid, key] of Object.entries(keys)) {
@@ -272,9 +273,6 @@ addInitializer('connected', () => {
         keys[kmid].image.classList.remove('changed');
       } else {
         keys[kmid].image.classList.add('changed');
-      }
-      if (printable) {
-        KEYUI.refreshKey(keys[kmid].image);
       }
     }
 
@@ -317,10 +315,6 @@ addInitializer('connected', () => {
       onClickEditIcon(editIcon, 'layer', layerIndex);
     }
 
-    ACTION.selectKey();
-    if (!printable) {
-      KEYUI.refreshAllKeys();
-    }
     ACTION.selectKey();
   }
 
@@ -465,17 +459,39 @@ addInitializer('connected', () => {
 
   ACTION.onclick('[data-layerid]', (target) => {
     setSaved('layerid', target.dataset.layerid);
+    MAINBOARD.selectedLayer = target.dataset.layerid;
     drawLayer(target.dataset.layerid);
   });
 
-  drawLayer(getSaved('layerid', 0));
+  MAINBOARD.selectedLayer = getSaved('layerid', 0);
+  drawLayer(MAINBOARD.selectedLayer);
 
   ////////////////////////////////////
   //
-  //  Render a printable layer in a separate window.
+  //  Draw a layer for printable page.
   //
   ////////////////////////////////////
+  function drawPrintableLayer(layerid, keys) {
+    if (layerid < 0 || layerid >= KBINFO.layers) {
+      layerid = 0;
+    }
+    if (!keys) {
+      keys = boardKeys;
+    }
+    const layerkeymap = KBINFO.keymap[layerid];
+    for (const [kmid, key] of Object.entries(keys)) {
+      keys[kmid].image.dataset.key = layerkeymap[kmid];
+      keys[kmid].image.dataset.kmid = kmid;
+      keys[kmid].image.dataset.bound = 'main';
+      KEYUI.refreshKey(keys[kmid].image);
+    }
+  }
 
+  ////////////////////////////////////
+  //
+  //  Render a printable set of layers in a separate window.
+  //
+  ////////////////////////////////////
   MAINBOARD.printLayers = (layerids) => {
     var printer = window.open('', '_blank');
     printer.document.write('<html>');
@@ -521,9 +537,9 @@ addInitializer('connected', () => {
           ),
         ])
       );
-      const mykeys = renderBoardInto(div);
+      const mykeys = renderBoardInto(div, true);
       const pparent = EL('div', {}, div);
-      drawLayer(layerid, mykeys, true);
+      drawPrintableLayer(layerid, mykeys, true);
       printer.document.write(pparent.innerHTML);
     }
 

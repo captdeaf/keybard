@@ -1,11 +1,10 @@
 # TODO
 
+- Make ? help work
+- Tapdance display
 - Macro display
 - Macro edit
 - Macro drag & drop
-- Tapdance display
-- Fix printable
-- Make ? help work
 
 # COMPLETE
 
@@ -32,3 +31,4 @@
 - Pre-'launch' and post-launch display.
 - Cleanup modifiers for qwerty.
 - Removed gear button for now.
+- Fix printable - fixed enough for now.
