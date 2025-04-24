@@ -1,11 +1,10 @@
 # TODO
 
-- Cleanup modifiers for qwerty.
 - Macro display
 - Macro edit
 - Macro drag & drop
+- Tapdance display
 - Fix printable
-- Reorganize layout of key selection 'tabs'
 - Make ? help work
 - Move settings to (gear)
 
@@ -30,3 +29,6 @@
 - Layer names in layers tab.
 - Macro and Tapdance displays
 - Remove pagination for now
+- Reorganize layout of key selection 'tabs'
+- Pre-'launch' and post-launch display.
+- Cleanup modifiers for qwerty.

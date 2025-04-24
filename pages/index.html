@@ -499,40 +499,17 @@
   </div>
 </div>
 <div class="kb-board-mods">
-    <div class="kb-group modifiers">
-        <div class="kbdesc extra-large left" style="text-align: left">
-            Modifier
-        </div>
-        <div class="key-mod kb-key modifier" data-modifier="SHIFT">Shift</div>
-        <div class="key-mod kb-key modifier" data-modifier="CTRL">Ctrl</div>
-        <div class="key-mod kb-key modifier" data-modifier="GUI">GUI</div>
-        <div class="key-mod kb-key modifier" data-modifier="ALT">Alt</div>
+    <div class="modifiers">
+        Modifiers
+        <div class="modifier" data-modifier="SHIFT">SHIFT</div>
+        <div class="modifier" data-modifier="CTRL">CTRL</div>
+        <div class="modifier" data-modifier="ALT">ALT</div>
+        <div class="modifier" data-modifier="GUI">GUI</div>
     </div>
-    <div class="kb-group modifiers">
-        <div class="kb-row kb-mods">
-            <div class="kbdesc extra-large left">Special</div>
-            <div
-                style="
-                    display: flex;
-                    flex-grow: 1;
-                    flex-direction: row;
-                    justify-content: flex-end;
-                "
-            >
-                <div
-                    class="key kb-key medium modifier"
-                    data-bind="key"
-                    data-key="KC_NO"
-                ></div>
-                <div
-                    class="key kb-key medium modifier"
-                    data-bind="key"
-                    data-key="KC_TRNS"
-                >
-                    ▽
-                </div>
-            </div>
-        </div>
+    <div class="modifiers">
+        Keys
+        <div class="key elastic kb-key qwerty-elastic" data-bind="key" data-key="KC_NO"></div>
+        <div class="key elastic kb-key qwerty-elastic" data-bind="key" data-key="KC_TRNS">▽</div>
     </div>
 </div>
 
