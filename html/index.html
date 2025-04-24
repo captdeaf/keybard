@@ -20,7 +20,14 @@
     </head>
     <body>
         <div><button class="on-connect" id="commit">COMMIT CHANGES</button></div>
-        {{allboards.html}}
+        <div id="boards-container">
+          <div id="sidebar">
+            {{sidebar.html}}
+            {{allboards.html}}
+          </div>
+          <div id="topboard" class="on-connect">{{mainboard.html}}</div>
+          {{floats.html}} {{macro.html}} {{tapdance.html}}
+        </div>
         <div id="allmenus"></div>
         <div id="panecontainer"></div>
         {{launch.html}} {{nosupport.html}}

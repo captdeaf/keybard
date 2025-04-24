@@ -1,0 +1,40 @@
+<div id="board-selection" style="z-index: 200">
+  <div id="topbar">{{menu.html}}</div>
+  <div id="board-selection-items" class="on-connect">
+    <div data-title="Basic Keyboard" class="board-sel" data-board="qwerty">{{icons/keyboard.html}}</div>
+    <div data-title="Layer keys" class="board-sel" data-board="layer">{{icons/layers.html}}</div>
+    <div class="board-sel" data-board="custom" style="display: none">
+      {{icons/mouse.html}}
+    </div>
+    <div class="board-sel" data-board="international" style="display: none">
+      {{icons/keyboard.html}}
+    </div>
+    <div data-title="Tapdances" class="board-sel" data-board="tapdance">
+      {{icons/tapdance.html}}
+    </div>
+    <div data-title="Macros" class="board-sel" data-board="macro">{{icons/macros.html}}</div>
+    <div data-title="ModTaps" class="board-sel" data-board="modtaps">
+      {{icons/keyboard.html}}
+    </div>
+    <div data-title="QMK keys" class="board-sel" data-board="quantum">
+      {{icons/keyboard.html}}
+    </div>
+    <div class="dropdown board-sel-unusual" id="menu-top">
+      <div>{{icons/svalboardkeys.html}}</div>
+      <div class="dropdown-content dropup" style="left: 0px">
+        <label class="board-sel" data-board="media">App, Media</label>
+        <label class="board-sel" data-board="audio"
+          >Audio and Haptics</label
+        >
+        <label class="board-sel" data-board="backlights">Backlights</label>
+        <label class="board-sel" data-board="magic">'Magic' keys</label>
+        <label class="board-sel" data-board="midi">MIDI</label>
+        <label class="board-sel" data-board="steno">Steno</label>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="lower-icons">
+    <div class="lower-icon">{{icons/help.html}}</div>
+  </div>
+</div>

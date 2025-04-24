@@ -6,7 +6,6 @@
 - Tapdance display
 - Fix printable
 - Make ? help work
-- Move settings to (gear)
 
 # COMPLETE
 
@@ -32,3 +31,4 @@
 - Reorganize layout of key selection 'tabs'
 - Pre-'launch' and post-launch display.
 - Cleanup modifiers for qwerty.
+- Removed gear button for now.
