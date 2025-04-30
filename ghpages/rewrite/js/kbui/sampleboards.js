@@ -98,7 +98,6 @@ addInitializer('load', () => {
   }
 
   selectTab(getSaved('main-container', 'mainboard-container'));
-  displayBoard('qwerty');
 
   ACTION.onclick('.board-sel', (target) => {
     selectTab('mainboard-container');
@@ -262,5 +261,6 @@ addInitializer('load', () => {
         get('[data-layer="' + i + '"]').style['display'] = 'none';
       }
     }
+    displayBoard('qwerty');
   });
 });

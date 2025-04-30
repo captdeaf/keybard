@@ -605,14 +605,21 @@
   border-radius: 25px;
   border: none;
   font-size: 10px;
-  height: 5px !important;
+  height: 25px !important;
   line-height: 10px;
   font-weight: bold;
   color: darkslategray;
   margin: 0 2px;
-  padding: 0 !important;
-  max-width: 100px;
+  padding: 7px 0 0 9px;
+  width: 60px;
 }
+
+.modifier.selected {
+  background-color: #f95053;
+  color: white;
+  border: 2px solid #f95053;
+}
+
 
 .modifiers .kbdesc {
   margin-left: 0;
@@ -625,6 +632,11 @@
 .modifier:hover {
   background-color: #f95053;
   color: white;
+}
+
+.modifier.selected:hover {
+  background-color: #f2f2f1;
+  color: black;
 }
 
 .elastic {

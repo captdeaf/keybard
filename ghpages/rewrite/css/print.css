@@ -2,6 +2,7 @@
   position: relative;
   break-inside: avoid;
   margin-bottom: 60px;
+  height: 500px;
 }
 
 @media print {
@@ -22,8 +23,11 @@ p.printable-title {
   position: absolute;
   top: -20px;
   width: 300px;
-  left: -150px;
+  left: 520px;
   text-align: center;
-  margin-left: 50%;
 }
 
+body {
+  display: flex;
+  flex-flow: column;
+}
