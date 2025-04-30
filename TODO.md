@@ -32,3 +32,5 @@
 - Cleanup modifiers for qwerty.
 - Removed gear button for now.
 - Fix printable - fixed enough for now.
+- Prettify Combos
+- remove layer sel from combos, key overrides
