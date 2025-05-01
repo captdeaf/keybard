@@ -315,6 +315,7 @@ addInitializer('connected', () => {
       onClickEditIcon(editIcon, 'layer', layerIndex);
     }
 
+    KEYUI.refreshAllKeys();
     ACTION.selectKey();
   }
 
