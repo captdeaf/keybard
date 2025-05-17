@@ -76,13 +76,7 @@ addInitializer('connected', () => {
       appendChildren(pane, EL('div', { class: 'panebody' }, contents));
     }
 
-    setTimeout(() => {
-      const panebounds = pane.getBoundingClientRect();
-      if (panebounds.y + panebounds.height > bounds.y) {
-        pane.style['top'] = bounds.y + bounds.height + 10 + 'px';
-      }
-      pane.style['visibility'] = 'visible';
-    }, 1);
+    pane.style['visibility'] = 'visible';
 
     panecontainer.innerHTML = '';
     appendChildren(panecontainer, pane);
@@ -110,13 +104,19 @@ addInitializer('connected', () => {
     if (curX === lastX && curY === lastY) return;
     lastX = curX;
     lastY = curY;
+    const target = elements[0];
     for (const el of elements) {
-      if (el.matches('[data-key]')) {
-        match = el;
-        break;
-      } else if (el.matches('[data-title]')) {
-        match = el;
-      } else if (el.matches('#floats')) {
+      if (el === target || el.contains(target)) {
+        if (el.matches('[data-key]')) {
+          match = el;
+          break;
+        } else if (el.matches('[data-title]')) {
+          match = el;
+        } else if (el.matches('#floats') || el.matches('label')) {
+          match = null;
+          break;
+        }
+      } else {
         break;
       }
     }
@@ -136,7 +136,7 @@ addInitializer('connected', () => {
     }
   }
 
-  setInterval(updatePane, 200);
+  // setInterval(updatePane, 200);
 
   document.onmousemove = (evt) => {
     curX = evt.clientX;

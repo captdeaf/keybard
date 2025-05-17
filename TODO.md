@@ -1,7 +1,6 @@
 # TODO
 
-- Mouseover can sometimes trigger a mouseover tooltip of what's underneath
-- New icons needed for disambiguation
+- Combine miscellaneous sample kbs into one large one.
 - On commit, make a new entry in kb history
 - Make ? help work
 - Tapdance display
@@ -40,3 +39,4 @@
 - Prettify Combos
 - remove layer sel from combos, key overrides
 - Mouseover menus are annoying for kb sample selection
+- Mouseover can sometimes trigger a mouseover tooltip of what's underneath
