@@ -7,10 +7,10 @@
 addInitializer('connected', () => {
   const panecontainer = get('#panecontainer');
 
-  function showPaneForKey(keyimage) {
-    const keystr = keyimage.dataset.key;
+  function showPaneForKey(keyel) {
+    const keystr = keyel.dataset.key;
 
-    const desc = KEYUI.getKeyContents(keyimage.dataset.key);
+    const desc = KEYUI.getKeyContents(keyel.dataset.key);
 
     let contents = desc.title;
 
@@ -32,7 +32,7 @@ addInitializer('connected', () => {
     } else if (keystr === 'KC_TRNS') {
       contents = 'Transparent key (fall-through to next active layer)';
     }
-    showPane(keyimage, keystr, contents);
+    showPane(keyel, keystr, contents);
   }
 
   function showPane(el, title, contents) {
@@ -40,8 +40,14 @@ addInitializer('connected', () => {
     let x = bounds.x + bounds.width / 2 - 50;
     let y = bounds.y - 100;
 
+    if (el.dataset.titlePos === 'right') {
+      x = bounds.x + bounds.width + 10;
+      y = bounds.y;
+    }
+
     const winbounds = document.documentElement.getBoundingClientRect();
 
+    // Min/max
     x = Math.min(x, winbounds.width - 180);
     y = Math.min(y, winbounds.height - 300);
     x = Math.max(x, 5);
@@ -76,7 +82,7 @@ addInitializer('connected', () => {
         pane.style['top'] = bounds.y + bounds.height + 10 + 'px';
       }
       pane.style['visibility'] = 'visible';
-    }, 20);
+    }, 1);
 
     panecontainer.innerHTML = '';
     appendChildren(panecontainer, pane);

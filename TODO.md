@@ -1,10 +1,15 @@
 # TODO
 
+- Mouseover can sometimes trigger a mouseover tooltip of what's underneath
+- New icons needed for disambiguation
+- On commit, make a new entry in kb history
 - Make ? help work
 - Tapdance display
 - Macro display
 - Macro edit
 - Macro drag & drop
+- Layer names, finalize
+- Uploading a .kbinfo from incompatible board should fit it to macro counts, etc.
 
 # COMPLETE
 
@@ -34,3 +39,4 @@
 - Fix printable - fixed enough for now.
 - Prettify Combos
 - remove layer sel from combos, key overrides
+- Mouseover menus are annoying for kb sample selection
