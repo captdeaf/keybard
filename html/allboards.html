@@ -6,28 +6,24 @@
   <div id="allboards-container">
     <div class="board-map" data-board="qwerty">{{kcs/qwerty.html}}</div>
     <!-- Special keys -->
-    <div class="board-map" data-board="media">{{kcs/media.html}}</div>
-    <div class="board-map" data-board="audio">{{kcs/audio.html}}</div>
-    <div class="board-map" data-board="backlights">
+    <div class="board-map" data-board="quantum">
+      {{kcs/modtaps.html}}
+      {{kcs/quantum.html}}
+      {{kcs/magic.html}}
+    </div>
+    <div class="board-map" data-board="misc">
+      {{kcs/media.html}}
+      {{kcs/audio.html}}
+      {{kcs/steno.html}}
       {{kcs/backlights.html}}
     </div>
-    <div class="board-map" data-board="international" style="display: none">
-      {{kcs/international.html}}
-    </div>
-    <div class="board-map" data-board="magic">{{kcs/magic.html}}</div>
-    <div class="board-map" data-board="midi">{{kcs/midi.html}}</div>
-    <div class="board-map" data-board="modtaps">{{kcs/modtaps.html}}</div>
-    <div class="board-map" data-board="quantum">{{kcs/quantum.html}}</div>
-    <div class="board-map" data-board="steno">{{kcs/steno.html}}</div>
-    <!-- Dynamically generated from kbinfo -->
-    <div class="board-map" data-board="custom">{{kcs/custom.html}}</div>
-    <div class="board-map" data-board="layer">{{kcs/layerkeys.html}}</div>
     <!-- More complex boards. -->
-    <div class="board-map" data-board="macro" id="macro-container">
-      <div id="macro-board" class="scroll-effects-vertical"></div>
+    <div class="board-map" data-board="layer">
+      {{kcs/layerkeys.html}}
     </div>
-    <div class="board-map" data-board="tapdance" id="tapdance-container">
-      <div id="tapdance-board" class="scroll-effects-vertical"></div>
+    <div class="board-map" id="macro-board" data-board="macro" id="macro-container">
+    </div>
+    <div class="board-map" id="tapdance-board" data-board="tapdance" id="tapdance-container">
     </div>
   </div>
 </div>

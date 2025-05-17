@@ -104,9 +104,10 @@
   z-index: 1;
   flex-grow: 1;
   align-self: stretch;
-  overflow-x: scroll;
+  overflow-y: scroll;
   width: 500px;
   box-sizing: border-box;
+  height: 90%;
 }
 
 #allboards {
@@ -124,9 +125,8 @@
   padding: 4px;
   margin-bottom: 4.5px;
   max-width: 100%;
-  flex-grow: 1;
-  flex-shrink: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
   box-sizing: border-box;
 }
 

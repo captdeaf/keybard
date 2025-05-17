@@ -1,6 +1,5 @@
 # TODO
 
-- Combine miscellaneous sample kbs into one large one.
 - On commit, make a new entry in kb history
 - Make ? help work
 - Tapdance display
@@ -41,3 +40,4 @@
 - Mouseover menus are annoying for kb sample selection
 - Mouseover can sometimes trigger a mouseover tooltip of what's underneath
 - Elements too close to top can be overlaid by keyPane.
+- Combine miscellaneous sample kbs into one large one.
