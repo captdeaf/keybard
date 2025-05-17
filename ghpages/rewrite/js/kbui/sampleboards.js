@@ -23,7 +23,8 @@ const BOARD_NAMES = {
   modtaps: 'Mod Hold, Tap Keys',
   quantum: 'QMK Keys',
   mouse: 'Mouse Keys',
-  steno: 'Steno',
+  misc: 'Miscellaneous keys',
+  steno: 'Steno keys',
   backlights: 'QMK Backlights',
   audio: 'Audio Keys',
   magic: 'QMK Magic Keys',
@@ -79,7 +80,8 @@ addInitializer('load', () => {
     if (name === 'keyoverride-container') return;
     allboardsContainer.style['display'] = 'block';
     sidebarSelector.classList.add('active');
-    for (const board of Object.values(allboards)) {
+    for (const [k, board] of Object.entries(allboards)) {
+      console.log("trying", k);
       board.selector.classList.remove('active');
       board.container.style['display'] = 'none';
     }

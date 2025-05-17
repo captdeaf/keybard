@@ -7,10 +7,10 @@
 addInitializer('connected', () => {
   const panecontainer = get('#panecontainer');
 
-  function showPaneForKey(keyimage) {
-    const keystr = keyimage.dataset.key;
+  function showPaneForKey(keyel) {
+    const keystr = keyel.dataset.key;
 
-    const desc = KEYUI.getKeyContents(keyimage.dataset.key);
+    const desc = KEYUI.getKeyContents(keyel.dataset.key);
 
     let contents = desc.title;
 
@@ -32,7 +32,7 @@ addInitializer('connected', () => {
     } else if (keystr === 'KC_TRNS') {
       contents = 'Transparent key (fall-through to next active layer)';
     }
-    showPane(keyimage, keystr, contents);
+    showPane(keyel, keystr, contents);
   }
 
   function showPane(el, title, contents) {
@@ -40,8 +40,14 @@ addInitializer('connected', () => {
     let x = bounds.x + bounds.width / 2 - 50;
     let y = bounds.y - 100;
 
+    if (el.dataset.titlePos === 'right') {
+      x = bounds.x + bounds.width + 10;
+      y = bounds.y;
+    }
+
     const winbounds = document.documentElement.getBoundingClientRect();
 
+    // Min/max
     x = Math.min(x, winbounds.width - 180);
     y = Math.min(y, winbounds.height - 300);
     x = Math.max(x, 5);
@@ -71,12 +77,20 @@ addInitializer('connected', () => {
     }
 
     setTimeout(() => {
+      // Position the pane.
       const panebounds = pane.getBoundingClientRect();
-      if (panebounds.y + panebounds.height > bounds.y) {
-        pane.style['top'] = bounds.y + bounds.height + 10 + 'px';
+      x = bounds.x + bounds.width + 5;
+      y = bounds.y;
+      if (x + panebounds.width > winbounds.width) {
+        x = bounds.x - panebounds.width - 5;
       }
+      if (y + panebounds.height > winbounds.height) {
+        y = bounds.y + bounds.height - panebounds.height - 5;
+      }
+      pane.style['left'] = x + 'px';
+      pane.style['top'] = y + 'px';
       pane.style['visibility'] = 'visible';
-    }, 20);
+    }, 60);
 
     panecontainer.innerHTML = '';
     appendChildren(panecontainer, pane);
@@ -104,13 +118,19 @@ addInitializer('connected', () => {
     if (curX === lastX && curY === lastY) return;
     lastX = curX;
     lastY = curY;
+    const target = elements[0];
     for (const el of elements) {
-      if (el.matches('[data-key]')) {
-        match = el;
-        break;
-      } else if (el.matches('[data-title]')) {
-        match = el;
-      } else if (el.matches('#floats')) {
+      if (el === target || el.contains(target)) {
+        if (el.matches('[data-key]')) {
+          match = el;
+          break;
+        } else if (el.matches('[data-title]')) {
+          match = el;
+        } else if (el.matches('#floats') || el.matches('label')) {
+          match = null;
+          break;
+        }
+      } else {
         break;
       }
     }
@@ -130,7 +150,7 @@ addInitializer('connected', () => {
     }
   }
 
-  setInterval(updatePane, 200);
+  // setInterval(updatePane, 200);
 
   document.onmousemove = (evt) => {
     curX = evt.clientX;

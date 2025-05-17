@@ -553,7 +553,7 @@
 /* Key pane */
 .keypane {
   min-width: 100px;
-  min-height: 80px;
+  min-height: 40px;
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
