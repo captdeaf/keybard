@@ -76,7 +76,21 @@ addInitializer('connected', () => {
       appendChildren(pane, EL('div', { class: 'panebody' }, contents));
     }
 
-    pane.style['visibility'] = 'visible';
+    setTimeout(() => {
+      // Position the pane.
+      const panebounds = pane.getBoundingClientRect();
+      x = bounds.x + bounds.width + 5;
+      y = bounds.y;
+      if (x + panebounds.width > winbounds.width) {
+        x = bounds.x - panebounds.width - 5;
+      }
+      if (y + panebounds.height > winbounds.height) {
+        y = bounds.y + bounds.height - panebounds.height - 5;
+      }
+      pane.style['left'] = x + 'px';
+      pane.style['top'] = y + 'px';
+      pane.style['visibility'] = 'visible';
+    }, 60);
 
     panecontainer.innerHTML = '';
     appendChildren(panecontainer, pane);

@@ -40,3 +40,4 @@
 - remove layer sel from combos, key overrides
 - Mouseover menus are annoying for kb sample selection
 - Mouseover can sometimes trigger a mouseover tooltip of what's underneath
+- Elements too close to top can be overlaid by keyPane.
