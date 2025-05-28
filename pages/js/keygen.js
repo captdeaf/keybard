@@ -1524,6 +1524,7 @@ const CODEMAP = {
   0x7c78: "FN_MO23",
   0x7c79: "QK_REPEAT_KEY",
   0x7c7a: "QK_ALT_REPEAT_KEY",
+  0x7c7b: "QK_LAYER_LOCK",
   0x7dff: "QK_QUANTUM_MAX",
   0x7e00: "USER00",
   0x7e01: "USER01",
@@ -10779,6 +10780,12 @@ const KEYMAP = {
     "str": "AltRep",
     "title": "QK_ALT_REPEAT_KEY"
   },
+  "QK_LAYER_LOCK": {
+    "code": 0x7c7b,
+    "qmkid": "QK_LAYER_LOCK",
+    "str": "Layer\nLock",
+    "title": "QK_LAYER_LOCK"
+  },
   "QK_QUANTUM_MAX": {
     "code": 0x7dff,
     "qmkid": "QK_QUANTUM_MAX",
@@ -12632,6 +12639,7 @@ const KEYALIASES = {
   "FN_MO13": "FN_MO13",
   "FN_MO23": "FN_MO23",
   "QK_REPEAT_KEY": "QK_REPEAT_KEY",
+  "QK_LAYER_LOCK": "QK_LAYER_LOCK",
   "USER00": "USER00",
   "USER01": "USER01",
   "USER02": "USER02",
@@ -13945,6 +13953,7 @@ const KEYALIASES = {
   "RAG_NRM": "MAGIC_UNSWAP_RALT_RGUI",
   "GUI_OFF": "MAGIC_NO_GUI",
   "GUI_ON": "MAGIC_UNNO_GUI",
+  "QK_LLCK": "QK_LAYER_LOCK",
   "KC_LOCKING_CAPS": "KC_LCAP",
   "KC_LOCKING_NUM": "KC_LNUM",
   "KC_LOCKING_SCROLL": "KC_LSCR",

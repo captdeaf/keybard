@@ -1240,6 +1240,7 @@ def define():
     Key(0x7c78, "FN_MO23"           , "FN_MO23"           , "FN_MO23"           )
     Key(0x7c78, "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     )
     Key(0x7c78, "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     , "QK_REPEAT_KEY"     )
+    Key(0x7c7b, "QK_LAYER_LOCK"     , "QK_LAYER_LOCK"     , "QK_LAYER_LOCK"     )
     Key(0x7e00, "USER00"            , "USER00"            , "USER00"            )
     Key(0x7e01, "USER01"            , "USER01"            , "USER01"            )
     Key(0x7e02, "USER02"            , "USER02"            , "USER02"            )

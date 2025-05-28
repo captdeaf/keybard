@@ -356,6 +356,8 @@ def doit():
     K("QK_REPEAT_KEY", "Repeat", alias=["QK_REP"])
     K("QK_ALT_REPEAT_KEY", "AltRep", alias=["QK_AREP"])
 
+    K("QK_LAYER_LOCK", "Layer\nLock", alias=["QK_LLCK"])
+
     K("KC_CALC", "Calc", "Launch Calculator (Windows)", alias=["KC_CALCULATOR"])
     K("KC_MAIL", "Mail", "Launch Mail (Windows)")
     K("KC_MSEL", "Media\nPlayer", "Launch Media Player (Windows)", alias=["KC_MEDIA_SELECT"])
