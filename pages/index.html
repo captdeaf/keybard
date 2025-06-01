@@ -46,6 +46,10 @@
 <script type="text/javascript" src="js/kbinfo.js"></script>
 <script type="text/javascript" src="js/kbihistory.js"></script>
 
+<!-- Color management -->
+<script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
+<script type="text/javascript" src="js/iroiro.js"></script>
+
 <!-- USB proto -->
 <script type="text/javascript" src="js/usbhid.js"></script>
 
@@ -82,6 +86,7 @@
 <script type="text/javascript" src="js/vial/tapdance.js"></script>
 <script type="text/javascript" src="js/vial/keyoverride.js"></script>
 <script type="text/javascript" src="js/vial/qmk.js"></script>
+<script type="text/javascript" src="js/vial/sval.js"></script>
 <script type="text/javascript" src="js/vial/api.js"></script>
 <script type="text/javascript" src="js/vial/vial.js"></script>
 
@@ -2362,7 +2367,10 @@
         <button class="scroll-right scroll-button" data-target="#layer-selection">›</button>
       </div>
       <div id="layer-header">
-        <div class="color-dot" id="layer-color-dot"></div>
+        <label data-open="#float-colorpicker" id="open-colorpicker" class="connect-enable"
+          style="cursor: pointer">
+          <div class="color-dot" id="layer-color-dot"></div>
+        </label>
         <h3 id="layer-header-title">Title</h3>
         <div>
           <div class="dropdown">
@@ -2494,6 +2502,17 @@
       <li>(Note: Keyboard changes will not be performed at this point.)</li>
     </ol>
   </p>
+</div>
+
+  <div id="float-colorpicker" class="floater closeable" display="none">
+
+    <div id="colorpicker-host"></div>
+
+    <div class="button-row">
+        <button data-action="colorpicker-cancel">Cancel</button>
+        <button data-action="colorpicker-accept">OK</button>
+    </div>
+
 </div>
 
   <div id="float-tips" class="floater closeable" style="min-width: 300px;">

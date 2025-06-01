@@ -234,10 +234,13 @@ addInitializer('load', () => {
           },
           SVG.layerIcon()
         );
+        const layerHsv255 = KBINFO.layer_colors[layerid];
+        const layerIro = IROIRO.hsv255ToIro(layerHsv255);
+        const colorHex = layerIro.hexString;
         const colorDot = EL('div', {
           class: 'color-dot',
           style: {
-            backgroundColor: '#ddd',
+            backgroundColor: colorHex,
             borderRadius: '50%',
             width: '15px',
             height: '15px',
