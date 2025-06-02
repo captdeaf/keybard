@@ -25,6 +25,6 @@ async function updateAllChanges() {
 
   SETTINGS.instant = docommit;
   if (docommit) {
-    CHANGES.commit();
+    await CHANGES.commit();
   }
 }
