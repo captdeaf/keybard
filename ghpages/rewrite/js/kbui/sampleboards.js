@@ -81,7 +81,6 @@ addInitializer('load', () => {
     allboardsContainer.style['display'] = 'block';
     sidebarSelector.classList.add('active');
     for (const [k, board] of Object.entries(allboards)) {
-      console.log("trying", k);
       board.selector.classList.remove('active');
       board.container.style['display'] = 'none';
     }
