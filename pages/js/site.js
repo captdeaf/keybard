@@ -101,9 +101,6 @@ addInitializer("load", () => {
   };
 
   TIPS.pick(Math.floor(Math.random() * tipcount));
-  if (getSaved("tips", "show") === "show") {
-    TIPS.show();
-  }
 
   ACTION.onclick("[data-tip]", (el) => {
     TIPS[el.dataset.tip]();

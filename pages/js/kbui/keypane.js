@@ -76,21 +76,29 @@ addInitializer('connected', () => {
       appendChildren(pane, EL('div', { class: 'panebody' }, contents));
     }
 
-    setTimeout(() => {
+    function adjust(redo) {
       // Position the pane.
       const panebounds = pane.getBoundingClientRect();
+      if (!redo) {
+        pane.style['width'] = panebounds.width + 'px';
+        pane.style['height'] = panebounds.height + 'px';
+      }
       x = bounds.x + bounds.width + 5;
       y = bounds.y;
-      if (x + panebounds.width > winbounds.width) {
+      if (panebounds.right > winbounds.width) {
         x = bounds.x - panebounds.width - 5;
       }
-      if (y + panebounds.height > winbounds.height) {
+      if (panebounds.bottom > winbounds.height) {
         y = bounds.y + bounds.height - panebounds.height - 5;
       }
       pane.style['left'] = x + 'px';
       pane.style['top'] = y + 'px';
       pane.style['visibility'] = 'visible';
-    }, 60);
+      if (redo) {
+        setTimeout(() => { adjust(false); }, 10);
+      }
+    }
+    setTimeout(() => { adjust(true); }, 60);
 
     panecontainer.innerHTML = '';
     appendChildren(panecontainer, pane);
