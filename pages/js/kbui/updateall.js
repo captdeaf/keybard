@@ -21,6 +21,8 @@ async function updateAllChanges() {
 
   await QMKSETTINGS.updateAll();
 
+  await IROIRO.updateAll();
+
   await KEYUI.refreshAllKeys();
 
   SETTINGS.instant = docommit;

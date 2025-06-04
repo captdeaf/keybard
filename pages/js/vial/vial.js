@@ -35,6 +35,11 @@ Object.assign(Vial, {
 
     // Visual layout.
     await Vial.kb.getKeyLayout(kbinfo);
+
+    // Svalboard-specific data
+    await Vial.sval.check(kbinfo);
+    await Vial.sval.pull(kbinfo);
+
     return kbinfo;
   },
 
