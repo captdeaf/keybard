@@ -321,11 +321,40 @@ addInitializer('connected', () => {
 
   ////////////////////////////////////
   //
+  //  Populates the layer list. This was originally inlined in the
+  //  initializer, but is separated here into a separate function so
+  //  that it can be called by updateAll, and reflect names loaded from
+  //  a .kbi file. Currently it captures layerSelection from its environment,
+  //  but that could be passed in or fetched independently using browserutils'
+  //  get(). replaceChildren should be safe to use on anything not named IE,
+  //  and cleaner and more performant than deleting existing children by hand.
+  //  It would also be possible to walk the DOM and simply replace the inner
+  //  text, but doing it this way allows us to simply call this either on
+  //  app startup or as part of a MAINBOARD.updateAll cycle without worrying
+  //  over whether anything was in there previously.
+  //
+  ////////////////////////////////////
+  function populateLayerList() {
+    const nextChildren = [...Array(KBINFO.layers).keys()].map(layerid => {
+      const layerSel = EL('div', {
+        'data-layerid': layerid,
+        class: 'layer-select selection',
+      });
+      makeEditableName(layerSel, 'layer', layerid);
+      return layerSel;
+    });
+
+    layerSelection.replaceChildren(...nextChildren);
+  }
+
+  ////////////////////////////////////
+  //
   //  Called when a file is uploaded or a device is connected after a file
   //  is uploaded. Mark and queue all changes.
   //
   ////////////////////////////////////
   MAINBOARD.updateAll = () => {
+    populateLayerList();
     drawLayer(MAINBOARD.selectedLayer);
 
     for (let ilayer = 0; ilayer < KBINFO.layers; ilayer++) {
@@ -430,18 +459,7 @@ addInitializer('connected', () => {
   // Draw the layer IDs and Names.
   //
   ////////////////////////////////////
-  children = [];
-  for (let i = 0; i < KBINFO.layers; i++) {
-    const layerid = i;
-    let layerName = getEditableName('layer', i, '' + i);
-    const layerSel = EL('div', {
-      'data-layerid': layerid,
-      class: 'layer-select selection',
-    });
-    makeEditableName(layerSel, 'layer', i);
-    children.push(layerSel);
-  }
-  appendChildren(layerSelection, ...children);
+  populateLayerList();
 
   function updateScrollButtons() {
     for (const scrollable of getAll('.horizontal-selection-container')) {
