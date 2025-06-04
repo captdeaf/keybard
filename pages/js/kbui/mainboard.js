@@ -292,6 +292,12 @@ addInitializer('connected', () => {
       const names = getSaved('names', {});
       const displayName = names?.layer?.[layerIndex] || layerIndex;
       layerHeaderTitle.textContent = `${displayName}`;
+
+      IROIRO.setPickerColorFromSelectedLayer();
+      const layerColorHex = IROIRO.picker.color.hexString;
+      const colorDot = get('#layer-color-dot');
+      colorDot.style.backgroundColor = layerColorHex;
+
       selectedLayer.classList.add('selected');
       const editIcon = EL(
         'div',
