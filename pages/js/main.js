@@ -58,12 +58,22 @@ addInitializer('load', () => {
 });
 
 async function tryConnect() {
-  const opened = await USB.open([{
-    // Filter for QMK/Vial kbs
-    usagePage: 0xFF60,
-    usage: 0x61,
-  }]);
-  return opened;
+  try {
+    const opened = await USB.open([{
+      // Filter for QMK/Vial kbs
+      usagePage: 0xFF60,
+      usage: 0x61,
+    }]);
+    return opened;
+  } catch (err) {
+    if (err instanceof DOMException && err.name === 'NotAllowedError') {
+        console.error('device is probably already opened by vial', USB.device);
+        alert('It looks like ' + USB.device.productName + ' may already be opened somewhere else');
+    } else {
+        console.error('failed to open USB:', err);
+    }
+    return false;
+  }
 }
 
 async function connectDevice(cause) {
