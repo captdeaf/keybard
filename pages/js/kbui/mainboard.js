@@ -146,6 +146,7 @@ addInitializer('connected', () => {
     if (layerid < 0 || layerid >= KBINFO.layers) {
       layerid = 0;
     }
+    layerid = parseInt(layerid, 10);
     if (!keys) {
       keys = boardKeys;
     }
@@ -173,7 +174,7 @@ addInitializer('connected', () => {
 
     const {hue, sat, val} = KBINFO.layer_colors?.[layerid] ?? {hue: 0, sat: 0, val: 0};
     const rgb = hsvToRgb(hue / 255, sat / 255, val / 255);
-    find('#layer-color-input')?.setAttribute('value',`#${rgb.map(c => c.toString(16).padStart(2, '0')).join('')}`);
+    find('#layer-color-input')?.setAttribute('value',`#${rgb.map(c => Math.floor(c).toString(16).padStart(2, '0')).join('')}`);
     find('#layer-color-input')?.dispatchEvent(new Event('input', { bubbles: true }));
 
     ACTION.selectKey();
