@@ -179,3 +179,13 @@
 .ko-toggle.checked {
   background-color: #ccf;
 }
+
+#layer-color {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: aqua;
+}

@@ -171,6 +171,9 @@ addInitializer('connected', () => {
     }
     find(`[data-layerid="${MAINBOARD.selectedLayer}"]`)?.classList.add('selected');
 
+    const {hue, sat, val} = KBINFO.layer_colors?.[layerid] ?? {hue: 0, sat: 0, val: 0};
+    const [r, g, b] = hsvToRgb(hue / 255, sat / 255, val / 255);
+    find('#layer-color')?.style.setProperty('background-color', `rgb(${r}, ${g}, ${b})`);
     ACTION.selectKey();
     if (!printable) {
       KEYUI.refreshAllKeys();
