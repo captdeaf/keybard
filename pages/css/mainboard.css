@@ -182,10 +182,21 @@
 
 #layer-color {
     display: inline-block;
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
+    margin-left: 4px;;
+}
+
+#layer-color button {
+    width: 25px;
+    height: 25px;
     border: 1px solid black;
-    border-radius: 2px;
-    background-color: aqua;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#layer-color-input {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    padding: 0;
+    border-radius: 50%;
 }

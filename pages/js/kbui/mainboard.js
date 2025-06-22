@@ -172,14 +172,53 @@ addInitializer('connected', () => {
     find(`[data-layerid="${MAINBOARD.selectedLayer}"]`)?.classList.add('selected');
 
     const {hue, sat, val} = KBINFO.layer_colors?.[layerid] ?? {hue: 0, sat: 0, val: 0};
-    const [r, g, b] = hsvToRgb(hue / 255, sat / 255, val / 255);
-    find('#layer-color')?.style.setProperty('background-color', `rgb(${r}, ${g}, ${b})`);
+    const rgb = hsvToRgb(hue / 255, sat / 255, val / 255);
+    find('#layer-color-input')?.setAttribute('value',`#${rgb.map(c => c.toString(16).padStart(2, '0')).join('')}`);
+    find('#layer-color-input')?.dispatchEvent(new Event('input', { bubbles: true }));
+
     ACTION.selectKey();
     if (!printable) {
       KEYUI.refreshAllKeys();
     }
     ACTION.selectKey();
   }
+
+  async function updateLayerLed(hue, sat, val) {
+    const layerid = MAINBOARD.selectedLayer;
+    CHANGES.queue(`layer${layerid}.led`, async () => {
+        await Vial.sval.setLayerColor(KBINFO, layerid, hue, sat, val);
+        if (MAINBOARD.selectedLayer === layerid) {
+            const rgb = hsvToRgb(hue / 255, sat / 255, val / 255);
+            find('#layer-color-input').setAttribute('value', `#${rgb.map(c => c.toString(16).padStart(2, '0')).join('')}`);
+            find('#layer-color-input').dispatchEvent(new Event('input', { bubbles: true }));
+        }
+    });
+  }
+
+  const swatches = KBINFO.layer_colors?.map(
+    ({hue, sat, val}) => {
+      const [r, g, b] = hsvToRgb(hue / 255, sat / 255, val / 255);
+      return `rgb(${r}, ${g}, ${b})`;
+    }
+  );
+  const defaultColor = swatches?.[0] ?? '#000000';
+  Coloris({
+    theme: 'polaroid',
+    format: 'hex',
+    alpha: false,
+    margin: 0,
+    closeButton: true,
+    swatches,
+    focusInput: false,
+    defaultColor,
+    onChange: (color) => {
+        const red = parseInt(color.slice(1, 3), 16);
+        const green = parseInt(color.slice(3, 5), 16);
+        const blue = parseInt(color.slice(5, 7), 16);
+        const [hue, sat, val] = rgbToHsv(red, green, blue);
+        updateLayerLed(Math.floor(hue * 255), Math.floor(sat * 255), Math.floor(val * 255));
+    }
+  });
 
   ////////////////////////////////////
   //
