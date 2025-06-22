@@ -179,3 +179,24 @@
 .ko-toggle.checked {
   background-color: #ccf;
 }
+
+#layer-color {
+    display: inline-block;
+    margin-left: 4px;;
+}
+
+#layer-color button {
+    width: 25px;
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#layer-color-input {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    padding: 0;
+    border-radius: 50%;
+}
